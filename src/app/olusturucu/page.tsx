@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import MatConfigurator from "@/components/configurator/MatConfigurator";
 
 export const metadata: Metadata = {
@@ -14,10 +14,10 @@ export default function ConfiguratorPage() {
         <span className="text-xs font-bold uppercase tracking-widest text-brand-red">
           Online Paspas Oluşturucu
         </span>
-        <h1 className="font-heading mt-2 text-3xl font-extrabold text-neutral-900 sm:text-4xl">
+        <h1 className="font-heading mt-2 text-3xl font-extrabold text-white sm:text-4xl">
           Kendi Paspasını Tasarla
         </h1>
-        <p className="mt-3 text-neutral-600">
+        <p className="mt-3 text-neutral-400">
           Aracınızı seçin, taban ve kenar rengini belirleyin, topuk pedi ve
           bagaj paspası ekleyin. Tasarımınızı canlı önizlemede anında görün,
           dakikalar içinde sipariş verin.

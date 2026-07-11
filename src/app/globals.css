@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --brand-red: #e31c23;
-  --brand-red-dark: #b8151b;
-  --brand-black: #111111;
+  --background: #0c0c0c;
+  --foreground: #f0f0f0;
+  --brand-red: #b91c32;
+  --brand-red-dark: #8B1A2B;
+  --brand-black: #1a1a1a;
+  --surface: #141414;
+  --surface-hover: #1e1e1e;
+  --border: #2a2a2a;
+  --muted: #9ca3af;
 }
 
 @theme inline {
@@ -14,6 +18,10 @@
   --color-brand-red: var(--brand-red);
   --color-brand-red-dark: var(--brand-red-dark);
   --color-brand-black: var(--brand-black);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
 }
@@ -79,7 +87,7 @@ h3 {
 
 /* Dekoratif arka plan dokuları */
 .bg-dots {
-  background-image: radial-gradient(rgba(17, 17, 17, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 

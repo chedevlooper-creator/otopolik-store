@@ -8,6 +8,7 @@ import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
 import { getVehiclePrice } from "@/lib/vehicle-data";
+import { PaletteIcon, RulerIcon, TruckIcon } from "lucide-react";
 
 const FLOOR_COLORS = [
   { name: "Siyah", hex: "#16161a" },
@@ -101,9 +102,18 @@ export default function MatConfigurator() {
           </p>
         </div>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-neutral-500">
-          <span>🎨 {FLOOR_COLORS.length * EDGE_COLORS.length} renk kombinasyonu</span>
-          <span>📐 3D lazer ölçümlü kalıp</span>
-          <span>🚚 1-3 iş gününde kargoda</span>
+          <span className="inline-flex items-center gap-1">
+            <PaletteIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            {FLOOR_COLORS.length * EDGE_COLORS.length} renk kombinasyonu
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <RulerIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            3D lazer ölçümlü kalıp
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            1-3 iş gününde kargoda
+          </span>
         </div>
       </div>
 

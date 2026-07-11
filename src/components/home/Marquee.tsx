@@ -1,9 +1,9 @@
 const MARQUEE_ITEMS = [
-  "🚚 1.500₺ üzeri ücretsiz kargo",
-  "🛡️ Araca özel tam uyum garantisi",
-  "💧 Tek sıkım suyla temizlik",
-  "↩️ 14 gün iade garantisi",
-  "🏆 Premium EVA malzeme",
+  "1.500₺ üzeri ücretsiz kargo",
+  "Araca özel tam uyum garantisi",
+  "Tek sıkım suyla temizlik",
+  "14 gün iade garantisi",
+  "Premium EVA malzeme",
 ];
 
 export default function Marquee() {

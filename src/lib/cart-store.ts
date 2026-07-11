@@ -2,6 +2,8 @@ import { CartItem } from "./types";
 
 const STORAGE_KEY = "otopolik-cart";
 
+const EMPTY: CartItem[] = [];
+
 let items: CartItem[] = [];
 let hydrated = false;
 const listeners = new Set<() => void>();
@@ -41,7 +43,7 @@ export function getSnapshot(): CartItem[] {
 }
 
 export function getServerSnapshot(): CartItem[] {
-  return [];
+  return EMPTY;
 }
 
 function setItems(next: CartItem[]) {

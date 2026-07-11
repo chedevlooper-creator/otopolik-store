@@ -53,8 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${poppins.variable} ${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-neutral-900">          <CartProvider>
+    <html lang="tr" className={`${poppins.variable} ${inter.variable} antialiased`}>
+      <body className="flex min-h-screen flex-col bg-[#0c0c0c] text-neutral-200 antialiased">          <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

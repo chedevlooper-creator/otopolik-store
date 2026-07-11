@@ -1,5 +1,6 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { MessageCircleIcon, ArrowRightIcon } from "lucide-react";
 
 export default function CtaBanner() {
   const whatsappHref = buildWhatsAppOrderLink(
@@ -7,35 +8,35 @@ export default function CtaBanner() {
   );
 
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-br from-brand-red via-brand-red to-brand-red-dark">
-      <div className="bg-dots-dark absolute inset-0" />
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-black/20 blur-3xl" />
-
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-16 text-center text-white sm:flex-row sm:justify-between sm:text-left">
-        <div>
-          <h2 className="font-heading text-2xl font-extrabold sm:text-3xl">
-            Aracınıza özel paspas için hazırız
-          </h2>
-          <p className="mt-2 max-w-md text-red-100">
-            Marka ve modelinizi belirtin, size en uygun seti önerelim.
-          </p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link
-            href="/urunler"
-            className="btn-press rounded-full bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-brand-red shadow-lg shadow-black/20 hover:bg-neutral-100"
-          >
-            Ürünleri İncele
-          </Link>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-press rounded-full border border-white/50 bg-white/10 px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white backdrop-blur hover:bg-white/20"
-          >
-            WhatsApp&apos;tan Yaz
-          </a>
+    <section className="border-t border-neutral-800 bg-[#141414]">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:py-14">
+        <div className="flex flex-col gap-5 rounded-2xl bg-neutral-900 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h2 className="font-heading text-lg font-extrabold text-white sm:text-xl">
+              Aracınıza özel sipariş için hazırız
+            </h2>
+            <p className="mt-1 text-sm text-white/60">
+              Marka ve modelinizi belirtin, size en uygun seti önerelim.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/urunler"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#141414] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-600"
+            >
+              Ürünleri İncele
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#22c35e]"
+            >
+              <MessageCircleIcon className="h-4 w-4" />
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </section>

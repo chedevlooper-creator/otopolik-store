@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format";
 import { useCart } from "@/context/cart-context";
 import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { ArrowRightIcon } from "lucide-react";
 
 type Props = {
   vehicleLabel: string;
@@ -27,11 +28,11 @@ export default function ConfigSummary({
   );
 
   return (
-    <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-lg shadow-black/5">
+    <section className="rounded-3xl border border-neutral-700 bg-[#141414] p-6 shadow-lg shadow-black/5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-neutral-500">Tasarımınız</p>
-          <p className="mt-1 text-sm font-semibold text-neutral-900">
+          <p className="mt-1 text-sm font-semibold text-white">
             {vehicleLabel || "Araç seçilmedi"}
           </p>
           <p className="text-xs text-neutral-500">{configSummary}</p>
@@ -59,7 +60,7 @@ export default function ConfigSummary({
             onAddToCart();
             router.push("/odeme");
           }}
-          className="btn-press flex-1 rounded-full border border-brand-black px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-neutral-900 hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:border-neutral-300 disabled:text-neutral-400"
+          className="btn-press flex-1 rounded-full border border-brand-black px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:border-neutral-600 disabled:text-neutral-400"
         >
           Hemen Sipariş Ver
         </button>
@@ -68,12 +69,13 @@ export default function ConfigSummary({
         href={whatsappHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-3 block text-center text-sm font-semibold text-neutral-500 hover:text-brand-red"
+        className="mt-3 inline-flex w-full items-center justify-center gap-1 text-sm font-semibold text-neutral-500 hover:text-brand-red"
       >
-        Kararsız mısınız? Tasarımı WhatsApp&apos;tan danışın →
+        Kararsız mısınız? Tasarımı WhatsApp&apos;tan danışın
+        <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
       </a>
       {!canAdd && (
-        <p className="mt-3 rounded-lg bg-neutral-50 px-3 py-2 text-center text-xs text-neutral-500">
+        <p className="mt-3 rounded-lg bg-neutral-900 px-3 py-2 text-center text-xs text-neutral-500">
           Sepete eklemek için önce aracınızı seçin.
         </p>
       )}

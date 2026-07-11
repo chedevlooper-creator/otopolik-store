@@ -293,15 +293,99 @@ DesignerCta → Showcase → InstagramGallery → FeaturedProducts →
 Testimonials → Faq → CtaBanner
 ```
 
-### 5.3. Ödeme Entegrasyon Planı
+### 5.3. Ödeme Entegrasyonu — Servis Karşılaştırması (Araştırma Raporu)
 
-| Adım | Açıklama |
-|------|----------|
-| 1 | Ödeme sağlayıcısı seçimi (iyzico / PayTR / diğer) |
-| 2 | API entegrasyonu ve checkout sayfası güncellemesi |
-| 3 | Kredi kartı ödeme seçeneğinin aktifleştirilmesi |
-| 4 | WhatsApp sipariş seçeneğinin korunması |
-| 5 | Test ve güvenlik doğrulaması |
+> **Tarih:** Temmuz 2026  
+> **Kapsam:** iyzico vs PayTR — Türkiye e-ticaret ödeme sağlayıcıları  
+> **Proje:** OTO POLİK (oto paspası, ~1000-1500₺ ortalama sipariş)
+
+#### 5.3.1. Karşılaştırma Tablosu
+
+| Özellik | **iyzico** | **PayTR** |
+|---------|-----------|-----------|
+| **Kurulum Ücreti** | Yok | Yok |
+| **Aylık Ücret** | Yok | Yok |
+| **Komisyon Oranı** | Genelde daha yüksek | Daha rekabetçi (KOBİ dostu) |
+| **Para Yatırma Süresi** | T+1 ila birkaç gün | Genelde T+1 (ertesi gün) |
+| **3D Secure** | ✅ Otomatik (Checkout Form ile) | ✅ Iframe içinde otomatik |
+| **Taksit Desteği** | ✅ `enabledInstallments` parametresi | ✅ `max_installment` parametresi |
+| **Node.js SDK** | ✅ `iyzipay` npm paketi (resmi) | ⚠️ Resmi SDK yok, HMAC-SHA256 ile manuel |
+| **API Kalitesi** | ⭐⭐⭐⭐⭐ Çok iyi dökümantasyon | ⭐⭐⭐⭐ İşlevsel, daha az kapsamlı |
+| **Next.js Uyumu** | ⭐⭐⭐⭐⭐ Checkout Form + API Route | ⭐⭐⭐⭐ Iframe + API Route ile çalışır |
+| **Dolandırıcılık Koruması** | "Frauctive" AI — çok güçlü | Standart (yeterli seviye) |
+| **Müşteri Desteği** | Portal tabanlı, bazen yavaş | KOBİ'lere hızlı destek |
+| **Marka Güveni** | "iyzico Korumalı Alışveriş" — yüksek | Daha az bilinir, yine de güvenilir |
+| **Geliştirici Deneyimi** | Harika (SDK, dökümantasyon) | Orta (manuel hash, daha az örnek) |
+
+#### 5.3.2. iyzico Entegrasyon Detayları
+
+**Kurulum:**
+```bash
+npm install iyzipay
+```
+
+**Ortam Değişkenleri:**
+```env
+IYZIPAY_API_KEY=your_public_key
+IYZIPAY_SECRET_KEY=your_secret_key
+IYZIPAY_URI=https://sandbox-api.iyzipay.com  # Canlı: https://api.iyzipay.com
+```
+
+**Akış (Checkout Form):**
+1. Sunucu tarafında (`app/api/payments/init/route.ts`) CheckoutForm verisi hazırlanır
+2. `iyzipay.checkoutFormInitialize.create()` çağrılır → `paymentPageUrl` + `token` döner
+3. Kullanıcı ödeme sayfasına yönlendirilir (veya iframe)
+4. iyzico callback URL'ye yönlendirir
+5. Sunucu `iyzipay.checkoutFormRetrieve.retrieve({ token })` ile sonucu doğrular
+6. Webhook (IPN) ile ek doğrulama yapılabilir
+
+**Taksit:** `enabledInstallments: [1, 2, 3, 6, 12]` ile sınırlanabilir
+
+**Test Kartları:** iyzico dokümantasyonunda hazır test kartları mevcut
+
+#### 5.3.3. PayTR Entegrasyon Detayları
+
+**Kurulum:** Harici SDK gerekmez (Node.js `crypto` modülü yeterli)
+
+**Ortam Değişkenleri:**
+```env
+PAYTR_MERCHANT_ID=your_merchant_id
+PAYTR_MERCHANT_KEY=your_key
+PAYTR_MERCHANT_SALT=your_salt
+```
+
+**Akış (Iframe):**
+1. Sunucu tarafında (`app/api/paytr-token/route.ts`) HMAC-SHA256 ile hash oluşturulur
+2. Hash ile PayTR API'sine POST → `token` döner
+3. Ön yüzde `<iframe src="https://www.paytr.com/odeme/api/token/{token}" />` render edilir
+4. Kullanıcı iframe içinde kart bilgilerini girer
+5. Webhook (`callback_url`) ile ödeme sonucu bildirilir
+6. Webhook'ta hash doğrulaması yapılmalı, `"OK"` yanıtı dönülmeli
+
+#### 5.3.4. Öneri
+
+| Kriter | Önerilen | Gerekçe |
+|--------|----------|---------|
+| **KOBİ bütçesi** | **PayTR** | Daha düşük komisyon, hızlı para yatırma |
+| **Hızlı entegrasyon** | **iyzico** | Resmi SDK, harika dökümantasyon, az kod |
+| **Müşteri güveni** | **iyzico** | Tanınmış marka, "Korumalı Alışveriş" |
+| **Geliştirici deneyimi** | **iyzico** | Çok daha iyi API/SDK kalitesi |
+
+**Ön tavsiye:** **iyzico** — iyi dökümantasyonu ve resmi Node.js SDK'sı sayesinde Next.js ile entegrasyonu çok daha hızlı ve güvenilir olur. Komisyon oranları biraz yüksek olsa da, ilk aşamada hızlı pazara çıkma ve müşteri güveni açısından iyzico öne çıkıyor.
+
+#### 5.3.5. Entegrasyon Adımları
+
+| Adım | Açıklama | Süre |
+|------|----------|------|
+| 1 | **Servis kararı** — iyzico veya PayTR | Bugün |
+| 2 | **Hesap oluşturma** — Servise kayıt + API anahtarları | ~1 saat |
+| 3 | **API Route oluşturma** — `/api/payments/init` + `/api/payments/result` | ~2 saat |
+| 4 | **Checkout sayfası güncelleme** — Kredi kartı seçeneğini aktifleştirme | ~1 saat |
+| 5 | **Webhook/callback** — Sipariş durumu güncelleme | ~1 saat |
+| 6 | **Test** — Sandbox test kartları ile doğrulama | ~1 saat |
+| 7 | **Canlıya alma** — Production API anahtarları | ~30 dk |
+
+> **Toplam entegrasyon süresi:** ~6-7 saat (servis kararı verildikten sonra)
 
 ---
 

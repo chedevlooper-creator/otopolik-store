@@ -1,7 +1,7 @@
 import Hero from "@/components/home/Hero";
-import Marquee from "@/components/home/Marquee";
 import VehicleFinder from "@/components/home/VehicleFinder";
 import FeatureStrip from "@/components/home/FeatureStrip";
+import Marquee from "@/components/home/Marquee";
 import HowItWorks from "@/components/home/HowItWorks";
 import Stats from "@/components/home/Stats";
 import DesignerCta from "@/components/home/DesignerCta";
@@ -9,9 +9,8 @@ import Showcase from "@/components/home/Showcase";
 import InstagramGallery from "@/components/home/InstagramGallery";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Testimonials from "@/components/home/Testimonials";
-import Faq from "@/components/home/Faq";
+import Faq, { FAQS } from "@/components/home/Faq";
 import CtaBanner from "@/components/home/CtaBanner";
-import { FAQS } from "@/components/home/Faq";
 import { faqPageSchema, renderJsonLd } from "@/lib/structured-data";
 
 export default function Home() {

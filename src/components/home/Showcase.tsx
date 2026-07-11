@@ -1,6 +1,7 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
+import { CheckIcon } from "lucide-react";
 
 export default function Showcase() {
   return (
@@ -25,10 +26,10 @@ export default function Showcase() {
             <span className="text-xs font-bold uppercase tracking-widest text-brand-red">
               Neden EVA Paspas?
             </span>
-            <h2 className="font-heading mt-3 text-3xl font-extrabold text-neutral-900 sm:text-4xl">
+            <h2 className="font-heading mt-3 text-3xl font-extrabold text-white sm:text-4xl">
               Ayağınızın altında hissedeceğiniz gerçek fark
             </h2>
-            <p className="mt-4 text-neutral-600 leading-relaxed">
+            <p className="mt-4 text-neutral-400 leading-relaxed">
               Klasik dokuma paspasların aksine EVA malzeme; suyu, çamuru ve
               tozu emmez, aracınızın tabanına sızdırmaz. Yüksek kenar yapısı
               sayesinde sıvılar dışarı taşmadan paspasın içinde tutulur.
@@ -40,9 +41,9 @@ export default function Showcase() {
                 "Kokusuz, esnek, kırılmaya dayanıklı premium malzeme",
                 "4 mevsim kullanım: yazın serin, kışın sıcak tutar",
               ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm text-neutral-700">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-50 text-brand-red text-xs">
-                    ✓
+                <li key={item} className="flex items-start gap-3 text-sm text-neutral-300">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-800">
+                    <CheckIcon className="h-3 w-3 text-brand-red" aria-hidden="true" />
                   </span>
                   {item}
                 </li>

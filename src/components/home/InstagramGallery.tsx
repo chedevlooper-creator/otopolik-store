@@ -1,6 +1,7 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { ArrowRightIcon } from "lucide-react";
 
 // Bu alan, @otopolik hesabından seçilip public/media/ altına eklenen onaylı içerikler içindir.
 const media = [
@@ -15,14 +16,14 @@ export default function InstagramGallery() {
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Instagram</span>
-        <h2 className="font-heading mt-2 text-3xl font-extrabold text-neutral-900 sm:text-4xl">Atölyeden ve kullanım detayları</h2>
-        <p className="mt-2 max-w-2xl text-neutral-600">Seçilen içerikler siteye sabit olarak eklenir; hızlı ve tutarlı bir deneyim sunar.</p>
+        <h2 className="font-heading mt-2 text-3xl font-extrabold text-white sm:text-4xl">Atölyeden ve kullanım detayları</h2>
+        <p className="mt-2 max-w-2xl text-neutral-400">Seçilen içerikler siteye sabit olarak eklenir; hızlı ve tutarlı bir deneyim sunar.</p>
       </div>
-      <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="font-bold text-brand-red hover:underline">@otopolik&apos;i ziyaret et →</a>
+      <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-brand-red hover:underline">@otopolik&apos;i ziyaret et <ArrowRightIcon className="h-4 w-4" aria-hidden="true" /></a>
     </div>
     <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
       {media.map((item) => (
-        <div key={item.src} className="group relative aspect-square overflow-hidden rounded-2xl bg-neutral-100 ring-1 ring-black/5">
+        <div key={item.src} className="group relative aspect-square overflow-hidden rounded-2xl bg-neutral-800 ring-1 ring-black/5">
           <Image
             src={item.src}
             alt={item.alt}

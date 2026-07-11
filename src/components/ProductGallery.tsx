@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -23,8 +23,8 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
             type="button"
             onClick={() => setActive(i)}
             aria-label={`Görsel ${i + 1}`}
-            className={`relative aspect-square w-16 overflow-hidden rounded-xl border-2 bg-neutral-100 transition-colors sm:w-20 ${
-              active === i ? "border-brand-red" : "border-neutral-200 hover:border-neutral-400"
+            className={`relative aspect-square w-16 overflow-hidden rounded-xl border-2 bg-neutral-800 transition-colors sm:w-20 ${
+              active === i ? "border-brand-red" : "border-neutral-700 hover:border-neutral-400"
             }`}
           >
             <Image src={src} alt={`${alt} küçük görsel ${i + 1}`} fill sizes="80px" className="object-cover" />
@@ -32,7 +32,7 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
         ))}
       </div>
 
-      <div className="relative order-1 aspect-square flex-1 overflow-hidden rounded-3xl bg-neutral-100 sm:order-2">
+      <div className="relative order-1 aspect-square flex-1 overflow-hidden rounded-3xl bg-neutral-800 sm:order-2">
         <Image
           key={gallery[active]}
           src={gallery[active]}

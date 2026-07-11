@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 export type ColorSwatch = {
   name: string;
@@ -22,7 +22,7 @@ export default function ColorPicker({
 }: Props) {
   return (
     <section>
-      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-neutral-900">
+      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-white">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red text-sm font-bold text-white">{step}</span>
         {label}
         <span className="ml-1 text-sm font-normal text-neutral-500">— {selected.name}</span>
@@ -38,7 +38,7 @@ export default function ColorPicker({
             className={`h-11 w-11 rounded-full border-2 shadow-sm transition-transform ${
               selected.name === c.name
                 ? "scale-110 border-brand-red ring-2 ring-brand-red/25"
-                : "border-neutral-200 hover:scale-105 hover:border-neutral-400"
+                : "border-neutral-700 hover:scale-105 hover:border-neutral-400"
             }`}
             style={{ backgroundColor: c.hex }}
           />

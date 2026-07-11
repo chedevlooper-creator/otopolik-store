@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import CartItemLine from "@/components/CartItemLine";
 import { formatPrice } from "@/lib/format";
 import { siteConfig } from "@/lib/site-config";
 import { getRemainingForFreeShipping, getShippingCost } from "@/lib/shipping";
+import { XIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
 
 export default function CartDrawer() {
   const { items, isDrawerOpen, closeDrawer, updateQuantity, removeItem, totalPrice } = useCart();
@@ -43,52 +44,57 @@ export default function CartDrawer() {
         }`}
       />
       <aside
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ${
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-[#141414] shadow-2xl transition-transform duration-300 ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
         aria-label="Sepet"
       >
-        <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-4">
-          <h2 className="font-heading text-lg font-extrabold text-neutral-900">
+        <div className="flex items-center justify-between border-b border-neutral-700 px-5 py-4">
+          <h2 className="font-heading text-lg font-extrabold text-white">
             Sepetim {items.length > 0 && <span className="text-brand-red">({items.length})</span>}
           </h2>
           <button
             type="button"
             onClick={closeDrawer}
             aria-label="Sepeti kapat"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-100 hover:text-brand-red"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-700 hover:text-brand-red"
           >
-            ✕
+            <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-            <p className="text-4xl">🛒</p>
-            <p className="font-heading font-bold text-neutral-900">Sepetiniz boş</p>
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-800">
+              <ShoppingCartIcon className="h-8 w-8 text-neutral-400" aria-hidden="true" />
+            </span>
+            <p className="font-heading font-bold text-white">Sepetiniz boş</p>
             <p className="text-sm text-neutral-500">
               Aracınıza özel EVA paspas setini keşfedin.
             </p>
             <Link
               href="/urunler"
               onClick={closeDrawer}
-              className="mt-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-700"
+              className="mt-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark"
             >
               Ürünleri İncele
             </Link>
           </div>
         ) : (
           <>
-            <div className="border-b border-neutral-100 px-5 py-3">
+            <div className="border-b border-neutral-800 px-5 py-3">
               {remaining > 0 ? (
-                <p className="text-xs text-neutral-600">
+                <p className="text-xs text-neutral-400">
                   Ücretsiz kargoya <strong className="text-brand-red">{formatPrice(remaining)}</strong> kaldı
                 </p>
               ) : (
-                <p className="text-xs font-semibold text-green-600">🎉 Ücretsiz kargo kazandınız!</p>
+                <p className="inline-flex items-center gap-1 text-xs font-semibold text-green-600">
+                  <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                  Ücretsiz kargo kazandınız!
+                </p>
               )}
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-neutral-100">
+              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-neutral-800">
                 <div
                   className="h-full rounded-full bg-brand-red transition-all duration-500"
                   style={{ width: `${progress}%` }}
@@ -96,7 +102,7 @@ export default function CartDrawer() {
               </div>
             </div>
 
-            <ul className="flex-1 divide-y divide-neutral-100 overflow-y-auto px-5">
+            <ul className="flex-1 divide-y divide-neutral-800 overflow-y-auto px-5">
               {items.map((item) => (
                 <CartItemLine
                   key={`${item.slug}-${item.color}`}
@@ -108,12 +114,12 @@ export default function CartDrawer() {
               ))}
             </ul>
 
-            <div className="border-t border-neutral-200 px-5 py-4">
-              <div className="mb-2 flex items-center justify-between text-sm text-neutral-600">
+            <div className="border-t border-neutral-700 px-5 py-4">
+              <div className="mb-2 flex items-center justify-between text-sm text-neutral-400">
                 <span>Kargo</span><span>{shippingCost === 0 ? "Ücretsiz" : formatPrice(shippingCost)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="font-heading font-bold text-neutral-900">Toplam</span>
+                <span className="font-heading font-bold text-white">Toplam</span>
                 <span className="font-heading text-xl font-extrabold text-brand-red">
                   {formatPrice(orderTotal)}
                 </span>
@@ -121,14 +127,14 @@ export default function CartDrawer() {
               <Link
                 href="/odeme"
                 onClick={closeDrawer}
-                className="mt-4 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-700"
+                className="mt-4 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark"
               >
                 Sipariş Talebine Geç
               </Link>
               <Link
                 href="/sepet"
                 onClick={closeDrawer}
-                className="mt-2 flex w-full items-center justify-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-bold uppercase tracking-wide text-neutral-700 hover:border-brand-red hover:text-brand-red"
+                className="mt-2 flex w-full items-center justify-center rounded-full border border-neutral-600 px-6 py-3 text-sm font-bold uppercase tracking-wide text-neutral-300 hover:border-brand-red hover:text-brand-red"
               >
                 Sepete Git
               </Link>

@@ -1,17 +1,16 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/lib/site-config";
+import { MenuIcon, XIcon, ShoppingCartIcon, PhoneIcon } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/", label: "Ana Sayfa" },
   { href: "/urunler", label: "Ürünler" },
-  { href: "/olusturucu", label: "Paspas Tasarla", highlight: true },
-  { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/olusturucu", label: "Tasarla" },
   { href: "/iletisim", label: "İletişim" },
 ];
 
@@ -22,118 +21,135 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-white/90 backdrop-blur-md transition-shadow duration-300 ${
-        scrolled ? "border-neutral-200 shadow-lg shadow-black/5" : "border-transparent"
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-neutral-700 bg-[#0c0c0c]/95 shadow-sm backdrop-blur-md"
+          : "border-b border-transparent bg-[#141414]"
       }`}
     >
-      <div className="bg-brand-black text-white text-xs sm:text-sm">
-        <div className="mx-auto max-w-7xl px-4 py-1.5 flex items-center justify-between gap-4">
-          <span className="truncate">
-            {siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri siparişlerde{" "}
-            <strong className="text-brand-red">ücretsiz kargo</strong>
-          </span>
-          <a
-            href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
-            className="hidden whitespace-nowrap transition-colors hover:text-brand-red sm:inline"
-          >
-            📞 {siteConfig.phoneDisplay}
-          </a>
-        </div>
-      </div>
-
       <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center justify-between py-3 gap-4">
-          <Link href="/" className="group flex items-center gap-3 shrink-0">
+        <div className="flex h-16 items-center justify-between gap-4">
+          {/* Logo */}
+          <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <Image
               src="/media/logo.jpg"
               alt={siteConfig.name}
-              width={60}
-              height={60}
+              width={38}
+              height={38}
               quality={95}
-              className="rounded-full shadow-md shadow-black/20 ring-2 ring-neutral-200 transition-transform duration-300 group-hover:scale-105"
+              className="rounded-full ring-1 ring-neutral-200/80"
               priority
             />
-            <span className="font-heading font-extrabold text-xl leading-none tracking-tight sm:text-2xl">
-              OTO <span className="text-brand-red">POLİK</span>
-              <span className="mt-0.5 block text-[10px] font-sans font-normal tracking-[0.25em] text-neutral-500 sm:text-[11px]">
-                OTO PASPASLARI
-              </span>
+            <span className="font-heading text-lg font-extrabold tracking-tight text-white">
+              OTO<span className="text-brand-red">POLİK</span>
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1 font-medium">
+          {/* Nav */}
+          <nav className="hidden items-center gap-0.5 md:flex">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+                className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   pathname === link.href
-                    ? "bg-red-50 text-brand-red"
-                    : link.highlight
-                      ? "font-bold text-brand-red hover:bg-red-50"
-                      : "text-neutral-700 hover:bg-neutral-50 hover:text-brand-red"
+                    ? "text-brand-red"
+                    : "text-neutral-400 hover:text-white"
                 }`}
               >
-                {link.highlight && <span className="mr-1" aria-hidden>🎨</span>}
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          {/* Right actions */}
+          <div className="flex items-center gap-2">
+            <a
+              href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
+              className="hidden items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-medium text-neutral-400 transition-colors hover:text-brand-red lg:flex"
+            >
+              <PhoneIcon className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden xl:inline">{siteConfig.phoneDisplay}</span>
+            </a>
             <button
               type="button"
               onClick={openDrawer}
-              className="btn-press relative flex items-center gap-2 rounded-full bg-brand-black text-white px-5 py-2.5 text-sm font-semibold shadow-md shadow-black/10 hover:bg-brand-red hover:shadow-lg hover:shadow-brand-red/30"
+              className="relative flex h-9 w-9 items-center justify-center rounded-lg text-neutral-300 transition-colors hover:bg-neutral-700 sm:w-auto sm:gap-2 sm:rounded-full sm:bg-neutral-900 sm:px-4 sm:text-sm sm:font-semibold sm:text-white sm:hover:bg-brand-red"
             >
-              <span aria-hidden>🛒</span>
-              <span className="hidden sm:inline">Sepetim</span>
+              <ShoppingCartIcon className="h-5 w-5 sm:h-4 sm:w-4" aria-hidden="true" />
+              <span className="hidden sm:inline">Sepet</span>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-red px-1 text-[11px] font-bold text-white ring-2 ring-white">
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-red px-1 text-[10px] font-bold text-white ring-2 ring-[#141414] sm:static sm:ring-0">
                   {totalItems}
                 </span>
               )}
             </button>
             <button
               type="button"
-              className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-neutral-300 hover:bg-neutral-700 md:hidden"
               onClick={() => setMenuOpen((open) => !open)}
-              aria-label="Menüyü aç/kapat"
+              aria-label="Menü"
             >
-              {menuOpen ? "✕" : "☰"}
+              {menuOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {menuOpen && (
-        <nav className="md:hidden border-t border-neutral-200 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-1">
+      {/* Mobile menu */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="border-t border-neutral-800 bg-[#141414]">
+          <div className="mx-auto max-w-7xl px-4 py-2">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className={`rounded-xl px-3 py-2.5 font-medium ${
+                className={`flex items-center rounded-lg px-3 py-3 text-sm font-medium transition-colors ${
                   pathname === link.href
-                    ? "bg-red-50 text-brand-red"
-                    : "text-neutral-800 hover:bg-neutral-100"
+                    ? "text-brand-red"
+                    : "text-neutral-300 hover:bg-neutral-800"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
+            <a
+              href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
+              className="flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium text-neutral-500"
+            >
+              <PhoneIcon className="h-4 w-4" aria-hidden="true" />
+              {siteConfig.phoneDisplay}
+            </a>
           </div>
         </nav>
-      )}
+      </div>
     </header>
   );
 }

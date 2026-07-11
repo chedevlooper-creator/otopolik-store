@@ -1,63 +1,67 @@
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
+import { PhoneIcon, MailIcon, MapPinIcon } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-brand-black text-neutral-300">
-      {/* Marka kırmızısı üst vurgu çizgisi */}
-      <div className="h-1 bg-gradient-to-r from-transparent via-brand-red to-transparent" />
-      <div className="bg-dots-dark pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto max-w-7xl px-4 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <div className="flex items-center gap-3 mb-3">
-            <Image src="/media/logo.jpg" alt={siteConfig.name} width={56} height={56} quality={95} className="rounded-full ring-2 ring-white/15" />
-            <span className="font-heading font-extrabold text-white text-xl tracking-tight">
-              OTO <span className="text-brand-red">POLİK</span>
+    <footer className="bg-neutral-950 text-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:py-14">
+        <div className="grid gap-10 sm:grid-cols-2">
+          <div>
+            <span className="font-heading text-xl font-extrabold tracking-tight">
+              OTO<span className="text-brand-red">POLİK</span>
             </span>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
+              Premium EVA paspas setleri. Her araca özel, milimetrik uyumlu üretim.
+            </p>
+            <div className="mt-5 space-y-2 text-sm text-white/60">
+              <a
+                href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
+                className="inline-flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <PhoneIcon className="h-4 w-4 text-brand-red" />
+                {siteConfig.phoneDisplay}
+              </a>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="inline-flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <MailIcon className="h-4 w-4 text-brand-red" />
+                {siteConfig.email}
+              </a>
+              <span className="inline-flex items-start gap-2">
+                <MapPinIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand-red" />
+                {siteConfig.address}
+              </span>
+            </div>
           </div>
-          <p className="text-sm leading-relaxed text-neutral-400">{siteConfig.description}</p>
-        </div>
 
-        <div>
-          <h3 className="font-heading font-bold text-white mb-3">Hızlı Bağlantılar</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/urunler" className="hover:text-brand-red">Tüm Ürünler</Link></li>
-            <li><Link href="/olusturucu" className="hover:text-brand-red">Paspas Tasarla</Link></li>
-            <li><Link href="/hakkimizda" className="hover:text-brand-red">Hakkımızda</Link></li>
-            <li><Link href="/iletisim" className="hover:text-brand-red">İletişim</Link></li>
-            <li><Link href="/sepet" className="hover:text-brand-red">Sepetim</Link></li>
-            <li><Link href="/bilgiler/kargo" className="hover:text-brand-red">Kargo ve Teslimat</Link></li>
-            <li><Link href="/bilgiler/iade" className="hover:text-brand-red">İade ve Değişim</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-heading font-bold text-white mb-3">Kategoriler</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/urunler?kategori=eva-3d" className="hover:text-brand-red">3D EVA Paspas</Link></li>
-            <li><Link href="/urunler?kategori=eva-havuzlu" className="hover:text-brand-red">Havuzlu EVA Paspas</Link></li>
-            <li><Link href="/urunler?kategori=bagaj" className="hover:text-brand-red">Bagaj Paspası</Link></li>
-            <li><Link href="/bilgiler/ozel-uretim" className="hover:text-brand-red">Özel Üretim</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-heading font-bold text-white mb-3">İletişim</h3>
-          <ul className="space-y-2 text-sm text-neutral-400">
-            <li>📞 {siteConfig.phoneDisplay}</li>
-            <li>✉️ {siteConfig.email}</li>
-            <li>📍 {siteConfig.address}</li>
-            <li>🕒 {siteConfig.businessHours}</li>
-            <li><a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-brand-red">Instagram&apos;da @otopolik</a></li>
-          </ul>
+          <div className="grid grid-cols-2 gap-6 sm:gap-8">
+            <div>
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-white/30">Sayfalar</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/urunler" className="text-white/50 hover:text-white">Ürünler</Link></li>
+                <li><Link href="/olusturucu" className="text-white/50 hover:text-white">Paspas Tasarla</Link></li>
+                <li><Link href="/iletisim" className="text-white/50 hover:text-white">İletişim</Link></li>
+                <li><Link href="/hakkimizda" className="text-white/50 hover:text-white">Hakkımızda</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-white/30">Bilgi</h3>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/bilgiler/kargo" className="text-white/50 hover:text-white">Kargo ve Teslimat</Link></li>
+                <li><Link href="/bilgiler/iade" className="text-white/50 hover:text-white">İade ve Değişim</Link></li>
+                <li><Link href="/bilgiler/gizlilik" className="text-white/50 hover:text-white">Gizlilik</Link></li>
+                <li><Link href="/sepet" className="text-white/50 hover:text-white">Sepetim</Link></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 py-4 text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>© {new Date().getFullYear()} {siteConfig.name}. Tüm hakları saklıdır.</span>
-          <Link href="/bilgiler/gizlilik" className="hover:text-brand-red">Gizlilik ve Ön Bilgilendirme</Link>
+      <div className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-4 py-4 text-xs text-white/30 flex items-center justify-between">
+          <span>© {new Date().getFullYear()} {siteConfig.name}</span>
+          <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white/60">Instagram</a>
         </div>
       </div>
     </footer>

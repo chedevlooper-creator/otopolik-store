@@ -4,8 +4,8 @@ export const siteConfig = {
   tagline: "Oto Paspasları",
   description:
     "Aracınıza özel üretim, EVA malzemeden 4 mevsim kullanılabilir, çamura ve suya karşı üstün korumalı oto paspasları.",
-  // Vercel'e deploy ettikten sonra gerçek alan adınızla değiştirin.
-  url: "https://otopolik.com",
+  // Vercel ortam değişkeninden alınır; yoksa varsayılan değer kullanılır.
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://otopolik.com",
   // Yayına almadan önce işletmenin doğrulanmış bilgileriyle güncelleyin.
   phoneDisplay: "0555 000 00 00",
   // WhatsApp numarası ülke kodu + alan kodu + numara, boşluksuz (örn: 905550000000)

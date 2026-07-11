@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { formatPrice } from "@/lib/format";
 
@@ -20,7 +20,7 @@ export default function ExtrasSelector({
 }: Props) {
   return (
     <section>
-      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-neutral-900">
+      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-white">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red text-sm font-bold text-white">4</span>
         Ekstralar
       </h2>
@@ -28,12 +28,12 @@ export default function ExtrasSelector({
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 px-5 py-4 transition-colors ${
             heelPad
-              ? "border-brand-red bg-red-50/60"
-              : "border-neutral-200 hover:border-neutral-300"
+              ? "border-brand-red bg-neutral-800/60"
+              : "border-neutral-700 hover:border-neutral-600"
           }`}
         >
           <span>
-            <span className="block text-sm font-bold text-neutral-900">Topuk Pedi</span>
+            <span className="block text-sm font-bold text-white">Topuk Pedi</span>
             <span className="text-xs text-neutral-500">Sürücü tarafına metal görünümlü koruma</span>
           </span>
           <span className="flex items-center gap-2">
@@ -49,12 +49,12 @@ export default function ExtrasSelector({
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 px-5 py-4 transition-colors ${
             trunkMat
-              ? "border-brand-red bg-red-50/60"
-              : "border-neutral-200 hover:border-neutral-300"
+              ? "border-brand-red bg-neutral-800/60"
+              : "border-neutral-700 hover:border-neutral-600"
           }`}
         >
           <span>
-            <span className="block text-sm font-bold text-neutral-900">Bagaj Paspası</span>
+            <span className="block text-sm font-bold text-white">Bagaj Paspası</span>
             <span className="text-xs text-neutral-500">Aynı renk kombinasyonuyla bagaj koruması</span>
           </span>
           <span className="flex items-center gap-2">
