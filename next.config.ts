@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // quality={90/95} kullanan görseller için izin listesi (Next 16'da zorunlu)
+    qualities: [75, 90, 95],
+  },
 };
 
 export default nextConfig;

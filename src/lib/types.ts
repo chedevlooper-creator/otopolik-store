@@ -1,0 +1,38 @@
+export type ProductColor = {
+  name: string;
+  hex: string;
+  image?: string;
+};
+
+export type Product = {
+  slug: string;
+  name: string;
+  brand: string;
+  model: string;
+  category: "eva-3d" | "eva-havuzlu" | "bagaj";
+  price: number;
+  oldPrice?: number;
+  image: string;
+  gallery: string[];
+  colors: ProductColor[];
+  description: string;
+  features: string[];
+  compatibility: {
+    yearRange: string;
+    bodyOrChassis: string;
+    note: string;
+  };
+  setContents: string[];
+  optionalExtras: string[];
+  dispatchEstimate: string;
+  badge?: string;
+};
+
+export type CartItem = {
+  slug: string;
+  name: string;
+  image: string;
+  price: number;
+  color: string;
+  quantity: number;
+};
