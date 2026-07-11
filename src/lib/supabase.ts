@@ -29,7 +29,8 @@ export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
       console.warn("Supabase istemcisi başlatılamadı. Ortam değişkenlerini kontrol edin.");
       return undefined;
     }
-    const value = (_client as Record<string | symbol, unknown>)[prop];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const value = (_client as any)[prop];
     if (typeof value === "function") {
       return value.bind(_client);
     }
