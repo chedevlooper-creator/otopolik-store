@@ -4,11 +4,11 @@ import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
-import { getProductBySlug, getRelatedProducts, products } from "@/lib/products";
+import { CATEGORY_LABELS, getProductBySlug, getRelatedProducts, products } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 import { buildWhatsAppOrderLink, siteConfig } from "@/lib/site-config";
 import { getShippingCost } from "@/lib/shipping";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, PlusIcon, ScissorsIcon, TruckIcon, Undo2Icon } from "lucide-react";
 import {
   productSchema,
   breadcrumbListSchema,
@@ -33,7 +33,7 @@ export async function generateMetadata({
     height: 1200,
   }));
   return {
-    title: `${product.name} | OTO POLİK`,
+    title: product.name,
     description: product.description,
     alternates: {
       canonical: `${siteConfig.url}/urunler/${product.slug}`,
@@ -68,84 +68,116 @@ export default async function ProductDetailPage({
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
-      <nav className="mb-6 text-sm text-neutral-500">
-        <Link href="/" className="hover:text-brand-red">Ana Sayfa</Link>
-        <span className="mx-2">/</span>
-        <Link href="/urunler" className="hover:text-brand-red">Ürünler</Link>
-        <span className="mx-2">/</span>
-        <span className="text-neutral-200">{product.brand} {product.model}</span>
+    <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:py-14">
+      <nav className="spec-value mb-6 text-xs uppercase tracking-[0.14em] text-muted">
+        <Link href="/" className="hover:text-sand">Ana Sayfa</Link>
+        <span className="mx-2 text-sand-dim">/</span>
+        <Link href="/urunler" className="hover:text-sand">Ürünler</Link>
+        <span className="mx-2 text-sand-dim">/</span>
+        <span className="text-foreground">{product.brand} {product.model}</span>
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <ProductGallery images={product.gallery} alt={product.name} badge={product.badge} />
+        <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+          <ProductGallery images={product.gallery} alt={product.name} badge={product.badge} />
+        </div>
 
-        <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-red">{product.brand}</span>
-          <h1 className="font-heading mt-2 text-2xl font-extrabold text-white sm:text-3xl">
+        <div className="min-w-0">
+          <span className="spec-label">{CATEGORY_LABELS[product.category]}</span>
+          <h1 className="mt-3 font-heading text-3xl font-bold text-white sm:text-4xl">
             {product.name}
           </h1>
 
           <div className="mt-4 flex items-baseline gap-3">
-            <span className="font-heading text-3xl font-extrabold text-white">
+            <span className="spec-value text-3xl font-semibold text-sand">
               {formatPrice(product.price)}
             </span>
             {product.oldPrice && (
-              <span className="text-lg text-neutral-400 line-through">
+              <span className="spec-value text-lg text-muted line-through">
                 {formatPrice(product.oldPrice)}
               </span>
             )}
           </div>
 
-          <p className="mt-5 leading-relaxed text-neutral-400">{product.description}</p>
+          <ul className="mt-5 grid grid-cols-3 gap-px border border-border bg-border">
+            {[
+              { icon: ScissorsIcon, label: "Araca özel kesim" },
+              { icon: TruckIcon, label: `${product.dispatchEstimate} içinde kargoda` },
+              { icon: Undo2Icon, label: "14 gün iade" },
+            ].map(({ icon: Icon, label }) => (
+              <li key={label} className="flex flex-col items-center gap-1.5 bg-surface px-2 py-3 text-center">
+                <Icon className="h-4 w-4 text-sand" aria-hidden="true" />
+                <span className="spec-value text-[10px] font-medium uppercase tracking-[0.12em] text-foreground/85">
+                  {label}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6">
+            <AddToCartButton product={product} />
+          </div>
+
+          <p className="mt-8 leading-relaxed text-muted">{product.description}</p>
 
           <ul className="mt-5 space-y-2">
             {product.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-3 text-sm text-neutral-300">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-800">
-                  <CheckIcon className="h-3 w-3 text-brand-red" aria-hidden="true" />
-                </span>
+              <li key={feature} className="flex items-start gap-3 text-sm text-foreground/85">
+                <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
                 {feature}
               </li>
             ))}
           </ul>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <section className="rounded-2xl bg-neutral-900 p-4">
-              <h2 className="font-heading text-sm font-bold text-white">Araç uyumluluğu</h2>
-              <p className="mt-2 text-sm text-neutral-400">{product.compatibility.yearRange}</p>
-              <p className="mt-1 text-sm text-neutral-400">{product.compatibility.bodyOrChassis}</p>
-              <a href={compatibilityLink} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-bold text-brand-red hover:underline">
-                Uyumluluğu WhatsApp&apos;tan teyit et
-              </a>
-            </section>
-            <section className="rounded-2xl bg-neutral-900 p-4">
-              <h2 className="font-heading text-sm font-bold text-white">Kargo ve teslimat</h2>
-              <p className="mt-2 text-sm text-neutral-400">Kargoya teslim: {product.dispatchEstimate}</p>
-              <p className="mt-1 text-sm text-neutral-400">{shippingCost === 0 ? "Bu ürün için ücretsiz kargo." : `Kargo: ${formatPrice(shippingCost)}; ${siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}</p>
-            </section>
-          </div>
-
-          <section className="mt-4 rounded-2xl border border-neutral-700 p-5">
-            <h2 className="font-heading text-base font-bold text-white">Bu sette neler var?</h2>
-            <ul className="mt-3 space-y-1.5 text-sm text-neutral-400">
-              {product.setContents.map((item) => <li key={item}>• {item}</li>)}
-            </ul>
-            <p className="mt-3 text-xs text-neutral-500">Opsiyonlar: {product.optionalExtras.join(" · ")}</p>
-          </section>
-
-          <div className="mt-8 border-t border-neutral-700 pt-6">
-            <AddToCartButton product={product} />
+          <div className="mt-8 border-t border-border">
+            <details className="group border-b border-dashed border-border">
+              <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
+                Araç uyumluluğu
+                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+              </summary>
+              <div className="pb-5">
+                <p className="text-sm text-muted">{product.compatibility.yearRange}</p>
+                <p className="mt-1 text-sm text-muted">{product.compatibility.bodyOrChassis}</p>
+                <a href={compatibilityLink} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-bold text-sand hover:underline">
+                  Uyumluluğu WhatsApp&apos;tan teyit et
+                </a>
+              </div>
+            </details>
+            <details className="group border-b border-dashed border-border">
+              <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
+                Kargo ve teslimat
+                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+              </summary>
+              <div className="pb-5">
+                <p className="text-sm text-muted">Kargoya teslim: {product.dispatchEstimate}</p>
+                <p className="mt-1 text-sm text-muted">{shippingCost === 0 ? "Bu ürün için ücretsiz kargo." : `Kargo: ${formatPrice(shippingCost)}; ${siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}</p>
+              </div>
+            </details>
+            <details className="group border-b border-dashed border-border" open>
+              <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
+                Bu sette neler var?
+                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+              </summary>
+              <div className="pb-5">
+                <ul className="space-y-1.5 text-sm text-muted">
+                  {product.setContents.map((item) => <li key={item}>• {item}</li>)}
+                </ul>
+                {product.optionalExtras.length > 0 && (
+                  <p className="spec-value mt-3 text-xs text-muted">Opsiyonlar: {product.optionalExtras.join(" · ")}</p>
+                )}
+              </div>
+            </details>
           </div>
         </div>
       </div>
 
       {related.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-heading mb-6 text-2xl font-extrabold text-white">
-            Benzer Ürünler
+          <span className="spec-label">Benzer ürünler</span>
+          <h2 className="mb-6 mt-3 font-heading text-3xl font-bold text-white">
+            Bunlar da ilginizi çekebilir
           </h2>
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {related.map((item) => (
               <ProductCard key={item.slug} product={item} />
             ))}

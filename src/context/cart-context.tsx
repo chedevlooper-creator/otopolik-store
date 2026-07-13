@@ -19,6 +19,7 @@ type CartContextValue = {
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
+  isHydrated: boolean;
   isDrawerOpen: boolean;
   openDrawer: () => void;
   closeDrawer: () => void;
@@ -31,6 +32,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     cartStore.subscribe,
     cartStore.getSnapshot,
     cartStore.getServerSnapshot
+  );
+  const isHydrated = useSyncExternalStore(
+    cartStore.subscribe,
+    cartStore.getHydrationSnapshot,
+    cartStore.getServerHydrationSnapshot
   );
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -60,11 +66,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       clearCart: cartStore.clearCart,
       totalItems,
       totalPrice,
+      isHydrated,
       isDrawerOpen,
       openDrawer,
       closeDrawer,
     }),
-    [items, addItem, totalItems, totalPrice, isDrawerOpen, openDrawer, closeDrawer]
+    [items, addItem, totalItems, totalPrice, isHydrated, isDrawerOpen, openDrawer, closeDrawer]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import { Barlow_Condensed, Barlow, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/context/cart-context";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsappFloat from "@/components/WhatsappFloat";
-import CartDrawer from "@/components/CartDrawer";
+import SiteChrome from "@/components/SiteChrome";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { siteConfig } from "@/lib/site-config";
 import {
   organizationSchema,
@@ -13,15 +10,22 @@ import {
   renderJsonLd,
 } from "@/lib/structured-data";
 
-const poppins = Poppins({
+const barlowCondensed = Barlow_Condensed({
   variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700", "800"],
 });
 
-const inter = Inter({
+const barlow = Barlow({
   variable: "--font-body",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-spec",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -53,15 +57,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${poppins.variable} ${inter.variable} antialiased`}>
-      <body className="flex min-h-screen flex-col bg-[#0c0c0c] text-neutral-200 antialiased">          <CartProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CartDrawer />
-          <WhatsappFloat />
-          {renderJsonLd(organizationSchema(), localBusinessSchema())}
-        </CartProvider>
+    <html
+      lang="tr"
+      className={`${barlowCondensed.variable} ${barlow.variable} ${plexMono.variable} antialiased`}
+    >
+      <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
+        <ConvexClientProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </ConvexClientProvider>
+        {renderJsonLd(organizationSchema(), localBusinessSchema())}
       </body>
     </html>
   );

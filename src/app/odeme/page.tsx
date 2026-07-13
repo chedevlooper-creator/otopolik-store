@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useCallback, type FormEvent } from "react";
 import Link from "next/link";
@@ -7,7 +7,9 @@ import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/format";
 import { buildWhatsAppOrderLink } from "@/lib/site-config";
 import { getShippingCost } from "@/lib/shipping";
-import { supabase } from "@/lib/supabase";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { isConvexConfiguredClient } from "@/lib/convex-client";
 
 interface FormErrors {
   fullName?: string;
@@ -43,8 +45,10 @@ function validateAddress(address: string): string | undefined {
 }
 
 export default function CheckoutPage() {
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice, clearCart, isHydrated } = useCart();
   const router = useRouter();
+  const createOrder = useMutation(api.orders.create);
+  const convexReady = isConvexConfiguredClient();
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
@@ -55,6 +59,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [paymentMethod, setPaymentMethod] = useState<"kapida" | "whatsapp">("whatsapp");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const shippingCost = getShippingCost(totalPrice);
   const orderTotal = totalPrice + shippingCost;
 
@@ -87,21 +92,45 @@ export default function CheckoutPage() {
 
   const handleChange = (field: keyof typeof form, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
-    if (field in { fullName: 1, phone: 1, city: 1, address: 1 }) {
-      validateField(field as keyof FormErrors, value);
+    if (field !== "note" && errors[field]) {
+      validateField(field, value);
     }
   };
 
-  const hasErrors = Object.keys(errors).length > 0;
+  if (!isHydrated) {
+    return (
+      <div
+        className="mx-auto max-w-5xl px-4 py-10 sm:py-14"
+        role="status"
+        aria-live="polite"
+        aria-label="Sipariş formu yükleniyor"
+      >
+        <div className="h-4 w-20 animate-pulse bg-surface motion-reduce:animate-none" />
+        <div className="mt-3 h-10 w-64 animate-pulse bg-surface motion-reduce:animate-none" />
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
+          <div className="space-y-5">
+            {["w-full", "w-full", "w-2/3", "w-full"].map((width, index) => (
+              <div key={index} className="space-y-2">
+                <div className="h-4 w-24 animate-pulse bg-surface motion-reduce:animate-none" />
+                <div className={`h-11 ${width} animate-pulse bg-surface motion-reduce:animate-none`} />
+              </div>
+            ))}
+          </div>
+          <div className="h-72 animate-pulse border border-border bg-surface motion-reduce:animate-none" />
+        </div>
+        <span className="sr-only">Sipariş formunuz yükleniyor.</span>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <h1 className="font-heading text-2xl font-extrabold text-white">Sepetiniz boş</h1>
-        <p className="mt-2 text-neutral-400">Ödeme adımına geçmeden önce sepetinize ürün ekleyin.</p>
+        <h1 className="font-heading text-3xl font-bold text-white">Sepetiniz boş</h1>
+        <p className="mt-2 text-muted">Ödeme adımına geçmeden önce sepetinize ürün ekleyin.</p>
         <Link
           href="/urunler"
-          className="mt-6 inline-flex rounded-full bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark"
+          className="btn-press mt-6 inline-flex bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
         >
           Ürünleri İncele
         </Link>
@@ -125,40 +154,12 @@ export default function CheckoutPage() {
     }
     setErrors(filteredErrors);
 
-    if (Object.keys(filteredErrors).length > 0) return;
-
-    setIsSubmitting(true);
-
-    try {
-      // Supabase'e siparişi kaydet (Eğer env.local yapılandırılmamışsa veya hata verirse try/catch korur)
-      const { error } = await supabase.from("orders").insert([
-        {
-          full_name: form.fullName,
-          phone: form.phone,
-          city: form.city,
-          address: form.address,
-          note: form.note || null,
-          payment_method: paymentMethod,
-          total_price: totalPrice,
-          shipping_cost: shippingCost,
-          order_total: orderTotal,
-          items: items.map(item => ({
-            slug: item.slug,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            color: item.color,
-            image: item.image,
-          })),
-          status: "pending",
-        }
-      ]);
-
-      if (error) {
-        console.error("Supabase order save error:", error);
-      }
-    } catch (err) {
-      console.error("Failed to connect or save to Supabase:", err);
+    if (Object.keys(filteredErrors).length > 0) {
+      const firstInvalidField = Object.keys(filteredErrors)[0];
+      requestAnimationFrame(() => {
+        document.getElementById(`checkout-${firstInvalidField}`)?.focus();
+      });
+      return;
     }
 
     const lines = [
@@ -182,165 +183,262 @@ export default function CheckoutPage() {
     ].filter(Boolean);
 
     const href = buildWhatsAppOrderLink(lines.join("\n"));
+    setSubmitError(null);
+
+    // Pencereyi kullanıcı etkileşimi sırasında aç; async kayıt sonrasında
+    // açmaya çalışmak tarayıcının popup engeline takılabilir.
+    const whatsappWindow = window.open("", "_blank");
+    if (!whatsappWindow) {
+      setSubmitError(
+        "WhatsApp penceresi açılamadı. Tarayıcınızda açılır pencerelere izin verip tekrar deneyin."
+      );
+      return;
+    }
+    whatsappWindow.opener = null;
+    whatsappWindow.location.replace(href);
+
+    setIsSubmitting(true);
+
+    try {
+      // Convex'e siparişi kaydet
+      if (convexReady) {
+        await createOrder({
+          customerName: form.fullName,
+          customerPhone: form.phone,
+          customerEmail: undefined,
+          city: form.city,
+          address: form.address,
+          items: items.map((item) => ({
+            slug: item.slug,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            color: item.color,
+            image: item.image,
+          })),
+          subtotal: totalPrice,
+          shippingFee: shippingCost,
+          total: orderTotal,
+          notes: form.note || undefined,
+        });
+      }
+    } catch (err) {
+      console.error("Failed to save order to Convex:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+
     clearCart();
-    setIsSubmitting(false);
-    window.open(href, "_blank", "noopener,noreferrer");
     router.push("/tesekkurler");
   }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
-      <h1 className="font-heading text-3xl font-extrabold text-white">Sipariş Talebi</h1>
-      <p className="mt-2 text-neutral-400">
+      <span className="spec-label">Sipariş</span>
+      <h1 className="mt-3 font-heading text-4xl font-bold text-white">Sipariş Talebi</h1>
+      <p id="checkout-description" className="mt-2 text-muted">
         Sipariş bilgilerinizi iletin; WhatsApp üzerinden siparişinizi onaylayalım.
         Kapıda ödeme seçeneğinde ek hizmet bedeli uygulanmaz.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
+      <form
+        name="checkout"
+        noValidate
+        aria-describedby="checkout-description"
+        onSubmit={handleSubmit}
+        className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]"
+      >
         <div className="space-y-5">
           <div className="grid gap-5 sm:grid-cols-2">
-            <label className="block text-sm font-semibold text-neutral-200">
+            <label htmlFor="checkout-fullName" className="block text-sm font-semibold text-foreground">
               Ad Soyad
               <input
+                id="checkout-fullName"
+                name="name"
                 required
                 type="text"
+                autoComplete="name"
+                minLength={3}
                 value={form.fullName}
                 onChange={(e) => handleChange("fullName", e.target.value)}
                 onBlur={(e) => validateField("fullName", e.target.value)}
-                className={`mt-1.5 w-full rounded-xl border px-4 py-2.5 font-normal focus:outline-none ${
-                  errors.fullName ? "border-red-400 focus:border-red-500" : "border-neutral-600 focus:border-brand-red"
+                aria-invalid={Boolean(errors.fullName)}
+                aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
+                className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                  errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
               {errors.fullName && (
-                <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>
+                <p id="checkout-fullName-error" role="alert" className="mt-1 text-xs text-brand-red">
+                  {errors.fullName}
+                </p>
               )}
             </label>
-            <label className="block text-sm font-semibold text-neutral-200">
+            <label htmlFor="checkout-phone" className="block text-sm font-semibold text-foreground">
               Telefon
               <input
+                id="checkout-phone"
+                name="tel"
                 required
                 type="tel"
+                autoComplete="tel"
+                inputMode="tel"
+                pattern="[+0-9() -]{10,18}"
                 value={form.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
                 onBlur={(e) => validateField("phone", e.target.value)}
+                aria-invalid={Boolean(errors.phone)}
+                aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
                 placeholder="05XX XXX XX XX"
-                className={`mt-1.5 w-full rounded-xl border px-4 py-2.5 font-normal focus:outline-none ${
-                  errors.phone ? "border-red-400 focus:border-red-500" : "border-neutral-600 focus:border-brand-red"
+                className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                  errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
               {errors.phone && (
-                <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
+                <p id="checkout-phone-error" role="alert" className="mt-1 text-xs text-brand-red">
+                  {errors.phone}
+                </p>
               )}
             </label>
           </div>
 
-          <label className="block text-sm font-semibold text-neutral-200">
+          <label htmlFor="checkout-city" className="block text-sm font-semibold text-foreground">
             Şehir
             <input
+              id="checkout-city"
+              name="address-level2"
               required
               type="text"
+              autoComplete="address-level2"
               value={form.city}
               onChange={(e) => handleChange("city", e.target.value)}
               onBlur={(e) => validateField("city", e.target.value)}
-              className={`mt-1.5 w-full rounded-xl border px-4 py-2.5 font-normal focus:outline-none ${
-                errors.city ? "border-red-400 focus:border-red-500" : "border-neutral-600 focus:border-brand-red"
+              aria-invalid={Boolean(errors.city)}
+              aria-describedby={errors.city ? "checkout-city-error" : undefined}
+              className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
             {errors.city && (
-              <p className="mt-1 text-xs text-red-500">{errors.city}</p>
+              <p id="checkout-city-error" role="alert" className="mt-1 text-xs text-brand-red">
+                {errors.city}
+              </p>
             )}
           </label>
 
-          <label className="block text-sm font-semibold text-neutral-200">
+          <label htmlFor="checkout-address" className="block text-sm font-semibold text-foreground">
             Adres
             <textarea
+              id="checkout-address"
+              name="street-address"
               required
               rows={3}
+              autoComplete="street-address"
+              minLength={10}
               value={form.address}
               onChange={(e) => handleChange("address", e.target.value)}
               onBlur={(e) => validateField("address", e.target.value)}
-              className={`mt-1.5 w-full rounded-xl border px-4 py-2.5 font-normal focus:outline-none ${
-                errors.address ? "border-red-400 focus:border-red-500" : "border-neutral-600 focus:border-brand-red"
+              aria-invalid={Boolean(errors.address)}
+              aria-describedby={errors.address ? "checkout-address-error" : undefined}
+              className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
             {errors.address && (
-              <p className="mt-1 text-xs text-red-500">{errors.address}</p>
+              <p id="checkout-address-error" role="alert" className="mt-1 text-xs text-brand-red">
+                {errors.address}
+              </p>
             )}
           </label>
 
-          <label className="block text-sm font-semibold text-neutral-200">
+          <label htmlFor="checkout-note" className="block text-sm font-semibold text-foreground">
             Sipariş Notu (opsiyonel)
             <textarea
+              id="checkout-note"
+              name="note"
               rows={2}
+              autoComplete="off"
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-neutral-600 px-4 py-2.5 font-normal focus:border-brand-red focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-surface px-4 py-2.5 font-normal focus:border-sand focus:outline-none"
             />
           </label>
 
-          <div>
-            <p className="mb-2 text-sm font-semibold text-neutral-200">Ödeme Şekli</p>
+          <fieldset>
+            <legend className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
+              Ödeme Şekli
+            </legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 rounded-xl border border-neutral-600 px-4 py-3 has-[:checked]:border-brand-red has-[:checked]:bg-neutral-800">
+              <label className="flex items-center gap-3 border border-border bg-surface px-4 py-3 has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
+                  value="whatsapp"
                   checked={paymentMethod === "whatsapp"}
                   onChange={() => setPaymentMethod("whatsapp")}
-                  className="accent-brand-red"
+                  className="accent-sand"
                 />
-                <span className="text-sm font-medium text-neutral-200">
+                <span className="text-sm font-medium text-foreground">
                   WhatsApp üzerinden sipariş onayı
                 </span>
               </label>
-              <label className="flex items-center gap-3 rounded-xl border border-neutral-600 px-4 py-3 has-[:checked]:border-brand-red has-[:checked]:bg-neutral-800">
+              <label className="flex items-center gap-3 border border-border bg-surface px-4 py-3 has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
+                  value="kapida"
                   checked={paymentMethod === "kapida"}
                   onChange={() => setPaymentMethod("kapida")}
-                  className="accent-brand-red"
+                  className="accent-sand"
                 />
-                <span className="text-sm font-medium text-neutral-200">Kapıda Ödeme</span>
+                <span className="text-sm font-medium text-foreground">Kapıda Ödeme</span>
               </label>
-              <div className="flex items-center gap-3 rounded-xl border border-dashed border-neutral-600 px-4 py-3 opacity-60">
-                <input type="radio" disabled />
-                <span className="text-sm font-medium text-neutral-500">
+              <label className="flex items-center gap-3 border border-dashed border-border px-4 py-3 opacity-60">
+                <input type="radio" name="payment" value="card" disabled />
+                <span className="text-sm font-medium text-muted">
                   Kredi kartı ile ödeme — yakında aktif olacak
                 </span>
-              </div>
+              </label>
             </div>
-          </div>
+          </fieldset>
         </div>
 
-        <aside className="h-fit rounded-2xl border border-neutral-700 p-6">
-          <h2 className="font-heading text-lg font-bold text-white">Sipariş Özeti</h2>
-          <ul className="mt-4 space-y-2 text-sm text-neutral-400">
+        <aside className="h-fit border border-border bg-surface p-6">
+          <h2 className="font-heading text-xl font-bold text-white">Sipariş Özeti</h2>
+          <ul className="mt-4 space-y-2 text-sm text-muted">
             {items.map((item) => (
               <li key={`${item.slug}-${item.color}`} className="flex justify-between gap-2">
                 <span className="line-clamp-1">
                   {item.name} ({item.color}) × {item.quantity}
                 </span>
-                <span className="shrink-0 font-semibold text-white">
+                <span className="spec-value shrink-0 font-medium text-white">
                   {formatPrice(item.price * item.quantity)}
                 </span>
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex items-center justify-between border-t border-neutral-700 pt-4">
-            <span className="text-sm text-neutral-400">Kargo</span>
-            <span className="text-sm font-semibold text-white">{shippingCost === 0 ? "Ücretsiz" : formatPrice(shippingCost)}</span>
+          <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+            <span className="text-sm text-muted">Kargo</span>
+            <span className="spec-value text-sm font-medium text-white">{shippingCost === 0 ? "Ücretsiz" : formatPrice(shippingCost)}</span>
           </div>
           <div className="mt-3 flex items-center justify-between">
-            <span className="font-heading font-bold text-white">Toplam</span>
-            <span className="font-heading text-xl font-extrabold text-brand-red">
+            <span className="font-heading text-lg font-bold uppercase text-white">Toplam</span>
+            <span className="spec-value text-xl font-semibold text-sand">
               {formatPrice(orderTotal)}
             </span>
           </div>
+          {submitError ? (
+            <p
+              role="alert"
+              className="mt-4 border border-brand-red bg-brand-red/10 px-3 py-2 text-xs font-medium text-brand-red"
+            >
+              {submitError}
+            </p>
+          ) : null}
           <button
             type="submit"
-            disabled={isSubmitting || hasErrors}
-            className="mt-6 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isSubmitting}
+            className="btn-press mt-6 flex w-full items-center justify-center bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
           </button>

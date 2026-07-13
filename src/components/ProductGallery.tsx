@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -15,24 +15,26 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
   const gallery = colorImage ? [colorImage, ...images.filter((image) => image !== colorImage)] : images;
 
   return (
-    <div className="flex flex-col gap-3 sm:flex-row">
-      <div className="order-2 flex gap-3 sm:order-1 sm:flex-col">
+    <div className="flex min-w-0 max-w-full flex-col gap-3 sm:flex-row">
+      <div className="order-2 flex max-w-full gap-3 overflow-x-auto pb-1 sm:order-1 sm:flex-col sm:overflow-visible sm:pb-0">
         {gallery.map((src, i) => (
           <button
             key={src + i}
             type="button"
             onClick={() => setActive(i)}
-            aria-label={`Görsel ${i + 1}`}
-            className={`relative aspect-square w-16 overflow-hidden rounded-xl border-2 bg-neutral-800 transition-colors sm:w-20 ${
-              active === i ? "border-brand-red" : "border-neutral-700 hover:border-neutral-400"
+            aria-label={`${alt}, görsel ${i + 1} görüntüle`}
+            aria-pressed={active === i}
+            className={`bg-eva relative aspect-square w-16 shrink-0 overflow-hidden border-2 bg-surface transition-colors sm:w-20 ${
+              active === i ? "border-sand" : "border-border hover:border-muted"
             }`}
           >
-            <Image src={src} alt={`${alt} küçük görsel ${i + 1}`} fill sizes="80px" className="object-cover" />
+            <Image src={src} alt="" fill sizes="80px" className="object-contain p-1.5" />
           </button>
         ))}
       </div>
 
-      <div className="relative order-1 aspect-square flex-1 overflow-hidden rounded-3xl bg-neutral-800 sm:order-2">
+      <div className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden border border-border bg-surface sm:order-2 sm:aspect-square">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(211,189,150,0.12),transparent_62%)]" />
         <Image
           key={gallery[active]}
           src={gallery[active]}
@@ -40,11 +42,11 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
           fill
           sizes="(min-width: 1024px) 50vw, 100vw"
           quality={90}
-          className="object-cover"
+          className="object-contain p-4 sm:p-8"
           priority
         />
         {badge && (
-          <span className="absolute left-4 top-4 rounded-full bg-brand-red px-3 py-1 text-xs font-bold text-white">
+          <span className="spec-value absolute left-4 top-4 bg-background/90 px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-sand">
             {badge}
           </span>
         )}

@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import MatPreview from "./MatPreview";
+import Image from "next/image";
 import VehicleSelector from "./VehicleSelector";
 import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
 import { getVehiclePrice } from "@/lib/vehicle-data";
+import { siteConfig } from "@/lib/site-config";
 import { PaletteIcon, RulerIcon, TruckIcon } from "lucide-react";
 
 const FLOOR_COLORS = [
@@ -32,15 +33,33 @@ const EDGE_COLORS = [
   { name: "Mor", hex: "#6b3fa0" },
 ];
 
-// TODO: Gerçek fiyatlarınızla güncelleyin.
-const DEFAULT_BASE_PRICE = 1149;
-const HEEL_PAD_PRICE = 149;
-const TRUNK_MAT_PRICE = 349;
+// Fiyatlar siteConfig'ten gelir; .env ile override edilebilir.
+const DEFAULT_BASE_PRICE = siteConfig.matBasePrice;
+const HEEL_PAD_PRICE = siteConfig.matHeelPadPrice;
+const TRUNK_MAT_PRICE = siteConfig.matTrunkPrice;
 
 const OTHER_VEHICLE = "diger";
 
+const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> = {
+  "Siyah|Siyah": { src: "/media/configurator/siyah-siyah.png", kind: "digital" },
+  "Siyah|Gri": { src: "/media/configurator/siyah-gri.png", kind: "digital" },
+  "Siyah|Bej": { src: "/media/configurator/siyah-bej.png", kind: "digital" },
+  "Siyah|Kırmızı": {
+    src: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
+    kind: "real",
+  },
+  "Siyah|Mavi": { src: "/media/configurator/siyah-mavi.png", kind: "digital" },
+  "Siyah|Turuncu": { src: "/media/configurator/siyah-turuncu.png", kind: "digital" },
+  "Siyah|Yeşil": { src: "/media/configurator/siyah-yesil.png", kind: "digital" },
+  "Siyah|Mor": { src: "/media/configurator/siyah-mor.png", kind: "digital" },
+  "Lacivert|Turuncu": {
+    src: "/media/configurator/lacivert-turuncu.png",
+    kind: "digital",
+  },
+};
+
 export default function MatConfigurator() {
-  const { addItem } = useCart();
+  const { addItem, closeDrawer } = useCart();
 
   const [brand, setBrand] = useState("");
   const [slug, setSlug] = useState("");
@@ -56,6 +75,10 @@ export default function MatConfigurator() {
 
   const totalPrice =
     basePrice + (heelPad ? HEEL_PAD_PRICE : 0) + (trunkMat ? TRUNK_MAT_PRICE : 0);
+
+  const previewKey = `${floor.name}|${edge.name}`;
+  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Siyah|Kırmızı"];
+  const hasExactPreview = previewKey in PREVIEW_IMAGES;
 
   const vehicleLabel = brand
     ? brand === OTHER_VEHICLE
@@ -74,7 +97,17 @@ export default function MatConfigurator() {
     .filter(Boolean)
     .join(" · ");
 
-  const canAdd = Boolean(vehicleLabel);
+  // Listelenen araçlarda marka ve model birlikte zorunludur. "Diğer" akışı
+  // WhatsApp ile uyumluluk teyidi gerektirdiği için ayrıca açıkça onaylanır.
+  const canAdd = Boolean(
+    brand && (brand === OTHER_VEHICLE ? slug === OTHER_VEHICLE : slug)
+  );
+  const steps = [
+    { label: "Aracınız", isActive: !canAdd, isDone: canAdd },
+    { label: "Taban", isActive: canAdd, isDone: true },
+    { label: "Kenar", isActive: canAdd, isDone: true },
+    { label: "Ekstralar", isActive: false, isDone: heelPad || trunkMat },
+  ];
 
   function handleAddToCart() {
     if (!canAdd) return;
@@ -88,37 +121,78 @@ export default function MatConfigurator() {
     });
   }
 
+  function handleCheckout() {
+    handleAddToCart();
+    closeDrawer();
+  }
+
   return (
-    <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
-      {/* Canlı önizleme */}
+    <div>
+      <ol
+        aria-label="Tasarım adımları"
+        className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-4"
+      >
+        {steps.map((step, index) => (
+          <li
+            key={step.label}
+            className={`flex items-center gap-2.5 border px-3 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
+              step.isActive
+                ? "border-sand bg-surface text-white"
+                : step.isDone
+                  ? "border-border bg-surface text-sand"
+                  : "border-border bg-background text-muted"
+            }`}
+          >
+            <span className="spec-value text-sm font-medium text-sand">
+              0{index + 1}
+            </span>
+            {step.label}
+          </li>
+        ))}
+      </ol>
+
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
+      {/* Gerçek ürün görünümü */}
       <div className="lg:sticky lg:top-32 lg:self-start">
-        <div className="bg-dots-dark relative overflow-hidden rounded-3xl bg-brand-black p-8 sm:p-10">
-          <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-red/20 blur-[100px]" />
-          <div className="relative flex items-center justify-center">
-            <MatPreview floorColor={floor.hex} edgeColor={edge.hex} heelPad={heelPad} brand={brand} model={slug || undefined} />
+        <div className="relative overflow-hidden border border-border bg-surface">
+          <Image
+            key={preview.src}
+            src={preview.src}
+            alt={`${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti araç içi görünümü`}
+            width={640}
+            height={853}
+            className="h-auto w-full object-cover"
+            priority
+          />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-5 pb-5 pt-16">
+            <p className="text-sm font-semibold text-white">
+              {preview.kind === "digital" ? "Dijital renk önizlemesi" : "Gerçek araç içi uygulama"}
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-white/70">
+              {hasExactPreview
+                ? `${floor.name} taban · ${edge.name} kenar`
+                : `Seçiminiz: ${floor.name} taban · ${edge.name} kenar — bu kombinasyonun görseli hazırlanıyor.`}
+            </p>
           </div>
-          <p className="relative mt-6 text-center text-xs text-neutral-400">
-            5 parçalı set önizlemesi temsilidir; üretim aracınızın orijinal kalıbına göre yapılır.
-          </p>
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-neutral-500">
-          <span className="inline-flex items-center gap-1">
-            <PaletteIcon className="h-3.5 w-3.5" aria-hidden="true" />
+        <div className="spec-value mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-muted">
+          <span className="inline-flex items-center gap-1.5">
+            <PaletteIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
             {FLOOR_COLORS.length * EDGE_COLORS.length} renk kombinasyonu
           </span>
-          <span className="inline-flex items-center gap-1">
-            <RulerIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          <span className="inline-flex items-center gap-1.5">
+            <RulerIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
             3D lazer ölçümlü kalıp
           </span>
-          <span className="inline-flex items-center gap-1">
-            <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          <span className="inline-flex items-center gap-1.5">
+            <TruckIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
             1-3 iş gününde kargoda
           </span>
         </div>
       </div>
 
       {/* Seçenekler */}
-      <div className="space-y-8">
+      <div className="space-y-7">
         <VehicleSelector
           brand={brand}
           slug={slug}
@@ -145,6 +219,8 @@ export default function MatConfigurator() {
         <ExtrasSelector
           heelPad={heelPad}
           trunkMat={trunkMat}
+          heelPadPrice={HEEL_PAD_PRICE}
+          trunkMatPrice={TRUNK_MAT_PRICE}
           onHeelPadChange={setHeelPad}
           onTrunkMatChange={setTrunkMat}
         />
@@ -154,8 +230,10 @@ export default function MatConfigurator() {
           configSummary={configSummary}
           totalPrice={totalPrice}
           onAddToCart={handleAddToCart}
+          onCheckout={handleCheckout}
           canAdd={canAdd}
         />
+      </div>
       </div>
     </div>
   );

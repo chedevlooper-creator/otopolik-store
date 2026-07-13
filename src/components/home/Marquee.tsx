@@ -6,13 +6,18 @@ const MARQUEE_ITEMS = [
   "Premium EVA malzeme",
 ];
 
+// Kesim föyündeki kesikli kesim çizgisi gibi iki hatlı duyuru bandı
 export default function Marquee() {
   return (
-    <div className="mt-10 overflow-hidden bg-brand-red py-2.5 text-white">
-      <div className="animate-marquee flex w-max gap-10 whitespace-nowrap text-sm font-semibold">
+    <div className="overflow-hidden border-y border-dashed border-border bg-surface py-3">
+      <div className="animate-marquee spec-value flex w-max gap-12 whitespace-nowrap text-xs font-medium uppercase tracking-[0.16em] text-sand">
         {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-          <span key={i} className="flex items-center gap-10">
-            {item} <span className="opacity-40">•</span>
+          <span
+            key={i}
+            aria-hidden={i >= MARQUEE_ITEMS.length || undefined}
+            className="flex items-center gap-12"
+          >
+            {item} <span className="text-sand-dim" aria-hidden="true">+</span>
           </span>
         ))}
       </div>

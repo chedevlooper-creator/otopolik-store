@@ -1,15 +1,22 @@
 @import "tailwindcss";
 
+/*
+ * OTO POLİK — "Atölye kesim föyü" tasarım sistemi
+ * Zemin: antrasit EVA levha. Vurgu: logo kırmızısı (yalnızca CTA ve kenar/overlok),
+ * ikincil vurgu: bej EVA (etiket, spek yazıları, rakamlar).
+ */
 :root {
-  --background: #0c0c0c;
-  --foreground: #f0f0f0;
-  --brand-red: #b91c32;
-  --brand-red-dark: #8B1A2B;
-  --brand-black: #1a1a1a;
-  --surface: #141414;
-  --surface-hover: #1e1e1e;
-  --border: #2a2a2a;
-  --muted: #9ca3af;
+  --background: #101114;
+  --foreground: #f1efe9;
+  --brand-red: #c8102e;
+  --brand-red-dark: #9a0c23;
+  --brand-black: #17181c;
+  --surface: #17181c;
+  --surface-hover: #1d1f24;
+  --border: #2a2c33;
+  --muted: #9a9da6;
+  --sand: #d3bd96;
+  --sand-dim: #a8946e;
 }
 
 @theme inline {
@@ -22,8 +29,11 @@
   --color-surface-hover: var(--surface-hover);
   --color-border: var(--border);
   --color-muted: var(--muted);
+  --color-sand: var(--sand);
+  --color-sand-dim: var(--sand-dim);
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
+  --font-mono: var(--font-spec);
 }
 
 html {
@@ -43,14 +53,16 @@ h2,
 h3,
 h4,
 .font-heading {
-  font-family: var(--font-heading), Arial, Helvetica, sans-serif;
+  font-family: var(--font-heading), "Arial Narrow", Arial, sans-serif;
 }
 
 h1,
 h2,
 h3 {
   text-wrap: balance;
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
 }
 
 ::selection {
@@ -61,7 +73,7 @@ h3 {
 /* İnce, markaya uygun kaydırma çubuğu */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #c4c4c4 transparent;
+  scrollbar-color: #3a3d45 transparent;
 }
 
 *::-webkit-scrollbar {
@@ -70,7 +82,7 @@ h3 {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #c4c4c4;
+  background: #3a3d45;
   border-radius: 8px;
 }
 
@@ -80,20 +92,92 @@ h3 {
 
 /* Klavye odak halkası */
 :focus-visible {
-  outline: 2px solid var(--brand-red);
+  outline: 2px solid var(--sand);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
-/* Dekoratif arka plan dokuları */
-.bg-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 22px 22px;
+/* EVA hücre dokusu — paspas yüzeyindeki baklava deseni */
+.bg-eva {
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(241, 239, 233, 0.028) 0 1px,
+      transparent 1px 11px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(241, 239, 233, 0.028) 0 1px,
+      transparent 1px 11px
+    );
 }
 
-.bg-dots-dark {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 22px 22px;
+.bg-eva-strong {
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(241, 239, 233, 0.05) 0 1px,
+      transparent 1px 9px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(241, 239, 233, 0.05) 0 1px,
+      transparent 1px 9px
+    );
+}
+
+/* Spek etiketi — kesim föyündeki teknik yazı */
+.spec-label {
+  font-family: var(--font-spec), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--sand);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.spec-label::before {
+  content: "";
+  width: 1.25rem;
+  height: 2px;
+  background: var(--brand-red);
+  flex-shrink: 0;
+}
+
+/* Mobilde geniş harf aralığı dar ekranda satır kırdırır; bir kademe azalt */
+@media (max-width: 639px) {
+  .spec-label {
+    letter-spacing: 0.16em;
+  }
+}
+
+/* Fiyat, ölçü, parça kodu gibi teknik değerler */
+.spec-value {
+  font-family: var(--font-spec), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Overlok kenarı — paspasın kenar rengi gibi karttan taşan sert kontur */
+.edge-card {
+  border: 1px solid var(--border);
+  box-shadow: 6px 6px 0 0 var(--brand-red);
+}
+
+.edge-card-sand {
+  border: 1px solid var(--border);
+  box-shadow: 6px 6px 0 0 var(--sand-dim);
+}
+
+/* Kesim çizgisi — föyler arasındaki kesikli ayraç */
+.cut-line {
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    var(--border) 0 10px,
+    transparent 10px 18px
+  );
+  background-size: 18px 1px;
 }
 
 /* Scroll reveal */
@@ -141,7 +225,7 @@ h3 {
 }
 
 .animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 
 .animate-marquee:hover {
@@ -191,8 +275,8 @@ h3 {
 
 /* Buton basma hissi */
 .btn-press {
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease,
-    border-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-press:active {
@@ -201,8 +285,8 @@ h3 {
 
 /* Kart yükselme efekti */
 .card-lift {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease,
-    border-color 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .card-lift:hover {

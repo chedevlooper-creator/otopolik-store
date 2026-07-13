@@ -16,84 +16,255 @@ const STANDARD_FEATURES = [
 
 type SeedProduct = {
   slug: string;
+  name: string;
   brand: string;
   model: string;
+  category: Product["category"];
   price: number;
   oldPrice?: number;
-  category?: Product["category"];
   badge?: string;
-  /** Her ürün için public/media/products/ altındaki gerçek görsel sayısı */
-  imageCount: number;
-  /** Varsayılandan farklı uzantı kullanan görseller: { [index]: "uzanti" } */
-  imageExtOverrides?: Record<number, string>;
+  image: string;
+  gallery: string[];
+  description: string;
+  features: string[];
+  setContents: string[];
+  optionalExtras: string[];
+  dispatchEstimate: string;
 };
 
 const SEED_PRODUCTS: SeedProduct[] = [
-  { slug: "volkswagen-golf-8-eva-paspas", brand: "Volkswagen", model: "Golf 8", price: 1149, oldPrice: 1399, badge: "Öne Çıkan", imageCount: 4 },
-  { slug: "renault-clio-5-eva-paspas", brand: "Renault", model: "Clio 5", price: 999, oldPrice: 1249, badge: "Fırsat", imageCount: 4 },
-  { slug: "fiat-egea-eva-paspas", brand: "Fiat", model: "Egea", price: 949, imageCount: 4 },
-  { slug: "toyota-corolla-eva-paspas", brand: "Toyota", model: "Corolla", price: 1099, imageCount: 3, imageExtOverrides: { 1: ".webp" } },
-  { slug: "hyundai-i20-eva-paspas", brand: "Hyundai", model: "i20", price: 949, imageCount: 3 },
-  { slug: "ford-focus-4-eva-paspas", brand: "Ford", model: "Focus 4", price: 1049, imageCount: 4 },
-  { slug: "dacia-duster-eva-paspas", brand: "Dacia", model: "Duster", price: 1199, badge: "Yeni", imageCount: 4 },
-  { slug: "bmw-3-serisi-eva-paspas", brand: "BMW", model: "3 Serisi (F30/G20)", price: 1399, category: "eva-havuzlu", imageCount: 4 },
-  { slug: "mercedes-c-serisi-eva-paspas", brand: "Mercedes", model: "C Serisi (W205/W206)", price: 1449, category: "eva-havuzlu", imageCount: 4 },
-  { slug: "audi-a3-eva-paspas", brand: "Audi", model: "A3 (8Y)", price: 1349, category: "eva-havuzlu", imageCount: 4 },
-  { slug: "opel-astra-k-eva-paspas", brand: "Opel", model: "Astra K", price: 999, imageCount: 3 },
-  { slug: "peugeot-208-eva-paspas", brand: "Peugeot", model: "208", price: 979, imageCount: 3 },
+  {
+    slug: "eva-oto-paspas-seti",
+    name: "Eva Oto Paspas Seti",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "eva-3d",
+    price: 1299,
+    oldPrice: 1999,
+    badge: "Çok Satan",
+    image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
+    gallery: [
+      "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
+      "/media/scraped/evaotopaspas/paspas-seti/02-siyah-urun-tam.png",
+      "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
+      "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
+      "/media/scraped/evaotopaspas/paspas-seti/05-comparison.webp",
+      "/media/scraped/evaotopaspas/paspas-seti/06-metal-topukluk.jpg",
+    ],
+    description:
+      'Aracınıza özel kalıplanmış, petek dokulu yüzeyiyle su ve çamuru hapseden premium EVA paspas setidir. 6000\'den fazla araç modeli için özel kesimle üretilir, mükemmel uyum sağlar.',
+    features: [
+      "Araca özel CNC kesim, milimetrik uyum",
+      "Petek dokulu yüzey — su ve çamuru hapseder",
+      "Kaymaz taban, güçlendirilmiş topukluk",
+      "Su geçirmez, 4 mevsim koruma",
+      "Kokusuz, esnek premium EVA malzeme",
+      "Tek sıkım suyla saniyeler içinde temizlenir",
+    ],
+    setContents: ["Ön sürücü paspası", "Ön yolcu paspası", "Arka sıra paspasları"],
+    optionalExtras: ["Bagaj paspası", "Renk seçimi (Siyah, Gri, Bej)"],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "eva-oto-bagaj-havuzu",
+    name: "Eva Oto Bagaj Havuzu",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "bagaj-havuzu",
+    price: 1049,
+    oldPrice: 1599,
+    badge: "Yeni",
+    image: "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
+    gallery: [
+      "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
+      "/media/scraped/evaotopaspas/bagaj-havuzu/02-antrasit-bagaj.png",
+      "/media/scraped/evaotopaspas/bagaj-havuzu/03-gri-bagaj.png",
+    ],
+    description:
+      "Aracınızın bagajını su, çamur, toz ve dökülmelere karşı korumak için özel olarak tasarlanmıştır. Araca özel ölçülerde üretilir, tam uyum sağlar. Dayanıklı EVA malzemesi sayesinde uzun ömürlüdür.",
+    features: [
+      "Araca özel üretim — 6000'den fazla model için kalıp",
+      "Su geçirmez ve kaymaz yüzey",
+      "Dayanıklı ve esnek EVA malzeme",
+      "Su ile kolayca temizlenir",
+      "Koku yapmaz, hijyenik",
+    ],
+    setContents: ["1 adet bagaj havuzu"],
+    optionalExtras: ["Renk seçimi (Siyah, Antrasit, Gri)"],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "eva-bagaj-cantasi",
+    name: "Eva Bagaj Çantası",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "bagaj-cantasi",
+    price: 899,
+    oldPrice: 1399,
+    badge: "Fırsat",
+    image: "/media/scraped/evaotopaspas/bagaj-cantasi/01-bagaj-cantasi.jpg",
+    gallery: [
+      "/media/scraped/evaotopaspas/bagaj-cantasi/01-bagaj-cantasi.jpg",
+    ],
+    description:
+      "Araç bagajınızda düzeni sağlamak ve eşyalarınızı korumak için özel olarak tasarlanmış EVA bagaj çantası. Su geçirmez, katlanabilir ve kaymaz tabanlıdır.",
+    features: [
+      "Dayanıklı EVA malzeme",
+      "Su geçirmez ve kolay temizlenebilir",
+      "Katlanabilir — yer kaplamaz",
+      "Kaymaz taban",
+      "Bölmeli iç yapı",
+    ],
+    setContents: ["1 adet EVA Bagaj Çantası"],
+    optionalExtras: [],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "premium-direksiyon-kilifi",
+    name: "Premium Direksiyon Kılıfı",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "direksiyon-kilifi",
+    price: 549,
+    oldPrice: 949,
+    image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
+    gallery: [
+      "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
+    ],
+    description:
+      "Aracınızın direksiyonunu hem koruyun hem de sürüş konforunu artırın. Premium suni deri malzemeden üretilmiş, kaymaz yüzeyli, şık ve sportif tasarımlı direksiyon kılıfı.",
+    features: [
+      "Premium kalite suni deri",
+      "Kaymaz yüzey — güçlü tutuş",
+      "Direksiyonu aşınma ve güneşe karşı korur",
+      "Şık ve sportif tasarım",
+      "Kolay montaj",
+    ],
+    setContents: ["1 adet Premium Direksiyon Kılıfı"],
+    optionalExtras: [],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "ortopedik-oto-minder-seti",
+    name: "Ortopedik Oto Minder Seti",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "minder-seti",
+    price: 2199,
+    oldPrice: 2699,
+    image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
+    gallery: [
+      "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
+    ],
+    description:
+      "Uzun yolculuklarda bel ve kalça bölgelerindeki baskıyı azaltmak, doğru oturma pozisyonunu desteklemek için tasarlanmış ortopedik minder seti. Ev ve ofis kullanımına da uygundur.",
+    features: [
+      "Ergonomik ve ortopedik tasarım",
+      "Yüksek kalite malzeme",
+      "Kaymaz taban yapısı",
+      "Kolay montaj ve taşıma",
+      "Ev ve ofis kullanımına uygun",
+    ],
+    setContents: ["1 adet Ortopedik Koltuk Minderi"],
+    optionalExtras: [],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "oto-ekran-koruyucu-set",
+    name: "Oto Ekran Koruyucu Set",
+    brand: "OTO POLİK",
+    model: "Tüm Modeller",
+    category: "ekran-koruyucu",
+    price: 899,
+    oldPrice: 1699,
+    badge: "Yeni",
+    image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
+    gallery: [
+      "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
+    ],
+    description:
+      "Aracınızın gösterge ve multimedya ekranlarını darbelere ve çizilmelere karşı koruyan 300 mikron nano ekran koruyucu set. Yüksek şeffaflık, kolay uygulama, 4 mevsim dayanıklılık.",
+    features: [
+      "300 mikron nano koruma",
+      "Tam set uyum (gösterge + multimedya)",
+      "Yüksek şeffaflık — görüntü kalitesini etkilemez",
+      "Kolay uygulama, iz bırakmaz",
+      "4 mevsim dayanıklılık",
+      "Yerli üretim",
+    ],
+    setContents: ["Gösterge paneli koruyucu", "Multimedya ekran koruyucu"],
+    optionalExtras: [],
+    dispatchEstimate: "1-3 iş günü",
+  },
+  {
+    slug: "fiat-egea-eva-paspas-seti",
+    name: "Fiat Egea Sedan Hücreli Premium EVA Paspas Seti",
+    brand: "OTO POLİK",
+    model: "Fiat Egea",
+    category: "eva-3d",
+    price: 1299,
+    oldPrice: 1799,
+    badge: "Öne Çıkan",
+    image: "/media/scraped/trendyol/01-paspas-fiat-egea.jpg",
+    gallery: [
+      "/media/scraped/trendyol/01-paspas-fiat-egea.jpg",
+      "/media/scraped/trendyol/02-paspas-fiat-egea.jpg",
+      "/media/scraped/trendyol/03-paspas-fiat-egea.jpg",
+      "/media/scraped/trendyol/04-paspas-fiat-egea.jpg",
+      "/media/scraped/trendyol/05-paspas-fiat-egea.jpg",
+    ],
+    description:
+      "Fiat Egea Sedan modelinize özel kalıplanmış, hücreli (petek) yüzeyiyle su ve çamuru hapseden premium EVA paspas seti. 8mm derinliğindeki hücreler sayesinde sıvıları tutar, aracınızın orijinal döşemesini korur.",
+    features: [
+      "Fiat Egea Sedan'a özel CNC kesim",
+      "8mm hücreli yüzey — su ve çamuru hapseder",
+      "3D tasarım, mükemmel uyum",
+      "Kaymaz taban ve güçlendirilmiş topukluk",
+      "Kokusuz, esnek premium EVA malzeme",
+      "Tek sıkım suyla saniyeler içinde temizlenir",
+    ],
+    setContents: ["Ön sürücü paspası", "Ön yolcu paspası", "Arka sıra paspasları"],
+    optionalExtras: ["Bagaj paspası", "Renk seçimi"],
+    dispatchEstimate: "1-3 iş günü",
+  },
 ];
 
-/** Slug'dan görsel dosya adı öneki çıkarır ("-eva-paspas" son ekini kırpar) */
-function imagePrefixFromSlug(slug: string): string {
-  return slug.replace(/-eva-paspas$/, "");
-}
+export const CATEGORY_LABELS: Record<Product["category"], string> = {
+  "eva-3d": "3D EVA Paspas",
+  "eva-havuzlu": "Havuzlu EVA Paspas",
+  bagaj: "Bagaj Paspası",
+  "bagaj-havuzu": "Bagaj Havuzu",
+  "bagaj-cantasi": "Bagaj Çantası",
+  "direksiyon-kilifi": "Direksiyon Kılıfı",
+  "minder-seti": "Minder Seti",
+  "ekran-koruyucu": "Ekran Koruyucu",
+};
 
-/** Her ürün için public/media/products/ altındaki gerçek görsel listesini döndürür */
-function getProductGallery(slug: string, imageCount: number, extOverrides?: Record<number, string>): string[] {
-  const prefix = imagePrefixFromSlug(slug);
-  const images: string[] = [];
-  for (let i = 1; i <= imageCount; i++) {
-    const ext = extOverrides?.[i] ?? ".jpg";
-    images.push(`/media/products/${prefix}-${i}${ext}`);
-  }
-  return images;
-}
-
-/** İlk galeri görselini ana görsel olarak kullan */
-function getProductMainImage(slug: string, extOverrides?: Record<number, string>): string {
-  const prefix = imagePrefixFromSlug(slug);
-  const ext = extOverrides?.[1] ?? ".jpg";
-  return `/media/products/${prefix}-1${ext}`;
-}
-
-export const products: Product[] = SEED_PRODUCTS.map((seed) => {
-  const category = seed.category ?? "eva-3d";
-  const gallery = getProductGallery(seed.slug, seed.imageCount, seed.imageExtOverrides);
-
-  return {
-    slug: seed.slug,
-    name: `${seed.brand} ${seed.model} Araca Özel EVA Paspas Seti`,
-    brand: seed.brand,
-    model: seed.model,
-    category,
-    price: seed.price,
-    oldPrice: seed.oldPrice,
-    image: getProductMainImage(seed.slug, seed.imageExtOverrides),
-    gallery,
-    colors: STANDARD_COLORS,
-    description: `${seed.brand} ${seed.model} modeline özel kalıplanmış, aracınızın taban hatlarına milimetrik uyum sağlayan premium EVA paspas setidir. Su, çamur, kar ve toza karşı üstün koruma sağlar; tek sıkım suyla saniyeler içinde temizlenir.`,
-    features: STANDARD_FEATURES,
-    compatibility: {
-      yearRange: "Model yılı sipariş öncesi teyit edilir",
-      bodyOrChassis: `${seed.model} kasa/versiyon bilgisiyle üretilir`,
-      note: "Aracınızın model yılı veya kasa bilgisi farklıysa WhatsApp'tan yazın; siparişten önce uyumluluğu teyit edelim.",
-    },
-    setContents: ["Ön sürücü paspası", "Ön yolcu paspası", "Arka sıra paspasları"],
-    optionalExtras: ["Bagaj paspası (uyumluluk teyidiyle)", "Renk seçimi"],
-    dispatchEstimate: "1-3 iş günü",
-    badge: seed.badge,
-  };
-});
+export const products: Product[] = SEED_PRODUCTS.map((seed) => ({
+  slug: seed.slug,
+  name: seed.name,
+  brand: seed.brand,
+  model: seed.model,
+  category: seed.category,
+  price: seed.price,
+  oldPrice: seed.oldPrice,
+  image: seed.image,
+  gallery: seed.gallery,
+  colors: STANDARD_COLORS,
+  description: seed.description,
+  features: seed.features,
+  compatibility: {
+    yearRange: "Model yılı sipariş öncesi teyit edilir",
+    bodyOrChassis: "Kasa/versiyon bilgisiyle üretilir",
+    note: "Aracınızın model yılı veya kasa bilgisi farklıysa WhatsApp'tan yazın; siparişten önce uyumluluğu teyit edelim.",
+  },
+  setContents: seed.setContents,
+  optionalExtras: seed.optionalExtras,
+  dispatchEstimate: seed.dispatchEstimate,
+  badge: seed.badge,
+  inStock: true,
+  isActive: true,
+}));
 
 export function getProductBySlug(slug: string) {
   return products.find((product) => product.slug === slug);

@@ -1,7 +1,7 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { brands, products } from "@/lib/products";
+import { brands, CATEGORY_LABELS, products } from "@/lib/products";
 import { Product } from "@/lib/types";
 import { buildWhatsAppOrderLink } from "@/lib/site-config";
 import { SearchIcon, XIcon } from "lucide-react";
@@ -11,11 +11,13 @@ export const metadata: Metadata = {
   description: "Araca özel üretim EVA oto paspası setlerini keşfedin.",
 };
 
-const CATEGORIES: { key: Product["category"]; label: string }[] = [
-  { key: "eva-3d", label: "3D EVA Paspas" },
-  { key: "eva-havuzlu", label: "Havuzlu EVA Paspas" },
-  { key: "bagaj", label: "Bagaj Paspası" },
-];
+// Yalnızca üründe karşılığı olan kategoriler listelenir; boş kategori
+// bağlantısı kullanıcıya aktif ürün varmış izlenimi vermesin.
+const CATEGORIES: { key: Product["category"]; label: string }[] = (
+  Object.keys(CATEGORY_LABELS) as Product["category"][]
+)
+  .filter((key) => products.some((product) => product.category === key))
+  .map((key) => ({ key, label: CATEGORY_LABELS[key] }));
 
 const SORTS = [
   { key: "onerilen", label: "Önerilen" },
@@ -40,6 +42,10 @@ function buildQuery(params: Params, overrides: Partial<Params>) {
   const qs = search.toString();
   return qs ? `/urunler?${qs}` : "/urunler";
 }
+
+const FILTER_PILL = "border px-4 py-1.5 text-sm font-semibold transition-colors";
+const FIELD =
+  "border border-border bg-surface text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none";
 
 export default async function ProductsPage({
   searchParams,
@@ -74,11 +80,11 @@ export default async function ProductsPage({
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
       <div className="mb-8">
-        <span className="text-xs font-bold uppercase tracking-widest text-brand-red">Katalog</span>
-        <h1 className="font-heading mt-2 text-3xl font-extrabold text-white sm:text-4xl">
+        <span className="spec-label">Katalog</span>
+        <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-bold text-white sm:text-5xl">
           Araca Özel EVA Paspas Setleri
         </h1>
-        <p className="mt-2 max-w-2xl text-neutral-400">
+        <p className="mt-3 max-w-2xl text-muted">
           Modelinizi bulun, size uygun EVA paspas setini inceleyin. Listede
           aracınızı göremiyorsanız WhatsApp üzerinden bize ulaşın, size özel
           üretim yapalım.
@@ -90,13 +96,13 @@ export default async function ProductsPage({
         {marka && <input type="hidden" name="marka" value={marka} />}
         {kategori && <input type="hidden" name="kategori" value={kategori} />}
         <div className="relative flex-1">
-          <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" aria-hidden="true" />
+          <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden="true" />
           <input
             type="search"
             name="q"
             defaultValue={q ?? ""}
             placeholder="Marka veya model arayın (örn. Golf, Egea)..."
-            className="w-full rounded-full border border-neutral-600 bg-[#141414] py-3 pl-11 pr-4 text-sm text-white placeholder:text-neutral-500 focus:border-brand-red focus:outline-none"
+            className={`${FIELD} w-full py-3 pl-11 pr-4`}
           />
         </div>
         <input
@@ -104,12 +110,12 @@ export default async function ProductsPage({
           name="yil"
           defaultValue={yil ?? ""}
           placeholder="Model yılı / kasa"
-          className="rounded-full border border-neutral-600 bg-[#141414] px-5 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-brand-red focus:outline-none"
+          className={`${FIELD} px-5 py-3`}
         />
         <select
           name="sirala"
           defaultValue={sirala ?? "onerilen"}
-          className="rounded-full border border-neutral-600 bg-[#141414] px-5 py-3 text-sm font-medium focus:border-brand-red focus:outline-none"
+          className={`${FIELD} px-5 py-3 font-medium`}
         >
           {SORTS.map((s) => (
             <option key={s.key} value={s.key}>{s.label}</option>
@@ -117,7 +123,7 @@ export default async function ProductsPage({
         </select>
         <button
           type="submit"
-          className="rounded-full bg-brand-black px-7 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-brand-red"
+          className="btn-press bg-brand-red px-7 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-brand-red-dark"
         >
           Ara
         </button>
@@ -127,10 +133,10 @@ export default async function ProductsPage({
       <div className="mb-3 flex flex-wrap gap-2">
         <Link
           href={buildQuery(params, { kategori: undefined })}
-          className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
+          className={`${FILTER_PILL} ${
             !kategori
-              ? "border-brand-black bg-brand-black text-white"
-              : "border-neutral-600 text-neutral-300 hover:border-brand-black"
+              ? "border-sand bg-surface text-sand"
+              : "border-border text-muted hover:border-sand hover:text-sand"
           }`}
         >
           Tüm Kategoriler
@@ -139,10 +145,10 @@ export default async function ProductsPage({
           <Link
             key={cat.key}
             href={buildQuery(params, { kategori: cat.key })}
-            className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
+            className={`${FILTER_PILL} ${
               kategori === cat.key
-                ? "border-brand-black bg-brand-black text-white"
-                : "border-neutral-600 text-neutral-300 hover:border-brand-black"
+                ? "border-sand bg-surface text-sand"
+                : "border-border text-muted hover:border-sand hover:text-sand"
             }`}
           >
             {cat.label}
@@ -154,10 +160,10 @@ export default async function ProductsPage({
       <div className="mb-8 flex flex-wrap gap-2">
         <Link
           href={buildQuery(params, { marka: undefined })}
-          className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
+          className={`${FILTER_PILL} ${
             !marka
-              ? "border-brand-red bg-brand-red text-white"
-              : "border-neutral-600 text-neutral-300 hover:border-brand-red hover:text-brand-red"
+              ? "border-sand bg-surface text-sand"
+              : "border-border text-muted hover:border-sand hover:text-white"
           }`}
         >
           Tüm Markalar
@@ -166,10 +172,10 @@ export default async function ProductsPage({
           <Link
             key={brand}
             href={buildQuery(params, { marka: brand })}
-            className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors ${
+            className={`${FILTER_PILL} ${
               marka === brand
-                ? "border-brand-red bg-brand-red text-white"
-                : "border-neutral-600 text-neutral-300 hover:border-brand-red hover:text-brand-red"
+                ? "border-sand bg-surface text-sand"
+                : "border-border text-muted hover:border-sand hover:text-white"
             }`}
           >
             {brand}
@@ -177,12 +183,12 @@ export default async function ProductsPage({
         ))}
       </div>
 
-      <div className="mb-5 flex items-center justify-between text-sm text-neutral-500">
-        <span>
-          <strong className="text-white">{filtered.length}</strong> ürün bulundu
+      <div className="mb-5 flex items-center justify-between text-sm text-muted">
+        <span className="spec-value">
+          <strong className="text-sand">{filtered.length}</strong> ürün bulundu
         </span>
         {activeFilterCount > 0 && (
-          <Link href="/urunler" className="inline-flex items-center gap-1 font-semibold text-brand-red hover:underline">
+          <Link href="/urunler" className="inline-flex items-center gap-1 font-semibold text-sand hover:underline">
             Filtreleri Temizle
             <XIcon className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
@@ -190,25 +196,25 @@ export default async function ProductsPage({
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-neutral-600 px-6 py-16 text-center">
-          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-neutral-800">
-            <SearchIcon className="h-8 w-8 text-neutral-400" aria-hidden="true" />
+        <div className="border border-dashed border-border px-6 py-16 text-center">
+          <span className="mx-auto flex h-16 w-16 items-center justify-center border border-border bg-surface">
+            <SearchIcon className="h-8 w-8 text-muted" aria-hidden="true" />
           </span>
-          <p className="font-heading mt-3 font-bold text-white">Sonuç bulunamadı</p>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-4 font-heading text-xl font-bold uppercase text-white">Sonuç bulunamadı</p>
+          <p className="mt-1 text-sm text-muted">
             Farklı bir arama deneyin veya aracınız için WhatsApp&apos;tan özel üretim isteyin.
           </p>
           <a
             href={buildWhatsAppOrderLink(`Merhaba, katalogda bulamadığım araç için paspas bilgisi almak istiyorum. Marka/model/yıl: ${[marka, q, yil].filter(Boolean).join(" / ")}`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex rounded-full bg-brand-red px-5 py-2.5 text-sm font-bold text-white hover:bg-brand-red-dark"
+            className="btn-press mt-5 inline-flex bg-brand-red px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
           >
             Aracım için bilgi al
           </a>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {filtered.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMemo } from "react";
 import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const selectClass =
-  "w-full rounded-xl border border-neutral-700 bg-neutral-900/60 px-4 py-3 text-sm font-medium transition-colors focus:border-brand-red focus:bg-[#141414] focus:outline-none focus:ring-2 focus:ring-brand-red/15";
+  "w-full border border-border bg-surface px-4 py-3 text-sm font-medium transition-colors focus:border-sand focus:outline-none";
 
 export default function VehicleSelector({
   brand,
@@ -29,8 +29,8 @@ export default function VehicleSelector({
 
   return (
     <section>
-      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-white">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red text-sm font-bold text-white">1</span>
+      <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
+        <span className="spec-value text-base font-medium text-sand">01</span>
         Aracınızı Seçin
       </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -50,7 +50,7 @@ export default function VehicleSelector({
           <option value={OTHER_VEHICLE}>Diğer / Listede yok</option>
         </select>
         {brand === OTHER_VEHICLE ? (
-          <div className="flex items-center rounded-xl bg-neutral-800 px-4 py-3 text-xs leading-snug text-brand-red">
+          <div className="flex items-center border border-dashed border-sand-dim bg-surface px-4 py-3 text-xs leading-snug text-sand">
             Sorun değil! Siparişten sonra WhatsApp&apos;tan araç bilginizi alıp kalıbı teyit ediyoruz.
           </div>
         ) : (
@@ -59,7 +59,7 @@ export default function VehicleSelector({
             value={slug}
             onChange={(e) => onSlugChange(e.target.value)}
             disabled={!brand}
-            className={`${selectClass} disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-400`}
+            className={`${selectClass} disabled:cursor-not-allowed disabled:text-muted`}
           >
             <option value="">{brand ? "Model seçin" : "Önce marka seçin"}</option>
             {vehicleModels.map((vm) => (
@@ -68,11 +68,18 @@ export default function VehicleSelector({
           </select>
         )}
       </div>
+      <p aria-live="polite" className="mt-3 text-xs text-muted">
+        {brand === OTHER_VEHICLE && slug === OTHER_VEHICLE
+          ? "Araç bilgileriniz siparişten sonra WhatsApp üzerinden teyit edilecek."
+          : slug
+            ? "Araç seçimi tamamlandı. Şimdi renk ve ekstraları belirleyebilirsiniz."
+            : "Devam etmek için marka ve modelinizi seçin."}
+      </p>
       {brand === OTHER_VEHICLE && slug !== OTHER_VEHICLE && (
         <button
           type="button"
           onClick={() => onSlugChange(OTHER_VEHICLE)}
-          className="mt-3 text-sm font-bold text-brand-red hover:underline"
+          className="mt-3 text-sm font-bold text-sand hover:underline"
         >
           Diğer araçla devam et →
         </button>

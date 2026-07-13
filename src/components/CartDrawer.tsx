@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -39,26 +39,26 @@ export default function CartDrawer() {
     >
       <div
         onClick={closeDrawer}
-        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
           isDrawerOpen ? "opacity-100" : "opacity-0"
         }`}
       />
       <aside
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-[#141414] shadow-2xl transition-transform duration-300 ${
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-border bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
         aria-label="Sepet"
       >
-        <div className="flex items-center justify-between border-b border-neutral-700 px-5 py-4">
-          <h2 className="font-heading text-lg font-extrabold text-white">
-            Sepetim {items.length > 0 && <span className="text-brand-red">({items.length})</span>}
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
+          <h2 className="font-heading text-2xl font-bold text-white">
+            Sepetim {items.length > 0 && <span className="text-sand">({items.length})</span>}
           </h2>
           <button
             type="button"
             onClick={closeDrawer}
             aria-label="Sepeti kapat"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-700 hover:text-brand-red"
+            className="flex h-9 w-9 items-center justify-center text-muted hover:bg-surface-hover hover:text-sand"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -66,43 +66,52 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-800">
-              <ShoppingCartIcon className="h-8 w-8 text-neutral-400" aria-hidden="true" />
+            <span className="flex h-16 w-16 items-center justify-center border border-border bg-background">
+              <ShoppingCartIcon className="h-8 w-8 text-muted" aria-hidden="true" />
             </span>
-            <p className="font-heading font-bold text-white">Sepetiniz boş</p>
-            <p className="text-sm text-neutral-500">
+            <p className="font-heading text-xl font-bold uppercase text-white">Sepetiniz boş</p>
+            <p className="text-sm text-muted">
               Aracınıza özel EVA paspas setini keşfedin.
             </p>
             <Link
               href="/urunler"
               onClick={closeDrawer}
-              className="mt-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark"
+              className="btn-press mt-2 bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
             >
               Ürünleri İncele
             </Link>
           </div>
         ) : (
           <>
-            <div className="border-b border-neutral-800 px-5 py-3">
+            <div className="border-b border-dashed border-border px-5 py-3">
               {remaining > 0 ? (
-                <p className="text-xs text-neutral-400">
-                  Ücretsiz kargoya <strong className="text-brand-red">{formatPrice(remaining)}</strong> kaldı
-                </p>
+                <div>
+                  <p className="text-xs text-muted">
+                    Ücretsiz kargoya{" "}
+                    <strong className="spec-value text-sand">{formatPrice(remaining)}</strong>{" "}
+                    kaldı
+                  </p>
+                  <div className="mt-2.5 h-1.5 overflow-hidden bg-background">
+                    <div
+                      className="h-full bg-brand-red transition-all duration-700 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                </div>
               ) : (
-                <p className="inline-flex items-center gap-1 text-xs font-semibold text-green-600">
-                  <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
-                  Ücretsiz kargo kazandınız!
-                </p>
+                <div>
+                  <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#25D366]">
+                    <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    Ücretsiz kargo kazandınız!
+                  </p>
+                  <div className="mt-2.5 h-1.5 overflow-hidden bg-background">
+                    <div className="h-full w-full bg-[#25D366] transition-all duration-500" />
+                  </div>
+                </div>
               )}
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-neutral-800">
-                <div
-                  className="h-full rounded-full bg-brand-red transition-all duration-500"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
             </div>
 
-            <ul className="flex-1 divide-y divide-neutral-800 overflow-y-auto px-5">
+            <ul className="flex-1 divide-y divide-border overflow-y-auto px-5">
               {items.map((item) => (
                 <CartItemLine
                   key={`${item.slug}-${item.color}`}
@@ -114,27 +123,28 @@ export default function CartDrawer() {
               ))}
             </ul>
 
-            <div className="border-t border-neutral-700 px-5 py-4">
-              <div className="mb-2 flex items-center justify-between text-sm text-neutral-400">
-                <span>Kargo</span><span>{shippingCost === 0 ? "Ücretsiz" : formatPrice(shippingCost)}</span>
+            <div className="border-t border-border px-5 py-4">
+              <div className="mb-2 flex items-center justify-between text-sm text-muted">
+                <span>Kargo</span>
+                <span className="spec-value">{shippingCost === 0 ? "Ücretsiz" : formatPrice(shippingCost)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="font-heading font-bold text-white">Toplam</span>
-                <span className="font-heading text-xl font-extrabold text-brand-red">
+                <span className="font-heading text-lg font-bold uppercase text-white">Toplam</span>
+                <span className="spec-value text-xl font-semibold text-sand">
                   {formatPrice(orderTotal)}
                 </span>
               </div>
               <Link
                 href="/odeme"
                 onClick={closeDrawer}
-                className="mt-4 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-red-dark"
+                className="btn-press mt-4 flex w-full items-center justify-center bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
               >
                 Sipariş Talebine Geç
               </Link>
               <Link
                 href="/sepet"
                 onClick={closeDrawer}
-                className="mt-2 flex w-full items-center justify-center rounded-full border border-neutral-600 px-6 py-3 text-sm font-bold uppercase tracking-wide text-neutral-300 hover:border-brand-red hover:text-brand-red"
+                className="btn-press mt-2 flex w-full items-center justify-center border border-border px-6 py-3 text-sm font-bold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
               >
                 Sepete Git
               </Link>

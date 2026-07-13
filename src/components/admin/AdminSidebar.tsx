@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboardIcon,
   ShoppingBagIcon,
@@ -10,9 +10,10 @@ import {
   SettingsIcon,
   MenuIcon,
   XIcon,
-  ChevronLeftIcon,
+  ExternalLinkIcon,
   LogOutIcon,
 } from "lucide-react";
+import { logoutAction } from "@/app/admin/logout/action";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboardIcon },
@@ -21,26 +22,82 @@ const NAV_ITEMS = [
   { href: "/admin/ayarlar", label: "Ayarlar", icon: SettingsIcon },
 ];
 
+// #region debug-point A:reporter
+const DEBUG_SERVER_URL = "http://127.0.0.1:7777/event";
+const DEBUG_SESSION_ID = "admin-sidebar-bug";
+const DEBUG_RUN_ID = "post-fix";
+
+function reportDebug(
+  hypothesisId: string,
+  location: string,
+  msg: string,
+  data: Record<string, unknown> = {},
+) {
+  fetch(DEBUG_SERVER_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sessionId: DEBUG_SESSION_ID,
+      runId: DEBUG_RUN_ID,
+      hypothesisId,
+      location,
+      msg: `[DEBUG] ${msg}`,
+      data,
+      ts: Date.now(),
+    }),
+  }).catch(() => {});
+}
+// #endregion
+
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    // #region debug-point A:pathname-collapsed
+    reportDebug("A", "AdminSidebar.tsx:state-effect", "pathname/collapsed state observed", {
+      pathname,
+      mobileOpen,
+      width: typeof window === "undefined" ? null : window.innerWidth,
+    });
+    // #endregion
+  }, [mobileOpen, pathname]);
+
+  // Login ekranında sidebar gizlenir; kullanıcı sadece formu görür.
+  if (pathname === "/admin/login") {
+    // #region debug-point A:login-hidden
+    reportDebug("A", "AdminSidebar.tsx:login-guard", "sidebar hidden on login route", {
+      pathname,
+    });
+    // #endregion
+    return null;
+  }
 
   return (
     <>
       {/* Mobil tetikleyici */}
       <button
         type="button"
-        onClick={() => setCollapsed((c) => !c)}
-        className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-black text-white shadow-lg lg:hidden"
+        onClick={() => {
+          // #region debug-point B:mobile-toggle
+          reportDebug("B", "AdminSidebar.tsx:mobile-toggle", "mobile toggle requested", {
+            mobileOpenBefore: mobileOpen,
+            pathname,
+            width: typeof window === "undefined" ? null : window.innerWidth,
+          });
+          // #endregion
+          setMobileOpen((open) => !open);
+        }}
+        className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center bg-brand-black text-white shadow-lg lg:hidden"
         aria-label="Menü"
       >
-        {collapsed ? <MenuIcon className="h-5 w-5" /> : <XIcon className="h-5 w-5" />}
+        {mobileOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
       </button>
 
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-brand-black text-white transition-all duration-300 ${
-          collapsed ? "-translate-x-full" : "translate-x-0"
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
         } w-64 lg:translate-x-0 lg:w-60`}
       >
         {/* Logo */}
@@ -48,7 +105,7 @@ export default function AdminSidebar() {
           <span className="font-heading text-xl font-extrabold tracking-tight">
             OTO <span className="text-brand-red">POLİK</span>
           </span>
-          <span className="ml-auto rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+          <span className="ml-auto bg-brand-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
             Admin
           </span>
         </div>
@@ -61,12 +118,24 @@ export default function AdminSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                onClick={() => {
+                  // #region debug-point A:nav-click
+                  reportDebug("A", "AdminSidebar.tsx:nav-link", "navigation item clicked", {
+                    pathname,
+                    targetHref: item.href,
+                    active,
+                    mobileOpenBefore: mobileOpen,
+                  });
+                  // #endregion
+                  setMobileOpen(false);
+                }}
+                className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors ${
                   active
                     ? "bg-brand-red text-white shadow-lg shadow-brand-red/20"
-                    : "text-neutral-400 hover:bg-[#141414]/5 hover:text-white"
+                    : "text-muted hover:bg-surface/5 hover:text-white"
                 }`}
-              >
+                role="menuitem"
+  >
                 <item.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                 {item.label}
               </Link>
@@ -76,21 +145,42 @@ export default function AdminSidebar() {
 
         {/* Alt kısım */}
         <div className="border-t border-white/10 px-3 py-4">
-          <button
-            type="button"
-            className="hidden h-8 w-8 items-center justify-center rounded-lg text-neutral-500 hover:bg-[#141414]/5 hover:text-white lg:flex"
-            onClick={() => setCollapsed((c) => !c)}
-            aria-label="Daralt"
-          >
-            <ChevronLeftIcon className={`h-4 w-4 transition-transform ${collapsed ? "rotate-180" : ""}`} />
-          </button>
           <Link
             href="/"
-            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-neutral-400 transition-colors hover:bg-[#141414]/5 hover:text-white"
+            onClick={() => {
+              // #region debug-point D:site-link
+              reportDebug("D", "AdminSidebar.tsx:site-link", "site return clicked", {
+                pathname,
+                mobileOpenBefore: mobileOpen,
+              });
+              // #endregion
+              setMobileOpen(false);
+            }}
+            className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-surface/5 hover:text-white"
           >
-            <LogOutIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <ExternalLinkIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
             Siteye Dön
           </Link>
+          <form action={logoutAction}>
+            <button
+              type="submit"
+              onClick={() => {
+                // #region debug-point D:logout-click
+                reportDebug("D", "AdminSidebar.tsx:logout-button", "logout requested", {
+                  pathname,
+                  mobileOpenBefore: mobileOpen,
+                });
+                // #endregion
+                setMobileOpen(false);
+              }}
+              className="mt-1 flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-muted transition-colors hover:bg-surface/5 hover:text-white"
+              role="menuitem"
+              aria-label="Oturumu Kapat"
+            >
+              <LogOutIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+              Oturumu Kapat
+            </button>
+          </form>
         </div>
       </aside>
     </>

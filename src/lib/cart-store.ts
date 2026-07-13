@@ -46,6 +46,15 @@ export function getServerSnapshot(): CartItem[] {
   return EMPTY;
 }
 
+export function getHydrationSnapshot(): boolean {
+  ensureHydrated();
+  return hydrated;
+}
+
+export function getServerHydrationSnapshot(): boolean {
+  return false;
+}
+
 function setItems(next: CartItem[]) {
   items = next;
   persist();

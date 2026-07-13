@@ -1,0 +1,2035 @@
+[browser] Image with src "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="page" pagePath="page.tsx">
+              <SegmentTrieNode>
+              <Home>
+                <Hero>
+                  <section className="relative o...">
+                    <div>
+                    <div className="relative m...">
+                      <div>
+                      <div className="relative z...">
+                        <VehicleFinder>
+                          <form onSubmit={function handleSubmit} className="bg-eva-str...">
+                            <p>
+                            <div className="flex flex-...">
+                              <div>
+                              <div>
+                              <div className="flex-1">
+                                <label>
+                                <input
+                                  id="finder-year"
+                                  value=""
+                                  onChange={function onChange}
+                                  placeholder="Örn. 2020"
+                                  className="w-full border border-border bg-background px-4 py-2.5 text-sm font-medium..."
+-                                 style={{caret-color:"transparent"}}
+                                >
+                              ...
+                ...
+            ...
+          ...
+ 
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3439:25)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at emitPendingHydrationWarnings (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3438:13)
+    at completeWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6885:102)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:131)
+    at completeUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndMaybeFocusHandler cacheNode={{rsc:{...}, ...}}>
+        <InnerScrollAndFocusHandlerOld focusAndScrollRef={{scrollRef:null, ...}} cacheNode={{rsc:{...}, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="urunler/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/urunler" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="urunler/pa...">
+                        <SegmentTrieNode>
+                        <ProductsPage>
+                          <div className="mx-auto ma...">
+                            <div>
+                            <form method="GET" action="/urunler" className="mb-6 flex ...">
+                              <div className="relative f...">
+                                <svg>
+                                <input
+                                  type="search"
+                                  name="q"
+                                  defaultValue=""
+                                  placeholder="Marka veya model arayın (örn. Golf, Egea)..."
+                                  className="border border-border bg-surface text-sm text-white placeholder:text-muted..."
+-                                 style={{caret-color:"transparent"}}
+                                >
+                              <input
+                                type="text"
+                                name="yil"
+                                defaultValue=""
+                                placeholder="Model yılı / kasa"
+                                className="border border-border bg-surface text-sm text-white placeholder:text-muted f..."
+-                               style={{caret-color:"transparent"}}
+                              >
+                              ...
+                            ...
+                      ...
+                    ...
+          ...
+ 
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3439:25)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at emitPendingHydrationWarnings (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3438:13)
+    at completeWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6885:102)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:131)
+    at completeUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="page" pagePath="page.tsx">
+              <SegmentTrieNode>
+              <Home>
+                <Hero>
+                  <section className="relative o...">
+                    <div>
+                    <div className="relative m...">
+                      <div>
+                      <div className="relative z...">
+                        <VehicleFinder>
+                          <form onSubmit={function handleSubmit} className="bg-eva-str...">
+                            <p>
+                            <div className="flex flex-...">
+                              <div>
+                              <div>
+                              <div className="flex-1">
+                                <label>
+                                <input
+                                  id="finder-year"
+                                  value=""
+                                  onChange={function onChange}
+                                  placeholder="Örn. 2020"
+                                  className="w-full border border-border bg-background px-4 py-2.5 text-sm font-medium..."
+-                                 style={{caret-color:"transparent"}}
+                                >
+                              ...
+                ...
+            ...
+          ...
+ 
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3439:25)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at emitPendingHydrationWarnings (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3438:13)
+    at completeWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6885:102)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:131)
+    at completeUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/eva-complete-beige.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/eva-complete-beige.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13951:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:14014:21)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13458:52) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13951:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:14014:21)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13458:52) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13951:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:14014:21)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13458:52) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13951:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:14014:21)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13458:52) (file://C:/Users/isaha/Yeni klasör (9)
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  [90m2 |[0m
+  [90m3 |[0m [36mimport[0m { useMemo, useState } [36mfrom[0m [32m"react"[0m;
+[31m[1m>[0m [90m4 |[0m [36mimport[0m [33mMatPreview[0m [36mfrom[0m [32m"./MatPreview"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m [36mimport[0m [33mVehicleSelector[0m [36mfrom[0m [32m"./VehicleSelector"[0m;
+  [90m6 |[0m [36mimport[0m [33mColorPicker[0m [36mfrom[0m [32m"./ColorPicker"[0m;
+  [90m7 |[0m [36mimport[0m [33mExtrasSelector[0m [36mfrom[0m [32m"./ExtrasSelector"[0m;
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Uncaught Error: ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./src/components/configurator/MatConfigurator.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+[browser] ./src/components/configurator/MatConfigurator.tsx:4:1
+Module not found: Can't resolve './MatPreview'
+  2 |
+  3 | import { useMemo, useState } from "react";
+> 4 | import MatPreview from "./MatPreview";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import VehicleSelector from "./VehicleSelector";
+  6 | import ColorPicker from "./ColorPicker";
+  7 | import ExtrasSelector from "./ExtrasSelector";
+
+Import trace:
+  Server Component:
+    ./src/components/configurator/MatConfigurator.tsx
+    ./src/app/olusturucu/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+    at handleErrors (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2774:21)
+    at processMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2835:28)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2680:13)
+    at WebSocket.handleMessage (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_client_16lnmlo._.js:2325:17) (file://C:/Users/isaha/Yeni klasör (9)
+Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Uncaught ReferenceError: MatPreview is not defined
+    at MatConfigurator (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/_0m96p46._.js?id=%255Bproject%255D%252Fsrc%252Fcomponents%252Fconfigurator%252FMatConfigurator.tsx+%255Bapp-client%255D+%2528ecmascript%2529:211:240)
+    at Object.react_stack_bottom_frame (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:186)
+    at performSyncWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10263:9)
+    at flushSyncWorkAcrossRoots_impl (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10179:316)
+    at processRootScheduleInMicrotask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10200:106)
+    at <unknown> (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10274:158)
+    at ConfiguratorPage (src\app\olusturucu\page.tsx:24:7)
+  22 |         </p>
+  23 |       </div>
+> 24 |       <MatConfigurator />
+     |       ^
+  25 |     </div>
+  26 |   );
+  27 | }
+⨯ ReferenceError: MatPreview is not defined
+    at MatConfigurator (src\components\configurator\MatConfigurator.tsx:136:12)
+  134 |       <div className="lg:sticky lg:top-32 lg:self-start">
+  135 |         <div className="bg-eva-strong relative overflow-hidden border border-border bg-su...
+> 136 |           <MatPreview
+      |            ^
+  137 |             floorColor={floor.hex}
+  138 |             edgeColor={edge.hex}
+  139 |             floorColorName={floor.name} {
+  digest: '2716015272'
+}
+[browser] Uncaught ReferenceError: MatPreview is not defined
+    at MatConfigurator (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/_0m96p46._.js:1645:240)
+    at Object.react_stack_bottom_frame (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6665:639)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+    at ConfiguratorPage (src\app\olusturucu\page.tsx:24:7)
+  22 |         </p>
+  23 |       </div>
+> 24 |       <MatConfigurator />
+     |       ^
+  25 |     </div>
+  26 |   );
+  27 | }
+⨯ ReferenceError: MatPreview is not defined
+    at MatConfigurator (src\components\configurator\MatConfigurator.tsx:136:12)
+  134 |       <div className="lg:sticky lg:top-32 lg:self-start">
+  135 |         <div className="bg-eva-strong relative overflow-hidden border border-border bg-su...
+> 136 |           <MatPreview
+      |            ^
+  137 |             floorColor={floor.hex}
+  138 |             edgeColor={edge.hex}
+  139 |             floorColorName={floor.name} {
+  digest: '2716015272'
+}
+[browser] Uncaught ReferenceError: MatPreview is not defined
+    at MatConfigurator (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/_0m96p46._.js:1645:240)
+    at Object.react_stack_bottom_frame (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6665:639)
+    at runWithFiberInDEV (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/isaha/Yeni klasör (9)/otopolik-store/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+    at ConfiguratorPage (src\app\olusturucu\page.tsx:24:7)
+  22 |         </p>
+  23 |       </div>
+> 24 |       <MatConfigurator />
+     |       ^
+  25 |     </div>
+  26 |   );
+  27 | }
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/trendyol/01-paspas-fiat-egea.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" is using quality "92" which is not configured in images.qualities [75, 90, 95]. Please update your config to [75, 90, 92, 95].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/isaha/Yeni klasör (9)
+[browser] Image with src "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/isaha/Yeni klasör (9)

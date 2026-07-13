@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 export type ColorSwatch = {
   name: string;
@@ -22,10 +22,10 @@ export default function ColorPicker({
 }: Props) {
   return (
     <section>
-      <h2 className="font-heading flex items-center gap-2.5 text-lg font-extrabold text-white">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red text-sm font-bold text-white">{step}</span>
+      <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
+        <span className="spec-value text-base font-medium text-sand">0{step}</span>
         {label}
-        <span className="ml-1 text-sm font-normal text-neutral-500">— {selected.name}</span>
+        <span className="spec-value ml-1 text-sm font-normal normal-case tracking-normal text-sand">— {selected.name}</span>
       </h2>
       <div className="mt-4 flex flex-wrap gap-2.5">
         {colors.map((c) => (
@@ -34,11 +34,12 @@ export default function ColorPicker({
             type="button"
             onClick={() => onSelect(c)}
             aria-label={`${label}: ${c.name}`}
+            aria-pressed={selected.name === c.name}
             title={c.name}
-            className={`h-11 w-11 rounded-full border-2 shadow-sm transition-transform ${
+            className={`h-11 w-11 border-2 transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand ${
               selected.name === c.name
-                ? "scale-110 border-brand-red ring-2 ring-brand-red/25"
-                : "border-neutral-700 hover:scale-105 hover:border-neutral-400"
+                ? "scale-110 border-sand"
+                : "border-border hover:scale-105 hover:border-muted"
             }`}
             style={{ backgroundColor: c.hex }}
           />
