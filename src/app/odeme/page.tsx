@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/format";
-import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { buildWhatsAppOrderLink, siteConfig } from "@/lib/site-config";
 import { getShippingCost } from "@/lib/shipping";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
+import { ShieldCheckIcon, TruckIcon, Undo2Icon } from "lucide-react";
 
 interface FormErrors {
   fullName?: string;
@@ -442,6 +443,21 @@ export default function CheckoutPage() {
           >
             {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
           </button>
+
+          <ul className="mt-5 space-y-2 border-t border-border pt-5 text-[11px] text-muted">
+            <li className="flex items-center gap-2">
+              <ShieldCheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
+              <span>SSL şifreli bağlantı ile güvenli iletim</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <Undo2Icon className="h-3.5 w-3.5 shrink-0 text-sand" aria-hidden="true" />
+              <span>14 gün koşulsuz iade garantisi</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <TruckIcon className="h-3.5 w-3.5 shrink-0 text-sand" aria-hidden="true" />
+              <span>{siteConfig.estimatedDispatch} içinde kargoda</span>
+            </li>
+          </ul>
         </aside>
       </form>
     </div>

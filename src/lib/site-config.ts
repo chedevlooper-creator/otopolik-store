@@ -30,32 +30,33 @@ export const siteConfig = {
   url: readEnv("NEXT_PUBLIC_SITE_URL", "https://otopolik.com"),
 
   // Telefon — kullanıcıya gösterilecek format
-  phoneDisplay: readEnv("NEXT_PUBLIC_SITE_PHONE", "0555 000 00 00"),
+  phoneDisplay: readEnv("NEXT_PUBLIC_SITE_PHONE", "0537 267 26 89"),
 
   // WhatsApp numarası — ülke kodu + alan kodu + numara, boşluksuz
   // Örn: 905551234567 (Türkiye için 90)
-  whatsappNumber: readEnv("NEXT_PUBLIC_SITE_WHATSAPP_NUMBER", "905550000000"),
+  whatsappNumber: readEnv("NEXT_PUBLIC_SITE_WHATSAPP_NUMBER", "905372672689"),
 
   // E-posta
-  email: readEnv("NEXT_PUBLIC_SITE_EMAIL", "siparis@otopolik.com"),
+  email: readEnv("NEXT_PUBLIC_SITE_EMAIL", "info@otopolik.com"),
 
   // Adres
-  address: readEnv("NEXT_PUBLIC_SITE_ADDRESS", "Örnek Mah. Sanayi Cad. No:1, İstanbul"),
+  address: readEnv("NEXT_PUBLIC_SITE_ADDRESS", "İOSB Mah. Sefaköy San. Sit. 7.Blok No:10-12, Başakşehir/İstanbul"),
 
   // Instagram
   instagram: readEnv("NEXT_PUBLIC_SITE_INSTAGRAM", "https://instagram.com/otopolik"),
 
   // Kargo
-  freeShippingThreshold: readEnvNumber("NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD", 1500),
+  freeShippingThreshold: readEnvNumber("NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD", 3500),
   shippingFee: readEnvNumber("NEXT_PUBLIC_SHIPPING_FEE", 99),
   estimatedDispatch: readEnv("NEXT_PUBLIC_ESTIMATED_DISPATCH", "1-3 iş günü"),
   businessHours: readEnv("NEXT_PUBLIC_BUSINESS_HOURS", "Pazartesi - Cumartesi, 09:00 - 18:00"),
 
   // Konfigüratör fiyatlandırma (TL)
   // basePrice: araç seçilmediğinde veya "Diğer Araç" seçildiğinde kullanılan fallback
-  matBasePrice: readEnvNumber("NEXT_PUBLIC_MAT_BASE_PRICE", 1149),
-  matHeelPadPrice: readEnvNumber("NEXT_PUBLIC_MAT_HEEL_PAD_PRICE", 149),
-  matTrunkPrice: readEnvNumber("NEXT_PUBLIC_MAT_TRUNK_PRICE", 349),
+  // İthal kalite paspas takımı: 3.500₺
+  matBasePrice: readEnvNumber("NEXT_PUBLIC_MAT_BASE_PRICE", 3500),
+  matHeelPadPrice: readEnvNumber("NEXT_PUBLIC_MAT_HEEL_PAD_PRICE", 500),
+  matTrunkPrice: readEnvNumber("NEXT_PUBLIC_MAT_TRUNK_PRICE", 1750),
 } as const;
 
 export function buildWhatsAppOrderLink(message: string) {

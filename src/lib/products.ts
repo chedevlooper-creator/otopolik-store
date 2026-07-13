@@ -1,9 +1,9 @@
 import { Product } from "./types";
 
 const STANDARD_COLORS = [
-  { name: "Siyah", hex: "#1a1a1a", image: "/media/eva-driver-black.png" },
-  { name: "Gri", hex: "#8a8a8a", image: "/media/eva-detail-gray.png" },
-  { name: "Bej", hex: "#c9b79c", image: "/media/eva-complete-beige.png" },
+  { name: "Siyah", hex: "#1a1a1a", image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png" },
+  { name: "Gri", hex: "#8a8a8a", image: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" },
+  { name: "Bej", hex: "#c9b79c", image: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg" },
 ];
 
 const STANDARD_FEATURES = [
@@ -39,8 +39,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "eva-3d",
-    price: 1299,
-    oldPrice: 1999,
+    price: 3500,
+    oldPrice: 4500,
     badge: "Çok Satan",
     image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
     gallery: [
@@ -71,8 +71,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "bagaj-havuzu",
-    price: 1049,
-    oldPrice: 1599,
+    price: 1750,
+    oldPrice: 2500,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
     gallery: [
@@ -202,8 +202,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Fiat Egea",
     category: "eva-3d",
-    price: 1299,
-    oldPrice: 1799,
+    price: 3500,
+    oldPrice: 4500,
     badge: "Öne Çıkan",
     image: "/media/scraped/trendyol/01-paspas-fiat-egea.jpg",
     gallery: [

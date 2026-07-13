@@ -14,18 +14,21 @@ const barlowCondensed = Barlow_Condensed({
   variable: "--font-heading",
   subsets: ["latin", "latin-ext"],
   weight: ["500", "600", "700", "800"],
+  display: "swap",
 });
 
 const barlow = Barlow({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const plexMono = IBM_Plex_Mono({
   variable: "--font-spec",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import CartDrawer from "@/components/CartDrawer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ScrollToTop from "@/components/ScrollToTop";
 import WhatsappFloat from "@/components/WhatsappFloat";
 import { CartProvider } from "@/context/cart-context";
 
@@ -22,6 +23,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <Footer />
       <CartDrawer />
       <WhatsappFloat />
+      <ScrollToTop />
     </CartProvider>
   );
 }

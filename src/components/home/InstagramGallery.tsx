@@ -2,25 +2,26 @@ import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 import { ArrowRightIcon } from "lucide-react";
 
-// Bu alan, @otopolik hesabından seçilip public/media/ altına eklenen onaylı içerikler içindir.
+// Bu alan, @otopolik hesabından seçilip public/media/scraped/ altına eklenen
+// onaylı içerikler içindir. Atölye içi EVA paspas fotoğrafları.
 const media = [
   {
-    src: "/media/eva-driver-black.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
     alt: "Siyah EVA sürücü paspası görünümü",
     label: "Sürücü kalıbı",
   },
   {
-    src: "/media/eva-complete-beige.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/02-siyah-urun-tam.png",
     alt: "Bej EVA paspas seti görünümü",
     label: "Tam set görünüm",
   },
   {
-    src: "/media/eva-detail-gray.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
     alt: "Gri EVA yüzey doku detayı",
     label: "Petek yüzey",
   },
   {
-    src: "/media/eva-rear-black.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
     alt: "Arka sıra EVA paspas görünümü",
     label: "Arka sıra uyum",
   },

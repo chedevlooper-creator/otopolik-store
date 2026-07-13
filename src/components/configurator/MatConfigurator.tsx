@@ -102,11 +102,13 @@ export default function MatConfigurator() {
   const canAdd = Boolean(
     brand && (brand === OTHER_VEHICLE ? slug === OTHER_VEHICLE : slug)
   );
+
+  const currentStep = !canAdd ? 0 : 3;
   const steps = [
-    { label: "Aracınız", isActive: !canAdd, isDone: canAdd },
-    { label: "Taban", isActive: canAdd, isDone: true },
-    { label: "Kenar", isActive: canAdd, isDone: true },
-    { label: "Ekstralar", isActive: false, isDone: heelPad || trunkMat },
+    { label: "Aracınız", index: 0 },
+    { label: "Taban", index: 1 },
+    { label: "Kenar", index: 2 },
+    { label: "Ekstralar", index: 3 },
   ];
 
   function handleAddToCart() {
@@ -114,7 +116,7 @@ export default function MatConfigurator() {
     addItem({
       slug: `ozel-tasarim-${slug}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase("tr-TR"),
       name: `Özel Tasarım EVA Paspas — ${vehicleLabel}`,
-      image: "/media/eva-driver-black.png",
+      image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
       price: totalPrice,
       color: configSummary,
       quantity: 1,
@@ -132,23 +134,36 @@ export default function MatConfigurator() {
         aria-label="Tasarım adımları"
         className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-4"
       >
-        {steps.map((step, index) => (
-          <li
-            key={step.label}
-            className={`flex items-center gap-2.5 border px-3 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-              step.isActive
-                ? "border-sand bg-surface text-white"
-                : step.isDone
-                  ? "border-border bg-surface text-sand"
-                  : "border-border bg-background text-muted"
-            }`}
-          >
-            <span className="spec-value text-sm font-medium text-sand">
-              0{index + 1}
-            </span>
-            {step.label}
-          </li>
-        ))}
+        {steps.map((step) => {
+          const isDone = step.index < currentStep;
+          const isActive = step.index === currentStep;
+          return (
+            <li
+              key={step.label}
+              aria-current={isActive ? "step" : undefined}
+              className={`flex items-center gap-2.5 border px-3 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
+                isActive
+                  ? "border-sand bg-surface text-white"
+                  : isDone
+                    ? "border-border bg-surface text-sand"
+                    : "border-border bg-background text-muted"
+              }`}
+            >
+              <span
+                className={`spec-value flex h-6 w-6 items-center justify-center text-[11px] font-bold ${
+                  isActive
+                    ? "bg-brand-red text-white"
+                    : isDone
+                      ? "bg-sand/20 text-sand"
+                      : "bg-border text-muted"
+                }`}
+              >
+                {isDone ? "✓" : `0${step.index + 1}`}
+              </span>
+              {step.label}
+            </li>
+          );
+        })}
       </ol>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">

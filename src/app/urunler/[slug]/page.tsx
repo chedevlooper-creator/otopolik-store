@@ -8,7 +8,30 @@ import { CATEGORY_LABELS, getProductBySlug, getRelatedProducts, products } from 
 import { formatPrice } from "@/lib/format";
 import { buildWhatsAppOrderLink, siteConfig } from "@/lib/site-config";
 import { getShippingCost } from "@/lib/shipping";
-import { CheckIcon, PlusIcon, ScissorsIcon, TruckIcon, Undo2Icon } from "lucide-react";
+import { CheckIcon, PlusIcon, ScissorsIcon, TruckIcon, Undo2Icon, CalendarIcon, ShieldCheckIcon, DropletIcon, WrenchIcon, SnowflakeIcon, SparklesIcon, RulerIcon, LockIcon, RecycleIcon, WindIcon, ChevronRightIcon, type LucideIcon } from "lucide-react";
+import TrustStrip from "@/components/TrustStrip";
+import Testimonials from "@/components/Testimonials";
+
+const FEATURE_ICON_RULES: { keywords: string[]; icon: LucideIcon }[] = [
+  { keywords: ["su", "çamur", "kire", "su geçirmez"], icon: DropletIcon },
+  { keywords: ["kesim", "kalıp", "milimetrik", "ölçü", "boyut"], icon: ScissorsIcon },
+  { keywords: ["4 mevsim", "kış", "yaz", "sıcak", "soğuk", "kar"], icon: SnowflakeIcon },
+  { keywords: ["koku", "temiz", "hijyen", "anti-bakteriyel"], icon: SparklesIcon },
+  { keywords: ["kaymaz", "tutunma", "tutucu", "anti-slip"], icon: LockIcon },
+  { keywords: ["esnek", "dayanıklı", "sağlam"], icon: ShieldCheckIcon },
+  { keywords: ["çevre", "geri dönüş", "recyclable"], icon: RecycleIcon },
+  { keywords: ["hava", "ventilasyon", "nefes"], icon: WindIcon },
+  { keywords: ["araç", "model", "uyum"], icon: RulerIcon },
+  { keywords: ["montaj", "tak", "kolay"], icon: WrenchIcon },
+];
+
+function pickFeatureIcon(feature: string): LucideIcon {
+  const lower = feature.toLocaleLowerCase("tr-TR");
+  for (const rule of FEATURE_ICON_RULES) {
+    if (rule.keywords.some((kw) => lower.includes(kw))) return rule.icon;
+  }
+  return CheckIcon;
+}
 import {
   productSchema,
   breadcrumbListSchema,
@@ -69,11 +92,18 @@ export default async function ProductDetailPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:py-14">
-      <nav className="spec-value mb-6 text-xs uppercase tracking-[0.14em] text-muted">
+      <nav aria-label="Konum" className="spec-value mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.14em] text-muted">
         <Link href="/" className="hover:text-sand">Ana Sayfa</Link>
-        <span className="mx-2 text-sand-dim">/</span>
+        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
         <Link href="/urunler" className="hover:text-sand">Ürünler</Link>
-        <span className="mx-2 text-sand-dim">/</span>
+        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
+        <Link
+          href={`/urunler?kategori=${encodeURIComponent(product.category)}`}
+          className="hover:text-sand"
+        >
+          {CATEGORY_LABELS[product.category]}
+        </Link>
+        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
         <span className="text-foreground">{product.brand} {product.model}</span>
       </nav>
 
@@ -114,19 +144,76 @@ export default async function ProductDetailPage({
             ))}
           </ul>
 
+          {/* Görünür bilgi kartları: uyumluluk + kargo */}
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="border border-border bg-surface p-4">
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                  Araç Uyumluluğu
+                </span>
+              </div>
+              <p className="mt-2 text-sm font-medium text-foreground">
+                {product.compatibility.yearRange}
+              </p>
+              <p className="mt-0.5 text-xs text-muted">{product.compatibility.bodyOrChassis}</p>
+              <a
+                href={compatibilityLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-block text-[11px] font-bold text-sand hover:underline"
+              >
+                WhatsApp&apos;tan teyit et →
+              </a>
+            </div>
+            <div className="border border-border bg-surface p-4">
+              <div className="flex items-center gap-2">
+                <TruckIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                  Kargo
+                </span>
+              </div>
+              <p className="mt-2 text-sm font-medium text-foreground">
+                {shippingCost === 0 ? "Ücretsiz kargo" : `${formatPrice(shippingCost)}`}
+              </p>
+              <p className="mt-0.5 text-xs text-muted">
+                Kargoya teslim: {product.dispatchEstimate}
+              </p>
+              <p className="mt-0.5 text-[11px] text-muted">
+                {siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz
+              </p>
+            </div>
+          </div>
+
+          {/* Güven rozeti */}
+          <div className="mt-4 flex items-center gap-2 border border-dashed border-border bg-surface/50 px-3 py-2">
+            <ShieldCheckIcon className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
+            <span className="text-xs text-foreground/80">
+              14 gün koşulsuz iade · SSL güvenli ödeme · KVKK uyumlu
+            </span>
+          </div>
+
           <div className="mt-6">
             <AddToCartButton product={product} />
           </div>
 
           <p className="mt-8 leading-relaxed text-muted">{product.description}</p>
 
-          <ul className="mt-5 space-y-2">
-            {product.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-3 text-sm text-foreground/85">
-                <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
-                {feature}
-              </li>
-            ))}
+          <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2" aria-label="Ürün özellikleri">
+            {product.features.map((feature) => {
+              const Icon = pickFeatureIcon(feature);
+              return (
+                <li
+                  key={feature}
+                  className="flex items-start gap-3 border border-border bg-surface/50 p-3"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-border bg-background text-sand">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <span className="text-sm leading-relaxed text-foreground/85">{feature}</span>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-8 border-t border-border">
@@ -184,6 +271,9 @@ export default async function ProductDetailPage({
           </div>
         </section>
       )}
+
+      <Testimonials />
+      <TrustStrip />
 
       {renderJsonLd(
         productSchema(product),

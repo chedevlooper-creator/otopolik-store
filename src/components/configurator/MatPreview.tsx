@@ -19,12 +19,12 @@ const REAL_PREVIEWS = {
     label: "Siyah + kırmızı",
   },
   beige: {
-    src: "/media/eva-complete-beige.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
     alt: "Araç içinde bej EVA paspas gerçek uygulama fotoğrafı",
     label: "Bej uygulama",
   },
   black: {
-    src: "/media/eva-driver-black.png",
+    src: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
     alt: "Araç içinde siyah EVA sürücü paspası gerçek uygulama fotoğrafı",
     label: "Siyah uygulama",
   },

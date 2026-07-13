@@ -21,7 +21,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-16 sm:pt-28 lg:pt-32">
+      <div className="relative mx-auto max-w-7xl px-4 pt-12 sm:pt-20 lg:pt-24">
         <div className="max-w-3xl">
           <div className="animate-hero flex flex-wrap items-stretch gap-y-2">
             {SPEC_TICKS.map(({ icon: Icon, label, detail }, index) => (
@@ -42,18 +42,18 @@ export default function Hero() {
             ))}
           </div>
 
-          <h1 className="animate-hero-delay-1 mt-5 font-heading text-[2.8rem] font-bold uppercase leading-[0.92] sm:mt-6 sm:text-7xl lg:text-8xl">
-            <span className="block sm:inline">Aracınızın</span>{" "}
-            <span className="block sm:inline">tabanına</span>
+          <h1 className="animate-hero-delay-1 mt-5 font-heading text-[2.6rem] font-bold uppercase leading-[0.92] sm:mt-6 sm:text-6xl lg:text-7xl">
+            <span className="block sm:inline">Paspasınız mı</span>{" "}
+            <span className="block sm:inline">kayar,</span>
             <span className="relative mt-2 block w-fit pb-2 sm:pb-3">
-              milimetrik uyum
+              yoksa kavrar mı?
               <span className="mt-2 block h-[5px] w-full bg-brand-red sm:mt-3 sm:h-[7px]" aria-hidden="true" />
             </span>
           </h1>
 
           <p className="animate-hero-delay-2 mt-5 max-w-xl text-sm leading-relaxed text-white/70 sm:mt-6 sm:text-lg">
-            SUV, sedan ya da hatchback. Aracınıza özel üretilen, dört mevsim
-            dayanıklı premium EVA paspasla sürüş alanınızı tamamlayın.
+            Standart paspasları bırakın. Aracınıza özel kesilen, dört mevsim
+            dayanıklı premium EVA paspasla tabanınızı tam koruma altına alın.
           </p>
 
           <div className="animate-hero-delay-2 mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
@@ -61,7 +61,7 @@ export default function Hero() {
               href="/olusturucu"
               className="btn-press inline-flex items-center justify-center gap-2 bg-brand-red px-8 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
             >
-              Paspasını Tasarla
+              Hemen Tasarla
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
@@ -73,8 +73,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Araç bulucu — kesim föyünün alt plakası gibi hero'nun altına oturur */}
-        <div className="relative z-10 mt-10 -mb-px sm:mt-20">
+        {/* Mini configurator — hero'nun alt plakası */}
+        <div className="relative z-10 mt-10 -mb-px sm:mt-14">
           <VehicleFinder />
         </div>
       </div>

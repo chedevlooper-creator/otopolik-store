@@ -34,12 +34,12 @@ export default function ProductCard({ product }: { product: Product }) {
           }`}
         />
         {product.badge && (
-          <span className="spec-value absolute left-3 top-3 bg-background/90 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-sand shadow-lg shadow-black/25">
+          <span className="spec-value absolute left-3 top-3 bg-background/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-sand shadow-lg shadow-black/25">
             {product.badge}
           </span>
         )}
         {discount > 0 && (
-          <span className="spec-value absolute right-3 top-3 bg-brand-red px-2.5 py-1 text-[11px] font-semibold text-white shadow-lg shadow-black/25">
+          <span className="spec-value absolute right-3 top-3 bg-brand-red px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-black/25">
             -%{discount}
           </span>
         )}

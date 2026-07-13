@@ -6,16 +6,19 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/lib/site-config";
-import { MenuIcon, XIcon, ShoppingCartIcon, PhoneIcon } from "lucide-react";
+import { MenuIcon, XIcon, ShoppingCartIcon, PhoneIcon, SearchIcon } from "lucide-react";
+import SearchModal from "@/components/SearchModal";
 
 const NAV_LINKS = [
   { href: "/urunler", label: "Ürünler" },
   { href: "/olusturucu", label: "Tasarla" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { totalItems, openDrawer } = useCart();
   const pathname = usePathname();
@@ -25,6 +28,7 @@ export default function Header() {
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
     setMenuOpen(false);
+    setSearchOpen(false);
   }
 
   useEffect(() => {
@@ -90,6 +94,14 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Ürün arama"
+              className="inline-flex h-11 w-11 items-center justify-center text-muted transition-colors hover:text-sand"
+            >
+              <SearchIcon className="h-5 w-5" aria-hidden="true" />
+            </button>
             <a
               href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
               className="spec-value hidden items-center gap-1.5 px-2 py-2 text-sm font-medium text-muted transition-colors hover:text-sand lg:flex"
@@ -136,6 +148,17 @@ export default function Header() {
       {menuOpen ? (
         <div className="overflow-hidden border-t border-border bg-surface md:hidden">
           <nav id="mobile-navigation" aria-label="Mobil menü" className="mx-auto max-w-7xl px-4 py-3">
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false);
+                setSearchOpen(true);
+              }}
+              className="flex w-full items-center gap-3 border-b border-border/50 px-2 py-4 text-base font-semibold uppercase tracking-wider text-foreground hover:text-sand"
+            >
+              <SearchIcon className="h-5 w-5 text-sand" aria-hidden="true" />
+              Ürün Ara
+            </button>
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -159,6 +182,8 @@ export default function Header() {
           </nav>
         </div>
       ) : null}
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

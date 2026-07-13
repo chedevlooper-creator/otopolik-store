@@ -1,5 +1,5 @@
 const MARQUEE_ITEMS = [
-  "1.500₺ üzeri ücretsiz kargo",
+  "3.500₺ üzeri ücretsiz kargo",
   "Araca özel tam uyum garantisi",
   "Tek sıkım suyla temizlik",
   "14 gün iade garantisi",

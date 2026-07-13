@@ -6,6 +6,8 @@ import CartItemLine from "@/components/CartItemLine";
 import { formatPrice } from "@/lib/format";
 import { getRemainingForFreeShipping, getShippingCost } from "@/lib/shipping";
 import { ShoppingCartIcon } from "lucide-react";
+import ProductCard from "@/components/ProductCard";
+import { getFeaturedProducts } from "@/lib/products";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, totalPrice, isHydrated } = useCart();
@@ -64,6 +66,7 @@ export default function CartPage() {
   const remainingForFreeShipping = getRemainingForFreeShipping(totalPrice);
   const shippingCost = getShippingCost(totalPrice);
   const orderTotal = totalPrice + shippingCost;
+  const featured = getFeaturedProducts(4);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
@@ -119,6 +122,19 @@ export default function CartPage() {
           </Link>
         </aside>
       </div>
+      {items.length > 0 && featured.length > 0 && (
+        <section className="mt-16">
+          <span className="spec-label">Tamamlayıcı ürünler</span>
+          <h2 className="mb-6 mt-3 font-heading text-2xl font-bold text-white">
+            Bunlara da göz atın
+          </h2>
+          <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+            {featured.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

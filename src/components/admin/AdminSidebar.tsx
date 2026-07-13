@@ -16,11 +16,11 @@ import {
 import { logoutAction } from "@/app/admin/logout/action";
 
 const NAV_ITEMS = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboardIcon },
-  { href: "/admin/siparisler", label: "Siparişler", icon: ShoppingBagIcon },
-  { href: "/admin/urunler", label: "Ürünler", icon: PackageIcon },
-  { href: "/admin/ayarlar", label: "Ayarlar", icon: SettingsIcon },
-];
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboardIcon, badgeKey: null },
+  { href: "/admin/siparisler", label: "Siparişler", icon: ShoppingBagIcon, badgeKey: "orders" },
+  { href: "/admin/urunler", label: "Ürünler", icon: PackageIcon, badgeKey: "products" },
+  { href: "/admin/ayarlar", label: "Ayarlar", icon: SettingsIcon, badgeKey: null },
+] as const;
 
 // #region debug-point A:reporter
 const DEBUG_SERVER_URL = "http://127.0.0.1:7777/event";
@@ -135,9 +135,14 @@ export default function AdminSidebar() {
                     : "text-muted hover:bg-surface/5 hover:text-white"
                 }`}
                 role="menuitem"
-  >
+              >
                 <item.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {item.label}
+                <span className="flex-1">{item.label}</span>
+                {item.badgeKey && active && (
+                  <span className="flex h-5 min-w-5 items-center justify-center bg-black/30 px-1.5 text-[10px] font-bold text-white">
+                    ●
+                  </span>
+                )}
               </Link>
             );
           })}

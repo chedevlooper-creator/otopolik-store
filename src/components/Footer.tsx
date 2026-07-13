@@ -1,6 +1,17 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
-import { PhoneIcon, MailIcon, MapPinIcon, RulerIcon, ShieldCheckIcon, TruckIcon, ScissorsIcon } from "lucide-react";
+import {
+  PhoneIcon,
+  MailIcon,
+  MapPinIcon,
+  RulerIcon,
+  TruckIcon,
+  ScissorsIcon,
+  CheckIcon,
+} from "lucide-react";
 
 const TRUST_BADGES = [
   { icon: RulerIcon, label: "Araca özel lazer kalıp", sub: "Milimetrik uyum" },
@@ -8,7 +19,107 @@ const TRUST_BADGES = [
   { icon: TruckIcon, label: "1-3 günde kargoda", sub: "Ücretsiz gönderim fırsatı" },
 ];
 
+function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" />
+    </svg>
+  );
+}
+
+function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M2.5 8.5C2.5 6 4 4.5 6.5 4.5h11C20 4.5 21.5 6 21.5 8.5v7c0 2.5-1.5 4-4 4h-11c-2.5 0-4-1.5-4-4z" />
+      <path d="M10 9l5 3-5 3z" fill="currentColor" />
+    </svg>
+  );
+}
+
+const SOCIAL_LINKS: { href: string; label: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>> }[] = [
+  { href: siteConfig.instagram, label: "Instagram", icon: InstagramIcon },
+  { href: "https://youtube.com/@otopolik", label: "YouTube", icon: YoutubeIcon },
+];
+
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "ok" | "err">("idle");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!ok) {
+      setStatus("err");
+      return;
+    }
+    setStatus("ok");
+    setEmail("");
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-4" noValidate>
+      <label htmlFor="footer-newsletter" className="sr-only">
+        E-posta adresi
+      </label>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <input
+          id="footer-newsletter"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (status !== "idle") setStatus("idle");
+          }}
+          placeholder="ornek@eposta.com"
+          aria-invalid={status === "err"}
+          className="w-full border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted focus:border-sand focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="btn-press inline-flex shrink-0 items-center justify-center gap-1.5 bg-brand-red px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+        >
+          {status === "ok" ? <CheckIcon className="h-4 w-4" aria-hidden="true" /> : null}
+          {status === "ok" ? "Eklendi" : "Abone Ol"}
+        </button>
+      </div>
+      <p className="mt-2 text-[11px] text-muted" aria-live="polite">
+        {status === "ok"
+          ? "Teşekkürler! Yeni kampanyalardan ilk siz haberdar olacaksınız."
+          : status === "err"
+            ? "Geçerli bir e-posta adresi girin."
+            : "Kampanya ve yeni ürünlerden haberdar olun. Spam göndermeyiz."}
+      </p>
+    </form>
+  );
+}
+
 export default function Footer() {
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="border-t border-border bg-background text-white">
       {/* Trust badges band */}
@@ -34,7 +145,7 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-14 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div>
             <span className="font-heading text-3xl font-bold uppercase tracking-wide">
               OTO<span className="text-brand-red">POLİK</span>
@@ -63,6 +174,20 @@ export default function Footer() {
                 <span className="leading-relaxed">{siteConfig.address}</span>
               </span>
             </div>
+            <div className="mt-6 flex items-center gap-2">
+              {SOCIAL_LINKS.map(({ href, label, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center border border-border text-muted transition-colors hover:border-sand hover:text-sand"
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </div>
 
           <div>
@@ -83,20 +208,19 @@ export default function Footer() {
               <li><Link href="/sepet" className="text-foreground/60 transition-colors hover:text-sand">Sepetim</Link></li>
             </ul>
           </div>
+          <div>
+            <h3 className="spec-label mb-5">Bülten</h3>
+            <p className="text-sm text-muted">
+              Kampanya ve yeni ürünlerden ilk siz haberdar olun.
+            </p>
+            <NewsletterForm />
+          </div>
         </div>
       </div>
       <div className="border-t border-dashed border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-muted">
-          <span className="spec-value">© {new Date().getFullYear()} {siteConfig.name}</span>
+          <span className="spec-value">© {currentYear ?? 2026} {siteConfig.name}</span>
           <div className="flex items-center gap-4">
-            <a
-              href={siteConfig.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-sand"
-            >
-              Instagram
-            </a>
             <span className="spec-value text-white/20" aria-hidden="true">|</span>
             <span className="spec-value">Premium EVA Paspas Üreticisi</span>
           </div>
