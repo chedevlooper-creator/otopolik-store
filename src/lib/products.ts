@@ -6,14 +6,6 @@ const STANDARD_COLORS = [
   { name: "Bej", hex: "#c9b79c", image: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg" },
 ];
 
-const STANDARD_FEATURES = [
-  "Araca özel kalıp, boşluk bırakmadan tam uyum",
-  "Su, çamur ve kire karşı 4 mevsim koruma",
-  "Kaymaz taban ve güçlendirilmiş topukluk",
-  "Tek sıkım suyla saniyeler içinde temizlenir",
-  "Kokusuz, esnek premium EVA malzeme",
-];
-
 type SeedProduct = {
   slug: string;
   name: string;

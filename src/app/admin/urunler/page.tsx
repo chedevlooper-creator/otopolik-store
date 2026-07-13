@@ -7,7 +7,6 @@ import {
   PencilIcon,
   Trash2Icon,
   TagIcon,
-  StarIcon,
   PackageIcon,
   ExternalLinkIcon,
   AlertCircleIcon,
@@ -19,7 +18,7 @@ import { formatPrice } from "@/lib/format";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
-import type { Id } from "../../../../convex/_generated/dataModel";
+import type { Doc, Id } from "../../../../convex/_generated/dataModel";
 
 const CATEGORIES = [
   { key: "eva-3d", label: "3D EVA Paspas" },
@@ -82,7 +81,11 @@ function slugify(input: string): string {
 
 export default function AdminUrunler() {
   const convexReady = isConvexConfiguredClient();
-  const products = useQuery(api.products.listAll, convexReady ? {} : "skip");
+  // `api` codegen placeholder'ı dönüş tipini iletmiyor (gerçek `npx convex
+  // dev` sonrası otomatik gelir); şema tabanlı gerçek tipe daralt.
+  const products = useQuery(api.products.listAll, convexReady ? {} : "skip") as
+    | Doc<"products">[]
+    | undefined;
   const createProduct = useMutation(api.products.create);
   const updateProduct = useMutation(api.products.update);
   const deleteProduct = useMutation(api.products.remove);
@@ -101,7 +104,7 @@ export default function AdminUrunler() {
     setEditing({ mode: "create" });
   }
 
-  function openEdit(product: any) {
+  function openEdit(product: Doc<"products">) {
     setForm({
       slug: product.slug,
       name: product.name,
@@ -119,7 +122,7 @@ export default function AdminUrunler() {
     setEditing({ mode: "edit", productId: product._id, initial: form });
   }
 
-  function openDelete(product: any) {
+  function openDelete(product: Doc<"products">) {
     setMessage(null);
     setEditing({ mode: "delete", productId: product._id, name: product.name });
   }
@@ -282,7 +285,7 @@ export default function AdminUrunler() {
                 Henüz ürün yok. &quot;Yeni Ürün&quot; ile başlayın.
               </div>
             ) : (
-              (products as any[]).map((p) => (
+              products.map((p) => (
                 <div
                   key={p._id}
                   className="flex flex-col items-start gap-4 px-5 py-4 sm:flex-row sm:items-center"
@@ -536,7 +539,7 @@ function ProductFormModal({
             />
           </label>
           <label className="block text-sm font-semibold text-foreground sm:col-span-2">
-            Rozet (ör: "%35 İndirim")
+            Rozet (ör: &quot;%35 İndirim&quot;)
             <input
               value={form.badge}
               onChange={(e) => setForm((f) => ({ ...f, badge: e.target.value }))}

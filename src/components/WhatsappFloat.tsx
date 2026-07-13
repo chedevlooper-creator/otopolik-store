@@ -34,7 +34,6 @@ export default function WhatsappFloat() {
 
   useEffect(() => {
     if (isHidden) {
-      setVisible(false);
       return;
     }
 

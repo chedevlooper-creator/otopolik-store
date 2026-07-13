@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   SearchIcon,
   FilterIcon,
@@ -16,6 +16,7 @@ import { formatPrice } from "@/lib/format";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
+import type { Id } from "../../../../convex/_generated/dataModel";
 
 type Siparis = {
   id: string;
@@ -142,33 +143,20 @@ export default function AdminSiparisler() {
   const orders = useQuery(api.orders.listAll, convexReady ? {} : "skip");
   const updateStatusMutation = useMutation(api.orders.updateStatus);
 
-  const [siparisler, setSiparisler] = useState<Siparis[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
   const [durumFilter, setDurumFilter] = useState("tumu");
   const [search, setSearch] = useState("");
   const [selectedSiparis, setSelectedSiparis] = useState<Siparis | null>(null);
 
-  // Convex query sonucunu state'e yansıt
-  useEffect(() => {
-    if (!convexReady) {
-      setLoadError(LOAD_ERROR_MESSAGE);
-      setLoading(false);
-      return;
-    }
-    if (orders === undefined) {
-      setLoading(true);
-      return;
-    }
-    setLoadError(null);
-    setSiparisler((orders as RawOrder[]).map((order) => mapOrder(order)));
-    setLoading(false);
-  }, [orders, convexReady]);
+  const loading = convexReady && orders === undefined;
+  const loadError = convexReady ? null : LOAD_ERROR_MESSAGE;
+  const siparisler = useMemo(
+    () => (convexReady && orders !== undefined ? (orders as RawOrder[]).map((order) => mapOrder(order)) : []),
+    [convexReady, orders]
+  );
 
   const fetchOrders = useCallback(async () => {
-    setLoading(true);
     window.location.reload();
   }, []);
 
@@ -181,7 +169,7 @@ export default function AdminSiparisler() {
       setActionError(null);
       setUpdatingOrderId(siparis.realUuid);
       await updateStatusMutation({
-        id: siparis.realUuid as any,
+        id: siparis.realUuid as Id<"orders">,
         status: nextStatus,
       });
       setSelectedSiparis(null);

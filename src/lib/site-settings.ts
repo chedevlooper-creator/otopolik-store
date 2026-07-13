@@ -39,7 +39,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   matTrunkPrice: siteConfig.matTrunkPrice,
 };
 
-function mapRow(row: any | null): SiteSettings {
+function mapRow(row: Partial<SiteSettings> | null | undefined): SiteSettings {
   if (!row) return DEFAULT_SETTINGS;
   return {
     phoneDisplay: row.phoneDisplay ?? DEFAULT_SETTINGS.phoneDisplay,

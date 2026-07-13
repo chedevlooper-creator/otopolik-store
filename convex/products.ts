@@ -4,6 +4,7 @@
 
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import type { IndexQuery } from "./_types";
 
 type ProductRecord = {
   isActive: boolean;
@@ -20,6 +21,8 @@ const CATEGORIES = [
   "ekran-koruyucu",
 ] as const;
 
+type ProductCategory = (typeof CATEGORIES)[number];
+
 // Admin: tüm ürünler (aktif/pasif)
 export const listAll = query({
   args: {},
@@ -34,19 +37,20 @@ export const listActive = query({
     category: v.optional(v.string()),
   },
   handler: async (ctx, { category }) => {
-    let q = ctx.db.query("products").withIndex("by_active", (q: any) =>
-      q.eq("isActive", true)
-    );
-
     if (category) {
-      // index değişimi gerekirse order değişebilir; basit yaklaşım:
-      q = ctx.db.query("products").withIndex("by_category", (q: any) =>
-        q.eq("category", category as any)
-      );
+      const cat = category as ProductCategory;
+      const all = (await ctx.db
+        .query("products")
+        .withIndex("by_category", (q: IndexQuery) => q.eq("category", cat))
+        .collect()) as ProductRecord[];
+      return all;
     }
 
-    const all = (await q.collect()) as ProductRecord[];
-    return category ? all : all.filter((p) => p.isActive);
+    const all = (await ctx.db
+      .query("products")
+      .withIndex("by_active", (q: IndexQuery) => q.eq("isActive", true))
+      .collect()) as ProductRecord[];
+    return all.filter((p) => p.isActive);
   },
 });
 
@@ -55,7 +59,7 @@ export const getBySlug = query({
   handler: async (ctx, { slug }) => {
     return await ctx.db
       .query("products")
-      .withIndex("by_slug", (q: any) => q.eq("slug", slug))
+      .withIndex("by_slug", (q: IndexQuery) => q.eq("slug", slug))
       .unique();
   },
 });
@@ -75,7 +79,7 @@ export const create = mutation({
     isActive: v.optional(v.boolean()),
   },
   handler: async (ctx, input) => {
-    if (!CATEGORIES.includes(input.category as any)) {
+    if (!CATEGORIES.includes(input.category as ProductCategory)) {
       throw new Error(`Geçersiz kategori: ${input.category}`);
     }
     const now = Date.now();
@@ -84,7 +88,7 @@ export const create = mutation({
       name: input.name,
       brand: input.brand ?? "OTO POLİK",
       model: input.model ?? "Tüm Modeller",
-      category: input.category as any,
+      category: input.category as ProductCategory,
       price: input.price,
       oldPrice: input.oldPrice,
       image: input.image,
@@ -112,7 +116,7 @@ export const update = mutation({
     isActive: v.optional(v.boolean()),
   },
   handler: async (ctx, { id, ...patch }) => {
-    if (patch.category && !CATEGORIES.includes(patch.category as any)) {
+    if (patch.category && !CATEGORIES.includes(patch.category as ProductCategory)) {
       throw new Error(`Geçersiz kategori: ${patch.category}`);
     }
     const cleaned: Record<string, unknown> = {};

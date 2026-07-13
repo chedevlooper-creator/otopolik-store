@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Convex codegen — not hand-edited, see CLAUDE.md.
+    "convex/_generated/**",
   ]),
 ]);
 

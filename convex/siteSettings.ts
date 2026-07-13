@@ -5,28 +5,16 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { siteSettingsDefaults } from "./defaults";
+import type { IndexQuery } from "./_types";
 
 const SINGLETON = "site" as const;
-
-async function ensureSingleton(ctx: any): Promise<any> {
-  const existing = await ctx.db
-    .query("siteSettings")
-    .withIndex("by_singleton", (q: any) => q.eq("singleton", SINGLETON))
-    .unique();
-  if (existing) return existing._id;
-  return await ctx.db.insert("siteSettings", {
-    singleton: SINGLETON,
-    ...siteSettingsDefaults(),
-    updatedAt: Date.now(),
-  });
-}
 
 export const getSettings = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db
       .query("siteSettings")
-      .withIndex("by_singleton", (q: any) => q.eq("singleton", SINGLETON))
+      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
       .unique();
   },
 });
@@ -34,7 +22,16 @@ export const getSettings = query({
 export const ensureSettings = mutation({
   args: {},
   handler: async (ctx) => {
-    return await ensureSingleton(ctx);
+    const existing = await ctx.db
+      .query("siteSettings")
+      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
+      .unique();
+    if (existing) return existing._id;
+    return await ctx.db.insert("siteSettings", {
+      singleton: SINGLETON,
+      ...siteSettingsDefaults(),
+      updatedAt: Date.now(),
+    });
   },
 });
 
@@ -54,7 +51,17 @@ export const updateSettings = mutation({
     matTrunkPrice: v.optional(v.number()),
   },
   handler: async (ctx, patch) => {
-    const id = await ensureSingleton(ctx);
+    const existing = await ctx.db
+      .query("siteSettings")
+      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
+      .unique();
+    const id = existing
+      ? existing._id
+      : await ctx.db.insert("siteSettings", {
+          singleton: SINGLETON,
+          ...siteSettingsDefaults(),
+          updatedAt: Date.now(),
+        });
     // undefined değerleri atla — patch partial update
     const cleaned: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(patch)) {

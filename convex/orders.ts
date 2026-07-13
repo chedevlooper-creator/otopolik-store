@@ -90,11 +90,11 @@ export const updateStatus = mutation({
     status: v.string(),
   },
   handler: async (ctx, { id, status }) => {
-    if (!STATUS_VALUES.includes(status as any)) {
+    if (!STATUS_VALUES.includes(status as (typeof STATUS_VALUES)[number])) {
       throw new Error(`Geçersiz durum: ${status}`);
     }
     await ctx.db.patch(id, {
-      status: status as any,
+      status: status as (typeof STATUS_VALUES)[number],
       updatedAt: Date.now(),
     });
   },

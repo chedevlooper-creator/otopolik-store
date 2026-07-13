@@ -16,3 +16,8 @@ export type DataModel = {
   products: GenericDoc;
   orders: GenericDoc;
 };
+
+export type Doc<TableName extends keyof DataModel> = DataModel[TableName] & {
+  _id: Id<TableName>;
+  _creationTime: number;
+};

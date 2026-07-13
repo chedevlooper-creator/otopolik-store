@@ -37,6 +37,15 @@ export type DashboardStats = {
   warning: string | null;
 };
 
+type RecentOrderRow = {
+  _id: string;
+  customerName: string;
+  items?: { name: string }[];
+  total: number;
+  status: string;
+  createdAt: number;
+};
+
 const STATUS_LABELS: Record<string, string> = {
   pending: "Onay bekleniyor",
   confirmed: "Onaylandı",
@@ -88,9 +97,11 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   try {
     const stats = await client.query(api.orders.getStats, {});
-    const recentRaw = await client.query(api.orders.listRecent, { limit: 5 });
+    const recentRaw = (await client.query(api.orders.listRecent, {
+      limit: 5,
+    })) as RecentOrderRow[];
 
-    const recentOrders: RecentOrder[] = (recentRaw as any[]).map((o) => ({
+    const recentOrders: RecentOrder[] = recentRaw.map((o) => ({
       id: shortId(String(o._id)),
       musteri: o.customerName ?? "—",
       urun: o.items?.[0]?.name ?? "Özel tasarım",

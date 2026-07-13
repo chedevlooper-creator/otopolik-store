@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import {
@@ -115,10 +115,7 @@ function NewsletterForm() {
 }
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
-  useEffect(() => {
-    setCurrentYear(new Date().getFullYear());
-  }, []);
+  const [currentYear] = useState(() => new Date().getFullYear());
 
   return (
     <footer className="border-t border-border bg-background text-white">
@@ -219,7 +216,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-dashed border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-muted">
-          <span className="spec-value">© {currentYear ?? 2026} {siteConfig.name}</span>
+          <span className="spec-value">© {currentYear} {siteConfig.name}</span>
           <div className="flex items-center gap-4">
             <span className="spec-value text-white/20" aria-hidden="true">|</span>
             <span className="spec-value">Premium EVA Paspas Üreticisi</span>
