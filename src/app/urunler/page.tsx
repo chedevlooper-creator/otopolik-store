@@ -91,96 +91,116 @@ export default async function ProductsPage({
         </p>
       </div>
 
-      {/* Arama + sıralama */}
-      <form method="GET" action="/urunler" className="mb-6 flex flex-col gap-3 sm:flex-row">
-        {marka && <input type="hidden" name="marka" value={marka} />}
-        {kategori && <input type="hidden" name="kategori" value={kategori} />}
-        <div className="relative flex-1">
-          <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden="true" />
-          <input
-            type="search"
-            name="q"
-            defaultValue={q ?? ""}
-            placeholder="Marka veya model arayın (örn. Golf, Egea)..."
-            className={`${FIELD} w-full py-3 pl-11 pr-4`}
-          />
-        </div>
-        <input
-          type="text"
-          name="yil"
-          defaultValue={yil ?? ""}
-          placeholder="Model yılı / kasa"
-          className={`${FIELD} px-5 py-3`}
-        />
-        <select
-          name="sirala"
-          defaultValue={sirala ?? "onerilen"}
-          className={`${FIELD} px-5 py-3 font-medium`}
-        >
-          {SORTS.map((s) => (
-            <option key={s.key} value={s.key}>{s.label}</option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="btn-press bg-brand-red px-7 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-brand-red-dark"
-        >
-          Ara
-        </button>
-      </form>
+      {/* Mobilde varsayılan kapalı filtre paneli — saf CSS checkbox-hack (JS gerektirmez);
+          sm+ üzerinde checkbox/label gizlenir ve panel her zaman görünür kalır. */}
+      <input
+        type="checkbox"
+        id="filtre-toggle"
+        defaultChecked={activeFilterCount > 0}
+        className="peer sr-only"
+      />
+      <label
+        htmlFor="filtre-toggle"
+        className="btn-press mb-4 flex cursor-pointer items-center justify-between border border-border bg-surface px-4 py-3 text-sm font-semibold text-white sm:hidden"
+      >
+        <span>
+          Filtrele{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+        </span>
+        <span className="text-muted transition-transform peer-checked:rotate-180" aria-hidden="true">▾</span>
+      </label>
 
-      {/* Kategori filtreleri */}
-      <div className="mb-3 flex flex-wrap gap-2">
-        <Link
-          href={buildQuery(params, { kategori: undefined })}
-          className={`${FILTER_PILL} ${
-            !kategori
-              ? "border-sand bg-surface text-sand"
-              : "border-border text-muted hover:border-sand hover:text-sand"
-          }`}
-        >
-          Tüm Kategoriler
-        </Link>
-        {CATEGORIES.map((cat) => (
+      <div className="mb-8 hidden peer-checked:block sm:block">
+        {/* Arama + sıralama */}
+        <form method="GET" action="/urunler" className="mb-6 flex flex-col gap-3 sm:flex-row">
+          {marka && <input type="hidden" name="marka" value={marka} />}
+          {kategori && <input type="hidden" name="kategori" value={kategori} />}
+          <div className="relative flex-1">
+            <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden="true" />
+            <input
+              type="search"
+              name="q"
+              defaultValue={q ?? ""}
+              placeholder="Marka veya model arayın (örn. Golf, Egea)..."
+              className={`${FIELD} w-full py-3 pl-11 pr-4`}
+            />
+          </div>
+          <input
+            type="text"
+            name="yil"
+            defaultValue={yil ?? ""}
+            placeholder="Model yılı / kasa"
+            className={`${FIELD} px-5 py-3`}
+          />
+          <select
+            name="sirala"
+            defaultValue={sirala ?? "onerilen"}
+            className={`${FIELD} px-5 py-3 font-medium`}
+          >
+            {SORTS.map((s) => (
+              <option key={s.key} value={s.key}>{s.label}</option>
+            ))}
+          </select>
+          <button
+            type="submit"
+            className="btn-press bg-brand-red px-7 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-brand-red-dark"
+          >
+            Ara
+          </button>
+        </form>
+
+        {/* Kategori filtreleri */}
+        <div className="mb-3 flex flex-wrap gap-2">
           <Link
-            key={cat.key}
-            href={buildQuery(params, { kategori: cat.key })}
+            href={buildQuery(params, { kategori: undefined })}
             className={`${FILTER_PILL} ${
-              kategori === cat.key
+              !kategori
                 ? "border-sand bg-surface text-sand"
                 : "border-border text-muted hover:border-sand hover:text-sand"
             }`}
           >
-            {cat.label}
+            Tüm Kategoriler
           </Link>
-        ))}
-      </div>
+          {CATEGORIES.map((cat) => (
+            <Link
+              key={cat.key}
+              href={buildQuery(params, { kategori: cat.key })}
+              className={`${FILTER_PILL} ${
+                kategori === cat.key
+                  ? "border-sand bg-surface text-sand"
+                  : "border-border text-muted hover:border-sand hover:text-sand"
+              }`}
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
 
-      {/* Marka filtreleri */}
-      <div className="mb-8 flex flex-wrap gap-2">
-        <Link
-          href={buildQuery(params, { marka: undefined })}
-          className={`${FILTER_PILL} ${
-            !marka
-              ? "border-sand bg-surface text-sand"
-              : "border-border text-muted hover:border-sand hover:text-white"
-          }`}
-        >
-          Tüm Markalar
-        </Link>
-        {brands.map((brand) => (
+        {/* Marka filtreleri */}
+        <div className="flex flex-wrap gap-2">
           <Link
-            key={brand}
-            href={buildQuery(params, { marka: brand })}
+            href={buildQuery(params, { marka: undefined })}
             className={`${FILTER_PILL} ${
-              marka === brand
+              !marka
                 ? "border-sand bg-surface text-sand"
                 : "border-border text-muted hover:border-sand hover:text-white"
             }`}
           >
-            {brand}
+            Tüm Markalar
           </Link>
-        ))}
+          {brands.map((brand) => (
+            <Link
+              key={brand}
+              href={buildQuery(params, { marka: brand })}
+              className={`${FILTER_PILL} ${
+                marka === brand
+                  ? "border-sand bg-surface text-sand"
+                  : "border-border text-muted hover:border-sand hover:text-white"
+              }`}
+            >
+              {brand}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="mb-5 flex items-center justify-between text-sm text-muted">
