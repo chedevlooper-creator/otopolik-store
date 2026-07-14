@@ -23,12 +23,7 @@ export type VehicleModel = {
   bodyType: VehicleBodyType;
 };
 
-export type VehicleBrand = {
-  name: string;
-  models: VehicleModel[];
-};
-
-export function getBodyTypeFromModel(fullName: string): VehicleBodyType {
+function getBodyTypeFromModel(fullName: string): VehicleBodyType {
   const parts = fullName.split(" ");
   const lastPart = parts[parts.length - 1];
   const known: VehicleBodyType[] = [
@@ -48,15 +43,7 @@ export function getBodyTypeFromModel(fullName: string): VehicleBodyType {
   return "Sedan";
 }
 
-export function getCategoryByBodyType(bodyType: VehicleBodyType): "eva-3d" | "eva-havuzlu" {
-  // SUV, Pickup, Van -> premium kategori
-  if (["SUV", "Pickup", "Van", "MPV", "Crossover", "Roadster", "Microcar"].includes(bodyType)) {
-    return "eva-havuzlu";
-  }
-  return "eva-3d";
-}
-
-export function getBasePriceByBodyType(bodyType: VehicleBodyType): number {
+function getBasePriceByBodyType(bodyType: VehicleBodyType): number {
   switch (bodyType) {
     case "SUV":
     case "Crossover":
@@ -341,11 +328,4 @@ export function getVehiclePrice(brand: string, modelName: string): number {
   const found = models.find((m) => m.name === modelName);
   if (!found) return 1290;
   return getBasePriceByBodyType(found.bodyType);
-}
-
-export function getVehicleCategory(brand: string, modelName: string): "eva-3d" | "eva-havuzlu" {
-  const models = getModelsByBrand(brand);
-  const found = models.find((m) => m.name === modelName);
-  if (!found) return "eva-3d";
-  return getCategoryByBodyType(found.bodyType);
 }
