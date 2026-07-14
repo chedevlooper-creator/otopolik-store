@@ -10,7 +10,7 @@ import { getShippingCost } from "@/lib/shipping";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
-import { ShieldCheckIcon, TruckIcon, Undo2Icon } from "lucide-react";
+import { ShieldCheckIcon, TruckIcon } from "lucide-react";
 
 interface FormErrors {
   fullName?: string;
@@ -201,7 +201,8 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      // Convex'e siparişi kaydet
+      let orderSaved = false;
+
       if (convexReady) {
         await createOrder({
           customerName: form.fullName,
@@ -222,15 +223,19 @@ export default function CheckoutPage() {
           total: orderTotal,
           notes: form.note || undefined,
         });
+        orderSaved = true;
       }
+
+      if (orderSaved) clearCart();
+      router.push("/tesekkurler");
     } catch (err) {
       console.error("Failed to save order to Convex:", err);
+      setSubmitError(
+        "Sipariş kaydı şu anda oluşturulamadı. WhatsApp penceresindeki özeti göndererek devam edebilirsiniz; sepetiniz korunuyor."
+      );
     } finally {
       setIsSubmitting(false);
     }
-
-    clearCart();
-    router.push("/tesekkurler");
   }
 
   return (
@@ -265,7 +270,7 @@ export default function CheckoutPage() {
                 onBlur={(e) => validateField("fullName", e.target.value)}
                 aria-invalid={Boolean(errors.fullName)}
                 aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
-                className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
                   errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
@@ -291,7 +296,7 @@ export default function CheckoutPage() {
                 aria-invalid={Boolean(errors.phone)}
                 aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
                 placeholder="05XX XXX XX XX"
-                className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+                className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
                   errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
@@ -316,7 +321,7 @@ export default function CheckoutPage() {
               onBlur={(e) => validateField("city", e.target.value)}
               aria-invalid={Boolean(errors.city)}
               aria-describedby={errors.city ? "checkout-city-error" : undefined}
-              className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+              className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
                 errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
@@ -341,7 +346,7 @@ export default function CheckoutPage() {
               onBlur={(e) => validateField("address", e.target.value)}
               aria-invalid={Boolean(errors.address)}
               aria-describedby={errors.address ? "checkout-address-error" : undefined}
-              className={`mt-1.5 w-full border bg-surface px-4 py-2.5 font-normal focus:outline-none ${
+              className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
                 errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
@@ -361,7 +366,7 @@ export default function CheckoutPage() {
               autoComplete="off"
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
-              className="mt-1.5 w-full border border-border bg-surface px-4 py-2.5 font-normal focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
           </label>
 
@@ -370,7 +375,7 @@ export default function CheckoutPage() {
               Ödeme Şekli
             </legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 border border-border bg-surface px-4 py-3 has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3.5 transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -383,7 +388,7 @@ export default function CheckoutPage() {
                   WhatsApp üzerinden sipariş onayı
                 </span>
               </label>
-              <label className="flex items-center gap-3 border border-border bg-surface px-4 py-3 has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3.5 transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -394,7 +399,7 @@ export default function CheckoutPage() {
                 />
                 <span className="text-sm font-medium text-foreground">Kapıda Ödeme</span>
               </label>
-              <label className="flex items-center gap-3 border border-dashed border-border px-4 py-3 opacity-60">
+              <label className="flex items-center gap-3 rounded-xl border border-dashed border-border px-4 py-3.5 opacity-60">
                 <input type="radio" name="payment" value="card" disabled />
                 <span className="text-sm font-medium text-muted">
                   Kredi kartı ile ödeme — yakında aktif olacak
@@ -404,7 +409,7 @@ export default function CheckoutPage() {
           </fieldset>
         </div>
 
-        <aside className="h-fit border border-border bg-surface p-6">
+        <aside className="premium-card h-fit rounded-[1.5rem] p-6 shadow-[0_28px_70px_rgba(0,0,0,.25)]">
           <h2 className="font-heading text-xl font-bold text-white">Sipariş Özeti</h2>
           <ul className="mt-4 space-y-2 text-sm text-muted">
             {items.map((item) => (
@@ -431,7 +436,7 @@ export default function CheckoutPage() {
           {submitError ? (
             <p
               role="alert"
-              className="mt-4 border border-brand-red bg-brand-red/10 px-3 py-2 text-xs font-medium text-brand-red"
+              className="mt-4 rounded-xl border border-brand-red bg-brand-red/10 px-3 py-2 text-xs font-medium text-brand-red"
             >
               {submitError}
             </p>
@@ -439,7 +444,7 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-press mt-6 flex w-full items-center justify-center bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-press mt-6 flex w-full items-center justify-center rounded-xl bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-brand-red/20 hover:bg-brand-red-dark disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
           </button>
@@ -447,11 +452,7 @@ export default function CheckoutPage() {
           <ul className="mt-5 space-y-2 border-t border-border pt-5 text-[11px] text-muted">
             <li className="flex items-center gap-2">
               <ShieldCheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden="true" />
-              <span>SSL şifreli bağlantı ile güvenli iletim</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Undo2Icon className="h-3.5 w-3.5 shrink-0 text-sand" aria-hidden="true" />
-              <span>14 gün koşulsuz iade garantisi</span>
+              <span>Uyumluluk siparişten önce teyit edilir</span>
             </li>
             <li className="flex items-center gap-2">
               <TruckIcon className="h-3.5 w-3.5 shrink-0 text-sand" aria-hidden="true" />

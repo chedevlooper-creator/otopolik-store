@@ -5,7 +5,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { siteSettingsDefaults } from "./defaults";
-import type { IndexQuery } from "./_types";
 
 const SINGLETON = "site" as const;
 
@@ -14,7 +13,7 @@ export const getSettings = query({
   handler: async (ctx) => {
     return await ctx.db
       .query("siteSettings")
-      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
+      .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
       .unique();
   },
 });
@@ -24,7 +23,7 @@ export const ensureSettings = mutation({
   handler: async (ctx) => {
     const existing = await ctx.db
       .query("siteSettings")
-      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
+      .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
       .unique();
     if (existing) return existing._id;
     return await ctx.db.insert("siteSettings", {
@@ -53,7 +52,7 @@ export const updateSettings = mutation({
   handler: async (ctx, patch) => {
     const existing = await ctx.db
       .query("siteSettings")
-      .withIndex("by_singleton", (q: IndexQuery) => q.eq("singleton", SINGLETON))
+      .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
       .unique();
     const id = existing
       ? existing._id

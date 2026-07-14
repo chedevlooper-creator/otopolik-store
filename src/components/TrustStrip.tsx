@@ -1,34 +1,32 @@
-import { ShieldCheckIcon, LockIcon, BadgeCheckIcon, CreditCardIcon, BanknoteIcon, MessageCircleIcon } from "lucide-react";
+import {
+  BanknoteIcon,
+  Layers3Icon,
+  MessageCircleCheckIcon,
+  RulerIcon,
+} from "lucide-react";
 
 const TRUST_ITEMS = [
-  { icon: ShieldCheckIcon, label: "SSL Şifreli" },
-  { icon: BadgeCheckIcon, label: "Güvenli Ödeme" },
-  { icon: BanknoteIcon, label: "Kapıda Ödeme" },
-  { icon: MessageCircleIcon, label: "WhatsApp Onay" },
-  { icon: CreditCardIcon, label: "Kredi Kartı (Yakında)" },
-  { icon: LockIcon, label: "KVKK Uyumlu" },
+  { icon: RulerIcon, label: "Araca özel ölçü", detail: "Taban hattına milimetrik uyum" },
+  { icon: Layers3Icon, label: "Premium EVA", detail: "Kokusuz ve su geçirmez yapı" },
+  { icon: MessageCircleCheckIcon, label: "Kalıp teyidi", detail: "Üretim öncesi uyumluluk kontrolü" },
+  { icon: BanknoteIcon, label: "Kapıda ödeme", detail: "Teslimatta ödeme seçeneği" },
 ];
 
 export default function TrustStrip() {
   return (
-    <section
-      aria-label="Güven sinyalleri"
-      className="border-y border-dashed border-border bg-surface/40"
-    >
-      <div className="mx-auto max-w-7xl px-4 py-5">
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {TRUST_ITEMS.map(({ icon: Icon, label }) => (
-            <li
-              key={label}
-              className="flex items-center justify-center gap-2 border border-border bg-background/60 px-3 py-2.5"
-            >
-              <Icon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
-              <span className="spec-value text-[10px] font-bold uppercase tracking-[0.12em] text-foreground/85">
-                {label}
-              </span>
-            </li>
-          ))}
-        </ul>
+    <section aria-label="Ürün ve alışveriş güvenceleri" className="border-y border-white/8 bg-[#090a0d]">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-white/8 px-4 sm:px-0 lg:grid-cols-4">
+        {TRUST_ITEMS.map(({ icon: Icon, label, detail }) => (
+          <div key={label} className="group flex min-h-24 items-center gap-3 bg-background px-3 py-5 transition-colors hover:bg-surface sm:px-6">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-sand transition-colors group-hover:border-sand/25 group-hover:bg-sand/8">
+              <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-white">{label}</p>
+              <p className="mt-1 text-[11px] leading-4 text-white/62 sm:text-xs">{detail}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

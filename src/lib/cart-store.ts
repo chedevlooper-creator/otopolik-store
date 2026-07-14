@@ -68,7 +68,7 @@ export function addItem(item: CartItem) {
     setItems(
       items.map((line) =>
         line.slug === item.slug && line.color === item.color
-          ? { ...line, quantity: line.quantity + item.quantity }
+          ? { ...line, ...item, quantity: line.quantity + item.quantity }
           : line
       )
     );

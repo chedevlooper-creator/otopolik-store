@@ -54,7 +54,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
               onClick={() => setColor(c.name)}
               aria-label={`Renk: ${c.name}`}
               aria-pressed={color === c.name}
-              className={`h-11 w-11 border-2 transition-transform sm:h-9 sm:w-9 ${
+              className={`h-11 w-11 rounded-full border-2 transition-transform sm:h-9 sm:w-9 ${
                 color === c.name ? "scale-110 border-sand" : "border-border hover:border-muted"
               }`}
               style={{ backgroundColor: c.hex }}
@@ -65,7 +65,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
 
       <div>
         <p className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">Adet</p>
-        <div className="inline-flex items-center border border-border">
+        <div className="inline-flex items-center rounded-full border border-border bg-surface">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -94,7 +94,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => addItem(buildLine())}
-          className="btn-press flex-1 bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+          className="btn-press red-glow flex-1 rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold text-white hover:bg-brand-red-dark"
         >
           Sepete Ekle
         </button>
@@ -105,7 +105,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             closeDrawer();
             router.push("/odeme");
           }}
-          className="btn-press flex-1 border border-border px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
+          className="btn-press flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04]"
         >
           Hemen Al
         </button>
@@ -139,7 +139,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             type="button"
             onClick={() => addItem(buildLine())}
             tabIndex={footerVisible ? -1 : undefined}
-            className="btn-press min-h-11 flex-1 bg-brand-red px-5 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+            className="btn-press min-h-11 flex-1 rounded-full bg-brand-red px-5 py-3 text-sm font-bold text-white hover:bg-brand-red-dark"
           >
             Sepete Ekle
           </button>

@@ -1,114 +1,137 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
+import {
+  ArrowRightIcon,
+  DropletsIcon,
+  Layers3Icon,
+  RulerIcon,
+  ShieldCheckIcon,
+} from "lucide-react";
 
-// İkon ızgarası yerine kesim föyü dili: malzemenin teknik değer tablosu
-const SPEC_ROWS = [
-  { key: "MALZEME", value: "Premium EVA — kokusuz, esnek, kırılmaya dayanıklı" },
-  { key: "YÜZEY", value: "Su geçirmez baklava hücre; sıvıyı emmez, içinde tutar" },
-  { key: "KALIP", value: "Aracınızın taban hatlarına göre kesim, milimetrik uyum" },
-  { key: "KENAR", value: "Yüksek kenar yapısı — çamur ve su dışarı taşmaz" },
-  { key: "KULLANIM", value: "4 mevsim: yazın serin, kışın sıcak tutar" },
+const FEATURES = [
+  { icon: RulerIcon, title: "Milimetrik kalıp", text: "Aracın taban hattına özel CNC kesim" },
+  { icon: DropletsIcon, title: "Hücreli yüzey", text: "Su ve çamuru paspasın içinde tutar" },
+  { icon: Layers3Icon, title: "Güçlendirilmiş set", text: "Sürücü topukluğu ve sabitleme noktaları" },
+  { icon: ShieldCheckIcon, title: "Dört mevsim", text: "Kokusuz, esnek ve su geçirmez EVA" },
 ];
 
 export default function Showcase() {
   return (
-    <>
-      {/* Neden EVA — malzeme hikâyesi + teknik tablo */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <ScrollReveal>
-            <div className="relative aspect-[4/3] overflow-hidden border border-border">
-              <Image
-                src="/media/premium-eva-campaign.png"
-                alt="Premium EVA paspasın araç içindeki görünümü"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                quality={90}
-                className="object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
-              />
+    <section className="home-section relative overflow-hidden">
+      <div className="relative mx-auto max-w-7xl px-4">
+        <ScrollReveal>
+          <div className="mb-10 flex flex-col gap-6 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <span className="section-kicker">Malzeme ve gerçek uygulama</span>
+              <h2 className="section-title mt-5">
+                Yakından bakınca fark edilen <span className="text-sand">EVA işçiliği.</span>
+              </h2>
+              <p className="section-copy mt-5 max-w-2xl">
+                Gösteriş için değil, araç tabanında kusursuz çalışması için tasarlandı. Görsellerin tamamı gerçek EVA set ve uygulama detaylarıdır.
+              </p>
             </div>
-          </ScrollReveal>
-          <ScrollReveal delay={120}>
-            <span className="spec-label">Neden EVA paspas?</span>
-            <h2 className="mt-4 font-heading text-4xl font-bold text-white sm:text-5xl">
-              Ayağınızın altında
-              <span className="block text-sand">gerçek fark</span>
-            </h2>
-            <p className="mt-5 leading-relaxed text-muted">
-              Klasik dokuma paspasların aksine EVA malzeme suyu, çamuru ve tozu
-              emmez; aracınızın tabanına sızdırmaz. Aşağıdaki değerler her sette
-              standarttır.
-            </p>
-            <dl className="mt-8">
-              {SPEC_ROWS.map((row) => (
-                <div
-                  key={row.key}
-                  className="flex flex-col gap-1 border-b border-dashed border-border py-3 sm:flex-row sm:items-baseline sm:gap-6"
-                >
-                  <dt className="spec-value w-28 shrink-0 text-[11px] font-medium tracking-[0.18em] text-sand">
-                    {row.key}
-                  </dt>
-                  <dd className="text-sm leading-relaxed text-foreground/85">
-                    {row.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
             <Link
-              href="/urunler"
-              className="btn-press mt-8 inline-flex bg-brand-red px-7 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+              href="/olusturucu"
+              className="inline-flex min-h-11 w-fit items-center gap-2 text-sm font-semibold text-sand transition-colors hover:text-white"
             >
-              Aracının Paspasını Bul
+              Kendi setini oluştur
+              <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+          </div>
+        </ScrollReveal>
 
-      {/* Kolay temizlik */}
-      <section className="bg-eva relative overflow-hidden border-y border-border bg-surface py-16 text-white sm:py-20">
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 lg:grid-cols-2 lg:gap-16">
-          <ScrollReveal className="order-2 lg:order-1">
-            <span className="spec-label">Kolay temizlik</span>
-            <h2 className="mt-4 font-heading text-4xl font-bold sm:text-5xl">
-              Sadece bir sıkım suyla
-              <span className="block text-sand">tertemiz</span>
-            </h2>
-            <p className="mt-5 leading-relaxed text-muted">
-              Paspası araçtan çıkarın, üzerine su tutun; kirler saniyeler içinde
-              akıp gitsin. Deterjan ya da özel temizlik malzemesi gerekmez.
-            </p>
-            <div className="mt-7 grid grid-cols-2 gap-4 sm:max-w-sm">
-              <div className="relative aspect-square overflow-hidden border border-border">
-                <Image
-                  src="/media/eva-detail-gray.png"
-                  alt="EVA paspas su damlası detayı"
-                  fill
-                  sizes="200px"
-                  quality={90}
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center gap-3 text-sm text-foreground/80">
-                <p><strong className="text-white">Su geçirmez</strong> yüzey yapısı</p>
-                <p><strong className="text-white">Deterjansız</strong> temizlik</p>
-              </div>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={120} className="order-1 lg:order-2">
-            <div className="relative aspect-[4/3] overflow-hidden border border-border shadow-2xl shadow-black/40">
+        <div className="grid gap-4 lg:grid-cols-12 lg:auto-rows-[260px]">
+          <ScrollReveal delay={60} className="h-full lg:col-span-7 lg:row-span-2">
+            <figure className="proof-card group relative h-[420px] overflow-hidden lg:h-full">
               <Image
-                src="/media/eva-complete-beige.png"
-                alt="Bej EVA paspas seti görünümü"
+                src="/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg"
+                alt="Kırmızı kenarlı siyah EVA paspasın araç içindeki gerçek uygulaması"
                 fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                sizes="(min-width: 1024px) 58vw, 100vw"
                 quality={90}
-                className="object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
               />
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/5 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                <span className="spec-value text-[10px] font-semibold uppercase tracking-[0.16em] text-sand">01 · Gerçek uygulama</span>
+                <p className="mt-2 font-heading text-3xl font-bold text-white sm:text-4xl">Taban hattını eksiksiz takip eder</p>
+                <p className="mt-2 max-w-lg text-sm leading-6 text-white/68">Kenar kıvrımları, sabitleme noktaları ve pedal boşluğu araca göre kesilir.</p>
+              </figcaption>
+            </figure>
+          </ScrollReveal>
+
+          <ScrollReveal delay={110} className="h-full lg:col-span-5">
+            <figure className="proof-card premium-grid group relative h-[320px] overflow-hidden bg-[#111318] lg:h-full">
+              <Image
+                src="/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png"
+                alt="Beş parçalı siyah EVA oto paspas seti"
+                fill
+                sizes="(min-width: 1024px) 42vw, 100vw"
+                quality={90}
+                className="object-contain p-7 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-10"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/90 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5">
+                <span className="spec-value text-[10px] font-semibold uppercase tracking-[0.15em] text-sand">02 · Tam set</span>
+                <p className="mt-1 font-heading text-2xl font-bold text-white">Ön ve arka sıra birlikte</p>
+              </figcaption>
+            </figure>
+          </ScrollReveal>
+
+          <ScrollReveal delay={150} className="h-full lg:col-span-3">
+            <figure className="proof-card group relative h-[300px] overflow-hidden lg:h-full">
+              <Image
+                src="/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg"
+                alt="Bej EVA paspasın araç içindeki gerçek uygulaması"
+                fill
+                sizes="(min-width: 1024px) 25vw, 100vw"
+                quality={90}
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-transparent to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5">
+                <span className="spec-value text-[10px] font-semibold uppercase tracking-[0.15em] text-sand">03 · Renk uyumu</span>
+                <p className="mt-1 font-heading text-2xl font-bold text-white">İç mekâna göre seçim</p>
+              </figcaption>
+            </figure>
+          </ScrollReveal>
+
+          <ScrollReveal delay={190} className="h-full lg:col-span-2">
+            <figure className="proof-card group relative h-[300px] overflow-hidden lg:h-full">
+              <Image
+                src="/media/scraped/evaotopaspas/paspas-seti/06-metal-topukluk.jpg"
+                alt="EVA paspas üzerindeki metal sürücü topukluğu"
+                fill
+                sizes="(min-width: 1024px) 17vw, 100vw"
+                quality={90}
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-transparent to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5">
+                <span className="spec-value text-[10px] font-semibold uppercase tracking-[0.15em] text-sand">04 · Detay</span>
+                <p className="mt-1 font-heading text-2xl font-bold text-white">Metal topukluk</p>
+              </figcaption>
+            </figure>
           </ScrollReveal>
         </div>
-      </section>
-    </>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map(({ icon: Icon, title, text }, index) => (
+            <ScrollReveal key={title} delay={index * 60}>
+              <article className="flex h-full gap-3 rounded-2xl border border-white/8 bg-white/[0.025] p-4 transition-[border-color,background-color] hover:border-white/14 hover:bg-white/[0.045]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.05] text-sand">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">{title}</h3>
+                  <p className="mt-1 text-xs leading-5 text-white/62">{text}</p>
+                </div>
+              </article>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

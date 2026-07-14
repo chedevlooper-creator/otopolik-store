@@ -1,22 +1,21 @@
 @import "tailwindcss";
 
-/*
- * OTO POLİK — "Atölye kesim föyü" tasarım sistemi
- * Zemin: antrasit EVA levha. Vurgu: logo kırmızısı (yalnızca CTA ve kenar/overlok),
- * ikincil vurgu: bej EVA (etiket, spek yazıları, rakamlar).
- */
+/* OTO POLİK — premium performance atelier */
 :root {
-  --background: #101114;
-  --foreground: #f1efe9;
-  --brand-red: #c8102e;
-  --brand-red-dark: #9a0c23;
-  --brand-black: #17181c;
-  --surface: #17181c;
-  --surface-hover: #1d1f24;
-  --border: #2a2c33;
-  --muted: #9a9da6;
-  --sand: #d3bd96;
-  --sand-dim: #a8946e;
+  --background: #08090c;
+  --foreground: #f7f5f2;
+  --brand-red: #e31937;
+  --brand-red-dark: #b90e29;
+  --brand-black: #0d0f13;
+  --surface: #111318;
+  --surface-hover: #181b21;
+  --border: #272a31;
+  --muted: #a8abb3;
+  --sand: #e1c9a2;
+  --sand-dim: #aa8d64;
+  --rule: rgba(247, 245, 242, 0.09);
+  --radius-card: 1.5rem;
+  --section-space: clamp(4.75rem, 7vw, 6.5rem);
 }
 
 @theme inline {
@@ -46,6 +45,10 @@ body {
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 7% 2%, rgba(227, 25, 55, 0.08), transparent 26rem),
+    radial-gradient(circle at 95% 18%, rgba(225, 201, 162, 0.045), transparent 32rem);
+  background-attachment: fixed;
 }
 
 h1,
@@ -60,9 +63,8 @@ h1,
 h2,
 h3 {
   text-wrap: balance;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  line-height: 0.95;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
 }
 
 ::selection {
@@ -111,6 +113,84 @@ h3 {
     );
 }
 
+/* Ortak premium yüzeyler */
+.surface-glass {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(145deg, rgba(22, 24, 30, 0.94), rgba(10, 11, 15, 0.9));
+  box-shadow: 0 26px 78px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.premium-card {
+  border: 1px solid var(--rule);
+  background: linear-gradient(145deg, rgba(23, 25, 31, 0.95), rgba(12, 14, 18, 0.99));
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.24);
+}
+
+.premium-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.red-glow {
+  box-shadow: 0 18px 50px rgba(227, 25, 55, 0.26);
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-spec), ui-monospace, monospace;
+  font-size: 0.69rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.19em;
+  color: var(--sand);
+}
+
+.section-kicker::before {
+  content: "";
+  width: 1.65rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-red), #ff6b81);
+  box-shadow: 0 0 18px rgba(227, 25, 55, 0.7);
+}
+
+/* Ana sayfa ritmi ve başlık ölçeği */
+.home-section {
+  padding-block: var(--section-space);
+}
+
+.home-section + .home-section {
+  padding-top: clamp(3.5rem, 5vw, 5rem);
+}
+
+.section-title {
+  color: var(--foreground);
+  font-family: var(--font-heading), "Arial Narrow", Arial, sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.65rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.section-copy {
+  color: rgba(247, 245, 242, 0.66);
+  font-size: clamp(0.9375rem, 1.15vw, 1rem);
+  line-height: 1.75;
+}
+
+.proof-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+}
+
 .bg-eva-strong {
   background-image: repeating-linear-gradient(
       45deg,
@@ -141,7 +221,9 @@ h3 {
   content: "";
   width: 1.25rem;
   height: 2px;
-  background: var(--brand-red);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-red), #ff6b81);
+  box-shadow: 0 0 16px rgba(227, 25, 55, 0.55);
   flex-shrink: 0;
 }
 
@@ -183,15 +265,16 @@ h3 {
 /* Scroll reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(16px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
 .reveal.reveal-visible {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -209,8 +292,32 @@ h3 {
   .animate-hero,
   .animate-hero-delay-1,
   .animate-hero-delay-2,
+  .animate-hero-delay-3,
   .animate-scroll-cue {
     animation: none !important;
+  }
+
+  .hero-line,
+  .hero-underline,
+  .hero-kicker {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .hero-media-video {
+    display: none;
+  }
+
+  .btn-press:hover,
+  .btn-press:active,
+  .card-lift:hover {
+    transform: none;
+  }
+
+  .proof-card img,
+  .premium-card img {
+    transform: none !important;
+    transition: none !important;
   }
 }
 
@@ -245,15 +352,76 @@ h3 {
 }
 
 .animate-hero {
-  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .animate-hero-delay-1 {
-  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
 
 .animate-hero-delay-2 {
-  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+
+.animate-hero-delay-3 {
+  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+
+/* Sinematik hero — satırlar maske içinden yükselir */
+.hero-line-mask {
+  display: block;
+  overflow: hidden;
+}
+
+@keyframes hero-line-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-line {
+  display: block;
+  transform: translateY(110%);
+  animation: hero-line-up 0.82s cubic-bezier(0.19, 1, 0.22, 1) 0.06s both;
+}
+
+.hero-line--2 {
+  animation-delay: 0.16s;
+}
+
+/* Alt çizgi — satır yerine oturduktan sonra soldan çizilir */
+@keyframes hero-underline-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero-underline {
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: hero-underline-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.72s both;
+}
+
+/* Kicker — hafif gecikmeli, harf aralığı toparlanarak belirir */
+@keyframes hero-kicker-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.42em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.24em;
+  }
+}
+
+.hero-kicker {
+  animation: hero-kicker-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Aşağı kaydır işareti */
@@ -279,8 +447,12 @@ h3 {
     background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+.btn-press:hover {
+  transform: translateY(-1px);
+}
+
 .btn-press:active {
-  transform: scale(0.97);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Kart yükselme efekti */
@@ -290,5 +462,15 @@ h3 {
 }
 
 .card-lift:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
+}
+
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .surface-glass {
+    backdrop-filter: blur(12px);
+  }
 }

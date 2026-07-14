@@ -48,7 +48,7 @@ export default function ColorPicker({
               aria-label={`${c.name} (${c.hex.toUpperCase()})`}
               onClick={() => onSelect(c)}
               title={`${c.name} · ${c.hex.toUpperCase()}`}
-              className={`group/color relative h-12 w-12 border-2 transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand ${
+              className={`group/color relative h-12 w-12 rounded-full border-2 transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand ${
                 isActive
                   ? "scale-110 border-sand shadow-[3px_3px_0_0_var(--brand-red)]"
                   : "border-border hover:scale-105 hover:border-muted"
@@ -58,7 +58,9 @@ export default function ColorPicker({
               {isActive && (
                 <span
                   aria-hidden="true"
-                  className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-[0.14em] text-sand"
+                  className={`absolute inset-0 flex items-center justify-center text-xs font-bold ${
+                    ["Siyah", "Lacivert", "Bordo", "Kahve", "Antrasit"].includes(c.name) ? "text-white" : "text-black"
+                  }`}
                 >
                   ✓
                 </span>

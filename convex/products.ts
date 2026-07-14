@@ -4,11 +4,6 @@
 
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import type { IndexQuery } from "./_types";
-
-type ProductRecord = {
-  isActive: boolean;
-};
 
 const CATEGORIES = [
   "eva-3d",
@@ -39,18 +34,18 @@ export const listActive = query({
   handler: async (ctx, { category }) => {
     if (category) {
       const cat = category as ProductCategory;
-      const all = (await ctx.db
+      const all = await ctx.db
         .query("products")
-        .withIndex("by_category", (q: IndexQuery) => q.eq("category", cat))
-        .collect()) as ProductRecord[];
-      return all;
+        .withIndex("by_category", (q) => q.eq("category", cat))
+        .collect();
+      return all.filter((product) => product.isActive);
     }
 
-    const all = (await ctx.db
+    const all = await ctx.db
       .query("products")
-      .withIndex("by_active", (q: IndexQuery) => q.eq("isActive", true))
-      .collect()) as ProductRecord[];
-    return all.filter((p) => p.isActive);
+      .withIndex("by_active", (q) => q.eq("isActive", true))
+      .collect();
+    return all;
   },
 });
 
@@ -59,7 +54,7 @@ export const getBySlug = query({
   handler: async (ctx, { slug }) => {
     return await ctx.db
       .query("products")
-      .withIndex("by_slug", (q: IndexQuery) => q.eq("slug", slug))
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
       .unique();
   },
 });

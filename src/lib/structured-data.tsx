@@ -2,7 +2,7 @@ import { siteConfig } from "./site-config";
 import { Product } from "./types";
 
 const url = siteConfig.url;
-const logoUrl = `${url}/media/logo.jpg`;
+const logoUrl = `${url}/media/otopolik-logo-3d.png`;
 
 /** Organization schema — tüm sayfalarda kullanılır */
 export function organizationSchema() {

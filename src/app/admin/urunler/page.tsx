@@ -170,7 +170,7 @@ export default function AdminUrunler() {
           model: form.model,
           category: form.category,
           price: form.price,
-          oldPrice: form.oldPrice,
+          oldPrice: form.oldPrice ?? undefined,
           image: form.image,
           badge: form.badge || undefined,
           inStock: form.inStock,

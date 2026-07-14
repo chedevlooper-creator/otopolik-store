@@ -43,9 +43,9 @@ function buildQuery(params: Params, overrides: Partial<Params>) {
   return qs ? `/urunler?${qs}` : "/urunler";
 }
 
-const FILTER_PILL = "border px-4 py-1.5 text-sm font-semibold transition-colors";
+const FILTER_PILL = "rounded-full border px-4 py-2 text-sm font-semibold transition-colors";
 const FIELD =
-  "border border-border bg-surface text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none";
+  "rounded-xl border border-white/10 bg-surface text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none";
 
 export default async function ProductsPage({
   searchParams,
@@ -78,8 +78,8 @@ export default async function ProductsPage({
   const activeFilterCount = [marka, kategori, q, yil].filter(Boolean).length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
-      <div className="mb-8">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
+      <div className="premium-grid mb-10 overflow-hidden rounded-[1.7rem] border border-white/8 bg-surface/55 p-6 sm:p-9">
         <span className="spec-label">Katalog</span>
         <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-bold text-white sm:text-5xl">
           Araca Özel EVA Paspas Setleri
@@ -101,7 +101,7 @@ export default async function ProductsPage({
       />
       <label
         htmlFor="filtre-toggle"
-        className="btn-press mb-4 flex cursor-pointer items-center justify-between border border-border bg-surface px-4 py-3 text-sm font-semibold text-white sm:hidden"
+        className="btn-press mb-4 flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm font-semibold text-white sm:hidden"
       >
         <span>
           Filtrele{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
@@ -216,8 +216,8 @@ export default async function ProductsPage({
       </div>
 
       {filtered.length === 0 ? (
-        <div className="border border-dashed border-border px-6 py-16 text-center">
-          <span className="mx-auto flex h-16 w-16 items-center justify-center border border-border bg-surface">
+        <div className="rounded-[1.7rem] border border-dashed border-border px-6 py-16 text-center">
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-surface">
             <SearchIcon className="h-8 w-8 text-muted" aria-hidden="true" />
           </span>
           <p className="mt-4 font-heading text-xl font-bold uppercase text-white">Sonuç bulunamadı</p>

@@ -13,7 +13,7 @@ type Props = {
 };
 
 const selectClass =
-  "w-full border border-border bg-surface px-4 py-3 text-sm font-medium transition-colors focus:border-sand focus:outline-none";
+  "w-full rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm font-medium transition-colors focus:border-sand focus:outline-none";
 
 export default function VehicleSelector({
   brand,
@@ -50,7 +50,7 @@ export default function VehicleSelector({
           <option value={OTHER_VEHICLE}>Diğer / Listede yok</option>
         </select>
         {brand === OTHER_VEHICLE ? (
-          <div className="flex items-center border border-dashed border-sand-dim bg-surface px-4 py-3 text-xs leading-snug text-sand">
+          <div className="flex items-center rounded-xl border border-dashed border-sand-dim bg-surface px-4 py-3 text-xs leading-snug text-sand">
             Sorun değil! Siparişten sonra WhatsApp&apos;tan araç bilginizi alıp kalıbı teyit ediyoruz.
           </div>
         ) : (

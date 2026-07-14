@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
+
   images: {
     qualities: [75, 90, 95],
   },
@@ -19,12 +21,6 @@ const nextConfig: NextConfig = {
   headers: async () => [
     {
       source: "/media/(.*)",
-      headers: [
-        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-      ],
-    },
-    {
-      source: "/_next/static/(.*)",
       headers: [
         { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
       ],

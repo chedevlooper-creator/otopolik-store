@@ -16,22 +16,44 @@ type Props = {
 export default function SearchModal({ open, onClose }: Props) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    requestAnimationFrame(() => inputRef.current?.focus());
+    if (!open) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const frame = requestAnimationFrame(() => inputRef.current?.focus());
     document.body.style.overflow = "hidden";
     return () => {
+      cancelAnimationFrame(frame);
       document.body.style.overflow = "";
+      previouslyFocused?.focus();
     };
-  }, []);
+  }, [open]);
 
   useEffect(() => {
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [open, onClose]);
 
   const results = useMemo(() => {
     const q = query.trim().toLocaleLowerCase("tr-TR");
@@ -57,10 +79,11 @@ export default function SearchModal({ open, onClose }: Props) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl border border-border bg-surface shadow-2xl"
+        ref={dialogRef}
+        className="surface-glass w-full max-w-2xl overflow-hidden rounded-[1.4rem] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-white/8 px-4 py-4 sm:px-5">
           <SearchIcon className="h-5 w-5 shrink-0 text-sand" aria-hidden="true" />
           <input
             ref={inputRef}
@@ -75,7 +98,7 @@ export default function SearchModal({ open, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Aramayı kapat"
-            className="rounded p-1 text-muted hover:bg-surface-hover hover:text-foreground"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-foreground"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -96,9 +119,9 @@ export default function SearchModal({ open, onClose }: Props) {
                   <Link
                     href={`/urunler/${p.slug}`}
                     onClick={onClose}
-                    className="flex items-center gap-3 border border-transparent px-3 py-2 transition-colors hover:border-border hover:bg-surface-hover"
+                    className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/8 hover:bg-white/[0.04]"
                   >
-                    <span className="relative h-12 w-12 shrink-0 overflow-hidden border border-border bg-background">
+                    <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/8 bg-background">
                       <Image
                         src={p.image}
                         alt=""
@@ -127,7 +150,7 @@ export default function SearchModal({ open, onClose }: Props) {
             </ul>
           )}
         </div>
-        <div className="flex items-center justify-between border-t border-border bg-background/50 px-4 py-2 text-[10px] text-muted">
+        <div className="flex items-center justify-between border-t border-white/8 bg-background/45 px-4 py-3 text-[10px] text-muted sm:px-5">
           <span className="spec-value uppercase tracking-[0.14em]">ESC ile kapat</span>
           <Link
             href="/urunler"

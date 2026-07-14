@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/lib/site-config";
-import { MenuIcon, XIcon, ShoppingCartIcon, PhoneIcon, SearchIcon } from "lucide-react";
+import {
+  BadgeCheckIcon,
+  MenuIcon,
+  XIcon,
+  ShoppingBagIcon,
+  PhoneIcon,
+  SearchIcon,
+} from "lucide-react";
 import SearchModal from "@/components/SearchModal";
+import Logo from "@/components/Logo";
 
 const NAV_LINKS = [
   { href: "/urunler", label: "Ürünler" },
@@ -20,91 +27,131 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuDialogRef = useRef<HTMLDivElement>(null);
   const { totalItems, openDrawer } = useCart();
   const pathname = usePathname();
 
-  // Rota değişince menü render sırasında kapanır (effect'te setState yerine).
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
-    setMenuOpen(false);
-    setSearchOpen(false);
-  }
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setMenuOpen(false);
+      setSearchOpen(false);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!menuOpen) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const menuButton = menuButtonRef.current;
+    const frame = requestAnimationFrame(() => {
+      menuDialogRef.current
+        ?.querySelector<HTMLElement>("button, a[href]")
+        ?.focus();
+    });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !menuDialogRef.current) return;
+      const focusable = Array.from(
+        menuDialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
     return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
+      if (previouslyFocused === menuButton) {
+        menuButton?.focus();
+      }
     };
   }, [menuOpen]);
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? "border-b border-border bg-background/95 shadow-sm backdrop-blur-md"
-          : "border-b border-border bg-background"
+          ? "border-white/10 bg-background/88 shadow-[0_18px_50px_rgba(0,0,0,.34)] backdrop-blur-xl"
+          : "border-white/8 bg-background/75 backdrop-blur-lg"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex h-16 items-center justify-between gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <Image
-              src="/media/logo.jpg"
-              alt={siteConfig.name}
-              width={38}
-              height={38}
-              quality={95}
-              className="rounded-full ring-1 ring-border"
-              priority
-            />
-            <span className="hidden font-heading text-2xl font-bold uppercase tracking-wide text-white sm:block">
-              OTO<span className="text-brand-red">POLİK</span>
-            </span>
-          </Link>
+      <div className="border-b border-white/5 bg-white/[0.025]">
+        <div className="mx-auto flex h-7 max-w-7xl items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/65 sm:justify-between">
+          <span className="inline-flex items-center gap-1.5 text-sand">
+            <BadgeCheckIcon className="h-3 w-3" aria-hidden="true" />
+            6.000+ araç modeli için özel kalıp
+          </span>
+          <span className="hidden sm:inline">
+            {siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz kargo · {siteConfig.estimatedDispatch} içinde kargo
+          </span>
+        </div>
+      </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden items-center md:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative px-4 py-2 text-sm font-semibold uppercase tracking-wider transition-colors ${
-                  pathname === link.href
-                    ? "text-sand after:absolute after:bottom-0 after:left-4 after:right-4 after:h-[2px] after:bg-sand"
-                    : "text-muted hover:text-white"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="flex h-[88px] items-center justify-between gap-3 sm:h-[92px] lg:h-[96px]">
+          <Logo variant="header" />
+
+          <nav className="hidden items-center gap-1 rounded-full border border-white/[0.09] bg-white/[0.035] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.025)] md:flex" aria-label="Ana menü">
+            {NAV_LINKS.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`inline-flex min-h-10 items-center rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.13em] transition-all ${
+                    active
+                      ? "bg-white/[0.1] text-white shadow-sm"
+                      : "text-white/62 hover:bg-white/[0.055] hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Right actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Ürün arama"
-              className="inline-flex h-11 w-11 items-center justify-center text-muted transition-colors hover:text-sand"
+              className="hidden h-11 w-11 items-center justify-center rounded-full border border-transparent text-white/65 transition-all hover:border-white/10 hover:bg-white/[0.05] hover:text-white sm:inline-flex"
             >
-              <SearchIcon className="h-5 w-5" aria-hidden="true" />
+              <SearchIcon className="h-[18px] w-[18px]" aria-hidden="true" />
             </button>
             <a
               href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
-              className="spec-value hidden items-center gap-1.5 px-2 py-2 text-sm font-medium text-muted transition-colors hover:text-sand lg:flex"
+              className="spec-value hidden min-h-11 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium text-white/62 transition-colors hover:text-sand lg:flex"
             >
               <PhoneIcon className="h-4 w-4" aria-hidden="true" />
               <span className="hidden xl:inline">{siteConfig.phoneDisplay}</span>
@@ -113,60 +160,57 @@ export default function Header() {
               type="button"
               onClick={openDrawer}
               aria-label={totalItems > 0 ? `Sepetim, ${totalItems} ürün` : "Sepetim"}
-              className="btn-press relative flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:text-sand sm:w-auto sm:gap-2 sm:border sm:border-border sm:bg-surface sm:px-4 sm:text-sm sm:font-bold sm:uppercase sm:tracking-wider sm:text-white sm:hover:border-sand sm:hover:text-white"
+              className="btn-press relative flex h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-background shadow-lg shadow-black/20 hover:bg-sand sm:px-4"
             >
-              <ShoppingCartIcon className="h-5 w-5 sm:h-4 sm:w-4" aria-hidden="true" />
+              <ShoppingBagIcon className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Sepet</span>
               {totalItems > 0 && (
-                <span
-                  aria-hidden="true"
-                  className="spec-value absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center bg-sand px-1 text-[10px] font-semibold text-background sm:static"
-                >
+                <span className="spec-value flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-red px-1 text-[10px] font-bold text-white">
                   {totalItems}
                 </span>
               )}
             </button>
             <button
+              ref={menuButtonRef}
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center text-foreground hover:text-sand md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/[0.06] md:hidden"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
             >
-              {menuOpen ? (
-                <XIcon className="h-5 w-5" aria-hidden="true" />
-              ) : (
-                <MenuIcon className="h-5 w-5" aria-hidden="true" />
-              )}
+              {menuOpen ? <XIcon className="h-5 w-5" aria-hidden="true" /> : <MenuIcon className="h-5 w-5" aria-hidden="true" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen ? (
-        <div className="overflow-hidden border-t border-border bg-surface md:hidden">
-          <nav id="mobile-navigation" aria-label="Mobil menü" className="mx-auto max-w-7xl px-4 py-3">
+        <div
+          ref={menuDialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobil menü"
+          className="absolute inset-x-0 top-full border-t border-white/8 bg-background/98 px-4 py-4 shadow-2xl backdrop-blur-xl md:hidden"
+        >
+          <nav id="mobile-navigation" className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/10 bg-surface p-2">
             <button
               type="button"
               onClick={() => {
                 setMenuOpen(false);
                 setSearchOpen(true);
               }}
-              className="flex w-full items-center gap-3 border-b border-border/50 px-2 py-4 text-base font-semibold uppercase tracking-wider text-foreground hover:text-sand"
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-semibold text-white hover:bg-white/[0.05]"
             >
-              <SearchIcon className="h-5 w-5 text-sand" aria-hidden="true" />
-              Ürün Ara
+              <SearchIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+              Ürün ara
             </button>
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 border-b border-border/50 px-2 py-4 text-base font-semibold uppercase tracking-wider transition-colors ${
-                  pathname === link.href
-                    ? "text-sand"
-                    : "text-foreground hover:text-sand"
+                className={`flex items-center rounded-xl px-4 py-3.5 text-sm font-semibold transition-colors ${
+                  pathname === link.href ? "bg-white/[0.06] text-sand" : "text-white/75 hover:bg-white/[0.04] hover:text-white"
                 }`}
               >
                 {link.label}
@@ -174,9 +218,9 @@ export default function Header() {
             ))}
             <a
               href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
-              className="flex items-center gap-3 px-2 py-4 text-base font-medium text-muted"
+              className="mt-1 flex items-center gap-3 border-t border-white/8 px-4 py-3.5 text-sm text-white/60"
             >
-              <PhoneIcon className="h-5 w-5 text-sand" aria-hidden="true" />
+              <PhoneIcon className="h-4 w-4 text-sand" aria-hidden="true" />
               {siteConfig.phoneDisplay}
             </a>
           </nav>

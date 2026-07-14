@@ -43,7 +43,7 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
               aria-label={`${alt}, görsel ${i + 1} görüntüle`}
               aria-selected={isActive}
               aria-current={isActive}
-              className={`group/thumb relative aspect-square w-16 shrink-0 overflow-hidden border-2 bg-surface transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:w-20 ${
+              className={`group/thumb relative aspect-square w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-surface transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:w-20 ${
                 isActive
                   ? "border-sand shadow-[3px_3px_0_0_var(--brand-red)]"
                   : "border-border hover:border-muted hover:-translate-y-0.5"
@@ -62,7 +62,7 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
       </div>
 
       {/* Main image */}
-      <div className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden border border-border bg-surface sm:order-2 sm:aspect-square">
+      <div className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden rounded-[1.5rem] border border-white/10 bg-surface sm:order-2 sm:aspect-square">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(211,189,150,0.12),transparent_62%)]" />
         <div
           className={`absolute inset-0 transition-opacity duration-200 ${
@@ -81,11 +81,11 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
           />
         </div>
         {badge && (
-          <span className="spec-value absolute left-4 top-4 bg-background/90 px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-sand">
+          <span className="spec-value absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-sand">
             {badge}
           </span>
         )}
-        <div className="spec-value absolute bottom-3 right-3 bg-background/85 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-muted">
+        <div className="spec-value absolute bottom-3 right-3 rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-muted">
           {active + 1} / {gallery.length}
         </div>
       </div>

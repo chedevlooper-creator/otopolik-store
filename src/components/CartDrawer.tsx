@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useCart } from "@/context/cart-context";
 import CartItemLine from "@/components/CartItemLine";
 import { formatPrice } from "@/lib/format";
@@ -11,17 +11,39 @@ import { XIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
 
 export default function CartDrawer() {
   const { items, isDrawerOpen, closeDrawer, updateQuantity, removeItem, totalPrice } = useCart();
+  const drawerRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isDrawerOpen) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const frame = requestAnimationFrame(() => closeButtonRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeDrawer();
+      if (e.key === "Tab" && drawerRef.current) {
+        const focusable = Array.from(
+          drawerRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
+      cancelAnimationFrame(frame);
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      previouslyFocused?.focus();
     };
   }, [isDrawerOpen, closeDrawer]);
 
@@ -39,15 +61,17 @@ export default function CartDrawer() {
     >
       <div
         onClick={closeDrawer}
-        className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
           isDrawerOpen ? "opacity-100" : "opacity-0"
         }`}
       />
       <aside
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-border bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 ${
+        ref={drawerRef}
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 sm:rounded-l-[1.5rem] ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
+        aria-modal="true"
         aria-label="Sepet"
       >
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
@@ -55,10 +79,11 @@ export default function CartDrawer() {
             Sepetim {items.length > 0 && <span className="text-sand">({items.length})</span>}
           </h2>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={closeDrawer}
             aria-label="Sepeti kapat"
-            className="flex h-9 w-9 items-center justify-center text-muted hover:bg-surface-hover hover:text-sand"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-sand"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -76,7 +101,7 @@ export default function CartDrawer() {
             <Link
               href="/urunler"
               onClick={closeDrawer}
-              className="btn-press mt-2 bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+              className="btn-press red-glow mt-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white hover:bg-brand-red-dark"
             >
               Ürünleri İncele
             </Link>
@@ -137,14 +162,14 @@ export default function CartDrawer() {
               <Link
                 href="/odeme"
                 onClick={closeDrawer}
-                className="btn-press mt-4 flex w-full items-center justify-center bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+                className="btn-press red-glow mt-4 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold text-white hover:bg-brand-red-dark"
               >
                 Sipariş Talebine Geç
               </Link>
               <Link
                 href="/sepet"
                 onClick={closeDrawer}
-                className="btn-press mt-2 flex w-full items-center justify-center border border-border px-6 py-3 text-sm font-bold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
+                className="btn-press mt-2 flex w-full items-center justify-center rounded-full border border-white/12 px-6 py-3 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04]"
               >
                 Sepete Git
               </Link>

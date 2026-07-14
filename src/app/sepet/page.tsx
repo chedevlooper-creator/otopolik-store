@@ -66,7 +66,8 @@ export default function CartPage() {
   const remainingForFreeShipping = getRemainingForFreeShipping(totalPrice);
   const shippingCost = getShippingCost(totalPrice);
   const orderTotal = totalPrice + shippingCost;
-  const featured = getFeaturedProducts(4);
+  const cartSlugs = new Set(items.map((item) => item.slug));
+  const featured = getFeaturedProducts(4).filter((p) => !cartSlugs.has(p.slug));
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
@@ -128,7 +129,15 @@ export default function CartPage() {
           <h2 className="mb-6 mt-3 font-heading text-2xl font-bold text-white">
             Bunlara da göz atın
           </h2>
-          <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+          <div className={`grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 ${
+            featured.length === 1
+              ? "max-w-md lg:grid-cols-1"
+              : featured.length === 2
+                ? "max-w-3xl lg:grid-cols-2"
+                : featured.length === 3
+                  ? "lg:grid-cols-3"
+                  : "lg:grid-cols-4"
+          }`}>
             {featured.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}

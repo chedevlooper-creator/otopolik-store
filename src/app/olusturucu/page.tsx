@@ -7,12 +7,18 @@ export const metadata: Metadata = {
     "Aracınıza özel EVA paspasınızı online tasarlayın: taban rengi, kenar rengi ve topuk pedini seçin, ekranda anında görün.",
 };
 
-export default function ConfiguratorPage() {
+export default async function ConfiguratorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ marka?: string; model?: string; yil?: string }>;
+}) {
+  const { marka = "", model = "" } = await searchParams;
+
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
-      <div className="mb-10 max-w-2xl">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
+      <div className="premium-grid mb-10 max-w-4xl rounded-[1.7rem] border border-white/8 bg-surface/45 p-6 sm:p-9">
         <span className="spec-label">Online Paspas Oluşturucu</span>
-        <h1 className="mt-4 font-heading text-4xl font-bold text-white sm:text-5xl">
+        <h1 className="mt-4 font-heading text-4xl font-bold text-white sm:text-6xl">
           Kendi Paspasını Tasarla
         </h1>
         <p className="mt-3 text-muted">
@@ -21,7 +27,7 @@ export default function ConfiguratorPage() {
           olarak canlanır, dakikalar içinde siparişinizi oluşturabilirsiniz.
         </p>
       </div>
-      <MatConfigurator />
+      <MatConfigurator initialBrand={marka} initialModel={model} />
     </div>
   );
 }

@@ -264,7 +264,15 @@ export default async function ProductDetailPage({
           <h2 className="mb-6 mt-3 font-heading text-3xl font-bold text-white">
             Bunlar da ilginizi çekebilir
           </h2>
-          <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+          <div className={`grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 ${
+            related.length === 1
+              ? "max-w-md lg:grid-cols-1"
+              : related.length === 2
+                ? "max-w-3xl lg:grid-cols-2"
+                : related.length === 3
+                  ? "lg:grid-cols-3"
+                  : "lg:grid-cols-4"
+          }`}>
             {related.map((item) => (
               <ProductCard key={item.slug} product={item} />
             ))}

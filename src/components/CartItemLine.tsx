@@ -26,7 +26,7 @@ export default function CartItemLine({
   return (
     <li className={compact ? "flex gap-3 py-4" : "flex gap-4 py-5"}>
       <div
-        className={`relative ${compact ? "h-20 w-20" : "h-24 w-24"} shrink-0 overflow-hidden border border-border bg-surface-hover`}
+        className={`relative ${compact ? "h-20 w-20 rounded-xl" : "h-24 w-24 rounded-2xl"} shrink-0 overflow-hidden border border-white/10 bg-surface-hover`}
       >
         <Image
           src={item.image}
@@ -50,12 +50,12 @@ export default function CartItemLine({
         </div>
 
         <div className="mt-auto flex items-center justify-between">
-          <div className="inline-flex items-center border border-border">
+          <div className="inline-flex items-center overflow-hidden rounded-full border border-white/10 bg-black/20">
             <button
               type="button"
               onClick={() => onUpdateQuantity(item.slug, item.color, item.quantity - 1)}
               aria-label={`${item.name} adedini azalt`}
-              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted hover:text-sand`}
+              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-sand`}
             >
               <MinusIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -66,7 +66,7 @@ export default function CartItemLine({
               type="button"
               onClick={() => onUpdateQuantity(item.slug, item.color, item.quantity + 1)}
               aria-label={`${item.name} adedini artır`}
-              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted hover:text-sand`}
+              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-sand`}
             >
               <PlusIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -81,7 +81,7 @@ export default function CartItemLine({
         type="button"
         onClick={() => onRemove(item.slug, item.color)}
         aria-label="Ürünü kaldır"
-        className="flex h-11 w-11 shrink-0 items-center justify-center self-start text-muted hover:text-brand-red"
+        className="flex h-11 w-11 shrink-0 items-center justify-center self-start rounded-full text-muted transition-colors hover:bg-brand-red/10 hover:text-brand-red"
       >
         <XIcon className="h-4 w-4" aria-hidden="true" />
       </button>

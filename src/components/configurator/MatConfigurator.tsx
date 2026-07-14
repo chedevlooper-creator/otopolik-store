@@ -12,25 +12,25 @@ import { siteConfig } from "@/lib/site-config";
 import { PaletteIcon, RulerIcon, TruckIcon } from "lucide-react";
 
 const FLOOR_COLORS = [
-  { name: "Siyah", hex: "#16161a" },
-  { name: "Antrasit", hex: "#3a3d42" },
-  { name: "Gri", hex: "#8a8f96" },
-  { name: "Açık Gri", hex: "#b9bec5" },
-  { name: "Bej", hex: "#c9b79c" },
-  { name: "Kahve", hex: "#6b4a2f" },
-  { name: "Lacivert", hex: "#1e3a5f" },
-  { name: "Bordo", hex: "#5e1a22" },
+  { name: "Siyah", hex: "#0f1012" },
+  { name: "Antrasit", hex: "#25282d" },
+  { name: "Gri", hex: "#585d64" },
+  { name: "Açık Gri", hex: "#9ba0a9" },
+  { name: "Bej", hex: "#bfa985" },
+  { name: "Kahve", hex: "#4e331f" },
+  { name: "Lacivert", hex: "#111f32" },
+  { name: "Bordo", hex: "#401216" },
 ];
 
 const EDGE_COLORS = [
-  { name: "Siyah", hex: "#141414" },
-  { name: "Gri", hex: "#8a8f96" },
-  { name: "Bej", hex: "#c9b79c" },
-  { name: "Kırmızı", hex: "#e31c23" },
-  { name: "Mavi", hex: "#2456a6" },
-  { name: "Turuncu", hex: "#e07a20" },
-  { name: "Yeşil", hex: "#2e7d4f" },
-  { name: "Mor", hex: "#6b3fa0" },
+  { name: "Siyah", hex: "#0f1012" },
+  { name: "Gri", hex: "#585d64" },
+  { name: "Bej", hex: "#bfa985" },
+  { name: "Kırmızı", hex: "#8c1626" },
+  { name: "Mavi", hex: "#1b3152" },
+  { name: "Turuncu", hex: "#ad5b23" },
+  { name: "Yeşil", hex: "#1b3c26" },
+  { name: "Mor", hex: "#3d214a" },
 ];
 
 // Fiyatlar siteConfig'ten gelir; .env ile override edilebilir.
@@ -58,11 +58,20 @@ const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> 
   },
 };
 
-export default function MatConfigurator() {
+type Props = {
+  /** URL'den gelen ön seçim (ör. ana sayfa araç bulucudan) */
+  initialBrand?: string;
+  initialModel?: string;
+};
+
+export default function MatConfigurator({
+  initialBrand = "",
+  initialModel = "",
+}: Props) {
   const { addItem, closeDrawer } = useCart();
 
-  const [brand, setBrand] = useState("");
-  const [slug, setSlug] = useState("");
+  const [brand, setBrand] = useState(initialBrand);
+  const [slug, setSlug] = useState(initialModel);
   const [floor, setFloor] = useState(FLOOR_COLORS[0]);
   const [edge, setEdge] = useState(EDGE_COLORS[3]);
   const [heelPad, setHeelPad] = useState(true);

@@ -14,6 +14,7 @@ import {
   LogOutIcon,
 } from "lucide-react";
 import { logoutAction } from "@/app/admin/logout/action";
+import Logo from "@/components/Logo";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboardIcon, badgeKey: null },
@@ -102,9 +103,7 @@ export default function AdminSidebar() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
-          <span className="font-heading text-xl font-extrabold tracking-tight">
-            OTO <span className="text-brand-red">POLİK</span>
-          </span>
+          <Logo href="/admin" size="sm" />
           <span className="ml-auto bg-brand-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
             Admin
           </span>

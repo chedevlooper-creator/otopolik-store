@@ -38,19 +38,30 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  icons: {
+    icon: [{ url: "/media/otopolik-logo-3d.png", type: "image/png" }],
+    apple: [{ url: "/media/otopolik-logo-3d.png" }],
+  },
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: siteConfig.name,
     title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: [{ url: "/media/hero-poster.jpg", width: 1920, height: 1080 }],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "OTO POLİK — Aracına tam oturan premium koruma",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: ["/media/hero-poster.jpg"],
+    images: ["/og.png"],
   },
 };
 
