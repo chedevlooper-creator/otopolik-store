@@ -25,7 +25,7 @@ export default function ConfigSummary({
   const router = useRouter();
 
   const whatsappHref = buildWhatsAppOrderLink(
-    `Merhaba, özel tasarım paspas istiyorum.\nAraç: ${vehicleLabel || "(belirtilecek)"}\nTasarım: ${configSummary}\nTahmini fiyat: ${formatPrice(totalPrice)}`
+    `Merhaba, özel tasarım paspas istiyorum.\nAraç: ${vehicleLabel || "(belirtilecek)"}\nTasarım: ${configSummary}\nTahmini fiyat: ${canAdd ? formatPrice(totalPrice) : "(araç seçilince belirlenir)"}`
   );
 
   return (
@@ -44,7 +44,7 @@ export default function ConfigSummary({
         <div className="shrink-0 text-right">
           <p className="spec-value hidden text-[11px] font-medium uppercase tracking-[0.18em] text-muted sm:block">Toplam</p>
           <p className="spec-value text-2xl font-semibold text-sand sm:text-3xl">
-            {formatPrice(totalPrice)}
+            {canAdd ? formatPrice(totalPrice) : "—"}
           </p>
         </div>
       </div>
