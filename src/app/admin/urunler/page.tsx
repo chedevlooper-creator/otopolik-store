@@ -18,6 +18,7 @@ import { formatPrice } from "@/lib/format";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
+import { useAdminConvexKey } from "@/hooks/useAdminConvexKey";
 import type { Doc, Id } from "../../../../convex/_generated/dataModel";
 
 const CATEGORIES = [
@@ -81,11 +82,13 @@ function slugify(input: string): string {
 
 export default function AdminUrunler() {
   const convexReady = isConvexConfiguredClient();
-  // `api` codegen placeholder'ı dönüş tipini iletmiyor (gerçek `npx convex
-  // dev` sonrası otomatik gelir); şema tabanlı gerçek tipe daralt.
-  const products = useQuery(api.products.listAll, convexReady ? {} : "skip") as
-    | Doc<"products">[]
-    | undefined;
+  const adminKeyState = useAdminConvexKey();
+  const adminKey =
+    adminKeyState.status === "ready" ? adminKeyState.adminKey : null;
+  const products = useQuery(
+    api.products.listAll,
+    convexReady && adminKey ? { adminKey } : "skip"
+  ) as Doc<"products">[] | undefined;
   const createProduct = useMutation(api.products.create);
   const updateProduct = useMutation(api.products.update);
   const deleteProduct = useMutation(api.products.remove);
@@ -147,8 +150,19 @@ export default function AdminUrunler() {
 
     setSaving(true);
     try {
+      if (!adminKey) {
+        setMessage({
+          type: "error",
+          text:
+            adminKeyState.status === "error"
+              ? adminKeyState.message
+              : "Admin yetkisi yükleniyor. Birkaç saniye sonra tekrar deneyin.",
+        });
+        return;
+      }
       if (editing.mode === "create") {
         await createProduct({
+          adminKey,
           slug: form.slug,
           name: form.name,
           brand: form.brand,
@@ -164,6 +178,7 @@ export default function AdminUrunler() {
         setMessage({ type: "success", text: "Ürün oluşturuldu." });
       } else if (editing.mode === "edit") {
         await updateProduct({
+          adminKey,
           id: editing.productId,
           name: form.name,
           brand: form.brand,
@@ -195,9 +210,19 @@ export default function AdminUrunler() {
 
   async function confirmDelete() {
     if (!editing || editing.mode !== "delete") return;
+    if (!adminKey) {
+      setMessage({
+        type: "error",
+        text:
+          adminKeyState.status === "error"
+            ? adminKeyState.message
+            : "Admin yetkisi yükleniyor. Birkaç saniye sonra tekrar deneyin.",
+      });
+      return;
+    }
     setSaving(true);
     try {
-      await deleteProduct({ id: editing.productId });
+      await deleteProduct({ adminKey, id: editing.productId });
       setMessage({ type: "success", text: "Ürün silindi." });
       setEditing(null);
     } catch (err) {
@@ -227,7 +252,7 @@ export default function AdminUrunler() {
         <button
           type="button"
           onClick={openCreate}
-          disabled={!convexReady}
+          disabled={!convexReady || !adminKey}
           className="inline-flex items-center gap-2 bg-brand-red px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-brand-red-dark disabled:cursor-not-allowed disabled:opacity-60"
         >
           <PlusIcon className="h-4 w-4" aria-hidden="true" />
@@ -245,6 +270,11 @@ export default function AdminUrunler() {
             yerleşik listeden geliyor. npx convex dev çalıştırın ve Convex projesi
             oluşturun, böylece değişiklikler kalıcı olsun.
           </p>
+        </div>
+      ) : adminKeyState.status === "error" ? (
+        <div className="flex items-start gap-3 border border-brand-red/40 bg-brand-red/5 px-4 py-3 text-xs text-brand-red">
+          <AlertCircleIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <p>{adminKeyState.message}</p>
         </div>
       ) : null}
 

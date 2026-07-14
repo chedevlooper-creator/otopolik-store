@@ -7,6 +7,7 @@
 
 import "server-only";
 import { getConvexClient, isConvexConfigured, api } from "@/lib/convex-server";
+import { getAdminConvexKey } from "@/lib/admin-convex-key";
 import { siteConfig } from "@/lib/site-config";
 
 export type SiteSettings = {
@@ -90,6 +91,7 @@ export async function saveSiteSettings(
 
   try {
     await client.mutation(api.siteSettings.updateSettings, {
+      adminKey: getAdminConvexKey(),
       phoneDisplay: input.phoneDisplay,
       whatsappNumber: input.whatsappNumber,
       email: input.email,

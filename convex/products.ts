@@ -4,6 +4,7 @@
 
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { requireAdminKey } from "./lib/adminAuth";
 
 const CATEGORIES = [
   "eva-3d",
@@ -20,8 +21,9 @@ type ProductCategory = (typeof CATEGORIES)[number];
 
 // Admin: tüm ürünler (aktif/pasif)
 export const listAll = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { adminKey: v.string() },
+  handler: async (ctx, { adminKey }) => {
+    requireAdminKey(adminKey);
     return await ctx.db.query("products").withIndex("by_active").collect();
   },
 });
@@ -52,15 +54,18 @@ export const listActive = query({
 export const getBySlug = query({
   args: { slug: v.string() },
   handler: async (ctx, { slug }) => {
-    return await ctx.db
+    const product = await ctx.db
       .query("products")
       .withIndex("by_slug", (q) => q.eq("slug", slug))
       .unique();
+    if (!product || !product.isActive) return null;
+    return product;
   },
 });
 
 export const create = mutation({
   args: {
+    adminKey: v.string(),
     slug: v.string(),
     name: v.string(),
     brand: v.optional(v.string()),
@@ -74,6 +79,7 @@ export const create = mutation({
     isActive: v.optional(v.boolean()),
   },
   handler: async (ctx, input) => {
+    requireAdminKey(input.adminKey);
     if (!CATEGORIES.includes(input.category as ProductCategory)) {
       throw new Error(`Geçersiz kategori: ${input.category}`);
     }
@@ -98,6 +104,7 @@ export const create = mutation({
 
 export const update = mutation({
   args: {
+    adminKey: v.string(),
     id: v.id("products"),
     name: v.optional(v.string()),
     brand: v.optional(v.string()),
@@ -110,7 +117,8 @@ export const update = mutation({
     inStock: v.optional(v.boolean()),
     isActive: v.optional(v.boolean()),
   },
-  handler: async (ctx, { id, ...patch }) => {
+  handler: async (ctx, { adminKey, id, ...patch }) => {
+    requireAdminKey(adminKey);
     if (patch.category && !CATEGORIES.includes(patch.category as ProductCategory)) {
       throw new Error(`Geçersiz kategori: ${patch.category}`);
     }
@@ -123,15 +131,21 @@ export const update = mutation({
 });
 
 export const remove = mutation({
-  args: { id: v.id("products") },
-  handler: async (ctx, { id }) => {
+  args: { adminKey: v.string(), id: v.id("products") },
+  handler: async (ctx, { adminKey, id }) => {
+    requireAdminKey(adminKey);
     await ctx.db.delete(id);
   },
 });
 
 export const setActive = mutation({
-  args: { id: v.id("products"), isActive: v.boolean() },
-  handler: async (ctx, { id, isActive }) => {
+  args: {
+    adminKey: v.string(),
+    id: v.id("products"),
+    isActive: v.boolean(),
+  },
+  handler: async (ctx, { adminKey, id, isActive }) => {
+    requireAdminKey(adminKey);
     await ctx.db.patch(id, { isActive, updatedAt: Date.now() });
   },
 });

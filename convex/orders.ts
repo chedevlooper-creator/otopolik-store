@@ -4,6 +4,7 @@
 
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { requireAdminKey } from "./lib/adminAuth";
 
 type OrderRecord = {
   createdAt: number;
@@ -22,6 +23,7 @@ const STATUS_VALUES = [
   "whatsapp_pending",
 ] as const;
 
+/** Public: storefront can create WhatsApp-backed orders without admin key. */
 export const create = mutation({
   args: {
     customerName: v.string(),
@@ -65,8 +67,9 @@ export const create = mutation({
 });
 
 export const listAll = query({
-  args: { limit: v.optional(v.number()) },
-  handler: async (ctx, { limit }) => {
+  args: { adminKey: v.string(), limit: v.optional(v.number()) },
+  handler: async (ctx, { adminKey, limit }) => {
+    requireAdminKey(adminKey);
     const q = ctx.db.query("orders").withIndex("by_created");
     if (limit) return await q.order("desc").take(limit);
     return await q.order("desc").collect();
@@ -74,8 +77,9 @@ export const listAll = query({
 });
 
 export const listRecent = query({
-  args: { limit: v.number() },
-  handler: async (ctx, { limit }) => {
+  args: { adminKey: v.string(), limit: v.number() },
+  handler: async (ctx, { adminKey, limit }) => {
+    requireAdminKey(adminKey);
     return await ctx.db
       .query("orders")
       .withIndex("by_created")
@@ -86,10 +90,12 @@ export const listRecent = query({
 
 export const updateStatus = mutation({
   args: {
+    adminKey: v.string(),
     id: v.id("orders"),
     status: v.string(),
   },
-  handler: async (ctx, { id, status }) => {
+  handler: async (ctx, { adminKey, id, status }) => {
+    requireAdminKey(adminKey);
     if (!STATUS_VALUES.includes(status as (typeof STATUS_VALUES)[number])) {
       throw new Error(`Geçersiz durum: ${status}`);
     }
@@ -101,8 +107,9 @@ export const updateStatus = mutation({
 });
 
 export const getStats = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { adminKey: v.string() },
+  handler: async (ctx, { adminKey }) => {
+    requireAdminKey(adminKey);
     const all = (await ctx.db.query("orders").collect()) as OrderRecord[];
     const now = Date.now();
     const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
@@ -124,7 +131,6 @@ export const getStats = query({
       .filter((o: OrderRecord) => o.status !== "cancelled")
       .reduce((a: number, o: OrderRecord) => a + o.total, 0);
 
-    // 7 günlük dağılım
     const dayLabels = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
     const days: { day: string; count: number }[] = [];
     for (let i = 6; i >= 0; i--) {

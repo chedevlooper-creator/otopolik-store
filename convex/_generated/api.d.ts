@@ -10,6 +10,7 @@
 
 import type * as _types from "../_types.js";
 import type * as defaults from "../defaults.js";
+import type * as lib_adminAuth from "../lib/adminAuth.js";
 import type * as orders from "../orders.js";
 import type * as products from "../products.js";
 import type * as siteSettings from "../siteSettings.js";
@@ -23,6 +24,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   _types: typeof _types;
   defaults: typeof defaults;
+  "lib/adminAuth": typeof lib_adminAuth;
   orders: typeof orders;
   products: typeof products;
   siteSettings: typeof siteSettings;

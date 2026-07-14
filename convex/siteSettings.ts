@@ -5,6 +5,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { siteSettingsDefaults } from "./defaults";
+import { requireAdminKey } from "./lib/adminAuth";
 
 const SINGLETON = "site" as const;
 
@@ -19,8 +20,9 @@ export const getSettings = query({
 });
 
 export const ensureSettings = mutation({
-  args: {},
-  handler: async (ctx) => {
+  args: { adminKey: v.string() },
+  handler: async (ctx, { adminKey }) => {
+    requireAdminKey(adminKey);
     const existing = await ctx.db
       .query("siteSettings")
       .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
@@ -36,6 +38,7 @@ export const ensureSettings = mutation({
 
 export const updateSettings = mutation({
   args: {
+    adminKey: v.string(),
     phoneDisplay: v.optional(v.string()),
     whatsappNumber: v.optional(v.string()),
     email: v.optional(v.string()),
@@ -49,7 +52,8 @@ export const updateSettings = mutation({
     matHeelPadPrice: v.optional(v.number()),
     matTrunkPrice: v.optional(v.number()),
   },
-  handler: async (ctx, patch) => {
+  handler: async (ctx, { adminKey, ...patch }) => {
+    requireAdminKey(adminKey);
     const existing = await ctx.db
       .query("siteSettings")
       .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
@@ -61,7 +65,6 @@ export const updateSettings = mutation({
           ...siteSettingsDefaults(),
           updatedAt: Date.now(),
         });
-    // undefined değerleri atla — patch partial update
     const cleaned: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(patch)) {
       if (value !== undefined) cleaned[key] = value;

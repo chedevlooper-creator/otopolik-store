@@ -201,8 +201,8 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      let orderSaved = false;
-
+      // WhatsApp zaten açıldı — kayıt başarısız olsa da sepeti temizlemeden
+      // teşekkür sayfasına gitmeyiz; Convex yoksa da sipariş kanalı WhatsApp'tır.
       if (convexReady) {
         await createOrder({
           customerName: form.fullName,
@@ -223,10 +223,9 @@ export default function CheckoutPage() {
           total: orderTotal,
           notes: form.note || undefined,
         });
-        orderSaved = true;
       }
 
-      if (orderSaved) clearCart();
+      clearCart();
       router.push("/tesekkurler");
     } catch (err) {
       console.error("Failed to save order to Convex:", err);

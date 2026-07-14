@@ -38,10 +38,6 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  icons: {
-    icon: [{ url: "/media/otopolik-logo-3d.png", type: "image/png" }],
-    apple: [{ url: "/media/otopolik-logo-3d.png" }],
-  },
   openGraph: {
     type: "website",
     locale: "tr_TR",

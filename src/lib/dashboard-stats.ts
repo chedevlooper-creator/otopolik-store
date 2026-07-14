@@ -7,6 +7,7 @@
 
 import "server-only";
 import { getConvexClient, isConvexConfigured, api } from "@/lib/convex-server";
+import { getAdminConvexKey } from "@/lib/admin-convex-key";
 import { products } from "@/lib/products";
 
 export type RecentOrder = {
@@ -96,8 +97,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
   }
 
   try {
-    const stats = await client.query(api.orders.getStats, {});
+    const adminKey = getAdminConvexKey();
+    const stats = await client.query(api.orders.getStats, { adminKey });
     const recentRaw = (await client.query(api.orders.listRecent, {
+      adminKey,
       limit: 5,
     })) as RecentOrderRow[];
 
@@ -128,7 +131,9 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     return {
       ...getFallbackStats(),
       warning:
-        "Convex sorgusu başarısız oldu. npx convex dev çalışıyor mu kontrol edin.",
+        error instanceof Error && error.message.includes("ADMIN_")
+          ? "ADMIN_SECRET tanımlı değil. Vercel ve Convex ortam değişkenlerini ayarlayın."
+          : "Convex sorgusu başarısız oldu. npx convex dev çalışıyor mu kontrol edin.",
     };
   }
 }

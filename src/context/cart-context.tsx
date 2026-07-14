@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   useSyncExternalStore,
@@ -34,17 +33,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     cartStore.getSnapshot,
     cartStore.getServerSnapshot
   );
-  const [isHydrated, setIsHydrated] = useState(false);
+  const isHydrated = useSyncExternalStore(
+    cartStore.subscribe,
+    cartStore.getHydrationSnapshot,
+    cartStore.getServerHydrationSnapshot
+  );
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      cartStore.getSnapshot();
-      setIsHydrated(true);
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, []);
 
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);

@@ -16,6 +16,7 @@ import { formatPrice } from "@/lib/format";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
+import { useAdminConvexKey } from "@/hooks/useAdminConvexKey";
 import type { Id } from "../../../../convex/_generated/dataModel";
 
 type Siparis = {
@@ -140,7 +141,13 @@ const LOAD_ERROR_MESSAGE =
 
 export default function AdminSiparisler() {
   const convexReady = isConvexConfiguredClient();
-  const orders = useQuery(api.orders.listAll, convexReady ? {} : "skip");
+  const adminKeyState = useAdminConvexKey();
+  const adminKey =
+    adminKeyState.status === "ready" ? adminKeyState.adminKey : null;
+  const orders = useQuery(
+    api.orders.listAll,
+    convexReady && adminKey ? { adminKey } : "skip"
+  );
   const updateStatusMutation = useMutation(api.orders.updateStatus);
 
   const [actionError, setActionError] = useState<string | null>(null);
@@ -149,8 +156,15 @@ export default function AdminSiparisler() {
   const [search, setSearch] = useState("");
   const [selectedSiparis, setSelectedSiparis] = useState<Siparis | null>(null);
 
-  const loading = convexReady && orders === undefined;
-  const loadError = convexReady ? null : LOAD_ERROR_MESSAGE;
+  const loading =
+    convexReady &&
+    (adminKeyState.status === "loading" ||
+      (adminKey !== null && orders === undefined));
+  const loadError = !convexReady
+    ? LOAD_ERROR_MESSAGE
+    : adminKeyState.status === "error"
+      ? adminKeyState.message
+      : null;
   const siparisler = useMemo(
     () => (convexReady && orders !== undefined ? (orders as RawOrder[]).map((order) => mapOrder(order)) : []),
     [convexReady, orders]
@@ -162,6 +176,14 @@ export default function AdminSiparisler() {
 
   async function updateOrderStatus(siparis: Siparis) {
     if (!siparis.realUuid) return;
+    if (!adminKey) {
+      setActionError(
+        adminKeyState.status === "error"
+          ? adminKeyState.message
+          : "Admin yetkisi yükleniyor. Birkaç saniye sonra tekrar deneyin."
+      );
+      return;
+    }
     const currentConf = durumBilgisi[siparis.durum];
     const nextStatus = currentConf?.nextStatus || "pending";
 
@@ -169,6 +191,7 @@ export default function AdminSiparisler() {
       setActionError(null);
       setUpdatingOrderId(siparis.realUuid);
       await updateStatusMutation({
+        adminKey,
         id: siparis.realUuid as Id<"orders">,
         status: nextStatus,
       });
