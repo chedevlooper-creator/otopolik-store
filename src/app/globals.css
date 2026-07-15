@@ -315,10 +315,6 @@ h3 {
     transform: none !important;
   }
 
-  .hero-media-video {
-    display: none;
-  }
-
   .btn-press:hover,
   .btn-press:active,
   .card-lift:hover {
