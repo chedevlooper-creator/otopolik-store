@@ -288,7 +288,9 @@ export default async function ProductDetailPage({
         </section>
       )}
 
-      <Testimonials />
+      <div className="mt-16">
+        <Testimonials />
+      </div>
       <TrustStrip />
 
       {renderJsonLd(

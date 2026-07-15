@@ -77,5 +77,5 @@ npx convex env set ADMIN_SECRET "<Vercel'dekiyle aynı>"
 ## 5. Kapsam dışı (sonraki sprint)
 
 - iyzico / kredi kartı
-- Analytics / KVKK cookie banner
 - Otomatik test / CI
+- Araç SEO landing sayfaları

@@ -4,6 +4,7 @@ import FeaturedProducts from "@/components/home/FeaturedProducts";
 import HowItWorks from "@/components/home/HowItWorks";
 import Showcase from "@/components/home/Showcase";
 import Faq from "@/components/home/Faq";
+import Testimonials from "@/components/Testimonials";
 import TrustStrip from "@/components/TrustStrip";
 import {
   getContentPage,
@@ -70,6 +71,11 @@ export default async function Home() {
           section("showcase-feature-04"),
         ]}
       />
+      <div className="home-section">
+        <div className="mx-auto max-w-7xl px-4">
+          <Testimonials />
+        </div>
+      </div>
       <Faq
         header={section("faq")}
         sidebar={section("faq-sidebar")}

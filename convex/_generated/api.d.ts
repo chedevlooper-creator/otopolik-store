@@ -15,6 +15,7 @@ import type * as defaults from "../defaults.js";
 import type * as files from "../files.js";
 import type * as lib_adminAuth from "../lib/adminAuth.js";
 import type * as lib_validators from "../lib/validators.js";
+import type * as orderNotify from "../orderNotify.js";
 import type * as orders from "../orders.js";
 import type * as products from "../products.js";
 import type * as seed from "../seed.js";
@@ -35,6 +36,7 @@ declare const fullApi: ApiFromModules<{
   files: typeof files;
   "lib/adminAuth": typeof lib_adminAuth;
   "lib/validators": typeof lib_validators;
+  orderNotify: typeof orderNotify;
   orders: typeof orders;
   products: typeof products;
   seed: typeof seed;

@@ -2,6 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import CartDrawer from "@/components/CartDrawer";
+import CookieConsent from "@/components/CookieConsent";
+import ConsentAnalytics from "@/components/ConsentAnalytics";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -24,6 +26,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <CartDrawer />
       <WhatsappFloat />
       <ScrollToTop />
+      <CookieConsent />
+      <ConsentAnalytics />
     </CartProvider>
   );
 }

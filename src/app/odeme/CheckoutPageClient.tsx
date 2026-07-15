@@ -515,6 +515,10 @@ export default function CheckoutPageClient({
               {submitError}
             </p>
           ) : null}
+          <p className="mt-4 rounded-xl border border-dashed border-border bg-background px-3 py-2 text-xs leading-5 text-muted">
+            WhatsApp penceresinde hazırlanan özeti göndermeden sipariş
+            kesinleşmez. Ekibimiz mesajınızın ardından uyumluluğu teyit eder.
+          </p>
           <button
             type="submit"
             disabled={isSubmitting}

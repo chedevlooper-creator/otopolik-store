@@ -3,12 +3,12 @@
 // =============================================================
 
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalQuery, mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { requireAdminKey } from "./lib/adminAuth";
 import { siteSettingsDefaults } from "./defaults";
 import {
   orderDocValidator,
-  orderStatusValidator,
   paymentMethodValidator,
 } from "./lib/validators";
 
@@ -153,7 +153,7 @@ export const create = mutation({
       subtotal >= settings.freeShippingThreshold ? 0 : settings.shippingFee;
     const total = subtotal + shippingFee;
 
-    return await ctx.db.insert("orders", {
+    const orderId = await ctx.db.insert("orders", {
       customerName: input.customerName.trim(),
       customerPhone: phone,
       customerEmail: input.customerEmail,
@@ -169,6 +169,20 @@ export const create = mutation({
       createdAt: now,
       updatedAt: now,
     });
+
+    await ctx.scheduler.runAfter(0, internal.orderNotify.notifyAdmin, {
+      orderId,
+    });
+
+    return orderId;
+  },
+});
+
+export const getByIdInternal = internalQuery({
+  args: { id: v.id("orders") },
+  returns: v.union(orderDocValidator, v.null()),
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
   },
 });
 

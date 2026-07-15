@@ -580,6 +580,13 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     body: "{email} · {phoneDisplay}",
   },
   {
+    pageSlug: "gizlilik",
+    sectionKey: "s5",
+    sortOrder: 5,
+    title: "Çerezler",
+    body: "Site; sepet, oturum ve tercihleriniz için gerekli çerezler kullanır. İsteğe bağlı olarak Vercel Analytics ile anonim ziyaret istatistikleri toplanabilir. Banner üzerinden “Yalnızca gerekli” veya “Kabul et” seçebilirsiniz; tercihinizi tarayıcı verilerini temizleyerek sıfırlayabilirsiniz.",
+  },
+  {
     pageSlug: "mesafeli-satis",
     sectionKey: "s1",
     sortOrder: 1,
