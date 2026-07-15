@@ -2,40 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type NavigatorWithConnection = Navigator & {
-  connection?: {
-    saveData?: boolean;
-  };
-};
-
 /**
  * Hero arka plan videosu.
  * Chrome/Safari autoplay için muted + playsInline property şart.
- * prefers-reduced-motion açıksa video yerine poster gösterir (display:none yok).
+ * prefers-reduced-motion UI animasyonlarını keser; sessiz dekoratif
+ * hero videosunu engellemez (Windows'ta sık açık kalır).
  */
 export default function HeroMedia() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [usePosterOnly, setUsePosterOnly] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const saveData = Boolean(
-      (navigator as NavigatorWithConnection).connection?.saveData
-    );
-
-    if (prefersReducedMotion || saveData) {
-      setUsePosterOnly(true);
-      video.pause();
-      return;
-    }
-
-    // Autoplay politikası: attribute yetmez, property zorunlu
     video.defaultMuted = true;
     video.muted = true;
     video.playsInline = true;
@@ -50,14 +31,17 @@ export default function HeroMedia() {
       try {
         video.muted = true;
         await video.play();
+        if (!cancelled) setPlaying(true);
       } catch {
-        // Sessizce dene; kullanıcı etkileşiminde tekrar
+        // Autoplay engeli — kullanıcı etkileşiminde tekrar
       }
     };
 
     void tryPlay();
     video.addEventListener("loadeddata", () => void tryPlay());
     video.addEventListener("canplay", () => void tryPlay());
+    video.addEventListener("playing", () => setPlaying(true));
+    video.addEventListener("pause", () => setPlaying(false));
     video.addEventListener("error", () => setFailed(true));
 
     const onVisible = () => {
@@ -69,7 +53,6 @@ export default function HeroMedia() {
       window.setTimeout(() => void tryPlay(), ms)
     );
 
-    // İlk kullanıcı etkileşiminde garanti play (autoplay engeli kırılır)
     const unlock = () => {
       void tryPlay();
       window.removeEventListener("pointerdown", unlock);
@@ -90,36 +73,53 @@ export default function HeroMedia() {
     };
   }, []);
 
-  const showPoster = usePosterOnly || failed;
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video || failed) return;
+    if (video.paused) {
+      video.muted = true;
+      void video.play().then(() => setPlaying(true)).catch(() => undefined);
+    } else {
+      video.pause();
+      setPlaying(false);
+    }
+  };
 
   return (
     <>
-      {/* Poster her zaman altta — video yüklenene / oynamayana kadar boş ekran olmasın */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/media/hero-poster.jpg"
+        src="/media/hero-poster.jpg?v=2"
         alt=""
         aria-hidden="true"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          showPoster ? "opacity-80" : "opacity-0"
+          failed || !playing ? "opacity-80" : "opacity-0"
         }`}
       />
-      {!usePosterOnly ? (
-        <video
-          ref={videoRef}
-          src="/media/hero-video.mp4"
-          poster="/media/hero-poster.jpg"
-          muted
-          loop
-          playsInline
-          autoPlay
-          preload="auto"
-          tabIndex={-1}
-          aria-hidden="true"
-          className={`hero-media-video absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            failed ? "opacity-0" : "opacity-80"
-          }`}
-        />
+      <video
+        ref={videoRef}
+        src="/media/hero-video.mp4?v=2"
+        poster="/media/hero-poster.jpg?v=2"
+        muted
+        loop
+        playsInline
+        autoPlay
+        preload="auto"
+        tabIndex={-1}
+        aria-hidden="true"
+        className={`hero-media-video absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+          failed ? "opacity-0" : "opacity-80"
+        }`}
+      />
+      {!failed ? (
+        <button
+          type="button"
+          onClick={togglePlay}
+          className="absolute bottom-4 right-4 z-20 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/90 backdrop-blur-sm hover:border-white/45 hover:text-white"
+          aria-label={playing ? "Videoyu duraklat" : "Videoyu oynat"}
+        >
+          {playing ? "Duraklat" : "Oynat"}
+        </button>
       ) : null}
     </>
   );
