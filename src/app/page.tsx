@@ -3,6 +3,7 @@ import Marquee from "@/components/home/Marquee";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import HowItWorks from "@/components/home/HowItWorks";
 import Showcase from "@/components/home/Showcase";
+import BrandGallery from "@/components/home/BrandGallery";
 import Faq from "@/components/home/Faq";
 import Testimonials from "@/components/Testimonials";
 import TrustStrip from "@/components/TrustStrip";
@@ -71,6 +72,7 @@ export default async function Home() {
           section("showcase-feature-04"),
         ]}
       />
+      <BrandGallery />
       <div className="home-section">
         <div className="mx-auto max-w-7xl px-4">
           <Testimonials />

@@ -283,8 +283,8 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     eyebrow: "01 · Gerçek uygulama",
     title: "Taban hattını eksiksiz takip eder",
     body: "Kenar kıvrımları, sabitleme noktaları ve pedal boşluğu araca göre kesilir.",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
-    imageAlt: "Kırmızı kenarlı siyah EVA paspasın araç içindeki gerçek uygulaması",
+    imageUrl: "/media/marka-galeri/op-8932.jpg",
+    imageAlt: "AMG rozetli siyah ve taba EVA paspas — OTO POLİK",
   },
   {
     pageSlug: "home",
@@ -293,8 +293,8 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     eyebrow: "02 · Tam set",
     title: "Ön ve arka sıra birlikte",
     body: "",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
-    imageAlt: "Beş parçalı siyah EVA oto paspas seti",
+    imageUrl: "/media/marka-galeri/op-8854.jpg",
+    imageAlt: "Geely rozetli renkli EVA paspas katmanları — OTO POLİK",
     iconKey: "contain",
   },
   {
@@ -304,8 +304,8 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     eyebrow: "03 · Renk uyumu",
     title: "İç mekâna göre seçim",
     body: "",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
-    imageAlt: "Bej EVA paspasın araç içindeki gerçek uygulaması",
+    imageUrl: "/media/marka-galeri/op-8906.jpg",
+    imageAlt: "Metal topukluklu siyah ve taba EVA paspas — OTO POLİK",
   },
   {
     pageSlug: "home",
@@ -314,8 +314,8 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     eyebrow: "04 · Detay",
     title: "Metal topukluk",
     body: "",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/06-metal-topukluk.jpg",
-    imageAlt: "EVA paspas üzerindeki metal sürücü topukluğu",
+    imageUrl: "/media/marka-galeri/op-8914.jpg",
+    imageAlt: "Araca özel rozetli EVA paspas dokusu — OTO POLİK",
   },
   {
     pageSlug: "home",
