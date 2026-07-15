@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts } from "@/lib/products";
+import { getFeaturedProducts } from "@/lib/catalog";
 import { ArrowRightIcon, HomeIcon } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "Aradığınız OTO POLİK sayfası bulunamadı.",
 };
 
-export default function NotFound() {
-  const featured = getFeaturedProducts(4);
+export default async function NotFound() {
+  const featured = await getFeaturedProducts(4);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-24">

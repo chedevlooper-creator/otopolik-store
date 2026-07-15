@@ -1,5 +1,11 @@
+"use client";
+
 import Link from "next/link";
-import { siteConfig, buildWhatsAppOrderLink } from "@/lib/site-config";
+import {
+  buildWhatsAppLink,
+  useStoreSettings,
+} from "@/context/settings-context";
+import { useCmsChrome } from "@/context/cms-context";
 import {
   ArrowRightIcon,
   CameraIcon,
@@ -21,12 +27,21 @@ const PAGE_LINKS = [
 const INFO_LINKS = [
   { href: "/bilgiler/kargo", label: "Kargo ve teslimat" },
   { href: "/bilgiler/iade", label: "İade ve değişim" },
+  { href: "/bilgiler/mesafeli-satis", label: "Mesafeli satış" },
+  { href: "/bilgiler/on-bilgilendirme", label: "Ön bilgilendirme" },
   { href: "/bilgiler/gizlilik", label: "Gizlilik" },
+  { href: "/bilgiler/ozel-uretim", label: "Özel üretim" },
   { href: "/sepet", label: "Sepetim" },
 ];
 
 export default function Footer() {
-  const whatsappHref = buildWhatsAppOrderLink("Merhaba, aracıma uygun EVA paspas seti hakkında bilgi almak istiyorum.");
+  const settings = useStoreSettings();
+  const cms = useCmsChrome();
+  const whatsappHref = buildWhatsAppLink(
+    settings.whatsappNumber,
+    "Merhaba, aracıma uygun EVA paspas seti hakkında bilgi almak istiyorum."
+  );
+  const footer = cms.footer;
 
   return (
     <footer className="border-t border-white/8 bg-[#07080a] text-white">
@@ -35,11 +50,18 @@ export default function Footer() {
           <div className="premium-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
           <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/72">Aracınıza özel üretim</p>
-              <h2 className="mt-3 max-w-3xl font-heading text-4xl font-bold text-white sm:text-5xl">Doğru kalıbı seçin, tarzınızı yola taşıyın.</h2>
+              <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/72">
+                {footer?.eyebrow ?? "Aracınıza özel üretim"}
+              </p>
+              <h2 className="mt-3 max-w-3xl font-heading text-4xl font-bold text-white sm:text-5xl">
+                {footer?.title ?? "Doğru kalıbı seçin, tarzınızı yola taşıyın."}
+              </h2>
             </div>
-            <Link href="/olusturucu" className="btn-press inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-white px-7 text-sm font-bold text-background shadow-xl shadow-black/20 hover:bg-sand">
-              Tasarımını başlat
+            <Link
+              href={footer?.ctaHref ?? "/olusturucu"}
+              className="btn-press inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-full bg-white px-7 text-sm font-bold text-background shadow-xl shadow-black/20 hover:bg-sand"
+            >
+              {footer?.ctaLabel ?? "Tasarımını başlat"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -51,10 +73,11 @@ export default function Footer() {
           <div>
             <Logo size="lg" />
             <p className="mt-4 max-w-sm text-sm leading-7 text-white/65">
-              Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler.
+              {footer?.body ??
+                "Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler."}
             </p>
             <div className="mt-6 flex gap-2">
-              <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 transition-all hover:border-white/22 hover:bg-white/[0.07] hover:text-white">
+              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 transition-all hover:border-white/22 hover:bg-white/[0.07] hover:text-white">
                 <CameraIcon className="h-4 w-4" aria-hidden="true" />
               </a>
               <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 transition-all hover:border-white/22 hover:bg-white/[0.07] hover:text-white">
@@ -84,17 +107,17 @@ export default function Footer() {
           <div>
             <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand">Bize ulaşın</h3>
             <div className="mt-5 space-y-4 text-sm text-white/65">
-              <a href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`} className="flex items-center gap-3 transition-colors hover:text-white">
+              <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="flex items-center gap-3 transition-colors hover:text-white">
                 <PhoneIcon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
-                {siteConfig.phoneDisplay}
+                {settings.phoneDisplay}
               </a>
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition-colors hover:text-white">
+              <a href={`mailto:${settings.email}`} className="flex items-center gap-3 transition-colors hover:text-white">
                 <MailIcon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
-                {siteConfig.email}
+                {settings.email}
               </a>
               <p className="flex items-start gap-3 leading-6">
                 <MapPinIcon className="mt-1 h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
-                {siteConfig.address}
+                {settings.address}
               </p>
             </div>
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-press mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#25D366]/35 bg-[#25D366]/10 px-5 text-xs font-bold text-[#7bf0a7] hover:border-[#25D366]/55 hover:bg-[#25D366]/16">
@@ -107,8 +130,8 @@ export default function Footer() {
 
       <div className="border-t border-white/7">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-[10px] uppercase tracking-[0.12em] text-white/48 sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} {siteConfig.name}</span>
-          <span>İstanbul&apos;da üretilir · Türkiye&apos;ye gönderilir</span>
+          <span>© {new Date().getFullYear()} {cms.seo.siteName}</span>
+          <span>{footer?.subtitle ?? "İstanbul'da üretilir · Türkiye'ye gönderilir"}</span>
         </div>
       </div>
     </footer>

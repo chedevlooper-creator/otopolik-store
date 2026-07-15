@@ -96,7 +96,26 @@ function mapOrder(order: RawOrder): Siparis {
     .filter(Boolean)
     .join(", ");
   const colors = items
-    .map((item) => stringValue(item.color))
+    .map((item) => {
+      const color = stringValue(item.color);
+      const config =
+        item.configuration && typeof item.configuration === "object"
+          ? item.configuration
+          : null;
+      if (!config) return color;
+      const bits = [
+        stringValue((config as { vehicle?: unknown }).vehicle),
+        stringValue((config as { baseColor?: unknown }).baseColor)
+          ? `taban:${stringValue((config as { baseColor?: unknown }).baseColor)}`
+          : "",
+        stringValue((config as { edgeColor?: unknown }).edgeColor)
+          ? `kenar:${stringValue((config as { edgeColor?: unknown }).edgeColor)}`
+          : "",
+        (config as { heelPad?: unknown }).heelPad ? "topuk" : "",
+        (config as { trunkMat?: unknown }).trunkMat ? "bagaj" : "",
+      ].filter(Boolean);
+      return bits.length ? `${color} (${bits.join(" · ")})` : color;
+    })
     .filter(Boolean)
     .join(", ");
   const totalQuantity = items.reduce(

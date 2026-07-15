@@ -70,11 +70,17 @@ export async function getSiteSettings(): Promise<{
   }
   try {
     const row = await client.query(api.siteSettings.getSettings, {});
-    return { settings: mapRow(row), source: "convex" };
+    return { settings: mapRow(row), source: row ? "convex" : "fallback" };
   } catch (error) {
     console.error("site_settings fetch error:", error);
     return { settings: DEFAULT_SETTINGS, source: "fallback" };
   }
+}
+
+/** Vitrin için kısayol — Convex yoksa env/site-config fallback. */
+export async function getStoreSettings(): Promise<SiteSettings> {
+  const { settings } = await getSiteSettings();
+  return settings;
 }
 
 export async function saveSiteSettings(

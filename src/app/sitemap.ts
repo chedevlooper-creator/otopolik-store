@@ -1,23 +1,58 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/lib/products";
+import { getProductSlugs } from "@/lib/catalog";
+import { getSiteSeo } from "@/lib/cms";
 import { siteConfig } from "@/lib/site-config";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const [{ seo }, slugs] = await Promise.all([getSiteSeo(), getProductSlugs()]);
+  const base = seo.siteUrl || siteConfig.url;
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteConfig.url, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${siteConfig.url}/urunler`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
-    { url: `${siteConfig.url}/olusturucu`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${siteConfig.url}/hakkimizda`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },
-    { url: `${siteConfig.url}/iletisim`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },
-    ...["kargo", "iade", "ozel-uretim", "gizlilik"].map((slug) => ({ url: `${siteConfig.url}/bilgiler/${slug}`, lastModified: now, changeFrequency: "yearly" as const, priority: 0.3 })),
+    { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    {
+      url: `${base}/urunler`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${base}/olusturucu`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${base}/hakkimizda`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${base}/iletisim`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    ...[
+      "kargo",
+      "iade",
+      "ozel-uretim",
+      "gizlilik",
+      "mesafeli-satis",
+      "on-bilgilendirme",
+    ].map((slug) => ({
+      url: `${base}/bilgiler/${slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
   ];
 
-  const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${siteConfig.url}/urunler/${product.slug}`,
+  const productRoutes: MetadataRoute.Sitemap = slugs.map((slug) => ({
+    url: `${base}/urunler/${slug}`,
     lastModified: now,
-    changeFrequency: "weekly",
+    changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 

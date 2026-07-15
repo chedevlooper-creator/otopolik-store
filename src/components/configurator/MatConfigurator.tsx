@@ -7,8 +7,8 @@ import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
+import { useStoreSettings } from "@/context/settings-context";
 import { getVehiclePrice } from "@/lib/vehicle-data";
-import { siteConfig } from "@/lib/site-config";
 import { PaletteIcon, RulerIcon, TruckIcon } from "lucide-react";
 
 const FLOOR_COLORS = [
@@ -33,11 +33,7 @@ const EDGE_COLORS = [
   { name: "Mor", hex: "#3d214a" },
 ];
 
-// Fiyatlar siteConfig'ten gelir; .env ile override edilebilir.
-const DEFAULT_BASE_PRICE = siteConfig.matBasePrice;
-const HEEL_PAD_PRICE = siteConfig.matHeelPadPrice;
-const TRUNK_MAT_PRICE = siteConfig.matTrunkPrice;
-
+// Fiyatlar store settings'ten gelir (Convex / env fallback).
 const OTHER_VEHICLE = "diger";
 
 const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> = {
@@ -69,6 +65,10 @@ export default function MatConfigurator({
   initialModel = "",
 }: Props) {
   const { addItem, closeDrawer } = useCart();
+  const settings = useStoreSettings();
+  const DEFAULT_BASE_PRICE = settings.matBasePrice;
+  const HEEL_PAD_PRICE = settings.matHeelPadPrice;
+  const TRUNK_MAT_PRICE = settings.matTrunkPrice;
 
   const [brand, setBrand] = useState(initialBrand);
   const [slug, setSlug] = useState(initialModel);
@@ -79,8 +79,8 @@ export default function MatConfigurator({
 
   const basePrice = useMemo(() => {
     if (!brand || !slug || brand === OTHER_VEHICLE) return DEFAULT_BASE_PRICE;
-    return getVehiclePrice(brand, slug);
-  }, [brand, slug]);
+    return getVehiclePrice(brand, slug) || DEFAULT_BASE_PRICE;
+  }, [brand, slug, DEFAULT_BASE_PRICE]);
 
   const totalPrice =
     basePrice + (heelPad ? HEEL_PAD_PRICE : 0) + (trunkMat ? TRUNK_MAT_PRICE : 0);
@@ -125,10 +125,17 @@ export default function MatConfigurator({
     addItem({
       slug: `ozel-tasarim-${slug}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase("tr-TR"),
       name: `Özel Tasarım EVA Paspas — ${vehicleLabel}`,
-      image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
+      image: preview.src,
       price: totalPrice,
       color: configSummary,
       quantity: 1,
+      configuration: {
+        vehicle: vehicleLabel,
+        baseColor: floor.name,
+        edgeColor: edge.name,
+        heelPad,
+        trunkMat,
+      },
     });
   }
 

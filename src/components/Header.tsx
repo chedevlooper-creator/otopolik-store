@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/cart-context";
-import { siteConfig } from "@/lib/site-config";
+import { useStoreSettings } from "@/context/settings-context";
+import { useCmsChrome } from "@/context/cms-context";
 import {
   BadgeCheckIcon,
   MenuIcon,
@@ -30,6 +31,8 @@ export default function Header() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuDialogRef = useRef<HTMLDivElement>(null);
   const { totalItems, openDrawer } = useCart();
+  const settings = useStoreSettings();
+  const cms = useCmsChrome();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -108,10 +111,11 @@ export default function Header() {
         <div className="mx-auto flex h-7 max-w-7xl items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/65 sm:justify-between">
           <span className="inline-flex items-center gap-1.5 text-sand">
             <BadgeCheckIcon className="h-3 w-3" aria-hidden="true" />
-            6.000+ araç modeli için özel kalıp
+            {cms.header?.title ?? "6.000+ araç modeli için özel kalıp"}
           </span>
           <span className="hidden sm:inline">
-            {siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz kargo · {siteConfig.estimatedDispatch} içinde kargo
+            {cms.header?.body ??
+              `${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz kargo · ${settings.estimatedDispatch} içinde kargo`}
           </span>
         </div>
       </div>
@@ -150,11 +154,11 @@ export default function Header() {
               <SearchIcon className="h-[18px] w-[18px]" aria-hidden="true" />
             </button>
             <a
-              href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
+              href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`}
               className="spec-value hidden min-h-11 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium text-white/62 transition-colors hover:text-sand lg:flex"
             >
               <PhoneIcon className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden xl:inline">{siteConfig.phoneDisplay}</span>
+              <span className="hidden xl:inline">{settings.phoneDisplay}</span>
             </a>
             <button
               type="button"
@@ -217,11 +221,11 @@ export default function Header() {
               </Link>
             ))}
             <a
-              href={`tel:${siteConfig.phoneDisplay.replace(/\s/g, "")}`}
+              href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`}
               className="mt-1 flex items-center gap-3 border-t border-white/8 px-4 py-3.5 text-sm text-white/60"
             >
               <PhoneIcon className="h-4 w-4 text-sand" aria-hidden="true" />
-              {siteConfig.phoneDisplay}
+              {settings.phoneDisplay}
             </a>
           </nav>
         </div>

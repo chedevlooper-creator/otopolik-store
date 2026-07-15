@@ -3,20 +3,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
+import { useStoreSettings } from "@/context/settings-context";
 import { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
-import { siteConfig } from "@/lib/site-config";
 import { getShippingCost } from "@/lib/shipping";
 import { TruckIcon, MinusIcon, PlusIcon } from "lucide-react";
 
 export default function AddToCartButton({ product }: { product: Product }) {
   const { addItem, closeDrawer } = useCart();
+  const settings = useStoreSettings();
   const router = useRouter();
-  const [color, setColor] = useState(product.colors[0].name);
+  const [color, setColor] = useState(product.colors[0]?.name ?? "Siyah");
   const [quantity, setQuantity] = useState(1);
   const [footerVisible, setFooterVisible] = useState(false);
   const subtotal = product.price * quantity;
-  const shippingCost = getShippingCost(subtotal);
+  const shippingCost = getShippingCost(subtotal, settings);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -30,10 +31,11 @@ export default function AddToCartButton({ product }: { product: Product }) {
   }, []);
 
   function buildLine() {
+    const selected = product.colors.find((c) => c.name === color);
     return {
       slug: product.slug,
       name: product.name,
-      image: product.image,
+      image: selected?.image ?? product.image,
       price: product.price,
       color,
       quantity,
@@ -115,7 +117,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <TruckIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
         {shippingCost === 0
           ? "Bu sipariş için kargo ücretsiz."
-          : `Kargo: ${formatPrice(siteConfig.shippingFee)} — ${siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}
+          : `Kargo: ${formatPrice(settings.shippingFee)} — ${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}
       </p>
 
       <div

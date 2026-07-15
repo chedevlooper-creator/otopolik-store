@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useCart } from "@/context/cart-context";
+import { useStoreSettings } from "@/context/settings-context";
 import CartItemLine from "@/components/CartItemLine";
 import { formatPrice } from "@/lib/format";
-import { siteConfig } from "@/lib/site-config";
 import { getRemainingForFreeShipping, getShippingCost } from "@/lib/shipping";
 import { XIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
 
 export default function CartDrawer() {
   const { items, isDrawerOpen, closeDrawer, updateQuantity, removeItem, totalPrice } = useCart();
+  const settings = useStoreSettings();
   const drawerRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -47,10 +48,10 @@ export default function CartDrawer() {
     };
   }, [isDrawerOpen, closeDrawer]);
 
-  const remaining = getRemainingForFreeShipping(totalPrice);
-  const shippingCost = getShippingCost(totalPrice);
+  const remaining = getRemainingForFreeShipping(totalPrice, settings);
+  const shippingCost = getShippingCost(totalPrice, settings);
   const orderTotal = totalPrice + shippingCost;
-  const progress = Math.min(100, (totalPrice / siteConfig.freeShippingThreshold) * 100);
+  const progress = Math.min(100, (totalPrice / settings.freeShippingThreshold) * 100);
 
   return (
     <div

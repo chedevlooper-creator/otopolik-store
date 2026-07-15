@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SearchIcon, XIcon } from "lucide-react";
-import { products } from "@/lib/products";
+import { useCatalogProducts } from "@/context/catalog-context";
 import { CATEGORY_LABELS } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 
@@ -14,6 +14,7 @@ type Props = {
 };
 
 export default function SearchModal({ open, onClose }: Props) {
+  const products = useCatalogProducts();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,7 @@ export default function SearchModal({ open, onClose }: Props) {
           .includes(q)
       )
       .slice(0, 6);
-  }, [query]);
+  }, [query, products]);
 
   if (!open) return null;
 

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format";
-import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { buildWhatsAppLink, useStoreSettings } from "@/context/settings-context";
 import { ArrowRightIcon } from "lucide-react";
 
 type Props = {
@@ -23,8 +23,10 @@ export default function ConfigSummary({
   canAdd,
 }: Props) {
   const router = useRouter();
+  const settings = useStoreSettings();
 
-  const whatsappHref = buildWhatsAppOrderLink(
+  const whatsappHref = buildWhatsAppLink(
+    settings.whatsappNumber,
     `Merhaba, özel tasarım paspas istiyorum.\nAraç: ${vehicleLabel || "(belirtilecek)"}\nTasarım: ${configSummary}\nTahmini fiyat: ${canAdd ? formatPrice(totalPrice) : "(araç seçilince belirlenir)"}`
   );
 

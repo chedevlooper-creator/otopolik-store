@@ -63,17 +63,22 @@ function setItems(next: CartItem[]) {
 
 export function addItem(item: CartItem) {
   ensureHydrated();
+  const qty = Math.min(9, Math.max(1, item.quantity));
   const existing = items.find((line) => line.slug === item.slug && line.color === item.color);
   if (existing) {
     setItems(
       items.map((line) =>
         line.slug === item.slug && line.color === item.color
-          ? { ...line, ...item, quantity: line.quantity + item.quantity }
+          ? {
+              ...line,
+              ...item,
+              quantity: Math.min(9, line.quantity + qty),
+            }
           : line
       )
     );
   } else {
-    setItems([...items, item]);
+    setItems([...items, { ...item, quantity: qty }]);
   }
 }
 
@@ -84,9 +89,14 @@ export function removeItem(slug: string, color: string) {
 
 export function updateQuantity(slug: string, color: string, quantity: number) {
   ensureHydrated();
+  const nextQty = Math.min(9, Math.max(0, quantity));
   setItems(
     items
-      .map((line) => (line.slug === slug && line.color === color ? { ...line, quantity } : line))
+      .map((line) =>
+        line.slug === slug && line.color === color
+          ? { ...line, quantity: nextQty }
+          : line
+      )
       .filter((line) => line.quantity > 0)
   );
 }

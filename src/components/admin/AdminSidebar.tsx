@@ -12,6 +12,7 @@ import {
   XIcon,
   ExternalLinkIcon,
   LogOutIcon,
+  FileTextIcon,
 } from "lucide-react";
 import { logoutAction } from "@/app/admin/logout/action";
 import Logo from "@/components/Logo";
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboardIcon, badgeKey: null },
   { href: "/admin/siparisler", label: "Siparişler", icon: ShoppingBagIcon, badgeKey: "orders" },
   { href: "/admin/urunler", label: "Ürünler", icon: PackageIcon, badgeKey: "products" },
+  { href: "/admin/icerik", label: "İçerik", icon: FileTextIcon, badgeKey: null },
   { href: "/admin/ayarlar", label: "Ayarlar", icon: SettingsIcon, badgeKey: null },
 ] as const;
 

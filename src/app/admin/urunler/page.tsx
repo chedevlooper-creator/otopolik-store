@@ -20,16 +20,42 @@ import { api } from "../../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
 import { useAdminConvexKey } from "@/hooks/useAdminConvexKey";
 import type { Doc, Id } from "../../../../convex/_generated/dataModel";
+import ImageUploadButton from "@/components/admin/ImageUploadButton";
 
 const CATEGORIES = [
   { key: "eva-3d", label: "3D EVA Paspas" },
   { key: "eva-havuzlu", label: "Havuzlu EVA" },
+  { key: "hali-paspas", label: "Halı Paspas" },
   { key: "bagaj", label: "Bagaj Paspası" },
   { key: "bagaj-havuzu", label: "Bagaj Havuzu" },
   { key: "bagaj-cantasi", label: "Bagaj Çantası" },
   { key: "direksiyon-kilifi", label: "Direksiyon Kılıfı" },
   { key: "minder-seti", label: "Minder Seti" },
   { key: "ekran-koruyucu", label: "Ekran Koruyucu" },
+];
+
+type ProductColorForm = {
+  name: string;
+  hex: string;
+  image: string;
+};
+
+const DEFAULT_PRODUCT_COLORS: ProductColorForm[] = [
+  {
+    name: "Siyah",
+    hex: "#1a1a1a",
+    image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
+  },
+  {
+    name: "Gri",
+    hex: "#8a8a8a",
+    image: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
+  },
+  {
+    name: "Bej",
+    hex: "#c9b79c",
+    image: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
+  },
 ];
 
 type FormState = {
@@ -41,6 +67,10 @@ type FormState = {
   price: number;
   oldPrice: number | null;
   image: string;
+  galleryText: string;
+  colors: ProductColorForm[];
+  description: string;
+  featuresText: string;
   badge: string;
   inStock: boolean;
   isActive: boolean;
@@ -55,6 +85,10 @@ const EMPTY_FORM: FormState = {
   price: 0,
   oldPrice: null,
   image: "",
+  galleryText: "",
+  colors: DEFAULT_PRODUCT_COLORS.map((c) => ({ ...c })),
+  description: "",
+  featuresText: "",
   badge: "",
   inStock: true,
   isActive: true,
@@ -117,6 +151,17 @@ export default function AdminUrunler() {
       price: Number(product.price),
       oldPrice: product.oldPrice != null ? Number(product.oldPrice) : null,
       image: product.image ?? "",
+      galleryText: (product.gallery ?? []).join("\n"),
+      colors:
+        product.colors?.length > 0
+          ? product.colors.map((c) => ({
+              name: c.name,
+              hex: c.hex,
+              image: c.image ?? "",
+            }))
+          : DEFAULT_PRODUCT_COLORS.map((c) => ({ ...c })),
+      description: product.description ?? "",
+      featuresText: (product.features ?? []).join("\n"),
       badge: product.badge ?? "",
       inStock: Boolean(product.inStock),
       isActive: Boolean(product.isActive),
@@ -160,6 +205,21 @@ export default function AdminUrunler() {
         });
         return;
       }
+      const gallery = form.galleryText
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+      const features = form.featuresText
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+      const colors = form.colors
+        .map((c) => ({
+          name: c.name.trim(),
+          hex: c.hex.trim(),
+          image: c.image.trim() || undefined,
+        }))
+        .filter((c) => c.name && c.hex);
       if (editing.mode === "create") {
         await createProduct({
           adminKey,
@@ -171,6 +231,10 @@ export default function AdminUrunler() {
           price: form.price,
           oldPrice: form.oldPrice ?? undefined,
           image: form.image,
+          gallery: gallery.length ? gallery : undefined,
+          colors: colors.length ? colors : undefined,
+          description: form.description || undefined,
+          features: features.length ? features : undefined,
           badge: form.badge || undefined,
           inStock: form.inStock,
           isActive: form.isActive,
@@ -187,6 +251,10 @@ export default function AdminUrunler() {
           price: form.price,
           oldPrice: form.oldPrice ?? undefined,
           image: form.image,
+          gallery: gallery.length ? gallery : undefined,
+          colors: colors.length ? colors : undefined,
+          description: form.description || undefined,
+          features: features.length ? features : undefined,
           badge: form.badge || undefined,
           inStock: form.inStock,
           isActive: form.isActive,
@@ -567,6 +635,190 @@ function ProductFormModal({
               placeholder="/media/products/..."
               className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
             />
+            <ImageUploadButton
+              onUploaded={(url) => setForm((f) => ({ ...f, image: url }))}
+              label="Ana görsel yükle"
+            />
+            {form.image ? (
+              <AdminImagePreview src={form.image} alt={form.name || "Ürün görseli"} />
+            ) : null}
+          </label>
+          <label className="block text-sm font-semibold text-foreground sm:col-span-2">
+            Galeri (satır başına bir URL)
+            <textarea
+              value={form.galleryText}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, galleryText: e.target.value }))
+              }
+              rows={3}
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-sand focus:outline-none"
+            />
+            <ImageUploadButton
+              onUploaded={(url) =>
+                setForm((f) => ({
+                  ...f,
+                  galleryText: f.galleryText.trim()
+                    ? `${f.galleryText.trim()}\n${url}`
+                    : url,
+                }))
+              }
+              label="Galeriye ekle"
+            />
+            {form.galleryText.trim() ? (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {form.galleryText
+                  .split("\n")
+                  .map((line) => line.trim())
+                  .filter(Boolean)
+                  .map((url) => (
+                    <AdminImagePreview
+                      key={url}
+                      src={url}
+                      alt="Galeri"
+                      compact
+                    />
+                  ))}
+              </div>
+            ) : null}
+          </label>
+          <fieldset className="space-y-3 border border-border bg-background/40 p-4 sm:col-span-2">
+            <legend className="px-1 text-sm font-bold text-foreground">
+              Renk görselleri
+            </legend>
+            <p className="text-xs text-muted">
+              Her renk için görsel URL girin. Konfigüratör ve ürün sayfasında
+              kullanılır.
+            </p>
+            {form.colors.map((color, index) => (
+              <div
+                key={`color-${index}`}
+                className="grid gap-3 border border-border/60 p-3 sm:grid-cols-[1fr_7rem_1fr_auto]"
+              >
+                <label className="block text-xs font-semibold text-foreground">
+                  Renk adı
+                  <input
+                    value={color.name}
+                    onChange={(e) =>
+                      setForm((f) => ({
+                        ...f,
+                        colors: f.colors.map((c, i) =>
+                          i === index ? { ...c, name: e.target.value } : c
+                        ),
+                      }))
+                    }
+                    className="mt-1 w-full border border-border bg-background px-2 py-1.5 text-sm"
+                  />
+                </label>
+                <label className="block text-xs font-semibold text-foreground">
+                  Hex
+                  <input
+                    value={color.hex}
+                    onChange={(e) =>
+                      setForm((f) => ({
+                        ...f,
+                        colors: f.colors.map((c, i) =>
+                          i === index ? { ...c, hex: e.target.value } : c
+                        ),
+                      }))
+                    }
+                    className="mt-1 w-full border border-border bg-background px-2 py-1.5 font-mono text-sm"
+                  />
+                </label>
+                <label className="block text-xs font-semibold text-foreground sm:col-span-1">
+                  Görsel URL
+                  <input
+                    value={color.image}
+                    onChange={(e) =>
+                      setForm((f) => ({
+                        ...f,
+                        colors: f.colors.map((c, i) =>
+                          i === index ? { ...c, image: e.target.value } : c
+                        ),
+                      }))
+                    }
+                    placeholder="/media/..."
+                    className="mt-1 w-full border border-border bg-background px-2 py-1.5 font-mono text-sm"
+                  />
+                  <ImageUploadButton
+                    onUploaded={(url) =>
+                      setForm((f) => ({
+                        ...f,
+                        colors: f.colors.map((c, i) =>
+                          i === index ? { ...c, image: url } : c
+                        ),
+                      }))
+                    }
+                    label="Yükle"
+                  />
+                </label>
+                <div className="flex items-end gap-2">
+                  {color.image ? (
+                    <AdminImagePreview
+                      src={color.image}
+                      alt={color.name}
+                      compact
+                    />
+                  ) : (
+                    <span
+                      className="mb-1 inline-block h-14 w-14 border border-border bg-background"
+                      style={{ backgroundColor: color.hex }}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setForm((f) => ({
+                        ...f,
+                        colors: f.colors.filter((_, i) => i !== index),
+                      }))
+                    }
+                    className="mb-1 inline-flex h-9 w-9 items-center justify-center border border-border text-muted hover:border-brand-red hover:text-brand-red"
+                    aria-label={`${color.name || "Renk"} sil`}
+                  >
+                    <Trash2Icon className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setForm((f) => ({
+                  ...f,
+                  colors: [
+                    ...f.colors,
+                    { name: "", hex: "#888888", image: "" },
+                  ],
+                }))
+              }
+              className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-sand hover:text-white"
+            >
+              <PlusIcon className="h-3.5 w-3.5" />
+              Renk ekle
+            </button>
+          </fieldset>
+          <label className="block text-sm font-semibold text-foreground sm:col-span-2">
+            Açıklama
+            <textarea
+              value={form.description}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, description: e.target.value }))
+              }
+              rows={3}
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+            />
+          </label>
+          <label className="block text-sm font-semibold text-foreground sm:col-span-2">
+            Özellikler (satır başına bir madde)
+            <textarea
+              value={form.featuresText}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, featuresText: e.target.value }))
+              }
+              rows={4}
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+            />
           </label>
           <label className="block text-sm font-semibold text-foreground sm:col-span-2">
             Rozet (ör: &quot;%35 İndirim&quot;)
@@ -778,5 +1030,31 @@ function BuiltInProducts() {
         </div>
       ))}
     </div>
+  );
+}
+
+function AdminImagePreview({
+  src,
+  alt,
+  compact = false,
+}: {
+  src: string;
+  alt: string;
+  compact?: boolean;
+}) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      className={
+        compact
+          ? "h-14 w-14 shrink-0 border border-border object-cover"
+          : "mt-2 h-32 w-full max-w-xs border border-border object-cover"
+      }
+      onError={(e) => {
+        e.currentTarget.classList.add("opacity-40");
+      }}
+    />
   );
 }

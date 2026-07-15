@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { buildWhatsAppLink, useStoreSettings } from "@/context/settings-context";
 
 // Rotalar WhatsApp butonunun gizli kalması gereken, doğrudan birincil eylem
 // içeren sayfalardır. Bu liste audit raporundaki P1 bulgusuna göre
@@ -27,7 +27,11 @@ function shouldHideOnPath(pathname: string): boolean {
 }
 
 export default function WhatsappFloat() {
-  const href = buildWhatsAppOrderLink("Merhaba, oto paspası hakkında bilgi almak istiyorum.");
+  const settings = useStoreSettings();
+  const href = buildWhatsAppLink(
+    settings.whatsappNumber,
+    "Merhaba, oto paspası hakkında bilgi almak istiyorum."
+  );
   const pathname = usePathname();
   const isHidden = shouldHideOnPath(pathname);
   const [visible, setVisible] = useState(false);

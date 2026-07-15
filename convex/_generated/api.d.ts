@@ -9,10 +9,16 @@
  */
 
 import type * as _types from "../_types.js";
+import type * as cms from "../cms.js";
+import type * as cmsSeedData from "../cmsSeedData.js";
 import type * as defaults from "../defaults.js";
+import type * as files from "../files.js";
 import type * as lib_adminAuth from "../lib/adminAuth.js";
+import type * as lib_validators from "../lib/validators.js";
 import type * as orders from "../orders.js";
 import type * as products from "../products.js";
+import type * as seed from "../seed.js";
+import type * as seedData from "../seedData.js";
 import type * as siteSettings from "../siteSettings.js";
 
 import type {
@@ -23,10 +29,16 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   _types: typeof _types;
+  cms: typeof cms;
+  cmsSeedData: typeof cmsSeedData;
   defaults: typeof defaults;
+  files: typeof files;
   "lib/adminAuth": typeof lib_adminAuth;
+  "lib/validators": typeof lib_validators;
   orders: typeof orders;
   products: typeof products;
+  seed: typeof seed;
+  seedData: typeof seedData;
   siteSettings: typeof siteSettings;
 }>;
 

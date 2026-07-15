@@ -30,6 +30,14 @@ export type Product = {
   isActive?: boolean;
 };
 
+export type CartItemConfiguration = {
+  vehicle?: string;
+  baseColor?: string;
+  edgeColor?: string;
+  heelPad?: boolean;
+  trunkMat?: boolean;
+};
+
 export type CartItem = {
   slug: string;
   name: string;
@@ -37,4 +45,6 @@ export type CartItem = {
   price: number;
   color: string;
   quantity: number;
+  /** Konfigüratör özel tasarım detayı — siparişe aktarılır */
+  configuration?: CartItemConfiguration;
 };

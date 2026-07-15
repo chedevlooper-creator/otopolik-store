@@ -98,7 +98,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   try {
     const adminKey = getAdminConvexKey();
-    const stats = await client.query(api.orders.getStats, { adminKey });
+    const stats = await client.query(api.orders.getStats, {
+      adminKey,
+      now: Date.now(),
+    });
     const recentRaw = (await client.query(api.orders.listRecent, {
       adminKey,
       limit: 5,

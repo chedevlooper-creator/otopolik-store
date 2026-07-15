@@ -6,11 +6,13 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { siteSettingsDefaults } from "./defaults";
 import { requireAdminKey } from "./lib/adminAuth";
+import { siteSettingsDocValidator } from "./lib/validators";
 
 const SINGLETON = "site" as const;
 
 export const getSettings = query({
   args: {},
+  returns: v.union(siteSettingsDocValidator, v.null()),
   handler: async (ctx) => {
     return await ctx.db
       .query("siteSettings")
@@ -21,6 +23,7 @@ export const getSettings = query({
 
 export const ensureSettings = mutation({
   args: { adminKey: v.string() },
+  returns: v.id("siteSettings"),
   handler: async (ctx, { adminKey }) => {
     requireAdminKey(adminKey);
     const existing = await ctx.db
@@ -52,6 +55,7 @@ export const updateSettings = mutation({
     matHeelPadPrice: v.optional(v.number()),
     matTrunkPrice: v.optional(v.number()),
   },
+  returns: v.id("siteSettings"),
   handler: async (ctx, { adminKey, ...patch }) => {
     requireAdminKey(adminKey);
     const existing = await ctx.db

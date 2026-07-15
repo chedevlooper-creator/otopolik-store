@@ -141,7 +141,6 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "hali-paspas",
-    // Fiyat piyasa tahminidir — teyit edilip güncellenmeli
     price: 1250,
     oldPrice: 1650,
     badge: "Yeni",
@@ -169,7 +168,6 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "direksiyon-kilifi",
-    // Fiyat piyasa tahminidir — teyit edilip güncellenmeli
     price: 450,
     oldPrice: 650,
     badge: "Yeni",
@@ -196,7 +194,6 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "ekran-koruyucu",
-    // Fiyat piyasa tahminidir — teyit edilip güncellenmeli
     price: 350,
     oldPrice: 500,
     badge: "Yeni",
@@ -223,7 +220,6 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "minder-seti",
-    // Fiyat piyasa tahminidir — teyit edilip güncellenmeli
     price: 950,
     oldPrice: 1350,
     badge: "Yeni",

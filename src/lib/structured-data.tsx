@@ -1,55 +1,85 @@
 import { siteConfig } from "./site-config";
 import { Product } from "./types";
 
-const url = siteConfig.url;
-const logoUrl = `${url}/media/otopolik-logo-3d.png`;
+type OrgInput = {
+  name?: string;
+  url?: string;
+  description?: string;
+  address?: string;
+  phoneDisplay?: string;
+  email?: string;
+  instagram?: string;
+};
+
+function resolveOrg(input?: OrgInput) {
+  return {
+    name: input?.name ?? siteConfig.name,
+    url: input?.url ?? siteConfig.url,
+    description: input?.description ?? siteConfig.description,
+    address: input?.address ?? siteConfig.address,
+    phoneDisplay: input?.phoneDisplay ?? siteConfig.phoneDisplay,
+    email: input?.email ?? siteConfig.email,
+    instagram: input?.instagram ?? siteConfig.instagram,
+  };
+}
 
 /** Organization schema — tüm sayfalarda kullanılır */
-export function organizationSchema() {
+export function organizationSchema(input?: OrgInput) {
+  const org = resolveOrg(input);
+  const logoUrl = `${org.url}/media/otopolik-logo-3d.png`;
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.name,
-    url,
+    name: org.name,
+    url: org.url,
     logo: logoUrl,
-    description: siteConfig.description,
+    description: org.description,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address,
+      streetAddress: org.address,
       addressLocality: "İstanbul",
       addressCountry: "TR",
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: siteConfig.phoneDisplay,
+      telephone: org.phoneDisplay,
       contactType: "customer service",
       availableLanguage: "Türkçe",
     },
-    sameAs: [siteConfig.instagram],
+    sameAs: [org.instagram],
   };
 }
 
 /** LocalBusiness schema — ana sayfada kullanılır */
-export function localBusinessSchema() {
+export function localBusinessSchema(input?: OrgInput) {
+  const org = resolveOrg(input);
+  const logoUrl = `${org.url}/media/otopolik-logo-3d.png`;
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: siteConfig.name,
-    url,
+    name: org.name,
+    url: org.url,
     logo: logoUrl,
     image: logoUrl,
-    description: siteConfig.description,
-    telephone: siteConfig.phoneDisplay,
-    email: siteConfig.email,
+    description: org.description,
+    telephone: org.phoneDisplay,
+    email: org.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address,
+      streetAddress: org.address,
       addressLocality: "İstanbul",
       addressCountry: "TR",
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
       opens: "09:00",
       closes: "18:00",
     },
@@ -58,7 +88,7 @@ export function localBusinessSchema() {
 }
 
 /** Product schema — ürün detay sayfasında kullanılır */
-export function productSchema(product: Product) {
+export function productSchema(product: Product, siteUrl = siteConfig.url) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -68,13 +98,15 @@ export function productSchema(product: Product) {
       "@type": "Brand",
       name: product.brand,
     },
-    image: product.gallery.map((img) => `${url}${img}`),
+    image: product.gallery.map((img) =>
+      img.startsWith("http") ? img : `${siteUrl}${img}`
+    ),
     offers: {
       "@type": "Offer",
       price: product.price,
       priceCurrency: "TRY",
       availability: "https://schema.org/InStock",
-      url: `${url}/urunler/${product.slug}`,
+      url: `${siteUrl}/urunler/${product.slug}`,
       shippingDetails: {
         "@type": "OfferShippingDetails",
         shippingDestination: {
@@ -96,7 +128,10 @@ export function productSchema(product: Product) {
 }
 
 /** BreadcrumbList schema — ürün detay sayfasında kullanılır */
-export function breadcrumbListSchema(productName: string) {
+export function breadcrumbListSchema(
+  productName: string,
+  siteUrl = siteConfig.url
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -105,13 +140,13 @@ export function breadcrumbListSchema(productName: string) {
         "@type": "ListItem",
         position: 1,
         name: "Ana Sayfa",
-        item: url,
+        item: siteUrl,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Ürünler",
-        item: `${url}/urunler`,
+        item: `${siteUrl}/urunler`,
       },
       {
         "@type": "ListItem",
@@ -123,9 +158,7 @@ export function breadcrumbListSchema(productName: string) {
 }
 
 /** FAQPage schema — ana sayfa SSS bölümünde kullanılır */
-export function faqPageSchema(
-  faqs: { q: string; a: string }[]
-) {
+export function faqPageSchema(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

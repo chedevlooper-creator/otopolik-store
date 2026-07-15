@@ -4,9 +4,15 @@ import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
-import { CATEGORY_LABELS, getProductBySlug, getRelatedProducts, products } from "@/lib/products";
+import {
+  CATEGORY_LABELS,
+  getProductBySlug,
+  getProductSlugs,
+  getRelatedProducts,
+} from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
-import { buildWhatsAppOrderLink, siteConfig } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
+import { getStoreSettings } from "@/lib/site-settings";
 import { getShippingCost } from "@/lib/shipping";
 import { CheckIcon, PlusIcon, ScissorsIcon, TruckIcon, Undo2Icon, CalendarIcon, ShieldCheckIcon, DropletIcon, WrenchIcon, SnowflakeIcon, SparklesIcon, RulerIcon, LockIcon, RecycleIcon, WindIcon, ChevronRightIcon, type LucideIcon } from "lucide-react";
 import TrustStrip from "@/components/TrustStrip";
@@ -38,8 +44,9 @@ import {
   renderJsonLd,
 } from "@/lib/structured-data";
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -48,7 +55,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   const images = product.gallery.map((img) => ({
     url: img,
@@ -81,14 +88,15 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const related = getRelatedProducts(slug, 4);
-  const shippingCost = getShippingCost(product.price);
-  const compatibilityLink = buildWhatsAppOrderLink(
+  const related = await getRelatedProducts(slug, 4);
+  const settings = await getStoreSettings();
+  const shippingCost = getShippingCost(product.price, settings);
+  const compatibilityLink = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
     `Merhaba, ${product.name} için araç uyumluluğunu teyit etmek istiyorum. Araç yıl/kasa bilgim: `
-  );
+  )}`;
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:py-14">
@@ -180,16 +188,16 @@ export default async function ProductDetailPage({
                 Kargoya teslim: {product.dispatchEstimate}
               </p>
               <p className="mt-0.5 text-[11px] text-muted">
-                {siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz
+                {settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz
               </p>
             </div>
           </div>
 
-          {/* Güven rozeti */}
+          {/* Güven rozeti — WhatsApp MVP */}
           <div className="mt-4 flex items-center gap-2 border border-dashed border-border bg-surface/50 px-3 py-2">
             <ShieldCheckIcon className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
             <span className="text-xs text-foreground/80">
-              14 gün koşulsuz iade · SSL güvenli ödeme · KVKK uyumlu
+              WhatsApp sipariş onayı · Kapıda ödeme seçeneği · Kişisel veriler yalnızca sipariş için
             </span>
           </div>
 
@@ -237,7 +245,7 @@ export default async function ProductDetailPage({
               </summary>
               <div className="pb-5">
                 <p className="text-sm text-muted">Kargoya teslim: {product.dispatchEstimate}</p>
-                <p className="mt-1 text-sm text-muted">{shippingCost === 0 ? "Bu ürün için ücretsiz kargo." : `Kargo: ${formatPrice(shippingCost)}; ${siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}</p>
+                <p className="mt-1 text-sm text-muted">{shippingCost === 0 ? "Bu ürün için ücretsiz kargo." : `Kargo: ${formatPrice(shippingCost)}; ${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}</p>
               </div>
             </details>
             <details className="group border-b border-dashed border-border" open>

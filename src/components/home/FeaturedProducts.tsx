@@ -1,11 +1,16 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ScrollReveal from "@/components/ScrollReveal";
-import { getFeaturedProducts } from "@/lib/products";
+import { getFeaturedProducts } from "@/lib/catalog";
 import { ArrowRightIcon } from "lucide-react";
+import type { ContentSection } from "@/lib/cms-defaults";
 
-export default function FeaturedProducts() {
-  const products = getFeaturedProducts(3);
+type Props = {
+  content?: ContentSection | null;
+};
+
+export default async function FeaturedProducts({ content }: Props) {
+  const products = await getFeaturedProducts(3);
 
   return (
     <section className="home-section relative overflow-hidden">
@@ -14,19 +19,20 @@ export default function FeaturedProducts() {
         <ScrollReveal>
           <div className="mb-10 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <span className="section-kicker">Öne çıkan ürünler</span>
+              <span className="section-kicker">{content?.eyebrow ?? "Öne çıkan ürünler"}</span>
               <h2 className="section-title mt-5 max-w-3xl">
-                Aracınıza yakışan koruma
+                {content?.title ?? "Aracınıza yakışan koruma"}
               </h2>
               <p className="section-copy mt-4 max-w-2xl">
-                Araca özel paspas setinden bagaj düzenine kadar, aynı malzeme disipliniyle üretilen üç temel çözüm.
+                {content?.body ??
+                  "Araca özel paspas setinden bagaj düzenine kadar, aynı malzeme disipliniyle üretilen üç temel çözüm."}
               </p>
             </div>
             <Link
-              href="/urunler"
+              href={content?.ctaHref ?? "/urunler"}
               className="btn-press inline-flex min-h-12 w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 text-sm font-semibold text-white hover:border-white/24 hover:bg-white/[0.065]"
             >
-              Tüm ürünleri gör
+              {content?.ctaLabel ?? "Tüm ürünleri gör"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

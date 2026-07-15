@@ -1,69 +1,89 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { siteConfig } from "@/lib/site-config";
+import { getStoreSettings } from "@/lib/site-settings";
+import { getContentPage, getSiteSeo, interpolateCmsText } from "@/lib/cms";
+import { DEFAULT_PAGES } from "@/lib/cms-defaults";
 
-const pages = {
-  kargo: {
-    title: "Kargo ve Teslimat",
-    description: "Siparişlerinizin hazırlanma ve teslimat sürecine ilişkin bilgiler.",
-    sections: [
-      ["Hazırlık süresi", `Siparişler, stok ve araç uyumluluğu teyidinin ardından ${siteConfig.estimatedDispatch} içinde kargoya teslim edilir.`],
-      ["Kargo ücreti", `${siteConfig.freeShippingThreshold.toLocaleString("tr-TR")}₺ ve üzerindeki siparişlerde kargo ücretsizdir. Bu tutarın altındaki siparişlerde sabit kargo ücreti ${siteConfig.shippingFee}₺ olarak sipariş özetinde gösterilir.`],
-      ["Teslimat", "Teslimat süresi kargo firmasına ve teslimat adresine göre değişir. Sipariş onayı sırasında güncel tahmini teslimat bilgisi paylaşılır."],
-    ],
-  },
-  iade: {
-    title: "İade ve Değişim",
-    description: "İade veya değişim talebi oluşturmadan önce bu koşulları inceleyin.",
-    sections: [
-      ["Başvuru", "İade veya değişim talebinizi sipariş numaranız ve ürün fotoğraflarıyla WhatsApp üzerinden iletebilirsiniz."],
-      ["Özel üretim", "Araç uyumluluğuna göre hazırlanan ürünlerde değerlendirme; ürünün durumu, uyumluluk teyidi ve tüketici mevzuatındaki istisnalar dikkate alınarak yapılır."],
-      ["İnceleme", "Talebiniz incelenmeden ürünü göndermeyin. Onay sonrası gönderim adresi ve süreç bilgisi paylaşılır."],
-    ],
-  },
-  "ozel-uretim": {
-    title: "Özel Üretim Bilgilendirmesi",
-    description: "Araca özel EVA paspas sipariş sürecinin nasıl ilerlediğini öğrenin.",
-    sections: [
-      ["Uyumluluk teyidi", "Marka, model, yıl ve kasa/versiyon bilgisi siparişten önce teyit edilir."],
-      ["Set kapsamı", "Standart set kapsamı ürün sayfasında gösterilir. Bagaj paspası gibi opsiyonlar ayrıca teyit edilir."],
-      ["Değişiklik", "Araç bilgisinde farklılık varsa üretime geçmeden önce WhatsApp üzerinden bildirin."],
-    ],
-  },
-  gizlilik: {
-    title: "Gizlilik ve Ön Bilgilendirme",
-    description: "Sipariş talebi sırasında paylaşılan kişisel bilgilerin kullanımına ilişkin bilgilendirme.",
-    sections: [
-      ["Toplanan bilgiler", "Sipariş talebi için ad, telefon, şehir, teslimat adresi ve sipariş notu alınır."],
-      ["Kullanım amacı", "Bu bilgiler yalnızca siparişi teyit etmek, teslimatı yürütmek ve gerektiğinde sizinle iletişime geçmek amacıyla kullanılır."],
-      ["Resmî metinler", "Yayına almadan önce işletmenize ait güncel gizlilik, mesafeli satış ve ön bilgilendirme metinlerini hukukî danışmanınızla tamamlayın."],
-    ],
-  },
-} as const;
+export const dynamic = "force-dynamic";
 
-type Slug = keyof typeof pages;
+const LEGAL_SLUGS = DEFAULT_PAGES.filter((p) => p.pageType === "legal").map(
+  (p) => p.slug
+);
 
 export function generateStaticParams() {
-  return Object.keys(pages).map((slug) => ({ slug }));
+  return LEGAL_SLUGS.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
-  const page = pages[slug as Slug];
-  return page ? { title: page.title, description: page.description } : {};
+  const { page } = await getContentPage(slug);
+  if (!page) return {};
+  return { title: page.metaTitle, description: page.metaDescription };
 }
 
-export default async function InfoPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function InfoPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  const page = pages[slug as Slug];
+  if (!LEGAL_SLUGS.includes(slug)) notFound();
+
+  const [{ page, sections }, settings, { seo }] = await Promise.all([
+    getContentPage(slug),
+    getStoreSettings(),
+    getSiteSeo(),
+  ]);
+
   if (!page) notFound();
-  return <main className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
-    <Link href="/" className="spec-value text-xs font-medium uppercase tracking-[0.14em] text-sand hover:underline">← Ana sayfa</Link>
-    <h1 className="mt-5 font-heading text-4xl font-bold text-white">{page.title}</h1>
-    <p className="mt-3 text-muted">{page.description}</p>
-    <div className="mt-10 space-y-5">
-      {page.sections.map(([heading, text]) => <section key={heading} className="border border-border bg-surface p-6"><h2 className="font-heading text-xl font-bold text-white">{heading}</h2><p className="mt-2 text-sm leading-relaxed text-muted">{text}</p></section>)}
+
+  const tokens = {
+    siteName: seo.siteName,
+    freeShippingThreshold: settings.freeShippingThreshold,
+    shippingFee: settings.shippingFee,
+    estimatedDispatch: settings.estimatedDispatch,
+    phoneDisplay: settings.phoneDisplay,
+    email: settings.email,
+    address: settings.address,
+  };
+
+  const bodySections = sections
+    .filter((s) => s.sectionKey.startsWith("s"))
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
+      <span className="spec-label">Bilgilendirme</span>
+      <h1 className="mt-4 font-heading text-4xl font-bold text-white sm:text-5xl">
+        {page.title}
+      </h1>
+      <p className="mt-3 text-muted">
+        {interpolateCmsText(page.description, tokens)}
+      </p>
+      <div className="mt-10 space-y-8">
+        {bodySections.map((section) => (
+          <section key={section.sectionKey}>
+            <h2 className="font-heading text-xl font-bold text-sand">
+              {section.title}
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-foreground/80">
+              {interpolateCmsText(section.body, tokens)}
+            </p>
+          </section>
+        ))}
+      </div>
+      <p className="mt-12 text-sm text-muted">
+        Sorularınız için{" "}
+        <Link href="/iletisim" className="font-semibold text-sand hover:underline">
+          iletişim
+        </Link>{" "}
+        sayfasını kullanabilirsiniz.
+      </p>
     </div>
-  </main>;
+  );
 }

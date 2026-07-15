@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { brands, CATEGORY_LABELS, products } from "@/lib/products";
+import {
+  CATEGORY_LABELS,
+  getBrands,
+  getProducts,
+} from "@/lib/catalog";
 import { Product } from "@/lib/types";
-import { buildWhatsAppOrderLink } from "@/lib/site-config";
+import { getStoreSettings } from "@/lib/site-settings";
+import { getContentPage } from "@/lib/cms";
 import { SearchIcon, XIcon } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Tüm Ürünler",
-  description: "Araca özel üretim EVA oto paspası setlerini keşfedin.",
-};
-
-// Yalnızca üründe karşılığı olan kategoriler listelenir; boş kategori
-// bağlantısı kullanıcıya aktif ürün varmış izlenimi vermesin.
-const CATEGORIES: { key: Product["category"]; label: string }[] = (
-  Object.keys(CATEGORY_LABELS) as Product["category"][]
-)
-  .filter((key) => products.some((product) => product.category === key))
-  .map((key) => ({ key, label: CATEGORY_LABELS[key] }));
+export async function generateMetadata(): Promise<Metadata> {
+  const { page } = await getContentPage("urunler");
+  return {
+    title: page?.metaTitle ?? "Tüm Ürünler",
+    description: page?.metaDescription,
+  };
+}
 
 const SORTS = [
   { key: "onerilen", label: "Önerilen" },
@@ -54,6 +54,17 @@ export default async function ProductsPage({
 }) {
   const params = await searchParams;
   const { marka, kategori, q, sirala, yil } = params;
+  const products = await getProducts();
+  const brands = await getBrands();
+  const settings = await getStoreSettings();
+  const { page, sections } = await getContentPage("urunler");
+  const kicker = sections.find((s) => s.sectionKey === "kicker");
+
+  const CATEGORIES: { key: Product["category"]; label: string }[] = (
+    Object.keys(CATEGORY_LABELS) as Product["category"][]
+  )
+    .filter((key) => products.some((product) => product.category === key))
+    .map((key) => ({ key, label: CATEGORY_LABELS[key] }));
 
   let filtered = products;
   if (marka) filtered = filtered.filter((p) => p.brand === marka);
@@ -76,23 +87,21 @@ export default async function ProductsPage({
   else if (sirala === "fiyat-azalan") filtered.sort((a, b) => b.price - a.price);
 
   const activeFilterCount = [marka, kategori, q, yil].filter(Boolean).length;
+  const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(`Merhaba, katalogda bulamadığım araç için paspas bilgisi almak istiyorum. Marka/model/yıl: ${[marka, q, yil].filter(Boolean).join(" / ")}`)}`;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
       <div className="premium-grid mb-10 overflow-hidden rounded-[1.7rem] border border-white/8 bg-surface/55 p-6 sm:p-9">
-        <span className="spec-label">Katalog</span>
+        <span className="spec-label">{kicker?.title ?? "Katalog"}</span>
         <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-bold text-white sm:text-5xl">
-          Araca Özel EVA Paspas Setleri
+          {page?.title ?? "Araca Özel EVA Paspas Setleri"}
         </h1>
         <p className="mt-3 max-w-2xl text-muted">
-          Modelinizi bulun, size uygun EVA paspas setini inceleyin. Listede
-          aracınızı göremiyorsanız WhatsApp üzerinden bize ulaşın, size özel
-          üretim yapalım.
+          {page?.description ??
+            "Modelinizi bulun, size uygun EVA paspas setini inceleyin. Listede aracınızı göremiyorsanız WhatsApp üzerinden bize ulaşın, size özel üretim yapalım."}
         </p>
       </div>
 
-      {/* Mobilde varsayılan kapalı filtre paneli — saf CSS checkbox-hack (JS gerektirmez);
-          sm+ üzerinde checkbox/label gizlenir ve panel her zaman görünür kalır. */}
       <input
         type="checkbox"
         id="filtre-toggle"
@@ -110,7 +119,6 @@ export default async function ProductsPage({
       </label>
 
       <div className="mb-8 hidden peer-checked:block sm:block">
-        {/* Arama + sıralama */}
         <form method="GET" action="/urunler" className="mb-6 flex flex-col gap-3 sm:flex-row">
           {marka && <input type="hidden" name="marka" value={marka} />}
           {kategori && <input type="hidden" name="kategori" value={kategori} />}
@@ -148,12 +156,10 @@ export default async function ProductsPage({
           </button>
         </form>
 
-        {/* Kategori filtreleri */}
         <div className="mb-3 flex flex-wrap gap-2">
           <Link
             href={buildQuery(params, { kategori: undefined })}
-            className={`${FILTER_PILL} ${
-              !kategori
+            className={`${FILTER_PILL} ${!kategori
                 ? "border-sand bg-surface text-sand"
                 : "border-border text-muted hover:border-sand hover:text-sand"
             }`}
@@ -164,8 +170,7 @@ export default async function ProductsPage({
             <Link
               key={cat.key}
               href={buildQuery(params, { kategori: cat.key })}
-              className={`${FILTER_PILL} ${
-                kategori === cat.key
+              className={`${FILTER_PILL} ${kategori === cat.key
                   ? "border-sand bg-surface text-sand"
                   : "border-border text-muted hover:border-sand hover:text-sand"
               }`}
@@ -175,12 +180,10 @@ export default async function ProductsPage({
           ))}
         </div>
 
-        {/* Marka filtreleri */}
         <div className="flex flex-wrap gap-2">
           <Link
             href={buildQuery(params, { marka: undefined })}
-            className={`${FILTER_PILL} ${
-              !marka
+            className={`${FILTER_PILL} ${!marka
                 ? "border-sand bg-surface text-sand"
                 : "border-border text-muted hover:border-sand hover:text-white"
             }`}
@@ -191,8 +194,7 @@ export default async function ProductsPage({
             <Link
               key={brand}
               href={buildQuery(params, { marka: brand })}
-              className={`${FILTER_PILL} ${
-                marka === brand
+              className={`${FILTER_PILL} ${marka === brand
                   ? "border-sand bg-surface text-sand"
                   : "border-border text-muted hover:border-sand hover:text-white"
               }`}
@@ -225,7 +227,7 @@ export default async function ProductsPage({
             Farklı bir arama deneyin veya aracınız için WhatsApp&apos;tan özel üretim isteyin.
           </p>
           <a
-            href={buildWhatsAppOrderLink(`Merhaba, katalogda bulamadığım araç için paspas bilgisi almak istiyorum. Marka/model/yıl: ${[marka, q, yil].filter(Boolean).join(" / ")}`)}
+            href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-press mt-5 inline-flex bg-brand-red px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
