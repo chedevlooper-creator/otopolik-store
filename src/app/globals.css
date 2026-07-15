@@ -262,19 +262,28 @@ h3 {
   background-size: 18px 1px;
 }
 
-/* Scroll reveal */
+/* Scroll reveal — JS gelene kadar görünür kalsın; animasyon sadece no-preference */
 .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
-.reveal.reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
-  will-change: auto;
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.reveal-visible) {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -299,8 +308,10 @@ h3 {
 
   .hero-line,
   .hero-underline,
-  .hero-kicker {
+  .hero-kicker,
+  .hero-fade {
     animation: none !important;
+    opacity: 1 !important;
     transform: none !important;
   }
 
@@ -367,7 +378,7 @@ h3 {
   animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
 }
 
-/* Sinematik hero — satırlar maske içinden yükselir */
+/* Sinematik hero — hydrate sonrası .hero-ready ile başlar */
 .hero-line-mask {
   display: block;
   overflow: hidden;
@@ -384,15 +395,9 @@ h3 {
 
 .hero-line {
   display: block;
-  transform: translateY(110%);
-  animation: hero-line-up 0.82s cubic-bezier(0.19, 1, 0.22, 1) 0.06s both;
+  transform: translateY(0);
 }
 
-.hero-line--2 {
-  animation-delay: 0.16s;
-}
-
-/* Alt çizgi — satır yerine oturduktan sonra soldan çizilir */
 @keyframes hero-underline-draw {
   from {
     transform: scaleX(0);
@@ -404,11 +409,9 @@ h3 {
 
 .hero-underline {
   transform-origin: left center;
-  transform: scaleX(0);
-  animation: hero-underline-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.72s both;
+  transform: scaleX(1);
 }
 
-/* Kicker — hafif gecikmeli, harf aralığı toparlanarak belirir */
 @keyframes hero-kicker-in {
   from {
     opacity: 0;
@@ -421,7 +424,43 @@ h3 {
 }
 
 .hero-kicker {
-  animation: hero-kicker-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  opacity: 1;
+}
+
+.hero-fade {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-ready .hero-line {
+    transform: translateY(110%);
+    animation: hero-line-up 0.82s cubic-bezier(0.19, 1, 0.22, 1) 0.06s both;
+  }
+
+  .hero-ready .hero-line--2 {
+    animation-delay: 0.16s;
+  }
+
+  .hero-ready .hero-underline {
+    transform: scaleX(0);
+    animation: hero-underline-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.72s
+      both;
+  }
+
+  .hero-ready .hero-kicker {
+    opacity: 0;
+    animation: hero-kicker-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-ready .hero-fade {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+  }
+
+  .hero-ready .hero-fade--late {
+    animation-delay: 0.32s;
+  }
 }
 
 /* Aşağı kaydır işareti */

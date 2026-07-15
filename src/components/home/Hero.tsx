@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import VehicleFinder from "@/components/home/VehicleFinder";
 import HeroMedia from "@/components/home/HeroMedia";
@@ -11,12 +14,33 @@ type Props = {
   };
 };
 
+/**
+ * Hero animasyonları hydrate sonrası başlar — production'da CSS erken yüklenip
+ * animasyonun kullanıcı görmeden bitmesini engeller.
+ */
 export default function Hero({ content }: Props) {
   const hero = content?.hero;
   const secondary = content?.secondaryCta;
+  const [motionReady, setMotionReady] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setMotionReady(true);
+      return;
+    }
+    const id = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => setMotionReady(true));
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, []);
 
   return (
-    <section className="relative flex min-h-[calc(100svh-7.25rem)] flex-col justify-between overflow-hidden bg-black text-white lg:min-h-[calc(100svh-7.75rem)]">
+    <section
+      className={`relative flex min-h-[calc(100svh-7.25rem)] flex-col justify-between overflow-hidden bg-black text-white lg:min-h-[calc(100svh-7.75rem)] ${
+        motionReady ? "hero-ready" : ""
+      }`}
+    >
       <div className="absolute inset-0 z-0">
         <HeroMedia />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.93)_0%,rgba(0,0,0,.68)_45%,rgba(0,0,0,.16)_100%)]" />
@@ -51,12 +75,12 @@ export default function Hero({ content }: Props) {
             </span>
           </h1>
 
-          <p className="animate-hero-delay-2 mt-6 max-w-xl text-sm leading-7 text-white/76 sm:text-base">
+          <p className="hero-fade mt-6 max-w-xl text-sm leading-7 text-white/76 sm:text-base">
             {hero?.body ??
               "Marka ve modelinize göre kalıplanan EVA paspas setleri. Suyu ve çamuru içinde tutar, tek sıkım suyla temizlenir, dört mevsim dayanır."}
           </p>
 
-          <div className="animate-hero-delay-3 mt-7 flex flex-col gap-3 sm:flex-row">
+          <div className="hero-fade hero-fade--late mt-7 flex flex-col gap-3 sm:flex-row">
             <Link
               href={hero?.ctaHref ?? "/olusturucu"}
               className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-brand-red px-7 text-sm font-bold uppercase tracking-[0.1em] text-white shadow-[0_18px_50px_rgba(227,25,55,.26)] hover:bg-[#f02142]"

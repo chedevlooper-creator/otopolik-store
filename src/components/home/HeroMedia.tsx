@@ -21,7 +21,22 @@ export default function HeroMedia() {
     const saveData = (navigator as NavigatorWithConnection).connection?.saveData;
     if (prefersReducedMotion || saveData) return;
 
-    void video.play().catch(() => undefined);
+    const tryPlay = () => {
+      void video.play().catch(() => undefined);
+    };
+
+    tryPlay();
+    video.addEventListener("loadeddata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+
+    // Bazı mobil tarayıcılarda ilk play sessizce başarısız oluyor
+    const retry = window.setTimeout(tryPlay, 400);
+
+    return () => {
+      window.clearTimeout(retry);
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+    };
   }, []);
 
   return (
