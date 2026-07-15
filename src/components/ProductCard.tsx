@@ -15,6 +15,8 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
   const shouldContainImage = ["eva-3d", "bagaj-havuzu", "bagaj-cantasi"].includes(product.category);
+  // Beyaz fonlu stüdyo çekimleri (JPG) koyu kartta sırıtmasın diye çerçeveli panel içinde gösterilir
+  const hasLightImage = product.category === "bagaj-cantasi";
   const showSwatches = ["eva-3d", "eva-havuzlu", "bagaj-havuzu"].includes(product.category);
 
   return (
@@ -28,15 +30,33 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
       <div className={`premium-grid relative overflow-hidden border-b border-white/8 bg-[#14161b] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,rgba(225,201,162,.16),transparent_58%)] opacity-90" />
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-red/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-          className={`transition-transform duration-700 ease-out group-hover:scale-[1.035] ${
-            shouldContainImage ? `object-contain ${featured ? "p-8 sm:p-12" : "p-5"}` : "object-cover"
-          }`}
-        />
+        {hasLightImage ? (
+          <div
+            className={`absolute overflow-hidden rounded-2xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.14),0_18px_40px_rgba(0,0,0,.35)] ${
+              featured ? "inset-8 sm:inset-12" : "inset-5"
+            }`}
+          >
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+              className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+            />
+            {/* Yumuşak stüdyo vinyeti — görsel ile panel arasındaki dikişi gizler */}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(20,22,27,.12))]" />
+          </div>
+        ) : (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+            className={`transition-transform duration-700 ease-out group-hover:scale-[1.035] ${
+              shouldContainImage ? `object-contain ${featured ? "p-8 sm:p-12" : "p-5"}` : "object-cover"
+            }`}
+          />
+        )}
 
         <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
           <div className="flex flex-wrap gap-2">

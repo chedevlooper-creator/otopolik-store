@@ -61,7 +61,6 @@ Vercel proje ayarlarından **Settings → Environment Variables** sayfasına gid
 | Değişken | Değer | Not |
 |----------|-------|-----|
 | `NEXT_PUBLIC_SITE_URL` | `https://otopolik.com` | Canlı domain; preview için `https://{preview-url}.vercel.app` |
-| `NEXT_PUBLIC_VERCEL_ENV` | `production` | Production için `production`, preview için `preview` |
 
 #### Ödeme Servisi (ileride)
 

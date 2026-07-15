@@ -9,7 +9,7 @@ export type Product = {
   name: string;
   brand: string;
   model: string;
-  category: "eva-3d" | "eva-havuzlu" | "bagaj" | "bagaj-havuzu" | "bagaj-cantasi" | "direksiyon-kilifi" | "minder-seti" | "ekran-koruyucu";
+  category: "eva-3d" | "eva-havuzlu" | "hali-paspas" | "bagaj" | "bagaj-havuzu" | "bagaj-cantasi" | "direksiyon-kilifi" | "minder-seti" | "ekran-koruyucu";
   price: number;
   oldPrice?: number;
   image: string;

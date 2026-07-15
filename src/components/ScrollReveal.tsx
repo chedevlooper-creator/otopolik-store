@@ -15,6 +15,11 @@ export default function ScrollReveal({ children, className = "", delay = 0 }: Pr
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Observer desteklenmiyorsa içerik gizli kalmasın — hemen göster
+    if (!("IntersectionObserver" in window)) {
+      el.classList.add("reveal-visible");
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
