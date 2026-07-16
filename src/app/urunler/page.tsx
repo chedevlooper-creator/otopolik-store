@@ -150,7 +150,7 @@ export default async function ProductsPage({
           </select>
           <button
             type="submit"
-            className="btn-press bg-brand-red px-7 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich px-7 py-3 text-sm font-bold uppercase tracking-wider text-white"
           >
             Ara
           </button>
@@ -230,7 +230,7 @@ export default async function ProductsPage({
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-press mt-5 inline-flex bg-brand-red px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich mt-5 inline-flex px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white"
           >
             Aracım için bilgi al
           </a>

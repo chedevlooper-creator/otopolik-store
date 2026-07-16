@@ -24,7 +24,7 @@ export default function VehicleFinder() {
   }
 
   const fieldClass =
-    "h-12 w-full rounded-xl border border-white/[0.08] bg-black/40 px-4 text-sm font-medium text-white outline-none transition-all duration-300 placeholder:text-white/30 hover:border-white/15 focus:border-sand/50 focus:bg-black/80 focus:shadow-[0_0_0_3px_rgba(223,200,150,.06)]";
+    "input-rich h-12 w-full rounded-xl border border-white/[0.08] px-4 text-sm font-medium text-white outline-none transition-all duration-300 placeholder:text-white/30 hover:border-white/15 focus:border-sand/50";
   const labelClass =
     "mb-2 block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50";
 
@@ -32,7 +32,7 @@ export default function VehicleFinder() {
     <form onSubmit={handleSubmit} className="surface-glass gradient-border overflow-hidden rounded-2xl p-5 sm:p-6 lg:p-7">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-red text-white shadow-lg shadow-brand-red/20">
+          <span className="icon-badge-rich flex h-11 w-11 items-center justify-center rounded-xl text-white">
             <CarFrontIcon className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
@@ -90,7 +90,7 @@ export default function VehicleFinder() {
         </div>
         <button
           type="submit"
-          className="btn-press flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-red px-6 text-sm font-bold text-white shadow-[0_14px_36px_rgba(227,25,55,.2)] hover:bg-[#f02142] sm:col-span-2 lg:col-span-1 lg:min-w-[168px]"
+          className="btn-press btn-red-rich flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-bold text-white sm:col-span-2 lg:col-span-1 lg:min-w-[168px]"
         >
           Tasarıma geç
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

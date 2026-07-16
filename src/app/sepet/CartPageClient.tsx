@@ -67,7 +67,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
         </p>
         <Link
           href="/urunler"
-          className="btn-press mt-6 inline-flex bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -128,7 +128,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
           </div>
           <Link
             href="/odeme"
-            className="btn-press mt-6 flex w-full items-center justify-center bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
           >
             Sipariş Talebine Geç
           </Link>

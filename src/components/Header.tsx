@@ -165,7 +165,7 @@ export default function Header() {
               type="button"
               onClick={openDrawer}
               aria-label={totalItems > 0 ? `Sepetim, ${totalItems} ürün` : "Sepetim"}
-              className="btn-press relative flex h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-[11px] font-bold uppercase tracking-[0.1em] text-background shadow-lg shadow-black/20 hover:bg-sand sm:px-4"
+              className="btn-press btn-light-rich relative flex h-11 items-center justify-center gap-2 rounded-full px-3 text-[11px] font-bold uppercase tracking-[0.1em] text-background sm:px-4"
             >
               <ShoppingBagIcon className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Sepet</span>

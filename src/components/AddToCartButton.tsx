@@ -96,7 +96,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => addItem(buildLine())}
-          className="btn-press red-glow flex-1 rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold text-white hover:bg-brand-red-dark"
+          className="btn-press btn-red-rich flex-1 rounded-full px-6 py-3.5 text-sm font-bold text-white"
         >
           Sepete Ekle
         </button>
@@ -141,7 +141,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             type="button"
             onClick={() => addItem(buildLine())}
             tabIndex={footerVisible ? -1 : undefined}
-            className="btn-press min-h-11 flex-1 rounded-full bg-brand-red px-5 py-3 text-sm font-bold text-white hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich min-h-11 flex-1 rounded-full px-5 py-3 text-sm font-bold text-white"
           >
             Sepete Ekle
           </button>

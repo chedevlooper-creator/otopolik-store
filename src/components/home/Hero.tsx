@@ -85,14 +85,14 @@ export default function Hero({ content }: Props) {
           <div className="hero-fade hero-fade--late mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href={hero?.ctaHref ?? "/olusturucu"}
-              className="btn-press inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full bg-gradient-to-b from-brand-red to-brand-red-dark px-8 text-sm font-bold uppercase tracking-[0.08em] text-white shadow-[0_20px_60px_rgba(227,25,55,.28),inset_0_1px_0_rgba(255,255,255,.12)] hover:from-[#f02142] hover:to-brand-red"
+              className="btn-press btn-red-rich inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full px-8 text-sm font-bold uppercase tracking-[0.08em] text-white"
             >
               {hero?.ctaLabel ?? "PASPASINI TASARLA"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href={secondary?.ctaHref ?? "/urunler"}
-              className="btn-press inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] px-8 text-sm font-bold uppercase tracking-[0.08em] text-white/90 backdrop-blur-sm hover:border-sand/40 hover:bg-white/[0.07] hover:text-sand"
+              className="btn-press btn-ghost-rich inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full px-8 text-sm font-bold uppercase tracking-[0.08em] text-white/90"
             >
               {secondary?.ctaLabel ?? "ÜRÜNLERİ İNCELE"}
             </Link>

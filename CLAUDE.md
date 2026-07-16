@@ -9,46 +9,56 @@ OTO POLİK — a Turkish e-commerce storefront (Next.js App Router) selling car-
 ## Commands
 
 ```bash
-npm run dev      # dev server (localhost:3000)
-npm run build    # production build
-npm start        # run production build
-npm run lint     # eslint (flat config, eslint-config-next)
-npx convex dev    # start Convex locally / push schema+functions (run from repo root)
+npm run dev        # dev server (localhost:3000)
+npm run build      # production build
+npm start          # run production build
+npm run lint       # eslint (flat config, eslint-config-next)
+npm run typecheck  # tsc --noEmit
+npx convex dev     # start Convex locally / push schema+functions (run from repo root)
 ```
 
 There is no test suite configured — do not assume a `test` script exists.
 
+Known lint debt: `react-hooks/set-state-in-effect` errors in `ConsentAnalytics.tsx`, `CookieConsent.tsx`, and `Hero.tsx` pre-date most work — don't treat them as regressions from your change, and don't add new ones (use lazy `useState` initializers instead of set-in-effect).
+
+WSL note: this repo lives on the WSL filesystem but the default `PATH` may resolve to Windows `npm` (`/mnt/c/Program Files/nodejs`), which fails on `\\wsl.localhost\...` paths with EISDIR/EPERM errors. Use a Linux-native node (e.g. `export PATH="/tmp/node-v22.16.0-linux-x64/bin:$PATH"`) for `npm install`/`npm run build`. Also: `npm run build` shares `.next/` with the dev server and usually kills it — restart `npm run dev` after building.
+
 ## Architecture
 
-### Two data layers that are NOT connected
+### Data layer: Convex-first with static fallback
 
-This is the most important thing to understand before touching product data:
+Nearly every data source follows the same **lazy-client + graceful fallback** pattern: `src/lib/convex-server.ts` / `convex-client.ts` return `null`/`false` when `NEXT_PUBLIC_CONVEX_URL` is unset or still the placeholder from `.env.example`, and each calling layer falls back to static defaults instead of throwing. Preserve this in any new Convex-touching code. The fallback pairs:
 
-- **Public storefront** (`/`, `/urunler`, `/urunler/[slug]`, sitemap, featured products) reads exclusively from the **static, hardcoded array** in `src/lib/products.ts`. It never queries Convex.
-- **Admin product CRUD** (`/admin/urunler`) reads/writes **Convex** directly (`useQuery`/`useMutation` against `api.products.*`). The page itself displays a fallback banner explaining that these are separate data sources.
+| Server layer (`src/lib/`) | Reads from Convex | Falls back to |
+|---|---|---|
+| `catalog.ts` (products for `/urunler`, product detail, featured, sitemap, layout) | `api.products.*` | static array in `products.ts` |
+| `cms.ts` (homepage sections, FAQs, promos, testimonials, SEO; re-exported via `cms-home.ts`) | `api.cms.*` | `cms-defaults.ts` seeds |
+| `site-settings.ts` (phone, shipping, prices; editable at `/admin/ayarlar`) | `api.siteSettings` | `site-config.ts` env-based config |
+| `dashboard-stats.ts` (admin dashboard) | orders/products | zero/mock data |
 
-Editing a product via the admin panel does **not** change what customers see on `/urunler`. To change what's live, edit `src/lib/products.ts` directly. Convex product data is effectively unused by the storefront today.
+So: with Convex configured, the storefront is fully database-driven and editable from `/admin`; without it, the site still works entirely from the static files. `products.ts` and `cms-defaults.ts` double as both fallback and Convex seed content (`convex/seed.ts`, `convex/cmsSeedData.ts`).
 
-Everything else Convex-backed (site settings, orders, dashboard stats) follows a **lazy-client + graceful fallback** pattern: `src/lib/convex-server.ts` / `convex-client.ts` return `null`/`false` when `NEXT_PUBLIC_CONVEX_URL` is unset or still the placeholder value from `.env.example`, and calling code falls back to static defaults (`site-config.ts`) or mock/zero data rather than throwing. Preserve this pattern in new Convex-touching code.
+Server components pass catalog/CMS data down; client components receive it via `src/context/` providers (`catalog-context`, `cms-context`, `settings-context`) rather than querying Convex themselves. The admin product CRUD (`/admin/urunler`) is the exception — it uses `useQuery`/`useMutation` against Convex directly.
 
 **No Supabase.** Despite past commit messages mentioning "Supabase," the backend is Convex. Do not go looking for a Supabase client.
 
-### Config: `site-config.ts` vs `site-settings.ts`
+### CMS-lite content model
 
-- `src/lib/site-config.ts` — static config object built from env vars with hardcoded Turkish-market fallbacks (phone, WhatsApp number, shipping thresholds, configurator base prices). Also exports `buildWhatsAppOrderLink(message)`.
-- `src/lib/site-settings.ts` — Convex-backed settings (`getSiteSettings`/`saveSiteSettings`, editable at `/admin/ayarlar`), falls back to `site-config.ts` defaults when Convex isn't configured.
+Homepage (`src/app/page.tsx`) composes itself from `ContentSection` rows keyed by `sectionKey` (`"hero"`, `"step-01"`, `"showcase-gallery-03"`, …) fetched via `getContentPage("home")`. Components take a `content`/`section` prop and fall back to hardcoded Turkish copy with `??` when a section is missing. Content is edited at `/admin/icerik` (`ContentManager.tsx`). Text supports token interpolation (`interpolateCmsText`) for values like `{freeShippingThreshold}`.
 
 ### Convex layout
 
-`convex/schema.ts` defines three tables: `siteSettings` (singleton), `products`, `orders` (with a Turkey-specific `whatsapp_pending` status and an optional embedded car-mat `configuration` object per line item). `convex/_generated/` is codegen — don't hand-edit.
+`convex/schema.ts` defines nine tables: `siteSettings` (singleton), `siteSeo`, `contentPages`, `contentSections`, `faqItems`, `promoItems`, `testimonials`, `products`, `orders` (Turkey-specific `whatsapp_pending` status, optional embedded car-mat `configuration` per line item). `convex/_generated/` is codegen — don't hand-edit.
 
-The `convex/` directory lives **outside** `src/`, so the `@/*` → `./src/*` path alias in `tsconfig.json` cannot reach it. Imports of `convex/_generated/api` from inside `src/app/...` use relative paths (e.g. `../../../convex/_generated/api`), not the alias.
+Admin-facing Convex mutations take an `adminKey: v.string()` argument checked by `requireAdminKey()` inside the mutation; the Next server supplies it via `getAdminConvexKey()` (`ADMIN_SECRET` or `ADMIN_PASSWORD` env, which must match the same env var set on the Convex deployment).
+
+The `convex/` directory lives **outside** `src/`, so the `@/*` → `./src/*` path alias in `tsconfig.json` cannot reach it. Imports of `convex/_generated/api` from inside `src/` use relative paths (e.g. `../../../convex/_generated/api`), not the alias.
 
 ### Admin auth
 
 Next.js 16 renamed `middleware.ts` → `src/proxy.ts` (same `NextRequest`/`NextResponse` API); this repo only has `proxy.ts`. It matches `/admin/:path*`, allows `/admin/login` through, and otherwise verifies the `admin_session` cookie via `verifySessionToken()` in `src/lib/admin-auth.ts`, redirecting to `/admin/login?next=<path>` if invalid.
 
-Auth is a single shared admin password (`ADMIN_PASSWORD` env var, no user accounts/DB). Session cookie is a stateless `{expireTimestamp}.{hmacSignature}` signed with HMAC-SHA256 via WebCrypto, keyed by `ADMIN_SECRET` (preferred) or `ADMIN_PASSWORD` (fallback), 7-day expiry, constant-time comparison. Server actions that mutate admin data (e.g. `admin/ayarlar/actions.ts`'s `updateSettings`) re-verify `isAuthenticated()` themselves rather than trusting the proxy alone — follow this pattern for new admin mutations, since Next.js proxy/middleware is only an edge-layer redirect, not a security boundary for the action itself.
+Auth is a single shared admin password (`ADMIN_PASSWORD` env var, no user accounts/DB). Session cookie is a stateless `{expireTimestamp}.{hmacSignature}` signed with HMAC-SHA256 via WebCrypto, keyed by `ADMIN_SECRET` (preferred) or `ADMIN_PASSWORD` (fallback), 7-day expiry, constant-time comparison. Server actions that mutate admin data re-verify `isAuthenticated()` themselves rather than trusting the proxy alone — follow this pattern for new admin mutations, since Next.js proxy/middleware is only an edge-layer redirect, not a security boundary for the action itself.
 
 Note: `src/app/admin/layout.tsx` has a stale comment referencing `src/middleware.ts` — that file doesn't exist; treat `proxy.ts` as authoritative.
 
@@ -58,14 +68,24 @@ Note: `src/app/admin/layout.tsx` has a stale comment referencing `src/middleware
 
 ### Checkout flow (no payment gateway)
 
-`src/app/odeme/page.tsx`: collects customer info (Turkish phone-format validation), payment method is `whatsapp` (default) or `kapida` (cash on delivery) — a credit-card option exists in the UI but is disabled ("coming soon"). On submit it opens the WhatsApp deep link (`wa.me/<number>?text=<order summary>`) **synchronously**, before the async Convex order write, to avoid popup blockers — then persists to Convex as best-effort (errors are logged, not surfaced), clears the cart, and routes to `/tesekkurler`.
+`src/app/odeme/`: collects customer info (Turkish phone-format validation), payment method is `whatsapp` (default) or `kapida` (cash on delivery) — a credit-card option exists in the UI but is disabled ("coming soon"). On submit it opens the WhatsApp deep link (`wa.me/<number>?text=<order summary>`) **synchronously**, before the async Convex order write, to avoid popup blockers — then persists to Convex as best-effort (errors are logged, not surfaced), clears the cart, and routes to `/tesekkurler`.
 
 ### Product configurator (`/olusturucu`)
 
-`src/components/configurator/MatConfigurator.tsx` orchestrates: vehicle brand/model selection (price lookup via `vehicle-data.ts`'s `getVehiclePrice()`, falling back to `siteConfig.matBasePrice` for "other vehicle"), independent floor/edge color pickers from fixed palettes, optional extras (heel pad, trunk mat) priced from `site-config.ts`, and a preview image resolved from a hardcoded `floorColor|edgeColor` lookup table (defaults to `Siyah|Kırmızı` if the exact combo has no pre-rendered image). Adds to cart via `useCart().addItem()`.
+`src/components/configurator/MatConfigurator.tsx` orchestrates: vehicle brand/model selection (price lookup via `vehicle-data.ts`'s `getVehiclePrice()`, falling back to `siteConfig.matBasePrice` for "other vehicle"), independent floor/edge color pickers from fixed palettes (`FLOOR_COLORS`/`EDGE_COLORS` hardcoded at the top of that file), optional extras (heel pad, trunk mat) priced from site settings, and a preview image resolved from a hardcoded `floorColor|edgeColor` lookup table (defaults to `Siyah|Kırmızı` if the exact combo has no pre-rendered image). Adds to cart via `useCart().addItem()`.
+
+## Design system
+
+Dark premium theme defined entirely in `src/app/globals.css` via CSS variables (`--brand-red #e31937`, `--sand #e1c9a2` gold accent, near-black surfaces) mapped into Tailwind v4 through `@theme inline`. Reuse the existing utility classes instead of re-inventing inline styles:
+
+- Buttons: `btn-red-rich` (layered red gradient + inner light + hover sheen sweep; handles `:disabled`), `btn-light-rich` (white/cream), `btn-ghost-rich` (glass outline) — always combined with `btn-press` (press micro-interaction).
+- Forms: `input-rich` (deep inset shadow + sand focus ring; deliberately does **not** set border-color so it composes with conditional error borders like checkout's).
+- Panels: `surface-glass`, `premium-card`, `proof-card` (all carry an inner top light line), `icon-badge-rich` (red gradient icon square), `edge-card` (hard offset shadow mimicking mat binding), `bg-eva`/`bg-eva-strong` (diamond EVA texture), `spec-label`/`spec-value` (monospace technical labels).
+- Motion: scroll reveals use `.reveal`/`.reveal-visible` (via `ScrollReveal.tsx`); hero animations gate behind a post-hydration `hero-ready` class. **All** animation must be disabled under `prefers-reduced-motion: reduce` — globals.css already handles the existing classes; follow that pattern for new ones.
 
 ## Conventions
 
 - Path alias `@/*` → `./src/*` (does not cover `convex/`, see above).
 - Deploy target is Vercel, region `fra1` (Frankfurt). Cache headers for `/media/*` and `/_next/static/*` are set in both `next.config.ts` and `vercel.json` (redundant, keep in sync if changing).
 - Product/media assets live under `public/media/`; `products.ts` image paths often reference `/media/scraped/...`, sourced from `paspasburada_db.json` at the repo root.
+- Admin UI (`/admin`) intentionally uses sharp corners and simpler styling than the customer-facing site; customer-facing polish classes (`*-rich`) are not applied there.

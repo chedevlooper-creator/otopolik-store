@@ -1,0 +1,9 @@
+{
+  "name": "run-otopolik-store-driver",
+  "private": true,
+  "type": "module",
+  "description": "Playwright driver for launching/screenshotting the OTO POLİK storefront. See SKILL.md.",
+  "dependencies": {
+    "playwright": "~1.61.1"
+  }
+}

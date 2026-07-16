@@ -36,9 +36,9 @@ export default async function ContactPage() {
       <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-3">
         <a
           href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`}
-          className="group bg-surface p-6 text-center transition-colors hover:bg-surface-hover"
+          className="group bg-surface bg-gradient-to-b from-white/[0.035] to-transparent p-6 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all hover:bg-surface-hover hover:shadow-[inset_0_1px_0_rgba(255,255,255,.09),0_16px_44px_rgba(0,0,0,.3)]"
         >
-          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-border bg-background">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-white/12 bg-gradient-to-b from-white/[0.06] to-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,.1),0_10px_24px_rgba(0,0,0,.35)] transition-transform duration-300 group-hover:-translate-y-0.5">
             <PhoneIcon className="h-6 w-6 text-sand" aria-hidden="true" />
           </span>
           <p className="mt-4 font-heading text-lg font-bold uppercase text-white">Telefon</p>
@@ -48,9 +48,9 @@ export default async function ContactPage() {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-surface p-6 text-center transition-colors hover:bg-surface-hover"
+          className="group bg-surface bg-gradient-to-b from-white/[0.035] to-transparent p-6 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all hover:bg-surface-hover hover:shadow-[inset_0_1px_0_rgba(255,255,255,.09),0_16px_44px_rgba(0,0,0,.3)]"
         >
-          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-border bg-background">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-white/12 bg-gradient-to-b from-white/[0.06] to-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,.1),0_10px_24px_rgba(0,0,0,.35)] transition-transform duration-300 group-hover:-translate-y-0.5">
             <MessageCircleIcon className="h-6 w-6 text-[#25D366]" aria-hidden="true" />
           </span>
           <p className="mt-4 font-heading text-lg font-bold uppercase text-white">WhatsApp</p>
@@ -60,9 +60,9 @@ export default async function ContactPage() {
         </a>
         <a
           href={`mailto:${settings.email}`}
-          className="group bg-surface p-6 text-center transition-colors hover:bg-surface-hover"
+          className="group bg-surface bg-gradient-to-b from-white/[0.035] to-transparent p-6 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all hover:bg-surface-hover hover:shadow-[inset_0_1px_0_rgba(255,255,255,.09),0_16px_44px_rgba(0,0,0,.3)]"
         >
-          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-border bg-background">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-white/12 bg-gradient-to-b from-white/[0.06] to-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,.1),0_10px_24px_rgba(0,0,0,.35)] transition-transform duration-300 group-hover:-translate-y-0.5">
             <MailIcon className="h-6 w-6 text-sand" aria-hidden="true" />
           </span>
           <p className="mt-4 font-heading text-lg font-bold uppercase text-white">E-posta</p>

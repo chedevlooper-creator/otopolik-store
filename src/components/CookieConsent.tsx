@@ -76,7 +76,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("accepted")}
-            className="btn-press min-h-11 bg-brand-red px-5 text-xs font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-white"
           >
             Kabul et
           </button>

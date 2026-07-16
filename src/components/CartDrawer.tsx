@@ -102,7 +102,7 @@ export default function CartDrawer() {
             <Link
               href="/urunler"
               onClick={closeDrawer}
-              className="btn-press red-glow mt-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white hover:bg-brand-red-dark"
+              className="btn-press btn-red-rich mt-2 rounded-full px-6 py-3 text-sm font-bold text-white"
             >
               Ürünleri İncele
             </Link>
@@ -163,7 +163,7 @@ export default function CartDrawer() {
               <Link
                 href="/odeme"
                 onClick={closeDrawer}
-                className="btn-press red-glow mt-4 flex w-full items-center justify-center rounded-full bg-brand-red px-6 py-3.5 text-sm font-bold text-white hover:bg-brand-red-dark"
+                className="btn-press btn-red-rich mt-4 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white"
               >
                 Sipariş Talebine Geç
               </Link>

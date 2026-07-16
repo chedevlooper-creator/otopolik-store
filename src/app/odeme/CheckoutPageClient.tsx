@@ -151,7 +151,7 @@ export default function CheckoutPageClient({
         </p>
         <Link
           href="/urunler"
-          className="btn-press mt-6 inline-flex bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -315,7 +315,7 @@ export default function CheckoutPageClient({
                 onBlur={(e) => validateField("fullName", e.target.value)}
                 aria-invalid={Boolean(errors.fullName)}
                 aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
-                className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
+                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
                   errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
@@ -341,7 +341,7 @@ export default function CheckoutPageClient({
                 aria-invalid={Boolean(errors.phone)}
                 aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
                 placeholder="05XX XXX XX XX"
-                className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
+                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
                   errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
                 }`}
               />
@@ -366,7 +366,7 @@ export default function CheckoutPageClient({
               onBlur={(e) => validateField("city", e.target.value)}
               aria-invalid={Boolean(errors.city)}
               aria-describedby={errors.city ? "checkout-city-error" : undefined}
-              className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
+              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
                 errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
@@ -391,7 +391,7 @@ export default function CheckoutPageClient({
               onBlur={(e) => validateField("address", e.target.value)}
               aria-invalid={Boolean(errors.address)}
               aria-describedby={errors.address ? "checkout-address-error" : undefined}
-              className={`mt-1.5 w-full rounded-xl border bg-surface px-4 py-3 font-normal focus:outline-none ${
+              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
                 errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
               }`}
             />
@@ -411,7 +411,7 @@ export default function CheckoutPageClient({
               autoComplete="off"
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-border bg-surface px-4 py-3 font-normal focus:border-sand focus:outline-none"
+              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
           </label>
 
@@ -420,7 +420,7 @@ export default function CheckoutPageClient({
               Ödeme Şekli
             </legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3.5 transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -433,7 +433,7 @@ export default function CheckoutPageClient({
                   WhatsApp üzerinden sipariş onayı
                 </span>
               </label>
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3.5 transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -522,7 +522,7 @@ export default function CheckoutPageClient({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-press mt-6 flex w-full items-center justify-center rounded-xl bg-brand-red px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-brand-red/20 hover:bg-brand-red-dark disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
           </button>

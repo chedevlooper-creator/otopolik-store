@@ -175,7 +175,7 @@ export default function MatConfigurator({
               <span
                 className={`spec-value flex h-6 w-6 items-center justify-center text-[11px] font-bold ${
                   isActive
-                    ? "bg-brand-red text-white"
+                    ? "icon-badge-rich text-white"
                     : isDone
                       ? "bg-sand/20 text-sand"
                       : "bg-border text-muted"

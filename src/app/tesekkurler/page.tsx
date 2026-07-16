@@ -54,7 +54,7 @@ export default async function ThankYouPage() {
       <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <Link
           href={primaryHref}
-          className="btn-press inline-flex rounded-full bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-brand-red/20 hover:bg-brand-red-dark"
+          className="btn-press btn-red-rich inline-flex rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {primaryCta}
         </Link>

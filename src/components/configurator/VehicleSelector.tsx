@@ -13,7 +13,7 @@ type Props = {
 };
 
 const selectClass =
-  "w-full rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm font-medium transition-colors focus:border-sand focus:outline-none";
+  "input-rich w-full rounded-xl border border-white/10 px-4 py-3 text-sm font-medium focus:border-sand focus:outline-none";
 
 export default function VehicleSelector({
   brand,

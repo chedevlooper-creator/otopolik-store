@@ -29,7 +29,7 @@ export default async function NotFound() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/"
-            className="btn-press inline-flex items-center gap-2 bg-brand-red px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-brand-red-dark"
+            className="btn-press btn-red-rich inline-flex items-center gap-2 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
           >
             <HomeIcon className="h-4 w-4" aria-hidden="true" />
             Ana Sayfaya Dön

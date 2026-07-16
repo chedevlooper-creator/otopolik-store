@@ -232,7 +232,9 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-card);
   background: var(--surface);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 24px 70px rgba(0, 0, 0, 0.26);
 }
 
 .bg-eva-strong {
@@ -532,6 +534,151 @@ h3 {
 
 .animate-scroll-cue {
   animation: scroll-cue 2s ease-in-out infinite;
+}
+
+/* ============================================
+   Zengin buton kaplamaları — katmanlı gradient,
+   iç ışık çizgisi ve hover parlama süpürmesi
+   ============================================ */
+.btn-red-rich {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f0264a 0%, var(--brand-red) 46%, #c11230 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+    0 12px 34px rgba(227, 25, 55, 0.32);
+}
+
+.btn-red-rich:hover {
+  filter: brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.24),
+    0 16px 44px rgba(227, 25, 55, 0.44);
+}
+
+.btn-red-rich:disabled {
+  background: var(--surface-hover);
+  box-shadow: none;
+  filter: none;
+}
+
+@keyframes btn-sheen {
+  from {
+    transform: skewX(-20deg) translateX(-180%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  to {
+    transform: skewX(-20deg) translateX(340%);
+    opacity: 0;
+  }
+}
+
+.btn-red-rich::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.32),
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-red-rich:hover::after {
+  animation: btn-sheen 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-red-rich:disabled::after {
+  animation: none;
+}
+
+/* Açık renkli birincil buton (header sepet) */
+.btn-light-rich {
+  background: linear-gradient(180deg, #ffffff 0%, #ece7de 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 10px 26px rgba(0, 0, 0, 0.3);
+}
+
+.btn-light-rich:hover {
+  background: linear-gradient(180deg, #ffffff 0%, var(--sand) 130%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 14px 34px rgba(0, 0, 0, 0.38);
+}
+
+/* Hayalet/çerçeveli ikincil buton */
+.btn-ghost-rich {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.02)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost-rich:hover {
+  border-color: rgba(225, 201, 162, 0.55);
+  color: var(--sand);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-red-rich:hover::after {
+    animation: none;
+  }
+}
+
+/* Zengin form alanı — derin iç gölge + odakta sand halka.
+   Border rengine dokunmaz; hata/durum border'larıyla güvenle birleşir. */
+.input-rich {
+  background-image: linear-gradient(
+    180deg,
+    rgba(15, 17, 22, 0.92),
+    rgba(8, 9, 12, 0.97)
+  );
+  background-color: #0a0b0f;
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.25s ease,
+    background-color 0.2s ease;
+}
+
+.input-rich:focus {
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(225, 201, 162, 0.13),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Zengin ikon rozeti — kırmızı gradient kare (form başlıkları, adım işaretleri) */
+.icon-badge-rich {
+  background: linear-gradient(180deg, #f0264a 0%, var(--brand-red) 55%, #b90e29 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 10px 26px rgba(227, 25, 55, 0.35);
 }
 
 /* ─── Buton basma — shimmer efektli ─── */

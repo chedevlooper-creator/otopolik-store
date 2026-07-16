@@ -55,7 +55,7 @@ export default function ConfigSummary({
           type="button"
           disabled={!canAdd}
           onClick={onAddToCart}
-          className="btn-press red-glow min-h-11 flex-1 rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white hover:bg-brand-red-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:bg-surface-hover disabled:text-muted sm:py-3.5"
+          className="btn-press btn-red-rich min-h-11 flex-1 rounded-full px-6 py-3 text-sm font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:text-muted sm:py-3.5"
         >
           Sepete Ekle
         </button>
