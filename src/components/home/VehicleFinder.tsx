@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
-import { ArrowRightIcon, CarFrontIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, CarFrontIcon, InfoIcon, SearchIcon } from "lucide-react";
 
 export default function VehicleFinder() {
   const router = useRouter();
@@ -96,6 +97,20 @@ export default function VehicleFinder() {
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
+      {brand && model && (
+        <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/8 bg-white/[0.03] px-4 py-3 text-xs text-white/62">
+          <InfoIcon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
+          <span>
+            {brand} {model} paspas fiyatını ve özelliklerini mi merak ediyorsunuz?{' '}
+            <Link
+              href={`/arac/${brand.toLocaleLowerCase('tr-TR').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u').replace(/[^a-z0-9]+/g,'-')}-${model.toLocaleLowerCase('tr-TR').replace(/ç/g,'c').replace(/ğ/g,'g').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ş/g,'s').replace(/ü/g,'u').replace(/[^a-z0-9]+/g,'-')}`}
+              className="font-semibold text-sand hover:underline"
+            >
+              Araç sayfasına git →
+            </Link>
+          </span>
+        </div>
+      )}
     </form>
   );
 }
