@@ -45,26 +45,35 @@ export default function Footer() {
   const footer = cms.footer;
 
   return (
-    <footer className="border-t border-white/[0.04] bg-[#070810] text-white">
-      <div className="mx-auto max-w-7xl px-4 pt-6">
-        <div className="relative overflow-hidden rounded-2xl border border-brand-red/20 bg-gradient-to-br from-brand-red via-[#c5112d] to-[#790b1c] px-6 py-8 shadow-[0_30px_90px_rgba(227,25,55,.12)] sm:px-9 sm:py-10">
-          <div className="premium-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/80">
+    <footer className="site-footer border-t border-white/[0.04] bg-[#070810] text-white">
+      <div className="mx-auto max-w-7xl px-4 pt-8 sm:pt-10">
+        <div className="footer-cta">
+          <div className="footer-cta__mesh" aria-hidden="true" />
+          <div className="footer-cta__sheen" aria-hidden="true" />
+          <div className="footer-cta__content">
+            <div className="footer-cta__copy">
+              <p className="footer-cta__eyebrow">
                 {footer?.eyebrow ?? "Aracınıza özel üretim"}
               </p>
-              <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold text-white sm:text-4xl">
+              <h2 className="footer-cta__title">
                 {footer?.title ?? "Doğru kalıbı seçin, tarzınızı yola taşıyın."}
               </h2>
+              <p className="footer-cta__sub">
+                CNC kesim · Premium EVA · {settings.estimatedDispatch} içinde kargo
+              </p>
             </div>
-            <Link
-              href={footer?.ctaHref ?? "/olusturucu"}
-              className="btn-press btn-light-rich inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-full px-7 text-sm font-bold text-background"
-            >
-              {footer?.ctaLabel ?? "Tasarımını başlat"}
-              <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            <div className="footer-cta__actions">
+              <Link
+                href={footer?.ctaHref ?? "/olusturucu"}
+                className="btn-press btn-sand-rich footer-cta__btn"
+              >
+                {footer?.ctaLabel ?? "Tasarımını başlat"}
+                <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link href="/urunler" className="footer-cta__ghost">
+                Ürünleri incele
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -78,38 +87,38 @@ export default function Footer() {
                 "Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler."}
             </p>
             <div className="mt-6 flex gap-2">
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300">
+              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer-social">
                 <CameraIcon className="h-4 w-4" aria-hidden="true" />
               </a>
-              <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
+              <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer-social">
                 <PlayIcon className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Keşfet</h3>
+            <h3 className="footer-col-title">Keşfet</h3>
             <ul className="mt-5 space-y-3 text-sm">
               {PAGE_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="link-slide inline-block text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
+                <li key={item.href}><Link href={item.href} className="footer-link">{item.label}</Link></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Destek</h3>
+            <h3 className="footer-col-title">Destek</h3>
             <ul className="mt-5 space-y-3 text-sm">
               {INFO_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="link-slide inline-block text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
+                <li key={item.href}><Link href={item.href} className="footer-link">{item.label}</Link></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand">Bize ulaşın</h3>
-            <div className="mt-5 space-y-4 text-sm text-white/65">
-              <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="link-slide-reverse inline-flex items-center gap-3 text-white/65 hover:text-white">
-                <PhoneIcon className="h-4 w-4 shrink-0 text-sand transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+            <h3 className="footer-col-title">Bize ulaşın</h3>
+            <div className="mt-5 space-y-4 text-sm text-white/55">
+              <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="flex items-center gap-3 transition-colors hover:text-white">
+                <PhoneIcon className="h-4 w-4 shrink-0 text-sand/80" aria-hidden="true" />
                 {settings.phoneDisplay}
               </a>
               <a href={`mailto:${settings.email}`} className="link-slide-reverse inline-flex items-center gap-3 text-white/65 hover:text-white">
@@ -121,7 +130,7 @@ export default function Footer() {
                 {settings.address}
               </p>
             </div>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-press mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#25D366]/30 bg-[#25D366]/[0.08] px-5 text-xs font-bold text-[#7bf0a7] hover:border-[#25D366]/50 hover:bg-[#25D366]/12">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-press mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#25D366]/30 bg-[#25D366]/[0.08] px-5 text-xs font-bold text-[#7bf0a7] hover:border-[#25D366]/50 hover:bg-[#25D366]/12">
               <MessageCircleIcon className="h-4 w-4" aria-hidden="true" />
               WhatsApp desteği
             </a>

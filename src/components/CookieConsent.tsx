@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 const STORAGE_KEY = "otopolik_cookie_consent";
@@ -27,25 +27,48 @@ export function setStoredConsent(value: ConsentValue) {
   }
 }
 
+function supportsPopover() {
+  return typeof HTMLElement !== "undefined" && "popover" in HTMLElement.prototype;
+}
+
+/**
+ * Cookie banner — popover="manual" so it stays until the user chooses
+ * (no light-dismiss). Falls back to fixed positioning when Popover API
+ * is unavailable.
+ */
 export default function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setVisible(getStoredConsent() === null);
+    const el = popoverRef.current;
+    if (!el || getStoredConsent() !== null) return;
+
+    if (supportsPopover() && typeof el.showPopover === "function") {
+      el.showPopover();
+    } else {
+      el.dataset.open = "true";
+    }
   }, []);
 
   function choose(value: ConsentValue) {
     setStoredConsent(value);
-    setVisible(false);
+    const el = popoverRef.current;
+    if (!el) return;
+    if (supportsPopover() && typeof el.hidePopover === "function" && el.matches(":popover-open")) {
+      el.hidePopover();
+    } else {
+      delete el.dataset.open;
+    }
   }
-
-  if (!visible) return null;
 
   return (
     <div
+      ref={popoverRef}
+      id="cookie-consent"
+      popover="manual"
       role="dialog"
       aria-label="Çerez ve gizlilik bildirimi"
-      className="fixed inset-x-0 bottom-0 z-[70] border-t border-border bg-surface/95 p-4 shadow-[0_-12px_40px_rgba(0,0,0,.45)] backdrop-blur-md sm:p-5"
+      className="cookie-consent-popover border-t border-white/10 bg-[#0a0c12]/96 p-4 shadow-[0_-12px_40px_rgba(0,0,0,.45)] backdrop-blur-md sm:p-5"
     >
       <div className="mx-auto flex max-w-5xl flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-2xl">
@@ -76,7 +99,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("accepted")}
-            className="btn-press btn-red-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-sand-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-background"
           >
             Kabul et
           </button>

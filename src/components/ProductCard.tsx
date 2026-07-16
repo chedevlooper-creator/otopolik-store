@@ -23,13 +23,12 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
     <Link
       href={`/urunler/${product.slug}`}
       data-whatsapp-obstacle
-      className={`group premium-card gradient-border card-lift flex h-full min-w-0 flex-col overflow-hidden rounded-2xl ${
+      className={`group premium-card card-lift flex h-full min-w-0 flex-col overflow-hidden ${
         featured ? "min-h-[520px]" : "min-h-[360px]"
       }`}
     >
-      <div className={`premium-grid relative overflow-hidden border-b border-white/[0.05] bg-[#0c0e16] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(225,201,162,.1),transparent_55%)] opacity-80" />
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-red/[0.06] blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
+      <div className={`relative overflow-hidden border-b border-white/[0.06] bg-[#0c0e16] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(225,201,162,.08),transparent_55%)] opacity-70" />
         {hasLightImage ? (
           <div
             className={`absolute overflow-hidden rounded-xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.1),0_20px_48px_rgba(0,0,0,.4)] ${
@@ -61,17 +60,17 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
           <div className="flex flex-wrap gap-2">
             {product.badge && (
-              <span className="spec-value rounded-full border border-white/8 bg-black/50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur-md">
+              <span className="spec-value border border-white/12 bg-black/70 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-white">
                 {product.badge}
               </span>
             )}
             {discount > 0 && (
-              <span className="spec-value rounded-full bg-gradient-to-r from-brand-red to-[#ff4d6a] px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-white shadow-lg shadow-brand-red/20">
+              <span className="spec-value border border-sand/40 bg-sand px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-background">
                 %{discount} avantaj
               </span>
             )}
           </div>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/8 bg-black/40 text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-background group-hover:shadow-lg">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/12 bg-black/60 text-white transition-all duration-300 group-hover:border-sand group-hover:bg-sand group-hover:text-background">
             <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>

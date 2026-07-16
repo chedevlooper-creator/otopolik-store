@@ -121,8 +121,8 @@ export default async function ProductDetailPage({
         </div>
 
         <div className="min-w-0">
-          <span className="spec-label">{CATEGORY_LABELS[product.category]}</span>
-          <h1 className="mt-3 font-heading text-3xl font-bold text-white sm:text-4xl">
+          <span className="section-kicker">{CATEGORY_LABELS[product.category]}</span>
+          <h1 className="mt-4 font-heading text-3xl font-bold tracking-[-0.03em] text-white sm:text-4xl">
             {product.name}
           </h1>
 
@@ -268,7 +268,7 @@ export default async function ProductDetailPage({
 
       {related.length > 0 && (
         <section className="mt-16">
-          <span className="spec-label">Benzer ürünler</span>
+          <span className="section-kicker">Benzer ürünler</span>
           <h2 className="mb-6 mt-3 font-heading text-3xl font-bold text-white">
             Bunlar da ilginizi çekebilir
           </h2>

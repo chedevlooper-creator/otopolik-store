@@ -67,7 +67,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
         </p>
         <Link
           href="/urunler"
-          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
+          className="btn-press btn-sand-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-background"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -83,12 +83,12 @@ export default function CartPageClient({ content }: { content: CartContent }) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
-      <span className="spec-label">Sepet</span>
-      <h1 className="mt-3 font-heading text-4xl font-bold text-white">
+      <span className="section-kicker">Sepet</span>
+      <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white">
         {content.title}
       </h1>
       {content.description ? (
-        <p className="mt-2 text-muted">{content.description}</p>
+        <p className="mt-2 text-sm leading-7 text-white/55">{content.description}</p>
       ) : null}
 
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
@@ -103,8 +103,8 @@ export default function CartPageClient({ content }: { content: CartContent }) {
           ))}
         </ul>
 
-        <aside className="h-fit border border-border bg-surface p-6">
-          <h2 className="font-heading text-xl font-bold text-white">Sipariş Özeti</h2>
+        <aside className="h-fit border border-white/10 bg-[#0a0c12] p-6">
+          <h2 className="font-heading text-xl font-bold text-white">Sipariş özeti</h2>
           <div className="mt-4 flex items-center justify-between text-sm text-muted">
             <span>Ara Toplam</span>
             <span className="spec-value font-medium text-white">{formatPrice(totalPrice)}</span>
@@ -128,7 +128,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
           </div>
           <Link
             href="/odeme"
-            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-sand-rich mt-6 flex w-full items-center justify-center px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background"
           >
             Sipariş Talebine Geç
           </Link>
@@ -142,8 +142,8 @@ export default function CartPageClient({ content }: { content: CartContent }) {
       </div>
       {items.length > 0 && featured.length > 0 && (
         <section className="mt-16">
-          <span className="spec-label">Tamamlayıcı ürünler</span>
-          <h2 className="mb-6 mt-3 font-heading text-2xl font-bold text-white">
+          <span className="section-kicker">Tamamlayıcı ürünler</span>
+          <h2 className="mb-6 mt-5 font-heading text-2xl font-bold tracking-[-0.03em] text-white">
             Bunlara da göz atın
           </h2>
           <div className={`grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 ${

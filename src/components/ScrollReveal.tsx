@@ -5,13 +5,19 @@ import { useEffect, useRef } from "react";
 type Props = {
   children: React.ReactNode;
   className?: string;
-  /** Gecikme (ms) — kart ızgaralarında kademeli giriş için */
+  /** Gecikme (ms) — kart ızgaralarında kademeli giriş için (IO fallback) */
   delay?: number;
 };
 
+function supportsScrollDrivenReveal() {
+  return (
+    typeof CSS !== "undefined" &&
+    CSS.supports("(animation-timeline: view()) and (animation-range: entry)")
+  );
+}
+
 /**
- * Scroll reveal — production'da hydrate gecikmesinde içerik gizli kalmasın diye
- * güvenlik zaman aşımı ve düşük threshold kullanır.
+ * Scroll reveal — native view-timeline when supported; IntersectionObserver fallback.
  */
 export default function ScrollReveal({
   children,
@@ -24,6 +30,16 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.classList.add("reveal-visible");
+      return;
+    }
+
+    if (supportsScrollDrivenReveal()) {
+      el.classList.add("reveal-sda");
+      return;
+    }
+
     const show = () => {
       el.classList.add("reveal-visible");
     };
@@ -33,12 +49,6 @@ export default function ScrollReveal({
       return;
     }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      show();
-      return;
-    }
-
-    // Hydrate / layout sonrası hâlâ görünür değilse içeriği kilitleme
     const fallback = window.setTimeout(show, 900);
 
     const observer = new IntersectionObserver(
@@ -54,7 +64,6 @@ export default function ScrollReveal({
       { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
     );
 
-    // Layout settle — IO'nun viewport'u doğru okuması için
     const frame = window.requestAnimationFrame(() => {
       observer.observe(el);
     });

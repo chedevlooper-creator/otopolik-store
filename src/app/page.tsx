@@ -1,5 +1,10 @@
 import Hero from "@/components/home/Hero";
-import Marquee from "@/components/home/Marquee";
+import FeatureBar from "@/components/home/FeatureBar";
+import DetailSection from "@/components/home/DetailSection";
+import LifestyleBand from "@/components/home/LifestyleBand";
+import VehicleSelectSection from "@/components/home/VehicleSelectSection";
+import CompareSlider from "@/components/home/CompareSlider";
+import CustomerGallery from "@/components/home/CustomerGallery";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import HowItWorks from "@/components/home/HowItWorks";
 import Showcase from "@/components/home/Showcase";
@@ -39,13 +44,13 @@ export default async function Home() {
 
   return (
     <>
-      <Hero
-        content={{
-          hero: section("hero"),
-          secondaryCta: section("hero-secondary-cta"),
-        }}
-      />
-      <Marquee />
+      <Hero />
+      <DetailSection />
+      <FeatureBar />
+      <LifestyleBand />
+      <VehicleSelectSection />
+      <CompareSlider />
+      <CustomerGallery />
       <TrustStrip />
       <FeaturedProducts content={section("featured")} />
       <HowItWorks
@@ -76,15 +81,17 @@ export default async function Home() {
           <Testimonials />
         </div>
       </div>
-      <Faq
-        header={section("faq")}
-        sidebar={section("faq-sidebar")}
-        items={faqItems}
-        whatsappHref={buildWhatsAppLink(
-          settings.whatsappNumber,
-          "Merhaba, aracıma özel EVA paspas siparişi hakkında bilgi almak istiyorum."
-        )}
-      />
+      <div id="sss">
+        <Faq
+          header={section("faq")}
+          sidebar={section("faq-sidebar")}
+          items={faqItems}
+          whatsappHref={buildWhatsAppLink(
+            settings.whatsappNumber,
+            "Merhaba, aracıma özel EVA paspas siparişi hakkında bilgi almak istiyorum."
+          )}
+        />
+      </div>
       {renderJsonLd(faqPageSchema(faqItems))}
     </>
   );

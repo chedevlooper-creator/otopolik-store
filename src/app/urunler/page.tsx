@@ -43,9 +43,10 @@ function buildQuery(params: Params, overrides: Partial<Params>) {
   return qs ? `/urunler?${qs}` : "/urunler";
 }
 
-const FILTER_PILL = "rounded-full border px-4 py-2 text-sm font-semibold transition-colors";
+const FILTER_PILL =
+  "border px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.1em] transition-colors";
 const FIELD =
-  "rounded-xl border border-white/10 bg-surface text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none";
+  "border border-white/10 bg-surface text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none";
 
 export default async function ProductsPage({
   searchParams,
@@ -91,12 +92,12 @@ export default async function ProductsPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <div className="premium-grid mb-10 overflow-hidden rounded-[1.7rem] border border-white/8 bg-surface/55 p-6 sm:p-9">
-        <span className="spec-label">{kicker?.title ?? "Katalog"}</span>
-        <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-bold text-white sm:text-5xl">
-          {page?.title ?? "Araca Özel EVA Paspas Setleri"}
+      <div className="mb-10 max-w-3xl border border-white/10 bg-[#0a0c12] p-6 sm:p-9">
+        <span className="section-kicker">{kicker?.title ?? "Katalog"}</span>
+        <h1 className="mt-5 max-w-full break-words font-heading text-3xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
+          {page?.title ?? "Araca özel EVA paspas setleri"}
         </h1>
-        <p className="mt-3 max-w-2xl text-muted">
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-white/55">
           {page?.description ??
             "Modelinizi bulun, size uygun EVA paspas setini inceleyin. Listede aracınızı göremiyorsanız WhatsApp üzerinden bize ulaşın, size özel üretim yapalım."}
         </p>
@@ -150,7 +151,7 @@ export default async function ProductsPage({
           </select>
           <button
             type="submit"
-            className="btn-press btn-red-rich px-7 py-3 text-sm font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-sand-rich px-7 py-3 text-sm font-bold uppercase tracking-wider text-background"
           >
             Ara
           </button>
@@ -160,8 +161,8 @@ export default async function ProductsPage({
           <Link
             href={buildQuery(params, { kategori: undefined })}
             className={`${FILTER_PILL} ${!kategori
-                ? "border-sand bg-surface text-sand"
-                : "border-border text-muted hover:border-sand hover:text-sand"
+                ? "border-sand bg-sand text-background"
+                : "border-white/12 text-white/55 hover:border-sand hover:text-sand"
             }`}
           >
             Tüm Kategoriler
@@ -171,8 +172,8 @@ export default async function ProductsPage({
               key={cat.key}
               href={buildQuery(params, { kategori: cat.key })}
               className={`${FILTER_PILL} ${kategori === cat.key
-                  ? "border-sand bg-surface text-sand"
-                  : "border-border text-muted hover:border-sand hover:text-sand"
+                  ? "border-sand bg-sand text-background"
+                  : "border-white/12 text-white/55 hover:border-sand hover:text-sand"
               }`}
             >
               {cat.label}
@@ -184,8 +185,8 @@ export default async function ProductsPage({
           <Link
             href={buildQuery(params, { marka: undefined })}
             className={`${FILTER_PILL} ${!marka
-                ? "border-sand bg-surface text-sand"
-                : "border-border text-muted hover:border-sand hover:text-white"
+                ? "border-sand bg-sand text-background"
+                : "border-white/12 text-white/55 hover:border-sand hover:text-white"
             }`}
           >
             Tüm Markalar
@@ -195,8 +196,8 @@ export default async function ProductsPage({
               key={brand}
               href={buildQuery(params, { marka: brand })}
               className={`${FILTER_PILL} ${marka === brand
-                  ? "border-sand bg-surface text-sand"
-                  : "border-border text-muted hover:border-sand hover:text-white"
+                  ? "border-sand bg-sand text-background"
+                  : "border-white/12 text-white/55 hover:border-sand hover:text-white"
               }`}
             >
               {brand}
@@ -218,11 +219,11 @@ export default async function ProductsPage({
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-[1.7rem] border border-dashed border-border px-6 py-16 text-center">
-          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-surface">
-            <SearchIcon className="h-8 w-8 text-muted" aria-hidden="true" />
+        <div className="border border-dashed border-white/15 px-6 py-16 text-center">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center border border-white/12 bg-[#0a0c12]">
+            <SearchIcon className="h-7 w-7 text-muted" aria-hidden="true" />
           </span>
-          <p className="mt-4 font-heading text-xl font-bold uppercase text-white">Sonuç bulunamadı</p>
+          <p className="mt-4 font-heading text-xl font-bold text-white">Sonuç bulunamadı</p>
           <p className="mt-1 text-sm text-muted">
             Farklı bir arama deneyin veya aracınız için WhatsApp&apos;tan özel üretim isteyin.
           </p>
@@ -230,7 +231,7 @@ export default async function ProductsPage({
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-press btn-red-rich mt-5 inline-flex px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-sand-rich mt-5 inline-flex px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-background"
           >
             Aracım için bilgi al
           </a>

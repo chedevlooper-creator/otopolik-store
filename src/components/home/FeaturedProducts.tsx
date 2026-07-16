@@ -13,8 +13,7 @@ export default async function FeaturedProducts({ content }: Props) {
   const products = await getFeaturedProducts(3);
 
   return (
-    <section className="home-section relative overflow-hidden">
-      <div className="pointer-events-none absolute right-[-14rem] top-10 h-[30rem] w-[30rem] rounded-full bg-brand-red/[0.045] blur-[130px]" aria-hidden="true" />
+    <section className="home-section relative overflow-hidden border-t border-white/[0.04]">
       <div className="relative mx-auto max-w-7xl px-4">
         <ScrollReveal>
           <div className="mb-10 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
@@ -30,7 +29,7 @@ export default async function FeaturedProducts({ content }: Props) {
             </div>
             <Link
               href={content?.ctaHref ?? "/urunler"}
-              className="btn-press btn-ghost-rich inline-flex min-h-12 w-fit items-center gap-2 rounded-full px-5 text-sm font-semibold text-white"
+              className="btn-press inline-flex min-h-12 w-fit items-center gap-2 border border-white/15 px-5 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-sand hover:text-sand"
             >
               {content?.ctaLabel ?? "Tüm ürünleri gör"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

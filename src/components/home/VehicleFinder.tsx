@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
-import { ArrowRightIcon, CarFrontIcon, InfoIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, InfoIcon, SparklesIcon } from "lucide-react";
 
 export default function VehicleFinder() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function VehicleFinder() {
 
   const brandList = useMemo(() => getAllBrands(), []);
   const models = useMemo(() => (brand ? getModelsByBrand(brand) : []), [brand]);
+  const filledCount = [brand, model, year].filter(Boolean).length;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,75 +25,122 @@ export default function VehicleFinder() {
     router.push(query.size ? `/olusturucu?${query.toString()}` : "/olusturucu");
   }
 
-  const fieldClass =
-    "input-rich h-12 w-full rounded-xl border border-white/[0.08] px-4 text-sm font-medium text-white outline-none transition-all duration-300 placeholder:text-white/30 hover:border-white/15 focus:border-sand/50";
-  const labelClass =
-    "mb-2 block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50";
-
   return (
-    <form onSubmit={handleSubmit} className="surface-glass gradient-border overflow-hidden rounded-2xl p-5 sm:p-6 lg:p-7">
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <span className="icon-badge-rich flex h-11 w-11 items-center justify-center rounded-xl text-white">
-            <CarFrontIcon className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="font-heading text-xl font-bold text-white sm:text-2xl">Aracını seç, tasarımını başlat</p>
-            <p className="mt-0.5 text-xs text-white/50">Doğru kalıbı birkaç saniyede bul.</p>
+    <form
+      onSubmit={handleSubmit}
+      className="vehicle-finder"
+      aria-labelledby="vehicle-finder-title"
+      data-progress={filledCount}
+    >
+      <div className="vehicle-finder__glow" aria-hidden="true" />
+      <div className="vehicle-finder__texture bg-eva" aria-hidden="true" />
+
+      <div className="vehicle-finder__head">
+        <div>
+          <p className="vehicle-finder__eyebrow">
+            <SparklesIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            Kalıp eşleştirme
+          </p>
+          <p id="vehicle-finder-title" className="vehicle-finder__title">
+            Aracını seç
+          </p>
+          <p className="vehicle-finder__sub">
+            Marka, model ve yıl — kalıbı saniyeler içinde bul.
+          </p>
+        </div>
+        <div className="vehicle-finder__stats" aria-hidden="true">
+          <div className="vehicle-finder__stat">
+            <strong>40+</strong>
+            <span>Marka</span>
+          </div>
+          <div className="vehicle-finder__stat">
+            <strong>6000+</strong>
+            <span>Model</span>
           </div>
         </div>
-        <span className="hidden items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/50 lg:inline-flex">
-          <SearchIcon className="h-3 w-3 text-sand/80" aria-hidden="true" />
-          40+ marka · 6000+ model
-        </span>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1.35fr_.72fr_auto] lg:items-end">
-        <div>
-          <label htmlFor="finder-brand" className={labelClass}>01 · Marka</label>
+      <div
+        className="vehicle-finder__progress"
+        role="progressbar"
+        aria-valuenow={filledCount}
+        aria-valuemin={0}
+        aria-valuemax={3}
+        aria-label="Form ilerleme"
+      >
+        <span data-active={filledCount >= 1 || undefined} />
+        <span data-active={filledCount >= 2 || undefined} />
+        <span data-active={filledCount >= 3 || undefined} />
+      </div>
+
+      <div className="vehicle-finder__grid">
+        <div className={`vehicle-finder__field ${brand ? "is-filled" : ""}`}>
+          <label htmlFor="finder-brand" className="vehicle-finder__label">
+            <span className="vehicle-finder__step">1</span>
+            Marka
+          </label>
           <select
             id="finder-brand"
+            name="marka"
             value={brand}
             onChange={(e) => {
               setBrand(e.target.value);
               setModel("");
             }}
-            className={fieldClass}
+            className="brand-select"
           >
-            <option value="" className="bg-[#0e1018]">Marka seçin</option>
-            {brandList.map((item) => <option key={item} value={item} className="bg-[#0e1018]">{item}</option>)}
+            <option value="">Marka seçin</option>
+            {brandList.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="finder-model" className={labelClass}>02 · Model / Kasa</label>
+
+        <div className={`vehicle-finder__field ${model ? "is-filled" : ""}`}>
+          <label htmlFor="finder-model" className="vehicle-finder__label">
+            <span className="vehicle-finder__step">2</span>
+            Model / Kasa
+          </label>
           <select
             id="finder-model"
+            name="model"
             value={model}
             onChange={(e) => setModel(e.target.value)}
             disabled={!brand}
-            className={`${fieldClass} disabled:cursor-not-allowed disabled:opacity-40`}
+            className="brand-select"
           >
-            <option value="" className="bg-[#0e1018]">{brand ? "Model seçin" : "Önce marka seçin"}</option>
-            {models.map((item) => <option key={item.name} value={item.name} className="bg-[#0e1018]">{item.name}</option>)}
+            <option value="">{brand ? "Model seçin" : "Önce marka"}</option>
+            {models.map((item) => (
+              <option key={item.name} value={item.name}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="finder-year" className={labelClass}>03 · Model yılı</label>
+
+        <div className={`vehicle-finder__field ${year ? "is-filled" : ""}`}>
+          <label htmlFor="finder-year" className="vehicle-finder__label">
+            <span className="vehicle-finder__step">3</span>
+            Model yılı
+          </label>
           <input
             id="finder-year"
+            name="yil"
             inputMode="numeric"
+            enterKeyHint="go"
             value={year}
-            onChange={(e) => setYear(e.target.value)}
+            onChange={(e) => setYear(e.target.value.replace(/\D/g, "").slice(0, 4))}
             maxLength={4}
             pattern="[0-9]{4}"
-            placeholder="Örn. 2021"
-            className={fieldClass}
+            placeholder="2021"
+            className="brand-input"
+            autoComplete="off"
           />
         </div>
-        <button
-          type="submit"
-          className="btn-press btn-red-rich flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-bold text-white sm:col-span-2 lg:col-span-1 lg:min-w-[168px]"
-        >
+
+        <button type="submit" className="btn-press btn-sand-rich vehicle-finder__submit">
           Tasarıma geç
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
         </button>

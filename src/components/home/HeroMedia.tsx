@@ -92,6 +92,10 @@ export default function HeroMedia() {
         src="/media/hero-poster.jpg?v=2"
         alt=""
         aria-hidden="true"
+        fetchPriority="high"
+        decoding="sync"
+        width={1920}
+        height={1080}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
           failed || !playing ? "opacity-80" : "opacity-0"
         }`}
@@ -104,7 +108,7 @@ export default function HeroMedia() {
         loop
         playsInline
         autoPlay
-        preload="auto"
+        preload="metadata"
         tabIndex={-1}
         aria-hidden="true"
         className={`hero-media-video absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${

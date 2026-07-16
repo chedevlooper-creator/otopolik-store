@@ -13,48 +13,63 @@ type Props = {
   onClose: () => void;
 };
 
+function supportsClosedBy() {
+  return typeof HTMLDialogElement !== "undefined" && "closedBy" in HTMLDialogElement.prototype;
+}
+
 export default function SearchModal({ open, onClose }: Props) {
   const products = useCatalogProducts();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (!open) return;
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const frame = requestAnimationFrame(() => inputRef.current?.focus());
-    document.body.style.overflow = "hidden";
-    return () => {
-      cancelAnimationFrame(frame);
-      document.body.style.overflow = "";
-      previouslyFocused?.focus();
-    };
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    dialog.setAttribute("closedby", "any");
+
+    if (open) {
+      if (!dialog.open) dialog.showModal();
+      const frame = requestAnimationFrame(() => inputRef.current?.focus());
+      return () => cancelAnimationFrame(frame);
+    }
+
+    if (dialog.open) dialog.close();
   }, [open]);
 
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusable = Array.from(
-          dialogRef.current.querySelectorAll<HTMLElement>(
-            'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-          )
-        );
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last?.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first?.focus();
-        }
-      }
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const syncClosed = () => {
+      setQuery("");
+      onClose();
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+    dialog.addEventListener("close", syncClosed);
+
+    // closedby fallback — Safari and older browsers
+    let onBackdropClick: ((event: MouseEvent) => void) | undefined;
+    if (!supportsClosedBy()) {
+      onBackdropClick = (event: MouseEvent) => {
+        if (event.target !== dialog) return;
+        const rect = dialog.getBoundingClientRect();
+        const inContent =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (inContent) return;
+        dialog.close();
+      };
+      dialog.addEventListener("click", onBackdropClick);
+    }
+
+    return () => {
+      dialog.removeEventListener("close", syncClosed);
+      if (onBackdropClick) dialog.removeEventListener("click", onBackdropClick);
+    };
+  }, [onClose]);
 
   const results = useMemo(() => {
     const q = query.trim().toLocaleLowerCase("tr-TR");
@@ -69,21 +84,13 @@ export default function SearchModal({ open, onClose }: Props) {
       .slice(0, 6);
   }, [query, products]);
 
-  if (!open) return null;
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
       aria-label="Ürün arama"
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-background/85 px-4 pt-16 backdrop-blur-md sm:pt-24"
-      onClick={onClose}
+      className="search-dialog m-0 mt-16 w-[calc(100%-2rem)] max-w-2xl border-0 bg-transparent p-0 open:flex open:flex-col sm:mt-24"
     >
-      <div
-        ref={dialogRef}
-        className="surface-glass w-full max-w-2xl overflow-hidden rounded-[1.4rem] shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="surface-glass w-full overflow-hidden shadow-2xl">
         <div className="flex items-center gap-3 border-b border-white/8 px-4 py-4 sm:px-5">
           <SearchIcon className="h-5 w-5 shrink-0 text-sand" aria-hidden="true" />
           <input
@@ -97,9 +104,9 @@ export default function SearchModal({ open, onClose }: Props) {
           />
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => dialogRef.current?.close()}
             aria-label="Aramayı kapat"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-foreground"
+            className="flex h-9 w-9 items-center justify-center border border-transparent text-muted hover:border-white/12 hover:bg-white/[0.04] hover:text-foreground"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -119,7 +126,7 @@ export default function SearchModal({ open, onClose }: Props) {
                 <li key={p.slug} role="option" aria-selected="false">
                   <Link
                     href={`/urunler/${p.slug}`}
-                    onClick={onClose}
+                    onClick={() => dialogRef.current?.close()}
                     className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/8 hover:bg-white/[0.04]"
                   >
                     <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/8 bg-background">
@@ -128,6 +135,7 @@ export default function SearchModal({ open, onClose }: Props) {
                         alt=""
                         fill
                         sizes="48px"
+                        fetchPriority="low"
                         className="object-contain p-1"
                       />
                     </span>
@@ -155,13 +163,13 @@ export default function SearchModal({ open, onClose }: Props) {
           <span className="spec-value uppercase tracking-[0.14em]">ESC ile kapat</span>
           <Link
             href="/urunler"
-            onClick={onClose}
+            onClick={() => dialogRef.current?.close()}
             className="spec-value font-bold uppercase tracking-[0.14em] text-sand hover:underline"
           >
             Tüm ürünler →
           </Link>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

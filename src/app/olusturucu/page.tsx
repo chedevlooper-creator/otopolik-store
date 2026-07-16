@@ -21,12 +21,12 @@ export default async function ConfiguratorPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <div className="premium-grid mb-10 max-w-4xl rounded-[1.7rem] border border-white/8 bg-surface/45 p-6 sm:p-9">
-        <span className="spec-label">{kicker?.title ?? "Online Paspas Oluşturucu"}</span>
-        <h1 className="mt-4 font-heading text-4xl font-bold text-white sm:text-6xl">
-          {page?.title ?? "Kendi Paspasını Tasarla"}
+      <div className="mb-10 max-w-3xl border border-white/10 bg-[#0a0c12] p-6 sm:p-9">
+        <span className="section-kicker">{kicker?.title ?? "Online paspas oluşturucu"}</span>
+        <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
+          {page?.title ?? "Kendi paspasını tasarla"}
         </h1>
-        <p className="mt-3 text-muted">
+        <p className="mt-3 max-w-xl text-sm leading-7 text-white/55">
           {page?.description ??
             "Aracınızı seçin, taban ve kenar rengini belirleyin, topuk pedi ve bagaj paspası ekleyin."}
         </p>

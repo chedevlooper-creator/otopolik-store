@@ -25,9 +25,9 @@ export default async function AboutPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-14 sm:py-20">
-      <span className="spec-label">{kicker?.title ?? "Hakkımızda"}</span>
-      <h1 className="mt-4 font-heading text-4xl font-bold text-white sm:text-5xl">
-        {page?.title ?? "Aracınız İçin Üstün Koruma"}
+      <span className="section-kicker">{kicker?.title ?? "Hakkımızda"}</span>
+      <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
+        {page?.title ?? "Aracınız için üstün koruma"}
       </h1>
       <div className="relative mt-8 aspect-[16/9] overflow-hidden border border-border">
         <Image

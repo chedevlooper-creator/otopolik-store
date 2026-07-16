@@ -140,7 +140,7 @@ export default function Showcase({ header, gallery, features }: Props) {
             </div>
             <Link
               href={header?.ctaHref ?? "/olusturucu"}
-              className="inline-flex min-h-11 w-fit items-center gap-2 text-sm font-semibold text-sand transition-colors hover:text-white"
+              className="btn-press inline-flex min-h-12 w-fit items-center gap-2 border border-white/15 px-5 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-sand hover:text-sand"
             >
               {header?.ctaLabel ?? "Kendi setini oluştur"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

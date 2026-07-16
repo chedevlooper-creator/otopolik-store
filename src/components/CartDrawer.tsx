@@ -9,44 +9,59 @@ import { formatPrice } from "@/lib/format";
 import { getRemainingForFreeShipping, getShippingCost } from "@/lib/shipping";
 import { XIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
 
+function supportsClosedBy() {
+  return typeof HTMLDialogElement !== "undefined" && "closedBy" in HTMLDialogElement.prototype;
+}
+
 export default function CartDrawer() {
   const { items, isDrawerOpen, closeDrawer, updateQuantity, removeItem, totalPrice } = useCart();
   const settings = useStoreSettings();
-  const drawerRef = useRef<HTMLElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!isDrawerOpen) return;
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const frame = requestAnimationFrame(() => closeButtonRef.current?.focus());
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeDrawer();
-      if (e.key === "Tab" && drawerRef.current) {
-        const focusable = Array.from(
-          drawerRef.current.querySelectorAll<HTMLElement>(
-            'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-          )
-        );
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last?.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first?.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    dialog.setAttribute("closedby", "any");
+
+    if (isDrawerOpen) {
+      if (!dialog.open) dialog.showModal();
+      const frame = requestAnimationFrame(() => closeButtonRef.current?.focus());
+      return () => cancelAnimationFrame(frame);
+    }
+
+    if (dialog.open) dialog.close();
+  }, [isDrawerOpen]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const syncClosed = () => closeDrawer();
+    dialog.addEventListener("close", syncClosed);
+
+    let onBackdropClick: ((event: MouseEvent) => void) | undefined;
+    if (!supportsClosedBy()) {
+      onBackdropClick = (event: MouseEvent) => {
+        if (event.target !== dialog) return;
+        const rect = dialog.getBoundingClientRect();
+        const inContent =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (inContent) return;
+        dialog.close();
+      };
+      dialog.addEventListener("click", onBackdropClick);
+    }
+
     return () => {
-      cancelAnimationFrame(frame);
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-      previouslyFocused?.focus();
+      dialog.removeEventListener("close", syncClosed);
+      if (onBackdropClick) dialog.removeEventListener("click", onBackdropClick);
     };
-  }, [isDrawerOpen, closeDrawer]);
+  }, [closeDrawer]);
 
   const remaining = getRemainingForFreeShipping(totalPrice, settings);
   const shippingCost = getShippingCost(totalPrice, settings);
@@ -54,27 +69,12 @@ export default function CartDrawer() {
   const progress = Math.min(100, (totalPrice / settings.freeShippingThreshold) * 100);
 
   return (
-    <div
-      className={`fixed inset-0 z-[60] transition-[visibility] ${
-        isDrawerOpen ? "visible" : "invisible delay-300"
-      }`}
-      aria-hidden={!isDrawerOpen}
+    <dialog
+      ref={dialogRef}
+      aria-label="Sepet"
+      className="cart-drawer-dialog m-0 ml-auto h-full max-h-none w-full max-w-md border-0 bg-transparent p-0"
     >
-      <div
-        onClick={closeDrawer}
-        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
-          isDrawerOpen ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <aside
-        ref={drawerRef}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 sm:rounded-l-[1.5rem] ${
-          isDrawerOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Sepet"
-      >
+      <div className="flex h-full max-h-[100dvh] w-full flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 sm:rounded-l-[1.5rem]">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <h2 className="font-heading text-2xl font-bold text-white">
             Sepetim {items.length > 0 && <span className="text-sand">({items.length})</span>}
@@ -82,9 +82,9 @@ export default function CartDrawer() {
           <button
             ref={closeButtonRef}
             type="button"
-            onClick={closeDrawer}
+            onClick={() => dialogRef.current?.close()}
             aria-label="Sepeti kapat"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-sand"
+            className="flex h-9 w-9 items-center justify-center border border-transparent text-muted hover:border-white/12 hover:bg-white/[0.04] hover:text-sand"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -101,8 +101,8 @@ export default function CartDrawer() {
             </p>
             <Link
               href="/urunler"
-              onClick={closeDrawer}
-              className="btn-press btn-red-rich mt-2 rounded-full px-6 py-3 text-sm font-bold text-white"
+              onClick={() => dialogRef.current?.close()}
+              className="btn-press btn-sand-rich mt-2 px-6 py-3 text-sm font-bold uppercase tracking-wider text-background"
             >
               Ürünleri İncele
             </Link>
@@ -162,22 +162,22 @@ export default function CartDrawer() {
               </div>
               <Link
                 href="/odeme"
-                onClick={closeDrawer}
-                className="btn-press btn-red-rich mt-4 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white"
+                onClick={() => dialogRef.current?.close()}
+                className="btn-press btn-sand-rich mt-4 flex w-full items-center justify-center px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background"
               >
                 Sipariş Talebine Geç
               </Link>
               <Link
                 href="/sepet"
-                onClick={closeDrawer}
-                className="btn-press mt-2 flex w-full items-center justify-center rounded-full border border-white/12 px-6 py-3 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04]"
+                onClick={() => dialogRef.current?.close()}
+                className="btn-press mt-2 flex w-full items-center justify-center border border-white/12 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
               >
                 Sepete Git
               </Link>
             </div>
           </>
         )}
-      </aside>
-    </div>
+      </div>
+    </dialog>
   );
 }

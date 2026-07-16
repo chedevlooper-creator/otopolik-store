@@ -145,7 +145,7 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
 
         {/* ── Main image with touch swipe + lightbox trigger ── */}
         <div
-          className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden rounded-[1.5rem] border border-white/10 bg-surface sm:order-2 sm:aspect-square"
+          className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden border border-white/10 bg-[#0a0c12] sm:order-2 sm:aspect-square"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}

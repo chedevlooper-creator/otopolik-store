@@ -107,9 +107,9 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <button
           type="button"
           onClick={handleAdd}
-          className={`btn-press btn-red-rich flex-1 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-all duration-200 ${
+          className={`btn-press btn-sand-rich flex-1 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background transition-all duration-200 ${
             justAdded
-              ? "!bg-emerald-500 !hover:bg-emerald-600"
+              ? "!bg-emerald-500 !text-white !hover:bg-emerald-600"
               : ""
           }`}
         >
@@ -134,7 +134,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             closeDrawer();
             router.push("/odeme");
           }}
-          className="btn-press flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground transition-all duration-200 hover:border-white/24 hover:bg-white/[0.04] hover:translate-y-[-1px]"
+          className="btn-press flex-1 border border-white/12 px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-foreground transition-all duration-200 hover:border-sand hover:text-sand"
         >
           Hemen Al
         </button>
@@ -168,9 +168,9 @@ export default function AddToCartButton({ product }: { product: Product }) {
             type="button"
             onClick={handleAdd}
             tabIndex={footerVisible ? -1 : undefined}
-            className={`btn-press btn-red-rich min-h-11 flex-1 rounded-full px-5 py-3 text-sm font-bold text-white transition-all duration-200 ${
+            className={`btn-press btn-sand-rich min-h-11 flex-1 px-5 py-3 text-sm font-bold uppercase tracking-wider text-background transition-all duration-200 ${
               justAdded
-                ? "!bg-emerald-500 !hover:bg-emerald-600"
+                ? "!bg-emerald-500 !text-white !hover:bg-emerald-600"
                 : ""
             }`}
           >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, type FormEvent } from "react";
+import { useState, useCallback, type FormEvent, type FocusEvent, type ChangeEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
@@ -28,6 +28,8 @@ interface FormErrors {
   legal?: string;
 }
 
+type FieldName = "fullName" | "phone" | "city" | "address";
+
 function validatePhone(phone: string): string | undefined {
   const cleaned = phone.replace(/[\s()-]/g, "");
   if (!cleaned) return "Telefon numarası zorunludur";
@@ -52,6 +54,37 @@ function validateAddress(address: string): string | undefined {
   if (!address.trim()) return "Adres zorunludur";
   if (address.trim().length < 10) return "Adres en az 10 karakter olmalıdır";
   return undefined;
+}
+
+function fieldError(field: FieldName, value: string): string | undefined {
+  switch (field) {
+    case "fullName":
+      return validateName(value);
+    case "phone":
+      return validatePhone(value);
+    case "city":
+      return validateCity(value);
+    case "address":
+      return validateAddress(value);
+  }
+}
+
+/** Sync custom validity + aria-invalid with :user-invalid timing. */
+function syncControlAria(
+  el: HTMLInputElement | HTMLTextAreaElement,
+  error: string | undefined
+) {
+  el.setCustomValidity(error ?? "");
+  const userInvalid =
+    typeof el.matches === "function" && el.matches(":user-invalid");
+  if (userInvalid || error) {
+    // Only announce after interaction (:user-invalid) or explicit submit error
+    if (userInvalid || el.getAttribute("data-submitted") === "true") {
+      el.setAttribute("aria-invalid", "true");
+    }
+  } else {
+    el.removeAttribute("aria-invalid");
+  }
 }
 
 export default function CheckoutPageClient({
@@ -79,22 +112,8 @@ export default function CheckoutPageClient({
   const shippingCost = getShippingCost(totalPrice, settings);
   const orderTotal = totalPrice + shippingCost;
 
-  const validateField = useCallback((field: keyof FormErrors, value: string) => {
-    let error: string | undefined;
-    switch (field) {
-      case "fullName":
-        error = validateName(value);
-        break;
-      case "phone":
-        error = validatePhone(value);
-        break;
-      case "city":
-        error = validateCity(value);
-        break;
-      case "address":
-        error = validateAddress(value);
-        break;
-    }
+  const validateField = useCallback((field: FieldName, value: string, el?: HTMLInputElement | HTMLTextAreaElement) => {
+    const error = fieldError(field, value);
     setErrors((prev) => {
       const next = { ...prev };
       if (error) {
@@ -104,13 +123,23 @@ export default function CheckoutPageClient({
       }
       return next;
     });
+    if (el) syncControlAria(el, error);
+    return error;
   }, []);
 
-  const handleChange = (field: keyof typeof form, value: string) => {
+  const handleChange = (field: FieldName | "note", value: string, el: HTMLInputElement | HTMLTextAreaElement) => {
     setForm((f) => ({ ...f, [field]: value }));
-    if (field !== "note" && errors[field]) {
-      validateField(field, value);
+    if (field === "note") return;
+    // Clear error as soon as the field becomes valid (accessible-error-announcement)
+    if (el.hasAttribute("aria-invalid")) {
+      validateField(field, value, el);
+    } else {
+      el.setCustomValidity(fieldError(field, value) ?? "");
     }
+  };
+
+  const handleBlur = (field: FieldName, e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    validateField(field, e.target.value, e.target);
   };
 
   if (!isHydrated) {
@@ -151,7 +180,7 @@ export default function CheckoutPageClient({
         </p>
         <Link
           href="/urunler"
-          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
+          className="btn-press btn-sand-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-background"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -173,6 +202,19 @@ export default function CheckoutPageClient({
     for (const [key, value] of Object.entries(allErrors)) {
       if (value) filteredErrors[key as keyof FormErrors] = value;
     }
+
+    // Mark fields as submitted so aria-invalid syncs with visual :user-invalid timing
+    const controls: FieldName[] = ["fullName", "phone", "city", "address"];
+    for (const field of controls) {
+      const el = document.getElementById(`checkout-${field}`) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
+      if (!el) continue;
+      el.setAttribute("data-submitted", "true");
+      syncControlAria(el, allErrors[field]);
+    }
+
     setErrors(filteredErrors);
 
     if (Object.keys(filteredErrors).length > 0) {
@@ -284,11 +326,11 @@ export default function CheckoutPageClient({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
-      <span className="spec-label">Sipariş</span>
-      <h1 className="mt-3 font-heading text-4xl font-bold text-white">
+      <span className="section-kicker">Sipariş</span>
+      <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white">
         {content.title}
       </h1>
-      <p id="checkout-description" className="mt-2 text-muted">
+      <p id="checkout-description" className="mt-2 text-sm leading-7 text-white/55">
         {content.description}
       </p>
 
@@ -302,104 +344,107 @@ export default function CheckoutPageClient({
         <div className="space-y-5">
           <div className="grid gap-5 sm:grid-cols-2">
             <label htmlFor="checkout-fullName" className="block text-sm font-semibold text-foreground">
-              Ad Soyad
+              Ad Soyad <span className="text-brand-red" aria-hidden="true">*</span>
               <input
                 id="checkout-fullName"
                 name="name"
                 required
                 type="text"
-                autoComplete="name"
+                autoComplete="shipping name"
+                enterKeyHint="next"
                 minLength={3}
                 value={form.fullName}
-                onChange={(e) => handleChange("fullName", e.target.value)}
-                onBlur={(e) => validateField("fullName", e.target.value)}
-                aria-invalid={Boolean(errors.fullName)}
-                aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
-                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                  errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
-                }`}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleChange("fullName", e.target.value, e.target)
+                }
+                onBlur={(e) => handleBlur("fullName", e)}
+                aria-invalid={errors.fullName ? true : undefined}
+                aria-describedby="checkout-fullName-error"
+                className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
               />
-              {errors.fullName && (
-                <p id="checkout-fullName-error" role="alert" className="mt-1 text-xs text-brand-red">
-                  {errors.fullName}
-                </p>
-              )}
+              <p id="checkout-fullName-error" role="alert" className="field-error">
+                <span aria-hidden="true">✕ </span>
+                {errors.fullName ?? "Ad soyad zorunludur"}
+              </p>
             </label>
             <label htmlFor="checkout-phone" className="block text-sm font-semibold text-foreground">
-              Telefon
+              Telefon <span className="text-brand-red" aria-hidden="true">*</span>
               <input
                 id="checkout-phone"
                 name="tel"
                 required
                 type="tel"
-                autoComplete="tel"
+                autoComplete="shipping tel"
+                enterKeyHint="next"
                 inputMode="tel"
                 pattern="[+0-9() -]{10,18}"
                 value={form.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-                onBlur={(e) => validateField("phone", e.target.value)}
-                aria-invalid={Boolean(errors.phone)}
-                aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleChange("phone", e.target.value, e.target)
+                }
+                onBlur={(e) => handleBlur("phone", e)}
+                aria-invalid={errors.phone ? true : undefined}
+                aria-describedby="checkout-phone-error"
                 placeholder="05XX XXX XX XX"
-                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                  errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
-                }`}
+                className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
               />
-              {errors.phone && (
-                <p id="checkout-phone-error" role="alert" className="mt-1 text-xs text-brand-red">
-                  {errors.phone}
-                </p>
-              )}
+              <p id="checkout-phone-error" role="alert" className="field-error">
+                <span aria-hidden="true">✕ </span>
+                {errors.phone ?? "Geçerli bir telefon numarası girin"}
+              </p>
             </label>
           </div>
 
+          {/* Helps browsers autofill Turkish shipping addresses */}
+          <input type="hidden" name="country" autoComplete="shipping country" value="TR" />
+
           <label htmlFor="checkout-city" className="block text-sm font-semibold text-foreground">
-            Şehir
+            Şehir <span className="text-brand-red" aria-hidden="true">*</span>
             <input
               id="checkout-city"
               name="address-level2"
               required
               type="text"
-              autoComplete="address-level2"
+              autoComplete="shipping address-level2"
+              enterKeyHint="next"
               value={form.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              onBlur={(e) => validateField("city", e.target.value)}
-              aria-invalid={Boolean(errors.city)}
-              aria-describedby={errors.city ? "checkout-city-error" : undefined}
-              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
-              }`}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleChange("city", e.target.value, e.target)
+              }
+              onBlur={(e) => handleBlur("city", e)}
+              aria-invalid={errors.city ? true : undefined}
+              aria-describedby="checkout-city-error"
+              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
-            {errors.city && (
-              <p id="checkout-city-error" role="alert" className="mt-1 text-xs text-brand-red">
-                {errors.city}
-              </p>
-            )}
+            <p id="checkout-city-error" role="alert" className="field-error">
+              <span aria-hidden="true">✕ </span>
+              {errors.city ?? "Şehir zorunludur"}
+            </p>
           </label>
 
           <label htmlFor="checkout-address" className="block text-sm font-semibold text-foreground">
-            Adres
+            Adres <span className="text-brand-red" aria-hidden="true">*</span>
             <textarea
               id="checkout-address"
               name="street-address"
               required
               rows={3}
-              autoComplete="street-address"
+              autoComplete="shipping street-address"
+              enterKeyHint="next"
               minLength={10}
               value={form.address}
-              onChange={(e) => handleChange("address", e.target.value)}
-              onBlur={(e) => validateField("address", e.target.value)}
-              aria-invalid={Boolean(errors.address)}
-              aria-describedby={errors.address ? "checkout-address-error" : undefined}
-              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
-              }`}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                handleChange("address", e.target.value, e.target)
+              }
+              onBlur={(e) => handleBlur("address", e)}
+              aria-invalid={errors.address ? true : undefined}
+              aria-describedby="checkout-address-error"
+              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
-            {errors.address && (
-              <p id="checkout-address-error" role="alert" className="mt-1 text-xs text-brand-red">
-                {errors.address}
-              </p>
-            )}
+            <p id="checkout-address-error" role="alert" className="field-error">
+              <span aria-hidden="true">✕ </span>
+              {errors.address ?? "Adres en az 10 karakter olmalıdır"}
+            </p>
           </label>
 
           <label htmlFor="checkout-note" className="block text-sm font-semibold text-foreground">
@@ -409,8 +454,11 @@ export default function CheckoutPageClient({
               name="note"
               rows={2}
               autoComplete="off"
+              enterKeyHint="done"
               value={form.note}
-              onChange={(e) => handleChange("note", e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                handleChange("note", e.target.value, e.target)
+              }
               className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
           </label>
@@ -483,7 +531,7 @@ export default function CheckoutPageClient({
           ) : null}
         </div>
 
-        <aside className="premium-card h-fit rounded-[1.5rem] p-6 shadow-[0_28px_70px_rgba(0,0,0,.25)]">
+        <aside className="premium-card h-fit p-6">
           <h2 className="font-heading text-xl font-bold text-white">Sipariş Özeti</h2>
           <ul className="mt-4 space-y-2 text-sm text-muted">
             {items.map((item) => (
@@ -522,7 +570,7 @@ export default function CheckoutPageClient({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-press btn-sand-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
           </button>
