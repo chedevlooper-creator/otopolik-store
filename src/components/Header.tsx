@@ -17,8 +17,9 @@ import {
 import SearchModal from "@/components/SearchModal";
 import Logo from "@/components/Logo";
 
-/** Condensed Mac-pro nav — logo covers home; Features lives inside Araç Seç. */
+/** Condensed Mac-pro nav. Features live inside Araç Seç. */
 const NAV_LINKS = [
+  { href: "/", label: "Ana Sayfa" },
   { href: "/urunler", label: "Ürünler" },
   { href: "/#arac-sec", label: "Araç Seç" },
   { href: "/galeri", label: "Galeri" },
@@ -153,7 +154,7 @@ export default function Header() {
 
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex h-16 items-center justify-between gap-3 sm:h-[68px]">
-            <Logo variant="header" ariaLabel="EVA Premium ana sayfa" />
+            <Logo variant="header" ariaLabel="Ana sayfaya git" />
 
             <nav
               className="mac-glass hidden items-center gap-0.5 rounded-full p-1 lg:flex"
@@ -166,7 +167,7 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`mac-nav-pill inline-flex min-h-9 items-center px-3.5 text-[11px] font-semibold tracking-[-0.01em] transition-colors ${
+                    className={`mac-nav-pill inline-flex min-h-9 items-center px-2.5 text-[11px] font-semibold tracking-[-0.01em] transition-colors xl:px-3.5 ${
                       active ? "text-sand" : "text-white/70"
                     }`}
                   >
@@ -236,7 +237,7 @@ export default function Header() {
           aria-labelledby="mobile-menu-title"
           className="absolute inset-x-0 top-full border-t border-white/[0.06] bg-background/96 px-4 py-4 shadow-2xl backdrop-blur-2xl lg:hidden"
         >
-          <div className="mac-glass mx-auto max-h-[calc(100vh-8rem)] max-w-7xl overflow-y-auto overscroll-contain rounded-2xl p-2">
+          <div className="mac-glass mx-auto max-h-[calc(100vh-8rem)] max-w-7xl overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.08] bg-[#0b0b0b]/95 p-2">
             <div className="flex min-h-12 items-center justify-between border-b border-white/[0.06] px-3">
               <h2
                 id="mobile-menu-title"

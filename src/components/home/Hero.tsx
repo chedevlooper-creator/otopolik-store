@@ -31,11 +31,11 @@ export default function Hero({ content }: Props) {
   const headline =
     hero?.title && hero?.subtitle
       ? `${hero.title} ${hero.subtitle}`.replace(/\s+/g, " ").trim()
-      : (hero?.title ?? "Araca özel havuzlu paspas");
+      : hero?.title ?? "Araca özel havuzlu paspas";
 
   return (
     <section
-      className={`relative flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-black text-white ${
+      className={`relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-black text-white ${
         motionReady ? "hero-ready" : ""
       }`}
     >
@@ -87,7 +87,7 @@ export default function Hero({ content }: Props) {
             </Link>
             <Link
               href={secondary?.ctaHref ?? "/urunler"}
-              className="btn-press btn-ghost-rich mac-glass inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] text-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              className="btn-press btn-ghost-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] text-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
             >
               {secondary?.ctaLabel ?? "Koleksiyonu keşfet"}
             </Link>

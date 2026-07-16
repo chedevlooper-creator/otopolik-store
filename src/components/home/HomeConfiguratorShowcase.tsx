@@ -715,7 +715,7 @@ export default function HomeConfiguratorShowcase() {
             </div>
             <Link
               href="/galeri"
-              className="btn-press btn-ghost-rich mac-glass hidden items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-sand transition hover:text-white sm:inline-flex"
+              className="btn-press btn-ghost-rich hidden items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-sand transition hover:text-white sm:inline-flex"
             >
               Tüm galeri <ArrowRightIcon className="h-4 w-4" />
             </Link>

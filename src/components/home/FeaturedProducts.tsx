@@ -37,7 +37,7 @@ export default async function FeaturedProducts({ content }: Props) {
             </div>
             <Link
               href={content?.ctaHref ?? "/urunler"}
-              className="btn-press btn-ghost-rich mac-glass inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-5 text-sm font-semibold text-white"
+              className="btn-press btn-ghost-rich inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-5 text-sm font-semibold text-white"
             >
               {content?.ctaLabel ?? "Tüm ürünleri gör"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
