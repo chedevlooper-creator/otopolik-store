@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { useStoreSettings } from "@/context/settings-context";
 import { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
 import { getShippingCost } from "@/lib/shipping";
-import { TruckIcon, MinusIcon, PlusIcon } from "lucide-react";
+import { TruckIcon, MinusIcon, PlusIcon, CheckIcon, ShoppingCartIcon } from "lucide-react";
 
 export default function AddToCartButton({ product }: { product: Product }) {
   const { addItem, closeDrawer } = useCart();
@@ -16,8 +16,19 @@ export default function AddToCartButton({ product }: { product: Product }) {
   const [color, setColor] = useState(product.colors[0]?.name ?? "Siyah");
   const [quantity, setQuantity] = useState(1);
   const [footerVisible, setFooterVisible] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+  const [animateCart, setAnimateCart] = useState(false);
   const subtotal = product.price * quantity;
   const shippingCost = getShippingCost(subtotal, settings);
+
+  const handleAdd = useCallback(() => {
+    addItem(buildLine());
+    setJustAdded(true);
+    setAnimateCart(true);
+    window.setTimeout(() => { setAnimateCart(false); }, 500);
+    window.setTimeout(() => { setJustAdded(false); }, 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addItem, color, quantity]);
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -95,10 +106,26 @@ export default function AddToCartButton({ product }: { product: Product }) {
       <div className="hidden gap-3 sm:flex sm:flex-row">
         <button
           type="button"
-          onClick={() => addItem(buildLine())}
-          className="btn-press btn-red-rich flex-1 rounded-full px-6 py-3.5 text-sm font-bold text-white"
+          onClick={handleAdd}
+          className={`btn-press btn-red-rich flex-1 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-all duration-200 ${
+            justAdded
+              ? "!bg-emerald-500 !hover:bg-emerald-600"
+              : ""
+          }`}
         >
-          Sepete Ekle
+          <span className={`inline-flex items-center gap-2 ${animateCart ? "animate-cart-pop" : ""}`}>
+            {justAdded ? (
+              <>
+                <CheckIcon className="h-4 w-4 animate-check-spread" aria-hidden="true" />
+                Eklendi
+              </>
+            ) : (
+              <>
+                <ShoppingCartIcon className="h-4 w-4" aria-hidden="true" />
+                Sepete Ekle
+              </>
+            )}
+          </span>
         </button>
         <button
           type="button"
@@ -107,7 +134,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             closeDrawer();
             router.push("/odeme");
           }}
-          className="btn-press flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04]"
+          className="btn-press flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground transition-all duration-200 hover:border-white/24 hover:bg-white/[0.04] hover:translate-y-[-1px]"
         >
           Hemen Al
         </button>
@@ -139,11 +166,27 @@ export default function AddToCartButton({ product }: { product: Product }) {
           </div>
           <button
             type="button"
-            onClick={() => addItem(buildLine())}
+            onClick={handleAdd}
             tabIndex={footerVisible ? -1 : undefined}
-            className="btn-press btn-red-rich min-h-11 flex-1 rounded-full px-5 py-3 text-sm font-bold text-white"
+            className={`btn-press btn-red-rich min-h-11 flex-1 rounded-full px-5 py-3 text-sm font-bold text-white transition-all duration-200 ${
+              justAdded
+                ? "!bg-emerald-500 !hover:bg-emerald-600"
+                : ""
+            }`}
           >
-            Sepete Ekle
+            <span className={`inline-flex items-center gap-2 ${animateCart ? "animate-cart-pop" : ""}`}>
+              {justAdded ? (
+                <>
+                  <CheckIcon className="h-4 w-4 animate-check-spread" aria-hidden="true" />
+                  Eklendi
+                </>
+              ) : (
+                <>
+                  <ShoppingCartIcon className="h-4 w-4" aria-hidden="true" />
+                  Ekle
+                </>
+              )}
+            </span>
           </button>
         </div>
       </div>

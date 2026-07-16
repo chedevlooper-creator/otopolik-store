@@ -78,10 +78,10 @@ export default function Footer() {
                 "Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler."}
             </p>
             <div className="mt-6 flex gap-2">
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] text-white/50 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white">
+              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300">
                 <CameraIcon className="h-4 w-4" aria-hidden="true" />
               </a>
-              <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] text-white/50 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white">
+              <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
                 <PlayIcon className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
@@ -91,7 +91,7 @@ export default function Footer() {
             <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Keşfet</h3>
             <ul className="mt-5 space-y-3 text-sm">
               {PAGE_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="text-white/50 transition-colors hover:text-white">{item.label}</Link></li>
+                <li key={item.href}><Link href={item.href} className="link-slide inline-block text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
               ))}
             </ul>
           </div>
@@ -100,20 +100,20 @@ export default function Footer() {
             <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Destek</h3>
             <ul className="mt-5 space-y-3 text-sm">
               {INFO_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="text-white/50 transition-colors hover:text-white">{item.label}</Link></li>
+                <li key={item.href}><Link href={item.href} className="link-slide inline-block text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Bize ulaşın</h3>
-            <div className="mt-5 space-y-4 text-sm text-white/55">
-              <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="flex items-center gap-3 transition-colors hover:text-white">
-                <PhoneIcon className="h-4 w-4 shrink-0 text-sand/80" aria-hidden="true" />
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand">Bize ulaşın</h3>
+            <div className="mt-5 space-y-4 text-sm text-white/65">
+              <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="link-slide-reverse inline-flex items-center gap-3 text-white/65 hover:text-white">
+                <PhoneIcon className="h-4 w-4 shrink-0 text-sand transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
                 {settings.phoneDisplay}
               </a>
-              <a href={`mailto:${settings.email}`} className="flex items-center gap-3 transition-colors hover:text-white">
-                <MailIcon className="h-4 w-4 shrink-0 text-sand/80" aria-hidden="true" />
+              <a href={`mailto:${settings.email}`} className="link-slide-reverse inline-flex items-center gap-3 text-white/65 hover:text-white">
+                <MailIcon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
                 {settings.email}
               </a>
               <p className="flex items-start gap-3 leading-6">
