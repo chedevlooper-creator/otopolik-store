@@ -12,6 +12,7 @@ import {
   generateVehicleContent,
   getAllVehicleSlugs,
   slugToVehicle,
+  type PriceTier,
 } from "@/lib/vehicle-seo";
 import { siteConfig } from "@/lib/site-config";
 import { formatPrice } from "@/lib/format";
@@ -35,6 +36,9 @@ import {
   SparklesIcon,
   RecycleIcon,
   WrenchIcon,
+  StarIcon,
+  PaletteIcon,
+  ShoppingCartIcon,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -209,6 +213,61 @@ export default async function VehicleLandingPage({
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Fiyat Tablosu */}
+      <section className="mt-16">
+        <span className="spec-label">Paket seçenekleri</span>
+        <h2 className="mt-4 font-heading text-3xl font-bold text-white sm:text-4xl">
+          {vehicle.brand} {vehicle.model} Paspas Fiyatları
+        </h2>
+        <p className="mt-2 max-w-2xl text-muted">
+          {vehicle.brand} {vehicle.model} modeliniz için 4 farklı paket seçeneği sunuyoruz.
+          Tüm paketler CNC kesim, araca özel üretimdir.
+        </p>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {content.priceTiers.map((tier: PriceTier) => (
+            <div
+              key={tier.label}
+              className={`relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
+                tier.isPopular
+                  ? "border-sand/40 bg-gradient-to-b from-sand/[0.06] to-transparent shadow-[0_20px_60px_rgba(225,201,162,0.08)]"
+                  : "border-border bg-surface/50 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
+              }`}
+            >
+              {tier.isPopular && (
+                <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1.5 rounded-full bg-sand px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-background">
+                  <StarIcon className="h-3 w-3" aria-hidden="true" />
+                  En çok tercih edilen
+                </span>
+              )}
+              <h3 className="font-heading text-lg font-bold text-white">
+                {tier.label}
+              </h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                {tier.description}
+              </p>
+              <p className="mt-4">
+                <span className="spec-value text-2xl font-semibold text-sand">
+                  {formatPrice(tier.price)}
+                </span>
+              </p>
+              <a
+                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(content.whatsappMessage)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn-press mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
+                  tier.isPopular
+                    ? "bg-brand-red text-white shadow-[0_14px_36px_rgba(227,25,55,.24)] hover:bg-[#f02142]"
+                    : "border border-white/12 bg-white/[0.04] text-white hover:border-white/30 hover:bg-white/[0.08]"
+                }`}
+              >
+                <ShoppingCartIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                Sipariş Ver
+              </a>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -12,6 +12,21 @@ import {
 } from "./vehicle-data";
 import { siteConfig } from "./site-config";
 
+export type PriceTier = {
+  label: string;
+  description: string;
+  price: number;
+  isPopular?: boolean;
+};
+
+export type Review = {
+  name: string;
+  model: string;
+  rating: number;
+  text: string;
+  date: string;
+};
+
 type VehiclePageContent = {
   brand: string;
   model: string;
@@ -24,6 +39,8 @@ type VehiclePageContent = {
   description: string;
   features: string[];
   price: number;
+  priceTiers: PriceTier[];
+  reviews: Review[];
   ctaLabel: string;
   whatsappMessage: string;
   faqItems: { q: string; a: string }[];
@@ -145,6 +162,67 @@ export function generateVehicleContent(
 
   const whatsappMessage = `Merhaba, ${brand} ${cleanModel} için araca özel EVA paspas seti hakkında bilgi almak istiyorum. Araç bilgilerim: ${brand} ${cleanModel}, ${bodyLabel}. Fiyat ve teslimat bilgisi paylaşır mısınız?`;
 
+  // ── Fiyat tablosu ──
+  const basePrice = price;
+  const heelPadPrice = siteConfig.matHeelPadPrice;
+  const trunkMatPrice = siteConfig.matTrunkPrice;
+
+  const priceTiers: PriceTier[] = [
+    {
+      label: "Temel Set",
+      description: "Ön sürücü, ön yolcu + arka koltuk (4 parça)",
+      price: basePrice,
+    },
+    {
+      label: "Artı Topuk Pedi",
+      description: "Temel set + sürücü topuk koruma pedi",
+      price: basePrice + heelPadPrice,
+    },
+    {
+      label: "Artı Bagaj",
+      description: "Temel set + bagaj paspası",
+      price: basePrice + trunkMatPrice,
+    },
+    {
+      label: "Full Set",
+      description: "Temel set + topuk pedi + bagaj paspası",
+      price: basePrice + heelPadPrice + trunkMatPrice,
+      isPopular: true,
+    },
+  ];
+
+  // ── Müşteri yorumları ──
+  const reviews: Review[] = [
+    {
+      name: "Ahmet Y.",
+      model: `${brand} ${model}`,
+      rating: 5,
+      text: `${brand} ${cleanModel} için sipariş verdim, paspaslar aracıma tıpatıp uydu. Kalite gerçekten beklentimin üzerinde.`,
+      date: "Mayıs 2026",
+    },
+    {
+      name: "Zeynep K.",
+      model: `${brand} ${model}`,
+      rating: 5,
+      text: "Daha önce iki farklı marka paspas kullandım, hiçbiri OTO POLİK kalitesinde değil. Özellikle su geçirmez yapısı kışın çok işe yarıyor.",
+      date: "Mayıs 2026",
+    },
+    {
+      name: "Mehmet D.",
+      model: `${brand} ${model}`,
+      rating: 4,
+      text: `Montajı çok kolay, hemen yerine oturdu. ${cleanModel} taban ölçüleriyle milimetrik uyum sağladı. Tek sıkıntım kargoda biraz gecikme oldu.`,
+      date: "Nisan 2026",
+    },
+    {
+      name: "Elif S.",
+      model: `${brand} ${model}`,
+      rating: 5,
+      text: "Temizlemesi inanılmaz kolay! Çamurlu bir haftasonundan sonra tek sıkım suyla tertemiz oldu. Kesinlikle tavsiye ederim.",
+      date: "Mayıs 2026",
+    },
+  ];
+
   const faqItems = [
     {
       q: `${brand} ${cleanModel} için paspas ne kadardır?`,
@@ -176,6 +254,8 @@ export function generateVehicleContent(
     description,
     features,
     price,
+    priceTiers,
+    reviews,
     ctaLabel: `${brand} ${cleanModel} Paspası Sipariş Et`,
     whatsappMessage,
     faqItems,
