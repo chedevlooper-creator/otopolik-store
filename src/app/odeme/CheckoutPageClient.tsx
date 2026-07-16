@@ -2,6 +2,7 @@
 
 import { useState, useCallback, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/format";
 import { buildWhatsAppLink, useStoreSettings } from "@/context/settings-context";
@@ -67,8 +68,9 @@ export default function CheckoutPageClient({
 }: {
   content: CheckoutContent;
 }) {
-  const { items, totalPrice, isHydrated } = useCart();
+  const { items, totalPrice, isHydrated, clearCart } = useCart();
   const settings = useStoreSettings();
+  const router = useRouter();
   const createOrder = useMutation(api.orders.create);
   const convexReady = isConvexConfiguredClient();
   const [form, setForm] = useState({
@@ -83,7 +85,6 @@ export default function CheckoutPageClient({
   const [legalAccepted, setLegalAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [fallbackVehicle, setFallbackVehicle] = useState<VehicleDetails>(
     EMPTY_VEHICLE_DETAILS
   );
@@ -257,7 +258,7 @@ export default function CheckoutPageClient({
               .filter(Boolean)
               .join(" · ")}]`
           : "";
-        return `- ${item.name} (${item.color})${configLine} x${item.quantity} — ${formatPrice(item.price * item.quantity)}`;
+        return `- ${item.name} (${item.color})${configLine} x${item.quantity} - ${formatPrice(item.price * item.quantity)}`;
       }),
       "",
       `Ara Toplam: ${formatPrice(totalPrice)}`,
@@ -267,7 +268,6 @@ export default function CheckoutPageClient({
 
     const href = buildWhatsAppLink(settings.whatsappNumber, lines.join("\n"));
     setSubmitError(null);
-    setSubmitSuccess(null);
 
     // Pencereyi kullanıcı etkileşimi sırasında aç; async kayıt sonrasında
     // açmaya çalışmak tarayıcının popup engeline takılabilir.
@@ -284,42 +284,33 @@ export default function CheckoutPageClient({
     setIsSubmitting(true);
 
     try {
-      if (!convexReady) {
-        setSubmitSuccess(
-          "Sipariş özetiniz WhatsApp'ta açıldı. Mesajı göndererek devam edebilirsiniz; sepetiniz korunuyor."
-        );
-        return;
+      if (convexReady) {
+        await createOrder({
+          customerName: form.fullName,
+          customerPhone: form.phone,
+          customerEmail: undefined,
+          city: form.city,
+          address: form.address,
+          items: itemsForOrder.map((item) => ({
+            slug: item.slug,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            color: item.color,
+            image: item.image,
+            configuration: item.configuration,
+          })),
+          paymentMethod,
+          notes: form.note || undefined,
+        });
       }
-
-      await createOrder({
-        customerName: form.fullName,
-        customerPhone: form.phone,
-        customerEmail: undefined,
-        city: form.city,
-        address: form.address,
-        items: itemsForOrder.map((item) => ({
-          slug: item.slug,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          color: item.color,
-          image: item.image,
-          configuration: item.configuration,
-        })),
-        paymentMethod,
-        notes: form.note || undefined,
-      });
-
-      setSubmitSuccess(
-        "Sipariş özetiniz WhatsApp'ta açıldı. Mesajı gönderdiğinizde talebiniz tamamlanır; bu aşamaya kadar sepetiniz korunur."
-      );
     } catch (err) {
+      // Best-effort Convex write — WhatsApp already opened; never block thank-you.
       console.error("Failed to save order to Convex:", err);
-      setSubmitError(
-        "Sipariş kaydı şu anda oluşturulamadı. WhatsApp penceresindeki özeti göndererek devam edebilirsiniz; sepetiniz korunuyor."
-      );
     } finally {
+      clearCart();
       setIsSubmitting(false);
+      router.push("/tesekkurler");
     }
   }
 
@@ -603,17 +594,10 @@ export default function CheckoutPageClient({
               {submitError}
             </p>
           ) : null}
-          {submitSuccess ? (
-            <p
-              role="status"
-              className="mt-4 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-3 py-2 text-xs font-medium leading-5 text-emerald-200"
-            >
-              {submitSuccess}
-            </p>
-          ) : null}
           <p className="mt-4 rounded-xl border border-dashed border-border bg-background px-3 py-2 text-xs leading-5 text-muted">
             WhatsApp penceresinde hazırlanan özeti göndermeden sipariş
-            kesinleşmez. Ekibimiz mesajınızın ardından uyumluluğu teyit eder.
+            kesinleşmez. Özet açıldıktan sonra sepet temizlenir ve teşekkür
+            sayfasına yönlendirilirsiniz.
           </p>
           <button
             type="submit"

@@ -14,9 +14,9 @@ type Props = {
 };
 
 /**
- * First viewport = one composition:
+ * Mac product-launch first viewport:
  * Brand (OTOPOLİK) → one headline → one sentence → CTA group → full-bleed cabin.
- * No trust strips, slide counters, or overlay chips in the hero.
+ * No trust strips, scroll cues, or overlay chips in the hero.
  */
 export default function Hero({ content }: Props) {
   const hero = content?.hero;
@@ -43,18 +43,16 @@ export default function Hero({ content }: Props) {
         <div className="hero-parallax absolute inset-0">
           <HeroMedia />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,2,2,.97)_0%,rgba(2,2,2,.88)_24%,rgba(2,2,2,.35)_52%,rgba(2,2,2,.08)_78%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.35)_0%,transparent_38%,rgba(0,0,0,.78)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.96)_0%,rgba(0,0,0,.82)_28%,rgba(0,0,0,.28)_58%,rgba(0,0,0,.06)_82%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.4)_0%,transparent_42%,rgba(0,0,0,.82)_100%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-20 lg:pb-24 lg:pt-32">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-20 pt-24 sm:px-6 sm:pb-24 lg:pb-28">
         <div className="max-w-3xl text-left">
-          {/* Brand is the hero signal — not an eyebrow */}
-          <p className="hero-brand font-heading text-[clamp(3.4rem,9vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.045em] text-white">
+          <p className="hero-brand font-heading text-[clamp(3.2rem,8.5vw,7rem)] font-medium leading-[0.9] tracking-[-0.05em] text-white">
             OTOPOLİK
           </p>
 
-          {/* Laser-cut contour — manufacturing vernacular as signature */}
           <svg
             className="hero-laser mt-3 w-full max-w-md text-brand-red"
             viewBox="0 0 420 18"
@@ -71,42 +69,31 @@ export default function Hero({ content }: Props) {
             <circle className="hero-laser-dot" cx="2" cy="12" r="2" fill="currentColor" />
           </svg>
 
-          <h1 className="hero-line mt-8 max-w-xl font-heading text-[clamp(1.55rem,2.8vw,2.35rem)] font-medium leading-[1.2] tracking-[-0.03em] text-sand">
+          <h1 className="hero-line mt-8 max-w-xl font-heading text-[clamp(1.5rem,2.6vw,2.2rem)] font-medium leading-[1.2] tracking-[-0.03em] text-sand">
             {headline}
           </h1>
 
-          <p className="hero-fade mt-5 max-w-md text-base leading-7 text-white/70 sm:text-[17px]">
-            {hero?.body ??
-              "Lazer kesim kalıp. Premium EVA. 1–3 günde kargo."}
+          <p className="hero-fade mt-5 max-w-md text-base leading-7 text-white/68 sm:text-[17px]">
+            {hero?.body ?? "Lazer kesim kalıp. Premium EVA. 1-3 günde kargo."}
           </p>
 
-          <div className="hero-fade hero-fade--late mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div className="hero-fade hero-fade--late mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-3">
             <Link
               href={hero?.ctaHref ?? "/#arac-sec"}
-              className="btn-press btn-red-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-8 text-[11px] font-bold uppercase tracking-[0.12em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              className="btn-press btn-red-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
             >
               {hero?.ctaLabel ?? "Aracını seç"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href={secondary?.ctaHref ?? "/urunler"}
-              className="btn-press btn-ghost-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-8 text-[11px] font-bold uppercase tracking-[0.12em] text-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              className="btn-press btn-ghost-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] text-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
             >
               {secondary?.ctaLabel ?? "Koleksiyonu keşfet"}
             </Link>
           </div>
         </div>
       </div>
-
-      <a
-        href="#arac-sec"
-        className="hero-fade absolute bottom-6 left-4 z-20 hidden items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-white/50 transition hover:text-sand focus-visible:text-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sand sm:left-6 lg:flex"
-      >
-        <span className="flex h-7 w-4 items-start justify-center rounded-full border border-white/40 p-1" aria-hidden="true">
-          <span className="h-1.5 w-px animate-bounce bg-sand" />
-        </span>
-        Aşağı
-      </a>
     </section>
   );
 }
