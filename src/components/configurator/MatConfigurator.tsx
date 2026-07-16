@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
 import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
@@ -9,7 +10,12 @@ import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
 import { useStoreSettings } from "@/context/settings-context";
 import { getVehiclePrice } from "@/lib/vehicle-data";
-import { PaletteIcon, RulerIcon, TruckIcon } from "lucide-react";
+import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
+import { GALLERY_ITEMS } from "@/lib/gallery-media";
+import GalleryLightbox from "@/components/GalleryLightbox";
+
+// Select a stable mix of 12 items for the configurator sidebar to show real applications
+const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
 
 const FLOOR_COLORS = [
   { name: "Siyah", hex: "#0f1012" },
@@ -76,6 +82,7 @@ export default function MatConfigurator({
   const [edge, setEdge] = useState(EDGE_COLORS[3]);
   const [heelPad, setHeelPad] = useState(true);
   const [trunkMat, setTrunkMat] = useState(false);
+  const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
 
   const basePrice = useMemo(() => {
     if (!brand || !slug || brand === OTHER_VEHICLE) return DEFAULT_BASE_PRICE;
@@ -220,6 +227,53 @@ export default function MatConfigurator({
             1-3 iş gününde kargoda
           </span>
         </div>
+
+        {/* Gerçek Müşteri Fotoğrafları / Videoları */}
+        <div className="mt-8 border-t border-white/5 pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Müşterilerimizin Paspas Tasarımları
+            </h3>
+            <Link
+              href="/galeri"
+              className="text-xs text-sand hover:underline hover:text-white transition-colors"
+            >
+              Tümünü Gör →
+            </Link>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-white/10">
+            {CONFIGURATOR_GALLERY_ITEMS.map((item, idx) => (
+              <div
+                key={item.src}
+                onClick={() => setSelectedGalleryIndex(idx)}
+                className="relative h-20 w-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border border-white/5 bg-surface transition-all duration-300 hover:border-white/20 active:scale-95"
+              >
+                {item.type === "photo" ? (
+                  <Image
+                    src={item.src}
+                    alt="Müşteri Paspası"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="relative h-full w-full bg-black">
+                    <video
+                      src={item.src}
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover opacity-70"
+                    />
+                    <span className="absolute inset-0 flex items-center justify-center text-white/80">
+                      <PlayIcon className="h-4 w-4 fill-white/50" />
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Seçenekler */}
@@ -266,6 +320,14 @@ export default function MatConfigurator({
         />
       </div>
       </div>
+
+      {selectedGalleryIndex !== null && (
+        <GalleryLightbox
+          items={CONFIGURATOR_GALLERY_ITEMS}
+          initialIndex={selectedGalleryIndex}
+          onClose={() => setSelectedGalleryIndex(null)}
+        />
+      )}
     </div>
   );
 }

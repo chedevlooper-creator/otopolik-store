@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Barlow, IBM_Plex_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
@@ -20,21 +20,21 @@ import {
   renderJsonLd,
 } from "@/lib/structured-data";
 
-const barlowCondensed = Barlow_Condensed({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const barlow = Barlow({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-spec",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600"],
@@ -124,7 +124,7 @@ export default async function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${barlowCondensed.variable} ${barlow.variable} ${plexMono.variable} antialiased`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
         <ConvexClientProvider>

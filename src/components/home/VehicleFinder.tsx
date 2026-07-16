@@ -24,29 +24,29 @@ export default function VehicleFinder() {
   }
 
   const fieldClass =
-    "h-12 w-full rounded-xl border border-white/12 bg-[#090b0f]/88 px-4 text-sm font-medium text-white outline-none transition-[border-color,background-color,box-shadow] placeholder:text-white/38 hover:border-white/20 focus:border-sand/65 focus:bg-black/95 focus:shadow-[0_0_0_3px_rgba(225,201,162,.08)]";
+    "h-12 w-full rounded-xl border border-white/[0.08] bg-black/40 px-4 text-sm font-medium text-white outline-none transition-all duration-300 placeholder:text-white/30 hover:border-white/15 focus:border-sand/50 focus:bg-black/80 focus:shadow-[0_0_0_3px_rgba(223,200,150,.06)]";
   const labelClass =
-    "mb-2 block text-[10px] font-bold uppercase tracking-[0.15em] text-white/62";
+    "mb-2 block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50";
 
   return (
-    <form onSubmit={handleSubmit} className="surface-glass overflow-hidden rounded-[1.5rem] p-4 sm:p-5 lg:p-6">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <form onSubmit={handleSubmit} className="surface-glass gradient-border overflow-hidden rounded-2xl p-5 sm:p-6 lg:p-7">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-red text-white shadow-lg shadow-brand-red/20">
             <CarFrontIcon className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
             <p className="font-heading text-xl font-bold text-white sm:text-2xl">Aracını seç, tasarımını başlat</p>
-            <p className="mt-0.5 text-xs text-white/62">Doğru kalıbı birkaç saniyede bul.</p>
+            <p className="mt-0.5 text-xs text-white/50">Doğru kalıbı birkaç saniyede bul.</p>
           </div>
         </div>
-        <span className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/58 lg:inline-flex">
-          <SearchIcon className="h-3 w-3 text-sand" aria-hidden="true" />
+        <span className="hidden items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/50 lg:inline-flex">
+          <SearchIcon className="h-3 w-3 text-sand/80" aria-hidden="true" />
           40+ marka · 6000+ model
         </span>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1.35fr_.72fr_auto] lg:items-end">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1.35fr_.72fr_auto] lg:items-end">
         <div>
           <label htmlFor="finder-brand" className={labelClass}>01 · Marka</label>
           <select
@@ -58,8 +58,8 @@ export default function VehicleFinder() {
             }}
             className={fieldClass}
           >
-            <option value="">Marka seçin</option>
-            {brandList.map((item) => <option key={item} value={item}>{item}</option>)}
+            <option value="" className="bg-[#0e1018]">Marka seçin</option>
+            {brandList.map((item) => <option key={item} value={item} className="bg-[#0e1018]">{item}</option>)}
           </select>
         </div>
         <div>
@@ -69,10 +69,10 @@ export default function VehicleFinder() {
             value={model}
             onChange={(e) => setModel(e.target.value)}
             disabled={!brand}
-            className={`${fieldClass} disabled:cursor-not-allowed disabled:opacity-45`}
+            className={`${fieldClass} disabled:cursor-not-allowed disabled:opacity-40`}
           >
-            <option value="">{brand ? "Model seçin" : "Önce marka seçin"}</option>
-            {models.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}
+            <option value="" className="bg-[#0e1018]">{brand ? "Model seçin" : "Önce marka seçin"}</option>
+            {models.map((item) => <option key={item.name} value={item.name} className="bg-[#0e1018]">{item.name}</option>)}
           </select>
         </div>
         <div>
@@ -90,7 +90,7 @@ export default function VehicleFinder() {
         </div>
         <button
           type="submit"
-          className="btn-press flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-red px-6 text-sm font-bold text-white shadow-[0_14px_36px_rgba(227,25,55,.24)] hover:bg-[#f02142] sm:col-span-2 lg:col-span-1 lg:min-w-[168px]"
+          className="btn-press flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-red px-6 text-sm font-bold text-white shadow-[0_14px_36px_rgba(227,25,55,.2)] hover:bg-[#f02142] sm:col-span-2 lg:col-span-1 lg:min-w-[168px]"
         >
           Tasarıma geç
           <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

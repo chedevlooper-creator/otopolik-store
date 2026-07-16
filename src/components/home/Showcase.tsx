@@ -18,44 +18,44 @@ const GALLERY_LAYOUTS = [
     className: "h-full lg:col-span-7 lg:row-span-2",
     figureClassName: "proof-card group relative h-[420px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]",
+      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-110",
     sizes: "(min-width: 1024px) 58vw, 100vw",
-    captionClassName: "absolute inset-x-0 bottom-0 p-5 sm:p-7",
-    titleClassName: "mt-2 font-heading text-3xl font-bold text-white sm:text-4xl",
+    captionClassName: "absolute inset-x-0 bottom-0 p-6 sm:p-8",
+    titleClassName: "mt-2 font-heading text-2xl font-bold text-white sm:text-3xl",
     showBody: true,
   },
   {
-    delay: 110,
+    delay: 120,
     className: "h-full lg:col-span-5",
     figureClassName:
-      "proof-card premium-grid group relative h-[320px] overflow-hidden bg-[#111318] lg:h-full",
+      "proof-card premium-grid group relative h-[320px] overflow-hidden bg-[#0c0e16] lg:h-full",
     imageClassName:
-      "object-contain p-7 transition-transform duration-700 ease-out group-hover:scale-[1.02] sm:p-10",
+      "object-contain p-7 transition-all duration-700 ease-out group-hover:scale-[1.03] sm:p-10",
     sizes: "(min-width: 1024px) 42vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-5",
-    titleClassName: "mt-1 font-heading text-2xl font-bold text-white",
+    titleClassName: "mt-1 font-heading text-xl font-bold text-white sm:text-2xl",
     showBody: false,
   },
   {
-    delay: 150,
+    delay: 180,
     className: "h-full lg:col-span-3",
     figureClassName: "proof-card group relative h-[300px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]",
+      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-110",
     sizes: "(min-width: 1024px) 25vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-5",
-    titleClassName: "mt-1 font-heading text-2xl font-bold text-white",
+    titleClassName: "mt-1 font-heading text-xl font-bold text-white sm:text-2xl",
     showBody: false,
   },
   {
-    delay: 190,
+    delay: 240,
     className: "h-full lg:col-span-2",
     figureClassName: "proof-card group relative h-[300px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]",
+      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110",
     sizes: "(min-width: 1024px) 17vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-5",
-    titleClassName: "mt-1 font-heading text-2xl font-bold text-white",
+    titleClassName: "mt-1 font-heading text-xl font-bold text-white",
     showBody: false,
   },
 ] as const;
@@ -197,20 +197,20 @@ export default function Showcase({ header, gallery, features }: Props) {
           })}
         </div>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {resolvedFeatures.map((feature, index) => {
             const Icon = FEATURE_ICONS[index] ?? RulerIcon;
             return (
-              <ScrollReveal key={feature.sectionKey} delay={index * 60}>
-                <article className="flex h-full gap-3 rounded-2xl border border-white/8 bg-white/[0.025] p-4 transition-[border-color,background-color] hover:border-white/14 hover:bg-white/[0.045]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.05] text-sand">
+              <ScrollReveal key={feature.sectionKey} delay={index * 80}>
+                <article className="group flex h-full gap-3 rounded-2xl border border-white/[0.05] bg-white/[0.015] p-5 transition-all duration-400 hover:border-white/[0.1] hover:bg-white/[0.03]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.03] text-sand transition-all duration-400 group-hover:bg-sand/[0.06] group-hover:shadow-[0_0_16px_rgba(223,200,150,.06)]">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <div>
                     <h3 className="text-sm font-semibold text-white">
                       {feature.title}
                     </h3>
-                    <p className="mt-1 text-xs leading-5 text-white/62">
+                    <p className="mt-1 text-xs leading-5 text-white/50">
                       {feature.body}
                     </p>
                   </div>

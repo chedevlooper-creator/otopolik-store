@@ -1,21 +1,23 @@
 @import "tailwindcss";
 
-/* OTO POLİK — premium performance atelier */
+/* OTO POLİK — 2026 premium atelier redesign */
 :root {
-  --background: #08090c;
-  --foreground: #f7f5f2;
+  --background: #060810;
+  --foreground: #f4f2ee;
   --brand-red: #e31937;
   --brand-red-dark: #b90e29;
-  --brand-black: #0d0f13;
-  --surface: #111318;
-  --surface-hover: #181b21;
-  --border: #272a31;
-  --muted: #a8abb3;
-  --sand: #e1c9a2;
-  --sand-dim: #aa8d64;
-  --rule: rgba(247, 245, 242, 0.09);
-  --radius-card: 1.5rem;
-  --section-space: clamp(4.75rem, 7vw, 6.5rem);
+  --brand-black: #0a0c14;
+  --surface: #0e1018;
+  --surface-hover: #151720;
+  --border: #1e2130;
+  --muted: #9da1b0;
+  --sand: #dfc896;
+  --sand-dim: #a88c5e;
+  --rule: rgba(255, 255, 255, 0.06);
+  --radius-card: 1.25rem;
+  --section-space: clamp(5.5rem, 9vw, 8rem);
+  --glow-red: rgba(227, 25, 55, 0.12);
+  --glow-sand: rgba(223, 200, 150, 0.06);
 }
 
 @theme inline {
@@ -42,13 +44,27 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  /* Çok katmanlı ambient arka plan — mavi-siyah derinlik */
   background-image:
-    radial-gradient(circle at 7% 2%, rgba(227, 25, 55, 0.08), transparent 26rem),
-    radial-gradient(circle at 95% 18%, rgba(225, 201, 162, 0.045), transparent 32rem);
+    radial-gradient(ellipse at 8% 0%, var(--glow-red), transparent 32rem),
+    radial-gradient(ellipse at 92% 12%, var(--glow-sand), transparent 38rem),
+    radial-gradient(ellipse at 50% 60%, rgba(14, 16, 30, 0.4), transparent 50rem);
   background-attachment: fixed;
+}
+
+/* Noise texture overlay — ince grain doku */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
 
 h1,
@@ -56,15 +72,15 @@ h2,
 h3,
 h4,
 .font-heading {
-  font-family: var(--font-heading), "Arial Narrow", Arial, sans-serif;
+  font-family: var(--font-heading), "Space Grotesk", system-ui, sans-serif;
 }
 
 h1,
 h2,
 h3 {
   text-wrap: balance;
-  letter-spacing: -0.015em;
-  line-height: 0.98;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
 }
 
 ::selection {
@@ -72,20 +88,20 @@ h3 {
   color: #fff;
 }
 
-/* İnce, markaya uygun kaydırma çubuğu */
+/* İnce kaydırma çubuğu */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #3a3d45 transparent;
+  scrollbar-color: #2a2d38 transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #3a3d45;
-  border-radius: 8px;
+  background: #2a2d38;
+  border-radius: 6px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
@@ -95,122 +111,150 @@ h3 {
 /* Klavye odak halkası */
 :focus-visible {
   outline: 2px solid var(--sand);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* EVA hücre dokusu — paspas yüzeyindeki baklava deseni */
+/* EVA hücre dokusu */
 .bg-eva {
   background-image: repeating-linear-gradient(
       45deg,
-      rgba(241, 239, 233, 0.028) 0 1px,
+      rgba(241, 239, 233, 0.022) 0 1px,
       transparent 1px 11px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(241, 239, 233, 0.028) 0 1px,
+      rgba(241, 239, 233, 0.022) 0 1px,
       transparent 1px 11px
     );
 }
 
-/* Ortak premium yüzeyler */
+/* ─── Glassmorphism 2.0 yüzeyler ─── */
 .surface-glass {
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  background: linear-gradient(145deg, rgba(22, 24, 30, 0.94), rgba(10, 11, 15, 0.9));
-  box-shadow: 0 26px 78px rgba(0, 0, 0, 0.38);
-  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    160deg,
+    rgba(16, 18, 28, 0.92),
+    rgba(8, 10, 18, 0.88)
+  );
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px) saturate(1.4);
 }
 
 .premium-card {
-  border: 1px solid var(--rule);
-  background: linear-gradient(145deg, rgba(23, 25, 31, 0.95), rgba(12, 14, 18, 0.99));
-  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    160deg,
+    rgba(18, 20, 30, 0.95),
+    rgba(10, 12, 20, 0.98)
+  );
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.premium-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 36px 90px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .premium-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 42px 42px;
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 .red-glow {
-  box-shadow: 0 18px 50px rgba(227, 25, 55, 0.26);
+  box-shadow: 0 20px 60px rgba(227, 25, 55, 0.22);
 }
 
+/* ─── Section kicker — yeni pill badge stili ─── */
 .section-kicker {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-family: var(--font-spec), ui-monospace, monospace;
-  font-size: 0.69rem;
+  gap: 0.5rem;
+  font-family: var(--font-spec), "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.19em;
+  letter-spacing: 0.17em;
   color: var(--sand);
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  border: 1px solid rgba(223, 200, 150, 0.12);
+  background: rgba(223, 200, 150, 0.04);
 }
 
 .section-kicker::before {
   content: "";
-  width: 1.65rem;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--brand-red), #ff6b81);
-  box-shadow: 0 0 18px rgba(227, 25, 55, 0.7);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-red);
+  box-shadow: 0 0 12px var(--glow-red), 0 0 4px var(--brand-red);
+  flex-shrink: 0;
 }
 
-/* Ana sayfa ritmi ve başlık ölçeği */
+/* Ana sayfa ritmi */
 .home-section {
   padding-block: var(--section-space);
 }
 
 .home-section + .home-section {
-  padding-top: clamp(3.5rem, 5vw, 5rem);
+  padding-top: clamp(4rem, 6vw, 5.5rem);
 }
 
+/* ─── Section başlık — daha cesur ─── */
 .section-title {
   color: var(--foreground);
-  font-family: var(--font-heading), "Arial Narrow", Arial, sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4.65rem);
+  font-family: var(--font-heading), "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2.25rem, 5vw, 4rem);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
   text-wrap: balance;
 }
 
 .section-copy {
-  color: rgba(247, 245, 242, 0.66);
-  font-size: clamp(0.9375rem, 1.15vw, 1rem);
-  line-height: 1.75;
+  color: rgba(244, 242, 238, 0.58);
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.8;
 }
 
 .proof-card {
-  border: 1px solid var(--rule);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-card);
   background: var(--surface);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
 }
 
 .bg-eva-strong {
   background-image: repeating-linear-gradient(
       45deg,
-      rgba(241, 239, 233, 0.05) 0 1px,
+      rgba(241, 239, 233, 0.04) 0 1px,
       transparent 1px 9px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(241, 239, 233, 0.05) 0 1px,
+      rgba(241, 239, 233, 0.04) 0 1px,
       transparent 1px 9px
     );
 }
 
-/* Spek etiketi — kesim föyündeki teknik yazı */
+/* ─── Spek etiketi ─── */
 .spec-label {
-  font-family: var(--font-spec), ui-monospace, monospace;
+  font-family: var(--font-spec), "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.6875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   color: var(--sand);
   display: inline-flex;
   align-items: center;
@@ -223,24 +267,22 @@ h3 {
   height: 2px;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--brand-red), #ff6b81);
-  box-shadow: 0 0 16px rgba(227, 25, 55, 0.55);
+  box-shadow: 0 0 16px rgba(227, 25, 55, 0.5);
   flex-shrink: 0;
 }
 
-/* Mobilde geniş harf aralığı dar ekranda satır kırdırır; bir kademe azalt */
 @media (max-width: 639px) {
   .spec-label {
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
   }
 }
 
-/* Fiyat, ölçü, parça kodu gibi teknik değerler */
 .spec-value {
-  font-family: var(--font-spec), ui-monospace, monospace;
-  letter-spacing: 0.02em;
+  font-family: var(--font-spec), "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.015em;
 }
 
-/* Overlok kenarı — paspasın kenar rengi gibi karttan taşan sert kontur */
+/* Overlok kenarı */
 .edge-card {
   border: 1px solid var(--border);
   box-shadow: 6px 6px 0 0 var(--brand-red);
@@ -251,7 +293,7 @@ h3 {
   box-shadow: 6px 6px 0 0 var(--sand-dim);
 }
 
-/* Kesim çizgisi — föyler arasındaki kesikli ayraç */
+/* Kesim çizgisi */
 .cut-line {
   height: 1px;
   background-image: linear-gradient(
@@ -262,26 +304,33 @@ h3 {
   background-size: 18px 1px;
 }
 
-/* Scroll reveal — JS gelene kadar görünür kalsın; animasyon sadece no-preference */
+/* ─── Scroll reveal — blur-in + scale ─── */
 .reveal {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .reveal:not(.reveal-visible) {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform;
+    transform: translateY(28px) scale(0.97);
+    filter: blur(6px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform, filter;
   }
 
   .reveal.reveal-visible {
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: auto;
   }
 }
@@ -294,6 +343,7 @@ h3 {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 
@@ -328,7 +378,7 @@ h3 {
   }
 }
 
-/* Marquee (duyuru bandı) */
+/* ─── Marquee ─── */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -339,39 +389,41 @@ h3 {
 }
 
 .animate-marquee {
-  animation: marquee 32s linear infinite;
+  animation: marquee 38s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* Hero başlık girişi */
+/* ─── Hero başlık girişi ─── */
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(34px);
+    transform: translateY(40px);
+    filter: blur(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
 .animate-hero {
-  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .animate-hero-delay-1 {
-  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
 .animate-hero-delay-2 {
-  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+  animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
 }
 
 .animate-hero-delay-3 {
-  animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+  animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.34s both;
 }
 
 /* Sinematik hero — hydrate sonrası .hero-ready ile başlar */
@@ -382,10 +434,12 @@ h3 {
 
 @keyframes hero-line-up {
   from {
-    transform: translateY(110%);
+    transform: translateY(115%);
+    filter: blur(4px);
   }
   to {
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -412,10 +466,12 @@ h3 {
   from {
     opacity: 0;
     letter-spacing: 0.42em;
+    filter: blur(4px);
   }
   to {
     opacity: 1;
     letter-spacing: 0.24em;
+    filter: blur(0);
   }
 }
 
@@ -429,33 +485,35 @@ h3 {
 
 @media (prefers-reduced-motion: no-preference) {
   .hero-ready .hero-line {
-    transform: translateY(110%);
-    animation: hero-line-up 0.82s cubic-bezier(0.19, 1, 0.22, 1) 0.06s both;
+    transform: translateY(115%);
+    filter: blur(4px);
+    animation: hero-line-up 0.9s cubic-bezier(0.19, 1, 0.22, 1) 0.08s both;
   }
 
   .hero-ready .hero-line--2 {
-    animation-delay: 0.16s;
+    animation-delay: 0.18s;
   }
 
   .hero-ready .hero-underline {
     transform: scaleX(0);
-    animation: hero-underline-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.72s
+    animation: hero-underline-draw 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.78s
       both;
   }
 
   .hero-ready .hero-kicker {
     opacity: 0;
-    animation: hero-kicker-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: hero-kicker-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .hero-ready .hero-fade {
     opacity: 0;
-    transform: translateY(18px);
-    animation: hero-rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    transform: translateY(22px);
+    filter: blur(6px);
+    animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
   }
 
   .hero-ready .hero-fade--late {
-    animation-delay: 0.32s;
+    animation-delay: 0.38s;
   }
 }
 
@@ -467,37 +525,146 @@ h3 {
     opacity: 1;
   }
   50% {
-    transform: translateY(8px);
-    opacity: 0.4;
+    transform: translateY(10px);
+    opacity: 0.3;
   }
 }
 
 .animate-scroll-cue {
-  animation: scroll-cue 1.8s ease-in-out infinite;
+  animation: scroll-cue 2s ease-in-out infinite;
 }
 
-/* Buton basma hissi */
+/* ─── Buton basma — shimmer efektli ─── */
 .btn-press {
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-    background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.btn-press::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.12) 55%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.btn-press:hover::before {
+  transform: translateX(120%);
 }
 
 .btn-press:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .btn-press:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.97);
 }
 
-/* Kart yükselme efekti */
+/* Kart yükselme efekti — daha yumuşak */
 .card-lift {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease, border-color 0.45s ease;
 }
 
 .card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+}
+
+/* ─── Glow animasyonu ─── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(227, 25, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(227, 25, 55, 0.5), 0 0 40px rgba(227, 25, 55, 0.15);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ─── WhatsApp pulse ring ─── */
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.wa-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25D366;
+  animation: wa-pulse 2s ease-out infinite;
+  z-index: -1;
+}
+
+/* ─── Gradient border tekniği ─── */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Mesh gradient divider ─── */
+.mesh-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(227, 25, 55, 0.25) 20%,
+    rgba(223, 200, 150, 0.15) 50%,
+    rgba(227, 25, 55, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+/* ─── Blur edge fade (marquee kenarları) ─── */
+.blur-edge {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
 }
 
 @media (max-width: 767px) {
@@ -506,6 +673,6 @@ h3 {
   }
 
   .surface-glass {
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px) saturate(1.2);
   }
 }

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gallery:optimize": "node scripts/optimize-gallery-images.js",
+    "gallery:generate": "node scripts/generate-gallery-data.js"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

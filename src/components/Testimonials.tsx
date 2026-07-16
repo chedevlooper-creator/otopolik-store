@@ -8,7 +8,7 @@ function Stars({ count }: { count: number }) {
         <StarIcon
           key={i}
           className={`h-3.5 w-3.5 ${
-            i < count ? "fill-sand text-sand" : "text-border"
+            i < count ? "fill-sand text-sand" : "text-white/10"
           }`}
           aria-hidden="true"
         />
@@ -33,26 +33,28 @@ export default async function Testimonials() {
           </span>
           <h2
             id="testimonials-title"
-            className="section-title mt-5"
+            className="section-title mt-6"
           >
             {header?.title ?? "Araç sahipleri ne diyor?"}
           </h2>
         </div>
-        <p className="hidden max-w-xs text-sm text-white/55 sm:block">
+        <p className="hidden max-w-xs text-sm text-white/45 sm:block">
           {header?.body ?? "Gerçek kullanıcı deneyimleri"}
         </p>
       </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((t) => (
           <article
             key={`${t.name}-${t.sortOrder}`}
-            className="flex flex-col gap-3 rounded-2xl border border-white/9 bg-white/[0.025] p-5"
+            className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.015] p-6 transition-all duration-400 hover:border-white/[0.1] hover:bg-white/[0.03]"
           >
+            {/* Dekoratif tırnak işareti */}
+            <span className="pointer-events-none absolute -right-2 -top-4 font-heading text-[6rem] font-bold leading-none text-white/[0.02] transition-colors duration-500 group-hover:text-sand/[0.04]" aria-hidden="true">&ldquo;</span>
             <Stars count={t.rating} />
-            <p className="text-sm leading-relaxed text-white/80">&ldquo;{t.text}&rdquo;</p>
-            <footer className="mt-auto border-t border-white/8 pt-3">
-              <p className="font-heading text-sm font-bold uppercase text-white">{t.name}</p>
-              <p className="spec-value mt-0.5 text-[10px] uppercase tracking-[0.14em] text-white/45">
+            <p className="relative text-sm leading-7 text-white/70">&ldquo;{t.text}&rdquo;</p>
+            <footer className="mt-auto border-t border-white/[0.05] pt-4">
+              <p className="font-heading text-sm font-bold text-white">{t.name}</p>
+              <p className="spec-value mt-0.5 text-[10px] uppercase tracking-[0.14em] text-white/38">
                 {t.location}
               </p>
             </footer>

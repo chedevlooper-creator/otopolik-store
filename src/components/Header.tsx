@@ -20,6 +20,7 @@ import Logo from "@/components/Logo";
 const NAV_LINKS = [
   { href: "/urunler", label: "Ürünler" },
   { href: "/olusturucu", label: "Tasarla" },
+  { href: "/galeri", label: "Galeri" },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];
@@ -101,15 +102,15 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+      className={`sticky top-0 z-50 border-b transition-all duration-400 ${
         scrolled
-          ? "border-white/10 bg-background/88 shadow-[0_18px_50px_rgba(0,0,0,.34)] backdrop-blur-xl"
-          : "border-white/8 bg-background/75 backdrop-blur-lg"
+          ? "border-white/[0.06] bg-background/90 shadow-[0_24px_60px_rgba(0,0,0,.4)] backdrop-blur-2xl saturate-150"
+          : "border-white/[0.04] bg-background/70 backdrop-blur-xl"
       }`}
     >
-      <div className="border-b border-white/5 bg-white/[0.025]">
-        <div className="mx-auto flex h-7 max-w-7xl items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/65 sm:justify-between">
-          <span className="inline-flex items-center gap-1.5 text-sand">
+      <div className="border-b border-white/[0.03] bg-white/[0.015]">
+        <div className="mx-auto flex h-7 max-w-7xl items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55 sm:justify-between">
+          <span className="inline-flex items-center gap-1.5 text-sand/80">
             <BadgeCheckIcon className="h-3 w-3" aria-hidden="true" />
             {cms.header?.title ?? "6.000+ araç modeli için özel kalıp"}
           </span>
@@ -124,7 +125,7 @@ export default function Header() {
         <div className="flex h-[88px] items-center justify-between gap-3 sm:h-[92px] lg:h-[96px]">
           <Logo variant="header" />
 
-          <nav className="hidden items-center gap-1 rounded-full border border-white/[0.09] bg-white/[0.035] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.025)] md:flex" aria-label="Ana menü">
+          <nav className="hidden items-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.02] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.015)] md:flex" aria-label="Ana menü">
             {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
               return (
@@ -132,10 +133,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`inline-flex min-h-10 items-center rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.13em] transition-all ${
+                  className={`relative inline-flex min-h-10 items-center rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 ${
                     active
-                      ? "bg-white/[0.1] text-white shadow-sm"
-                      : "text-white/62 hover:bg-white/[0.055] hover:text-white"
+                      ? "bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,.06)]"
+                      : "text-white/50 hover:bg-white/[0.04] hover:text-white/90"
                   }`}
                 >
                   {link.label}
@@ -164,7 +165,7 @@ export default function Header() {
               type="button"
               onClick={openDrawer}
               aria-label={totalItems > 0 ? `Sepetim, ${totalItems} ürün` : "Sepetim"}
-              className="btn-press relative flex h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-background shadow-lg shadow-black/20 hover:bg-sand sm:px-4"
+              className="btn-press relative flex h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-[11px] font-bold uppercase tracking-[0.1em] text-background shadow-lg shadow-black/20 hover:bg-sand sm:px-4"
             >
               <ShoppingBagIcon className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Sepet</span>
@@ -195,9 +196,9 @@ export default function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobil menü"
-          className="absolute inset-x-0 top-full border-t border-white/8 bg-background/98 px-4 py-4 shadow-2xl backdrop-blur-xl md:hidden"
+          className="absolute inset-x-0 top-full border-t border-white/[0.04] bg-background/96 px-4 py-4 shadow-2xl backdrop-blur-2xl md:hidden"
         >
-          <nav id="mobile-navigation" className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/10 bg-surface p-2">
+          <nav id="mobile-navigation" className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/[0.06] bg-surface p-2">
             <button
               type="button"
               onClick={() => {
