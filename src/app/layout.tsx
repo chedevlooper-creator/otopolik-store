@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Syne, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
@@ -20,14 +20,14 @@ import {
   renderJsonLd,
 } from "@/lib/structured-data";
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   variable: "--font-heading",
   subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
@@ -124,7 +124,7 @@ export default async function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${syne.variable} ${instrumentSans.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
         <ConvexClientProvider>

@@ -14,10 +14,19 @@ export const getSettings = query({
   args: {},
   returns: v.union(siteSettingsDocValidator, v.null()),
   handler: async (ctx) => {
-    return await ctx.db
+    const existing = await ctx.db
       .query("siteSettings")
       .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
       .unique();
+    if (!existing) return null;
+
+    const canonical = siteSettingsDefaults();
+    return {
+      ...existing,
+      matBasePrice: canonical.matBasePrice,
+      matHeelPadPrice: canonical.matHeelPadPrice,
+      matTrunkPrice: canonical.matTrunkPrice,
+    };
   },
 });
 
@@ -30,7 +39,15 @@ export const ensureSettings = mutation({
       .query("siteSettings")
       .withIndex("by_singleton", (q) => q.eq("singleton", SINGLETON))
       .unique();
-    if (existing) return existing._id;
+    if (existing) {
+      const canonical = siteSettingsDefaults();
+      await ctx.db.patch(existing._id, {
+        matBasePrice: canonical.matBasePrice,
+        matHeelPadPrice: canonical.matHeelPadPrice,
+        matTrunkPrice: canonical.matTrunkPrice,
+      });
+      return existing._id;
+    }
     return await ctx.db.insert("siteSettings", {
       singleton: SINGLETON,
       ...siteSettingsDefaults(),
@@ -51,9 +68,6 @@ export const updateSettings = mutation({
     shippingFee: v.optional(v.number()),
     estimatedDispatch: v.optional(v.string()),
     businessHours: v.optional(v.string()),
-    matBasePrice: v.optional(v.number()),
-    matHeelPadPrice: v.optional(v.number()),
-    matTrunkPrice: v.optional(v.number()),
   },
   returns: v.id("siteSettings"),
   handler: async (ctx, { adminKey, ...patch }) => {
@@ -73,7 +87,14 @@ export const updateSettings = mutation({
     for (const [key, value] of Object.entries(patch)) {
       if (value !== undefined) cleaned[key] = value;
     }
-    await ctx.db.patch(id, { ...cleaned, updatedAt: Date.now() });
+    const canonical = siteSettingsDefaults();
+    await ctx.db.patch(id, {
+      ...cleaned,
+      matBasePrice: canonical.matBasePrice,
+      matHeelPadPrice: canonical.matHeelPadPrice,
+      matTrunkPrice: canonical.matTrunkPrice,
+      updatedAt: Date.now(),
+    });
     return id;
   },
 });

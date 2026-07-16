@@ -33,7 +33,7 @@ export default function ConfigSummary({
   return (
     <section
       aria-label="Sipariş özeti"
-      className="sticky bottom-0 z-20 border-t border-sand/35 bg-[#0a0c12]/95 p-4 shadow-[0_-8px_32px] shadow-black/40 backdrop-blur lg:bottom-4 lg:border lg:border-white/10 lg:p-6"
+      className="border-t border-sand/35 bg-surface/95 p-4 shadow-[0_-8px_32px] shadow-black/40 backdrop-blur lg:sticky lg:bottom-4 lg:z-20 lg:rounded-[1.4rem] lg:border lg:p-6"
     >
       <div className="flex items-center justify-between gap-3 sm:items-start">
         <div className="min-w-0">
@@ -55,7 +55,7 @@ export default function ConfigSummary({
           type="button"
           disabled={!canAdd}
           onClick={onAddToCart}
-          className="btn-press btn-sand-rich min-h-11 flex-1 px-6 py-3 text-sm font-bold uppercase tracking-wider text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:text-muted sm:py-3.5"
+          className="btn-press btn-red-rich min-h-11 flex-1 rounded-full px-6 py-3 text-sm font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:text-muted sm:py-3.5"
         >
           Sepete Ekle
         </button>
@@ -66,7 +66,7 @@ export default function ConfigSummary({
             onCheckout();
             router.push("/odeme");
           }}
-          className="btn-press hidden min-h-11 flex-1 border border-white/12 px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:text-muted sm:block"
+          className="btn-press hidden min-h-11 flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:text-muted sm:block"
         >
           Hemen Sipariş Ver
         </button>

@@ -1,5 +1,7 @@
-// PaspasBurada.com.tr referans alınarak oluşturulmuş araç veritabanı
-// Fiyatlar: kategori bazlı (Hatchback/Sedan/SUV/Van)
+import { MAT_PRICING } from "./mat-pricing";
+
+// PaspasBurada.com.tr referans alınarak oluşturulmuş araç veritabanı.
+// Fiyat araç gövde tipinden değil, merkezi paspas fiyatlandırmasından gelir.
 
 export type VehicleBodyType =
   | "Hatchback"
@@ -41,33 +43,6 @@ function getBodyTypeFromModel(fullName: string): VehicleBodyType {
 
   // Varsayılan
   return "Sedan";
-}
-
-function getBasePriceByBodyType(bodyType: VehicleBodyType): number {
-  switch (bodyType) {
-    case "SUV":
-    case "Crossover":
-    case "Pickup":
-      return 1590;
-    case "Van":
-    case "MPV":
-      return 1690;
-    case "Sedan":
-    case "Station Wagon":
-      return 1290;
-    case "Hatchback":
-    case "Coupe":
-    case "Cabrio":
-    case "Roadster":
-    case "Liftback":
-    case "Sportback":
-    case "Fastback":
-      return 1290;
-    case "Microcar":
-      return 1190;
-    default:
-      return 1290;
-  }
 }
 
 const brandData: Record<string, string[]> = {
@@ -324,8 +299,9 @@ export function getModelsByBrand(brand: string): VehicleModel[] {
 }
 
 export function getVehiclePrice(brand: string, modelName: string): number {
-  const models = getModelsByBrand(brand);
-  const found = models.find((m) => m.name === modelName);
-  if (!found) return 1290;
-  return getBasePriceByBodyType(found.bodyType);
+  // Marka/model parametreleri uyumluluk için tutulur. Aynı EVA paspas seti,
+  // katalogda ve tüm konfigüratörlerde aynı taban fiyatı kullanır.
+  void brand;
+  void modelName;
+  return MAT_PRICING.basePrice;
 }

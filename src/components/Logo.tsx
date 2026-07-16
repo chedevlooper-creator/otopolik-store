@@ -7,6 +7,7 @@ type LogoProps = {
   variant?: "badge" | "header";
   className?: string;
   priority?: boolean;
+  ariaLabel?: string;
 };
 
 const LOGO_SIZE = {
@@ -21,6 +22,7 @@ export default function Logo({
   variant = "badge",
   className = "",
   priority = false,
+  ariaLabel,
 }: LogoProps) {
   const logoSize = LOGO_SIZE[size];
   const badge = (
@@ -41,23 +43,26 @@ export default function Logo({
 
   const content =
     variant === "header" ? (
-      <span className="group inline-flex min-w-0 items-center gap-2.5 sm:gap-3">
-        <span className="relative inline-flex size-[58px] aspect-square shrink-0 overflow-hidden rounded-full border border-white/16 bg-black shadow-[0_12px_36px_rgba(0,0,0,.62)] ring-1 ring-white/[0.05] transition-[border-color,box-shadow] duration-300 group-hover:border-white/30 group-hover:shadow-[0_14px_42px_rgba(227,25,55,.18)] sm:size-[66px] lg:size-[72px]">
+      <span className="group inline-flex items-center gap-2.5">
+        <span
+          className="relative inline-flex h-11 w-11 aspect-square shrink-0 overflow-hidden rounded-full border border-white/15 bg-black shadow-[0_4px_12px_rgba(0,0,0,.55)] ring-1 ring-white/[0.04]"
+        >
           <Image
             src="/media/otopolik-logo-3d.png"
-            alt=""
+            alt="OTO POLİK Logo"
             fill
             quality={90}
-            sizes="(min-width: 1024px) 72px, (min-width: 640px) 66px, 58px"
-            className="object-contain scale-x-[1.035]"
+            priority={priority}
+            sizes="44px"
+            className="object-contain"
           />
         </span>
-        <span className="min-w-0 leading-none">
-          <span className="block whitespace-nowrap font-heading text-[1.55rem] font-extrabold tracking-[-0.035em] text-white sm:text-[1.8rem] lg:text-[2rem]">
-            OTO <span className="text-brand-red">POLİK</span>
+        <span className="flex flex-col items-start leading-none">
+          <span className="block whitespace-nowrap font-heading text-[1.2rem] font-bold tracking-[0.06em] text-[#f3eee4] transition-colors duration-300 group-hover:text-sand sm:text-[1.35rem]">
+            OTO POLİK
           </span>
-          <span className="mt-1 hidden whitespace-nowrap font-mono text-[8px] font-medium uppercase tracking-[0.21em] text-white/48 sm:block lg:text-[9px]">
-            Aracına özel EVA
+          <span className="mt-1 text-[7px] font-semibold uppercase tracking-[0.32em] text-sand/75 sm:text-[8px]">
+            EVA PREMIUM
           </span>
         </span>
       </span>
@@ -69,11 +74,18 @@ export default function Logo({
     return <span className={className}>{content}</span>;
   }
 
+  const defaultAriaLabel =
+    href === "/admin"
+      ? "OTO POLİK yönetim paneli"
+      : variant === "header"
+        ? "EVA Premium ana sayfa"
+        : "OTO POLİK ana sayfa";
+
   return (
     <Link
       href={href}
-      className={`inline-flex shrink-0 items-center rounded-full ${className}`}
-      aria-label="OTO POLİK ana sayfa"
+      className={`inline-flex min-h-11 min-w-11 shrink-0 items-center rounded-full ${className}`}
+      aria-label={ariaLabel ?? defaultAriaLabel}
     >
       {content}
     </Link>

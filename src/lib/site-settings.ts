@@ -9,6 +9,7 @@ import "server-only";
 import { getConvexClient, isConvexConfigured, api } from "@/lib/convex-server";
 import { getAdminConvexKey } from "@/lib/admin-convex-key";
 import { siteConfig } from "@/lib/site-config";
+import { MAT_PRICING } from "@/lib/mat-pricing";
 
 export type SiteSettings = {
   phoneDisplay: string;
@@ -35,9 +36,9 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   shippingFee: siteConfig.shippingFee,
   estimatedDispatch: siteConfig.estimatedDispatch,
   businessHours: siteConfig.businessHours,
-  matBasePrice: siteConfig.matBasePrice,
-  matHeelPadPrice: siteConfig.matHeelPadPrice,
-  matTrunkPrice: siteConfig.matTrunkPrice,
+  matBasePrice: MAT_PRICING.basePrice,
+  matHeelPadPrice: MAT_PRICING.heelPadPrice,
+  matTrunkPrice: MAT_PRICING.trunkMatPrice,
 };
 
 function mapRow(row: Partial<SiteSettings> | null | undefined): SiteSettings {
@@ -54,9 +55,11 @@ function mapRow(row: Partial<SiteSettings> | null | undefined): SiteSettings {
     estimatedDispatch:
       row.estimatedDispatch ?? DEFAULT_SETTINGS.estimatedDispatch,
     businessHours: row.businessHours ?? DEFAULT_SETTINGS.businessHours,
-    matBasePrice: row.matBasePrice ?? DEFAULT_SETTINGS.matBasePrice,
-    matHeelPadPrice: row.matHeelPadPrice ?? DEFAULT_SETTINGS.matHeelPadPrice,
-    matTrunkPrice: row.matTrunkPrice ?? DEFAULT_SETTINGS.matTrunkPrice,
+    // Eski Convex satırlarında farklı değerler bulunsa bile vitrinin
+    // fiyat kaynağı daima mat-pricing.ts'dir.
+    matBasePrice: MAT_PRICING.basePrice,
+    matHeelPadPrice: MAT_PRICING.heelPadPrice,
+    matTrunkPrice: MAT_PRICING.trunkMatPrice,
   };
 }
 
@@ -107,9 +110,6 @@ export async function saveSiteSettings(
       shippingFee: input.shippingFee,
       estimatedDispatch: input.estimatedDispatch,
       businessHours: input.businessHours,
-      matBasePrice: input.matBasePrice,
-      matHeelPadPrice: input.matHeelPadPrice,
-      matTrunkPrice: input.matTrunkPrice,
     });
     return { ok: true };
   } catch (error) {

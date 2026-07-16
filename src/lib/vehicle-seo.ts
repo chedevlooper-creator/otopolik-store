@@ -11,6 +11,7 @@ import {
   getVehiclePrice,
 } from "./vehicle-data";
 import { siteConfig } from "./site-config";
+import { MAT_PRICING } from "./mat-pricing";
 
 export type PriceTier = {
   label: string;
@@ -123,15 +124,6 @@ function getBodyTypeLabel(model: string): string {
   return "Araç";
 }
 
-function getBodyTypeCategory(model: string): string {
-  const lower = model.toLowerCase();
-  if (lower.includes("suv") || lower.includes("crossover")) return "SUV/Crossover";
-  if (lower.includes("sedan")) return "sedan";
-  if (lower.includes("hatchback") || lower.includes("coupe")) return "hatchback/coupe";
-  if (lower.includes("wagon") || lower.includes("mpv") || lower.includes("van")) return "aile/çok amaçlı";
-  return "araç";
-}
-
 export function generateVehicleContent(
   brand: string,
   model: string
@@ -164,8 +156,8 @@ export function generateVehicleContent(
 
   // ── Fiyat tablosu ──
   const basePrice = price;
-  const heelPadPrice = siteConfig.matHeelPadPrice;
-  const trunkMatPrice = siteConfig.matTrunkPrice;
+  const heelPadPrice = MAT_PRICING.heelPadPrice;
+  const trunkMatPrice = MAT_PRICING.trunkMatPrice;
 
   const priceTiers: PriceTier[] = [
     {

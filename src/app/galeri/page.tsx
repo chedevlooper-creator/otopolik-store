@@ -8,19 +8,25 @@ import { CameraIcon, VideoIcon, Grid3X3Icon } from "lucide-react";
 
 const ITEMS_PER_PAGE = 24;
 
-const FILTER_BTN =
-  "inline-flex items-center gap-2 border px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors";
-
 export default function GalleryPage() {
   const [filter, setFilter] = useState<"all" | "photo" | "video">("all");
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  // Filter items based on selected tab
   const filteredItems = useMemo(() => {
-    if (filter === "all") return GALLERY_ITEMS;
+    // Keep the first visit lightweight: show optimized photos first and load
+    // the original videos only when the visitor opens or filters for them.
+    if (filter === "all") {
+      return [
+        ...GALLERY_ITEMS.filter((item) => item.type === "photo"),
+        ...GALLERY_ITEMS.filter((item) => item.type === "video"),
+      ];
+    }
     return GALLERY_ITEMS.filter((item) => item.type === filter);
   }, [filter]);
 
+  // Items to display in the current grid (paginated)
   const displayedItems = useMemo(() => {
     return filteredItems.slice(0, visibleCount);
   }, [filteredItems, visibleCount]);
@@ -33,118 +39,146 @@ export default function GalleryPage() {
 
   const handleFilterChange = (newFilter: "all" | "photo" | "video") => {
     setFilter(newFilter);
-    setVisibleCount(ITEMS_PER_PAGE);
+    setVisibleCount(ITEMS_PER_PAGE); // Reset pagination
   };
 
   return (
-    <main className="min-h-screen bg-background py-14 sm:py-20">
+    <div className="min-h-screen bg-background py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4">
-        <div className="mb-10 max-w-2xl">
-          <span className="section-kicker">Gerçek uygulamalar</span>
-          <h1 className="section-title mt-5 font-heading text-4xl font-bold text-white sm:text-5xl">
-            Müşteri fotoğrafları & videoları
+        {/* Header */}
+        <div className="mb-10 max-w-4xl">
+          <span className="section-kicker text-sand text-xs font-semibold uppercase tracking-[0.2em]">
+            Gerçek Uygulamalar
+          </span>
+          <h1 className="section-title mt-4 font-heading text-4xl font-semibold text-white sm:text-6xl">
+            Gerçek Araçlar. Gerçek Uyum.
           </h1>
-          <p className="mt-4 text-sm leading-7 text-white/55 sm:text-base">
-            6.000&apos;den fazla araç için ürettiğimiz premium EVA paspasların gerçek araç içi çekimleri.
+          <p className="section-copy mt-4 max-w-2xl text-base text-white/60">
+            6.000&apos;den fazla araç için ürettiğimiz premium EVA paspasların gerçek araç içi çekimleri. Kaliteyi ve uyumu kendi gözlerinizle görün.
           </p>
         </div>
 
-        <div className="mb-10 flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => handleFilterChange("all")}
-            className={`${FILTER_BTN} ${
-              filter === "all"
-                ? "border-sand bg-sand text-background"
-                : "border-white/12 text-white/60 hover:border-white/25 hover:text-white"
-            }`}
+        {/* Filters */}
+        <div className="mb-10 flex">
+          <div
+            role="group"
+            aria-label="Galeri türünü filtrele"
+            className="inline-flex max-w-full overflow-x-auto rounded-full border border-white/10 bg-surface/50 p-1 backdrop-blur-sm"
           >
-            <Grid3X3Icon className="h-3.5 w-3.5" />
-            Tümü ({GALLERY_ITEMS.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => handleFilterChange("photo")}
-            className={`${FILTER_BTN} ${
-              filter === "photo"
-                ? "border-sand bg-sand text-background"
-                : "border-white/12 text-white/60 hover:border-white/25 hover:text-white"
-            }`}
-          >
-            <CameraIcon className="h-3.5 w-3.5" />
-            Fotoğraflar ({GALLERY_ITEMS.filter((i) => i.type === "photo").length})
-          </button>
-          <button
-            type="button"
-            onClick={() => handleFilterChange("video")}
-            className={`${FILTER_BTN} ${
-              filter === "video"
-                ? "border-sand bg-sand text-background"
-                : "border-white/12 text-white/60 hover:border-white/25 hover:text-white"
-            }`}
-          >
-            <VideoIcon className="h-3.5 w-3.5" />
-            Videolar ({GALLERY_ITEMS.filter((i) => i.type === "video").length})
-          </button>
+            <button
+              type="button"
+              onClick={() => handleFilterChange("all")}
+              aria-pressed={filter === "all"}
+              aria-controls="gallery-grid"
+              className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
+                filter === "all"
+                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  : "text-white/60 hover:text-white"
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+            >
+              <Grid3X3Icon className="h-3.5 w-3.5" aria-hidden="true" />
+              Tümü ({GALLERY_ITEMS.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => handleFilterChange("photo")}
+              aria-pressed={filter === "photo"}
+              aria-controls="gallery-grid"
+              className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
+                filter === "photo"
+                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  : "text-white/60 hover:text-white"
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+            >
+              <CameraIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              Fotoğraflar ({GALLERY_ITEMS.filter((i) => i.type === "photo").length})
+            </button>
+            <button
+              type="button"
+              onClick={() => handleFilterChange("video")}
+              aria-pressed={filter === "video"}
+              aria-controls="gallery-grid"
+              className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
+                filter === "video"
+                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  : "text-white/60 hover:text-white"
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+            >
+              <VideoIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              Videolar ({GALLERY_ITEMS.filter((i) => i.type === "video").length})
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 md:gap-3">
-          {displayedItems.map((item, index) => (
-            <button
-              key={item.src}
-              type="button"
-              onClick={() => setLightboxIndex(index)}
-              className="group relative overflow-hidden border border-white/[0.06] bg-surface text-left transition-colors hover:border-white/15"
-            >
-              {item.type === "photo" ? (
-                <div className="relative aspect-[4/5] w-full overflow-hidden">
-                  <Image
-                    src={item.src}
-                    alt="OTO POLİK müşteri uygulaması"
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    loading="lazy"
-                    fetchPriority="low"
-                  />
-                </div>
-              ) : (
-                <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden bg-black">
-                  <video
-                    src={item.src}
-                    muted
-                    playsInline
-                    preload="metadata"
-                    className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/20" />
-                  <span className="relative z-10 flex h-11 w-11 items-center justify-center border border-white/25 bg-black/50 text-white">
-                    <VideoIcon className="h-5 w-5 fill-white" />
+        {/* Gallery Grid */}
+        <div
+          id="gallery-grid"
+          aria-label={`${filter === "all" ? "Tüm" : filter === "photo" ? "Fotoğraf" : "Video"} galeri sonuçları`}
+          className="columns-2 gap-3 sm:columns-3 sm:gap-4 lg:columns-4"
+        >
+          {displayedItems.map((item, index) => {
+            return (
+              <button
+                key={item.src}
+                type="button"
+                onClick={() => setLightboxIndex(index)}
+                aria-label={`${item.type === "photo" ? "Müşteri uygulama fotoğrafını" : "Müşteri uygulama videosunu"} aç, ${index + 1}. öğe`}
+                className="group relative mb-3 block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg border border-white/[0.07] bg-surface p-0 text-left transition-all duration-300 hover:border-white/15 hover:shadow-[0_20px_55px_rgba(0,0,0,.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:mb-4"
+              >
+                {item.type === "photo" ? (
+                  <div className={`relative w-full overflow-hidden ${index % 7 === 0 ? "aspect-square" : index % 5 === 0 ? "aspect-[3/4]" : "aspect-[4/5]"}`}>
+                    <Image
+                      src={item.src}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <div className={`relative flex w-full items-center justify-center overflow-hidden bg-black ${index % 5 === 0 ? "aspect-square" : "aspect-[4/5]"}`}>
+                    <video
+                      src={item.src}
+                      muted
+                      playsInline
+                      preload="none"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+                    <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-all duration-300 group-hover:scale-110 group-hover:bg-white/45">
+                      <VideoIcon className="h-6 w-6 fill-white" aria-hidden="true" />
+                    </span>
+                  </div>
+                )}
+                {/* Hover overlay detail */}
+                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-sand">
+                    Büyütmek için tıklayın
                   </span>
                 </div>
-              )}
-              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-sand">
-                  Büyütmek için tıklayın
-                </span>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
 
+        {/* Load More Button */}
         {hasMore && (
-          <div className="mt-14">
+          <div className="mt-16 text-center">
             <button
               type="button"
               onClick={handleShowMore}
-              className="btn-press inline-flex min-h-12 items-center justify-center border border-white/15 px-8 py-3 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-sand hover:text-sand"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-surface px-8 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-white/5 hover:border-white/20 active:scale-95 animate-fade-in"
             >
-              Daha fazla göster ({filteredItems.length - visibleCount} kalan)
+              Daha Fazla Göster ({filteredItems.length - visibleCount} kalan)
             </button>
           </div>
         )}
       </div>
 
+      {/* Lightbox Modal */}
       {lightboxIndex !== null && (
         <GalleryLightbox
           items={filteredItems}
@@ -152,6 +186,6 @@ export default function GalleryPage() {
           onClose={() => setLightboxIndex(null)}
         />
       )}
-    </main>
+    </div>
   );
 }

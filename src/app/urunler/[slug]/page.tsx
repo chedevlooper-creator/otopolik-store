@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
-import ProductGallery from "@/components/ProductGallery";
+import ProductGallery, {
+  ProductVariantGalleryProvider,
+} from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import {
   CATEGORY_LABELS,
@@ -57,7 +59,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return {};
-  const images = product.gallery.map((img) => ({
+  const images = product.gallery.slice(0, 6).map((img) => ({
     url: img,
     width: 1200,
     height: 1200,
@@ -93,6 +95,7 @@ export default async function ProductDetailPage({
 
   const related = await getRelatedProducts(slug, 4);
   const settings = await getStoreSettings();
+  const displayGallery = product.gallery.slice(0, 12);
   const shippingCost = getShippingCost(product.price, settings);
   const compatibilityLink = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
     `Merhaba, ${product.name} için araç uyumluluğunu teyit etmek istiyorum. Araç yıl/kasa bilgim: `
@@ -115,9 +118,13 @@ export default async function ProductDetailPage({
         <span className="text-foreground">{product.brand} {product.model}</span>
       </nav>
 
+      <ProductVariantGalleryProvider
+        key={product.slug}
+        initialImage={product.colors[0]?.image || product.image}
+      >
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
-          <ProductGallery images={product.gallery} alt={product.name} badge={product.badge} />
+          <ProductGallery images={displayGallery} alt={product.name} badge={product.badge} />
         </div>
 
         <div className="min-w-0">
@@ -141,7 +148,7 @@ export default async function ProductDetailPage({
             {[
               { icon: ScissorsIcon, label: "Araca özel kesim" },
               { icon: TruckIcon, label: `${product.dispatchEstimate} içinde kargoda` },
-              { icon: Undo2Icon, label: "14 gün iade" },
+              { icon: Undo2Icon, label: "Ürüne göre iade koşulu" },
             ].map(({ icon: Icon, label }) => (
               <li key={label} className="flex flex-col items-center gap-1.5 bg-surface px-2 py-3 text-center">
                 <Icon className="h-4 w-4 text-sand" aria-hidden="true" />
@@ -265,6 +272,7 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </div>
+      </ProductVariantGalleryProvider>
 
       {related.length > 0 && (
         <section className="mt-16">

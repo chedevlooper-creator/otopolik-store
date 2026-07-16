@@ -92,11 +92,6 @@ function AdminLoginForm() {
             )}
           </button>
         </form>
-
-        <p className="mt-6 text-xs text-muted">
-          Şifrenizi <code className="text-foreground">.env.local</code> dosyasındaki
-          {" "}<code className="text-foreground">ADMIN_PASSWORD</code> değişkeninden alabilirsiniz.
-        </p>
       </div>
     </div>
   );

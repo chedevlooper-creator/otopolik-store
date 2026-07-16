@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useCallback, type FormEvent, type FocusEvent, type ChangeEvent } from "react";
+import { useState, useCallback, type FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/format";
 import { buildWhatsAppLink, useStoreSettings } from "@/context/settings-context";
@@ -11,6 +10,14 @@ import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
 import { ShieldCheckIcon, TruckIcon } from "lucide-react";
+import VehicleDetailsFields from "@/components/VehicleDetailsFields";
+import {
+  EMPTY_VEHICLE_DETAILS,
+  cartItemRequiresVehicle,
+  formatVehicleLabel,
+  isVehicleDetailsComplete,
+  type VehicleDetails,
+} from "@/lib/vehicle-compatibility";
 
 type CheckoutContent = {
   title: string;
@@ -26,9 +33,8 @@ interface FormErrors {
   city?: string;
   address?: string;
   legal?: string;
+  vehicle?: string;
 }
-
-type FieldName = "fullName" | "phone" | "city" | "address";
 
 function validatePhone(phone: string): string | undefined {
   const cleaned = phone.replace(/[\s()-]/g, "");
@@ -56,45 +62,13 @@ function validateAddress(address: string): string | undefined {
   return undefined;
 }
 
-function fieldError(field: FieldName, value: string): string | undefined {
-  switch (field) {
-    case "fullName":
-      return validateName(value);
-    case "phone":
-      return validatePhone(value);
-    case "city":
-      return validateCity(value);
-    case "address":
-      return validateAddress(value);
-  }
-}
-
-/** Sync custom validity + aria-invalid with :user-invalid timing. */
-function syncControlAria(
-  el: HTMLInputElement | HTMLTextAreaElement,
-  error: string | undefined
-) {
-  el.setCustomValidity(error ?? "");
-  const userInvalid =
-    typeof el.matches === "function" && el.matches(":user-invalid");
-  if (userInvalid || error) {
-    // Only announce after interaction (:user-invalid) or explicit submit error
-    if (userInvalid || el.getAttribute("data-submitted") === "true") {
-      el.setAttribute("aria-invalid", "true");
-    }
-  } else {
-    el.removeAttribute("aria-invalid");
-  }
-}
-
 export default function CheckoutPageClient({
   content,
 }: {
   content: CheckoutContent;
 }) {
-  const { items, totalPrice, clearCart, isHydrated } = useCart();
+  const { items, totalPrice, isHydrated } = useCart();
   const settings = useStoreSettings();
-  const router = useRouter();
   const createOrder = useMutation(api.orders.create);
   const convexReady = isConvexConfiguredClient();
   const [form, setForm] = useState({
@@ -109,11 +83,33 @@ export default function CheckoutPageClient({
   const [legalAccepted, setLegalAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const [fallbackVehicle, setFallbackVehicle] = useState<VehicleDetails>(
+    EMPTY_VEHICLE_DETAILS
+  );
+  const missingVehicleItems = items.filter(
+    (item) =>
+      cartItemRequiresVehicle(item.slug) && !item.configuration?.vehicle?.trim()
+  );
   const shippingCost = getShippingCost(totalPrice, settings);
   const orderTotal = totalPrice + shippingCost;
 
-  const validateField = useCallback((field: FieldName, value: string, el?: HTMLInputElement | HTMLTextAreaElement) => {
-    const error = fieldError(field, value);
+  const validateField = useCallback((field: keyof FormErrors, value: string) => {
+    let error: string | undefined;
+    switch (field) {
+      case "fullName":
+        error = validateName(value);
+        break;
+      case "phone":
+        error = validatePhone(value);
+        break;
+      case "city":
+        error = validateCity(value);
+        break;
+      case "address":
+        error = validateAddress(value);
+        break;
+    }
     setErrors((prev) => {
       const next = { ...prev };
       if (error) {
@@ -123,23 +119,13 @@ export default function CheckoutPageClient({
       }
       return next;
     });
-    if (el) syncControlAria(el, error);
-    return error;
   }, []);
 
-  const handleChange = (field: FieldName | "note", value: string, el: HTMLInputElement | HTMLTextAreaElement) => {
+  const handleChange = (field: keyof typeof form, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
-    if (field === "note") return;
-    // Clear error as soon as the field becomes valid (accessible-error-announcement)
-    if (el.hasAttribute("aria-invalid")) {
-      validateField(field, value, el);
-    } else {
-      el.setCustomValidity(fieldError(field, value) ?? "");
+    if (field !== "note" && errors[field]) {
+      validateField(field, value);
     }
-  };
-
-  const handleBlur = (field: FieldName, e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    validateField(field, e.target.value, e.target);
   };
 
   if (!isHydrated) {
@@ -180,7 +166,7 @@ export default function CheckoutPageClient({
         </p>
         <Link
           href="/urunler"
-          className="btn-press btn-sand-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-background"
+          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -196,31 +182,27 @@ export default function CheckoutPageClient({
       phone: validatePhone(form.phone),
       city: validateCity(form.city),
       address: validateAddress(form.address),
+      vehicle:
+        missingVehicleItems.length > 0 &&
+        !isVehicleDetailsComplete(fallbackVehicle)
+          ? "Araç marka, model, yıl ve kasa/versiyon bilgisini tamamlayın."
+          : undefined,
     };
 
     const filteredErrors: FormErrors = {};
     for (const [key, value] of Object.entries(allErrors)) {
       if (value) filteredErrors[key as keyof FormErrors] = value;
     }
-
-    // Mark fields as submitted so aria-invalid syncs with visual :user-invalid timing
-    const controls: FieldName[] = ["fullName", "phone", "city", "address"];
-    for (const field of controls) {
-      const el = document.getElementById(`checkout-${field}`) as
-        | HTMLInputElement
-        | HTMLTextAreaElement
-        | null;
-      if (!el) continue;
-      el.setAttribute("data-submitted", "true");
-      syncControlAria(el, allErrors[field]);
-    }
-
     setErrors(filteredErrors);
 
     if (Object.keys(filteredErrors).length > 0) {
       const firstInvalidField = Object.keys(filteredErrors)[0];
       requestAnimationFrame(() => {
-        document.getElementById(`checkout-${firstInvalidField}`)?.focus();
+        const targetId =
+          firstInvalidField === "vehicle"
+            ? "checkout-vehicle-brand"
+            : `checkout-${firstInvalidField}`;
+        document.getElementById(targetId)?.focus();
       });
       return;
     }
@@ -233,6 +215,21 @@ export default function CheckoutPageClient({
       return;
     }
 
+    const fallbackVehicleLabel = isVehicleDetailsComplete(fallbackVehicle)
+      ? formatVehicleLabel(fallbackVehicle)
+      : "";
+    const itemsForOrder = items.map((item) =>
+      cartItemRequiresVehicle(item.slug) && !item.configuration?.vehicle?.trim()
+        ? {
+            ...item,
+            configuration: {
+              ...item.configuration,
+              vehicle: fallbackVehicleLabel,
+            },
+          }
+        : item
+    );
+
     const lines = [
       "🛒 *Yeni Sipariş Talebi*",
       "",
@@ -244,7 +241,7 @@ export default function CheckoutPageClient({
       `Sipariş Tercihi: ${paymentMethod === "kapida" ? "Kapıda Ödeme (ek ücret yok)" : "WhatsApp üzerinden onay"}`,
       "",
       "*Ürünler:*",
-      ...items.map((item) => {
+      ...itemsForOrder.map((item) => {
         const configLine = item.configuration
           ? ` [${[
               item.configuration.vehicle,
@@ -270,6 +267,7 @@ export default function CheckoutPageClient({
 
     const href = buildWhatsAppLink(settings.whatsappNumber, lines.join("\n"));
     setSubmitError(null);
+    setSubmitSuccess(null);
 
     // Pencereyi kullanıcı etkileşimi sırasında aç; async kayıt sonrasında
     // açmaya çalışmak tarayıcının popup engeline takılabilir.
@@ -287,8 +285,8 @@ export default function CheckoutPageClient({
 
     try {
       if (!convexReady) {
-        setSubmitError(
-          "Sipariş kaydı şu an kullanılamıyor. WhatsApp penceresindeki özeti göndererek devam edebilirsiniz; sepetiniz korunuyor."
+        setSubmitSuccess(
+          "Sipariş özetiniz WhatsApp'ta açıldı. Mesajı göndererek devam edebilirsiniz; sepetiniz korunuyor."
         );
         return;
       }
@@ -299,7 +297,7 @@ export default function CheckoutPageClient({
         customerEmail: undefined,
         city: form.city,
         address: form.address,
-        items: items.map((item) => ({
+        items: itemsForOrder.map((item) => ({
           slug: item.slug,
           name: item.name,
           price: item.price,
@@ -312,8 +310,9 @@ export default function CheckoutPageClient({
         notes: form.note || undefined,
       });
 
-      clearCart();
-      router.push("/tesekkurler");
+      setSubmitSuccess(
+        "Sipariş özetiniz WhatsApp'ta açıldı. Mesajı gönderdiğinizde talebiniz tamamlanır; bu aşamaya kadar sepetiniz korunur."
+      );
     } catch (err) {
       console.error("Failed to save order to Convex:", err);
       setSubmitError(
@@ -326,11 +325,11 @@ export default function CheckoutPageClient({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
-      <span className="section-kicker">Sipariş</span>
-      <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white">
+      <span className="spec-label">Sipariş</span>
+      <h1 className="mt-3 font-heading text-4xl font-bold text-white">
         {content.title}
       </h1>
-      <p id="checkout-description" className="mt-2 text-sm leading-7 text-white/55">
+      <p id="checkout-description" className="mt-2 text-muted">
         {content.description}
       </p>
 
@@ -342,109 +341,143 @@ export default function CheckoutPageClient({
         className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]"
       >
         <div className="space-y-5">
+          {missingVehicleItems.length > 0 ? (
+            <section
+              aria-labelledby="checkout-vehicle-title"
+              className="rounded-2xl border border-white/15 bg-surface/60 p-5"
+            >
+              <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-sand">
+                Üretim bilgisi gerekli
+              </p>
+              <h2
+                id="checkout-vehicle-title"
+                className="mt-1 font-heading text-xl font-bold text-white"
+              >
+                Aracınızı tamamlayın
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted">
+                Sepetinizde araç bilgisi eksik {missingVehicleItems.length} ürün var.
+                Aşağıdaki bilgiler bu ürünlerin doğru kalıpla hazırlanması için kullanılacak.
+              </p>
+              <VehicleDetailsFields
+                value={fallbackVehicle}
+                onChange={(next) => {
+                  setFallbackVehicle(next);
+                  if (isVehicleDetailsComplete(next)) {
+                    setErrors((current) => {
+                      const copy = { ...current };
+                      delete copy.vehicle;
+                      return copy;
+                    });
+                  }
+                }}
+                idPrefix="checkout-vehicle"
+                showError={Boolean(errors.vehicle)}
+                className="mt-5"
+              />
+            </section>
+          ) : null}
+
           <div className="grid gap-5 sm:grid-cols-2">
             <label htmlFor="checkout-fullName" className="block text-sm font-semibold text-foreground">
-              Ad Soyad <span className="text-brand-red" aria-hidden="true">*</span>
+              Ad Soyad
               <input
                 id="checkout-fullName"
                 name="name"
                 required
                 type="text"
-                autoComplete="shipping name"
-                enterKeyHint="next"
+                autoComplete="name"
                 minLength={3}
                 value={form.fullName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleChange("fullName", e.target.value, e.target)
-                }
-                onBlur={(e) => handleBlur("fullName", e)}
-                aria-invalid={errors.fullName ? true : undefined}
-                aria-describedby="checkout-fullName-error"
-                className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
+                onChange={(e) => handleChange("fullName", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
+                aria-invalid={Boolean(errors.fullName)}
+                aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
+                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
+                  errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                }`}
               />
-              <p id="checkout-fullName-error" role="alert" className="field-error">
-                <span aria-hidden="true">✕ </span>
-                {errors.fullName ?? "Ad soyad zorunludur"}
-              </p>
+              {errors.fullName && (
+                <p id="checkout-fullName-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                  {errors.fullName}
+                </p>
+              )}
             </label>
             <label htmlFor="checkout-phone" className="block text-sm font-semibold text-foreground">
-              Telefon <span className="text-brand-red" aria-hidden="true">*</span>
+              Telefon
               <input
                 id="checkout-phone"
                 name="tel"
                 required
                 type="tel"
-                autoComplete="shipping tel"
-                enterKeyHint="next"
+                autoComplete="tel"
                 inputMode="tel"
                 pattern="[+0-9() -]{10,18}"
                 value={form.phone}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleChange("phone", e.target.value, e.target)
-                }
-                onBlur={(e) => handleBlur("phone", e)}
-                aria-invalid={errors.phone ? true : undefined}
-                aria-describedby="checkout-phone-error"
+                onChange={(e) => handleChange("phone", e.target.value)}
+                onBlur={(e) => validateField("phone", e.target.value)}
+                aria-invalid={Boolean(errors.phone)}
+                aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
                 placeholder="05XX XXX XX XX"
-                className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
+                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
+                  errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                }`}
               />
-              <p id="checkout-phone-error" role="alert" className="field-error">
-                <span aria-hidden="true">✕ </span>
-                {errors.phone ?? "Geçerli bir telefon numarası girin"}
-              </p>
+              {errors.phone && (
+                <p id="checkout-phone-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                  {errors.phone}
+                </p>
+              )}
             </label>
           </div>
 
-          {/* Helps browsers autofill Turkish shipping addresses */}
-          <input type="hidden" name="country" autoComplete="shipping country" value="TR" />
-
           <label htmlFor="checkout-city" className="block text-sm font-semibold text-foreground">
-            Şehir <span className="text-brand-red" aria-hidden="true">*</span>
+            Şehir
             <input
               id="checkout-city"
               name="address-level2"
               required
               type="text"
-              autoComplete="shipping address-level2"
-              enterKeyHint="next"
+              autoComplete="address-level2"
               value={form.city}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                handleChange("city", e.target.value, e.target)
-              }
-              onBlur={(e) => handleBlur("city", e)}
-              aria-invalid={errors.city ? true : undefined}
-              aria-describedby="checkout-city-error"
-              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
+              onChange={(e) => handleChange("city", e.target.value)}
+              onBlur={(e) => validateField("city", e.target.value)}
+              aria-invalid={Boolean(errors.city)}
+              aria-describedby={errors.city ? "checkout-city-error" : undefined}
+              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
+                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+              }`}
             />
-            <p id="checkout-city-error" role="alert" className="field-error">
-              <span aria-hidden="true">✕ </span>
-              {errors.city ?? "Şehir zorunludur"}
-            </p>
+            {errors.city && (
+              <p id="checkout-city-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                {errors.city}
+              </p>
+            )}
           </label>
 
           <label htmlFor="checkout-address" className="block text-sm font-semibold text-foreground">
-            Adres <span className="text-brand-red" aria-hidden="true">*</span>
+            Adres
             <textarea
               id="checkout-address"
               name="street-address"
               required
               rows={3}
-              autoComplete="shipping street-address"
-              enterKeyHint="next"
+              autoComplete="street-address"
               minLength={10}
               value={form.address}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                handleChange("address", e.target.value, e.target)
-              }
-              onBlur={(e) => handleBlur("address", e)}
-              aria-invalid={errors.address ? true : undefined}
-              aria-describedby="checkout-address-error"
-              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
+              onChange={(e) => handleChange("address", e.target.value)}
+              onBlur={(e) => validateField("address", e.target.value)}
+              aria-invalid={Boolean(errors.address)}
+              aria-describedby={errors.address ? "checkout-address-error" : undefined}
+              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
+                errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+              }`}
             />
-            <p id="checkout-address-error" role="alert" className="field-error">
-              <span aria-hidden="true">✕ </span>
-              {errors.address ?? "Adres en az 10 karakter olmalıdır"}
-            </p>
+            {errors.address && (
+              <p id="checkout-address-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                {errors.address}
+              </p>
+            )}
           </label>
 
           <label htmlFor="checkout-note" className="block text-sm font-semibold text-foreground">
@@ -454,18 +487,15 @@ export default function CheckoutPageClient({
               name="note"
               rows={2}
               autoComplete="off"
-              enterKeyHint="done"
               value={form.note}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                handleChange("note", e.target.value, e.target)
-              }
+              onChange={(e) => handleChange("note", e.target.value)}
               className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
             />
           </label>
 
           <fieldset>
             <legend className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
-              Ödeme Şekli
+              Sipariş ve ödeme tercihi
             </legend>
             <div className="space-y-2">
               <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
@@ -478,7 +508,7 @@ export default function CheckoutPageClient({
                   className="accent-sand"
                 />
                 <span className="text-sm font-medium text-foreground">
-                  WhatsApp üzerinden sipariş onayı
+                  WhatsApp ile teklif ve sipariş onayı
                 </span>
               </label>
               <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
@@ -490,7 +520,9 @@ export default function CheckoutPageClient({
                   onChange={() => setPaymentMethod("kapida")}
                   className="accent-sand"
                 />
-                <span className="text-sm font-medium text-foreground">Kapıda Ödeme</span>
+                <span className="text-sm font-medium text-foreground">
+                  WhatsApp onayından sonra kapıda ödeme
+                </span>
               </label>
             </div>
           </fieldset>
@@ -511,6 +543,7 @@ export default function CheckoutPageClient({
               }}
               className="mt-1 accent-sand"
               aria-invalid={Boolean(errors.legal)}
+              aria-describedby={errors.legal ? "checkout-legal-error" : undefined}
             />
             <span className="text-sm leading-6 text-foreground/85">
              {" "}
@@ -525,19 +558,26 @@ export default function CheckoutPageClient({
             </span>
           </label>
           {errors.legal ? (
-            <p role="alert" className="text-xs text-brand-red">
+            <p id="checkout-legal-error" role="alert" className="text-xs font-medium text-red-300">
               {errors.legal}
             </p>
           ) : null}
         </div>
 
-        <aside className="premium-card h-fit p-6">
+        <aside className="premium-card h-fit rounded-[1.5rem] p-6 shadow-[0_28px_70px_rgba(0,0,0,.25)]">
           <h2 className="font-heading text-xl font-bold text-white">Sipariş Özeti</h2>
           <ul className="mt-4 space-y-2 text-sm text-muted">
             {items.map((item) => (
-              <li key={`${item.slug}-${item.color}`} className="flex justify-between gap-2">
-                <span className="line-clamp-1">
-                  {item.name} ({item.color}) × {item.quantity}
+              <li key={`${item.slug}-${item.color}`} className="flex items-start justify-between gap-2">
+                <span className="min-w-0">
+                  <span className="block line-clamp-1">
+                    {item.name} ({item.color}) × {item.quantity}
+                  </span>
+                  {item.configuration?.vehicle ? (
+                    <span className="mt-0.5 block line-clamp-2 text-[11px] leading-4 text-sand/80">
+                      {item.configuration.vehicle}
+                    </span>
+                  ) : null}
                 </span>
                 <span className="spec-value shrink-0 font-medium text-white">
                   {formatPrice(item.price * item.quantity)}
@@ -558,9 +598,17 @@ export default function CheckoutPageClient({
           {submitError ? (
             <p
               role="alert"
-              className="mt-4 rounded-xl border border-brand-red bg-brand-red/10 px-3 py-2 text-xs font-medium text-brand-red"
+              className="mt-4 rounded-xl border border-red-400/45 bg-red-500/10 px-3 py-2 text-xs font-medium text-red-200"
             >
               {submitError}
+            </p>
+          ) : null}
+          {submitSuccess ? (
+            <p
+              role="status"
+              className="mt-4 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-3 py-2 text-xs font-medium leading-5 text-emerald-200"
+            >
+              {submitSuccess}
             </p>
           ) : null}
           <p className="mt-4 rounded-xl border border-dashed border-border bg-background px-3 py-2 text-xs leading-5 text-muted">
@@ -570,9 +618,9 @@ export default function CheckoutPageClient({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-press btn-sand-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isSubmitting ? "Gönderiliyor..." : "Sipariş Talebini Gönder"}
+            {isSubmitting ? "Hazırlanıyor..." : "WhatsApp'ta Sipariş Özetini Aç"}
           </button>
 
           <ul className="mt-5 space-y-2 border-t border-border pt-5 text-[11px] text-muted">

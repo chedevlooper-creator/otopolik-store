@@ -18,7 +18,7 @@ const GALLERY_LAYOUTS = [
     className: "h-full lg:col-span-7 lg:row-span-2",
     figureClassName: "proof-card group relative h-[420px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-110",
+      "parallax-media object-cover transition-all duration-700 ease-out group-hover:brightness-110",
     sizes: "(min-width: 1024px) 58vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-6 sm:p-8",
     titleClassName: "mt-2 font-heading text-2xl font-bold text-white sm:text-3xl",
@@ -41,7 +41,7 @@ const GALLERY_LAYOUTS = [
     className: "h-full lg:col-span-3",
     figureClassName: "proof-card group relative h-[300px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:brightness-110",
+      "parallax-media object-cover transition-all duration-700 ease-out group-hover:brightness-110",
     sizes: "(min-width: 1024px) 25vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-5",
     titleClassName: "mt-1 font-heading text-xl font-bold text-white sm:text-2xl",
@@ -52,7 +52,7 @@ const GALLERY_LAYOUTS = [
     className: "h-full lg:col-span-2",
     figureClassName: "proof-card group relative h-[300px] overflow-hidden lg:h-full",
     imageClassName:
-      "object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110",
+      "parallax-media object-cover transition-all duration-700 ease-out group-hover:brightness-110",
     sizes: "(min-width: 1024px) 17vw, 100vw",
     captionClassName: "absolute inset-x-0 bottom-0 p-5",
     titleClassName: "mt-1 font-heading text-xl font-bold text-white",
@@ -68,8 +68,8 @@ const GALLERY_FALLBACKS: ContentSection[] = [
     eyebrow: "01 · Gerçek uygulama",
     title: "Taban hattını eksiksiz takip eder",
     body: "Kenar kıvrımları, sabitleme noktaları ve pedal boşluğu araca göre kesilir.",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
-    imageAlt: "Kırmızı kenarlı siyah EVA paspasın araç içindeki gerçek uygulaması",
+    imageUrl: "/media/galeri/musteri/photo_5845771899898629467_w.webp",
+    imageAlt: "Jeep iç mekânında siyah EVA paspasın gerçek uygulaması",
     isPublished: true,
   },
   {
@@ -91,8 +91,8 @@ const GALLERY_FALLBACKS: ContentSection[] = [
     eyebrow: "03 · Renk uyumu",
     title: "İç mekâna göre seçim",
     body: "",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg",
-    imageAlt: "Bej EVA paspasın araç içindeki gerçek uygulaması",
+    imageUrl: "/media/galeri/musteri/photo_5906683564177165681_w.webp",
+    imageAlt: "Mercedes iç mekânında kahverengi EVA paspasın gerçek uygulaması",
     isPublished: true,
   },
   {
@@ -102,8 +102,8 @@ const GALLERY_FALLBACKS: ContentSection[] = [
     eyebrow: "04 · Detay",
     title: "Metal topukluk",
     body: "",
-    imageUrl: "/media/scraped/evaotopaspas/paspas-seti/06-metal-topukluk.jpg",
-    imageAlt: "EVA paspas üzerindeki metal sürücü topukluğu",
+    imageUrl: "/media/galeri/musteri/photo_5866003077058465479_w.webp",
+    imageAlt: "Mavi EVA paspasın gerçek araç içi uygulaması",
     isPublished: true,
   },
 ];
@@ -126,9 +126,13 @@ export default function Showcase({ header, gallery, features }: Props) {
         <ScrollReveal>
           <div className="mb-10 flex flex-col gap-6 sm:mb-12 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
-              <span className="section-kicker">
-                {header?.eyebrow ?? "Malzeme ve gerçek uygulama"}
-              </span>
+              {header?.eyebrow !== undefined && header?.eyebrow !== null ? (
+                header.eyebrow && header.eyebrow.toUpperCase() !== "EYEBROW" ? (
+                  <span className="section-kicker">{header.eyebrow}</span>
+                ) : null
+              ) : (
+                <span className="section-kicker">Malzeme ve gerçek uygulama</span>
+              )}
               <h2 className="section-title mt-5">
                 {header?.title ??
                   "Yakından bakınca fark edilen EVA işçiliği."}

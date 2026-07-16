@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCart } from "@/context/cart-context";
 
 const STORAGE_KEY = "otopolik_cookie_consent";
 
@@ -27,55 +29,45 @@ export function setStoredConsent(value: ConsentValue) {
   }
 }
 
-function supportsPopover() {
-  return typeof HTMLElement !== "undefined" && "popover" in HTMLElement.prototype;
+function subscribeToConsent(onStoreChange: () => void) {
+  window.addEventListener("otopolik:consent", onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener("otopolik:consent", onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
 }
 
-/**
- * Cookie banner — popover="manual" so it stays until the user chooses
- * (no light-dismiss). Falls back to fixed positioning when Popover API
- * is unavailable.
- */
+export function useStoredConsent(): ConsentValue | null {
+  return useSyncExternalStore(subscribeToConsent, getStoredConsent, () => null);
+}
+
 export default function CookieConsent() {
-  const popoverRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = popoverRef.current;
-    if (!el || getStoredConsent() !== null) return;
-
-    if (supportsPopover() && typeof el.showPopover === "function") {
-      el.showPopover();
-    } else {
-      el.dataset.open = "true";
-    }
-  }, []);
+  const consent = useStoredConsent();
+  const pathname = usePathname();
+  const { isDrawerOpen } = useCart();
+  const hasMobilePurchaseBar = pathname.startsWith("/urunler/");
 
   function choose(value: ConsentValue) {
     setStoredConsent(value);
-    const el = popoverRef.current;
-    if (!el) return;
-    if (supportsPopover() && typeof el.hidePopover === "function" && el.matches(":popover-open")) {
-      el.hidePopover();
-    } else {
-      delete el.dataset.open;
-    }
   }
+
+  if (consent !== null || isDrawerOpen) return null;
 
   return (
     <div
-      ref={popoverRef}
-      id="cookie-consent"
-      popover="manual"
       role="dialog"
       aria-label="Çerez ve gizlilik bildirimi"
-      className="cookie-consent-popover border-t border-white/10 bg-[#0a0c12]/96 p-4 shadow-[0_-12px_40px_rgba(0,0,0,.45)] backdrop-blur-md sm:p-5"
+      className={`fixed inset-x-3 z-[70] border border-white/10 bg-[#0b0b0b]/96 p-4 shadow-[0_24px_80px_rgba(0,0,0,.72)] backdrop-blur-xl sm:bottom-5 sm:left-auto sm:right-5 sm:max-w-xl sm:p-5 ${
+        hasMobilePurchaseBar ? "bottom-[6.25rem]" : "bottom-3"
+      }`}
     >
-      <div className="mx-auto flex max-w-5xl flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-4">
         <div className="max-w-2xl">
           <p className="font-heading text-sm font-bold uppercase tracking-wide text-white">
             Çerez ve gizlilik
           </p>
-          <p className="mt-2 text-sm leading-6 text-muted">
+          <p className="mt-2 text-xs leading-5 text-muted sm:text-sm sm:leading-6">
             Site deneyimi ve sipariş süreci için gerekli çerezleri kullanırız.
             İsteğe bağlı olarak ziyaret istatistiklerini (Vercel Analytics)
             de açabilirsiniz. Ayrıntılar için{" "}
@@ -88,7 +80,7 @@ export default function CookieConsent() {
             .
           </p>
         </div>
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+        <div className="grid shrink-0 grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => choose("essential")}
@@ -99,7 +91,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("accepted")}
-            className="btn-press btn-sand-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-background"
+            className="btn-press btn-red-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-white"
           >
             Kabul et
           </button>

@@ -26,6 +26,13 @@ const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
 const MAX_QTY = 9;
 
+const VEHICLE_REQUIRED_SLUGS = new Set([
+  "eva-oto-paspas-seti",
+  "eva-oto-bagaj-havuzu",
+  "hali-oto-paspas-seti",
+  "arac-ekran-koruyucu",
+]);
+
 const SINGLETON = "site" as const;
 
 const statsValidator = v.object({
@@ -111,6 +118,12 @@ export const create = mutation({
         .unique();
 
       if (product && product.isActive) {
+        if (
+          VEHICLE_REQUIRED_SLUGS.has(product.slug) &&
+          !item.configuration?.vehicle?.trim()
+        ) {
+          throw new Error(`${product.name} için araç bilgisi zorunludur.`);
+        }
         resolvedItems.push({
           slug: product.slug,
           name: product.name,
@@ -121,16 +134,16 @@ export const create = mutation({
           configuration: item.configuration,
         });
       } else if (item.slug.startsWith("ozel-tasarim-")) {
-        // Konfigüratör özel tasarım — client fiyatı kabul (sunucu ayarları ile sınırlanır)
-        const price = Math.max(
-          0,
-          Math.min(
-            settings.matBasePrice +
-              settings.matHeelPadPrice +
-              settings.matTrunkPrice,
-            Number(item.price) || settings.matBasePrice
-          )
-        );
+        if (!item.configuration?.vehicle?.trim()) {
+          throw new Error("Özel tasarım paspas için araç bilgisi zorunludur.");
+        }
+        // Eski Convex ayarları farklı fiyatlar taşıyabildiği için özel tasarım
+        // fiyatı vitrinin kanonik varsayılanlarından ve seçili ekstralardan üretilir.
+        const canonical = siteSettingsDefaults();
+        const price =
+          canonical.matBasePrice +
+          (item.configuration.heelPad ? canonical.matHeelPadPrice : 0) +
+          (item.configuration.trunkMat ? canonical.matTrunkPrice : 0);
         resolvedItems.push({
           slug: item.slug,
           name: item.name ?? "Özel Tasarım EVA Paspas",

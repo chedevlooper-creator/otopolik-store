@@ -208,10 +208,10 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     sectionKey: "hero",
     sortOrder: 10,
     eyebrow: "Araca Özel Kalıp • Premium EVA • 1-3 Günde Kargo",
-    title: "ARACINIZIN TABANINA",
-    subtitle: "MİLİMETRİK UYUM",
-    body: "Marka ve modelinize göre kalıplanan EVA paspas setleri. Suyu ve çamuru içinde tutar, tek sıkım suyla temizlenir, dört mevsim dayanır.",
-    ctaLabel: "PASPASINI TASARLA",
+    title: "Aracınızın Zeminine",
+    subtitle: "Kusursuz Uyum.",
+    body: "Premium EVA teknolojisi ile üretilen, her araca özel tasarlanmış havuzlu paspaslar.",
+    ctaLabel: "ARACINI SEÇ",
     ctaHref: "/olusturucu",
   },
   {
@@ -219,7 +219,7 @@ export const CONTENT_SECTIONS_SEED: SeedSection[] = [
     sectionKey: "hero-secondary-cta",
     sortOrder: 11,
     body: "",
-    ctaLabel: "ÜRÜNLERİ İNCELE",
+    ctaLabel: "KOLEKSİYONU KEŞFET",
     ctaHref: "/urunler",
   },
   {

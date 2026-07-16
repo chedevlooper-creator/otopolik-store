@@ -28,9 +28,13 @@ export default async function Testimonials() {
     <section aria-labelledby="testimonials-title" className="mt-0">
       <div className="flex items-baseline justify-between gap-4">
         <div>
-          <span className="section-kicker">
-            {header?.eyebrow ?? "Müşteri Yorumları"}
-          </span>
+          {header?.eyebrow !== undefined && header?.eyebrow !== null ? (
+            header.eyebrow && header.eyebrow.toUpperCase() !== "EYEBROW" ? (
+              <span className="section-kicker">{header.eyebrow}</span>
+            ) : null
+          ) : (
+            <span className="section-kicker">Müşteri Yorumları</span>
+          )}
           <h2
             id="testimonials-title"
             className="section-title mt-6"

@@ -23,54 +23,54 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
     <Link
       href={`/urunler/${product.slug}`}
       data-whatsapp-obstacle
-      className={`group premium-card card-lift flex h-full min-w-0 flex-col overflow-hidden ${
+      className={`group premium-card gradient-border card-lift flex h-full min-w-0 flex-col overflow-hidden rounded-sm ${
         featured ? "min-h-[520px]" : "min-h-[360px]"
       }`}
     >
-      <div className={`relative overflow-hidden border-b border-white/[0.06] bg-[#0c0e16] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(225,201,162,.08),transparent_55%)] opacity-70" />
-        {hasLightImage ? (
-          <div
-            className={`absolute overflow-hidden rounded-xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.1),0_20px_48px_rgba(0,0,0,.4)] ${
-              featured ? "inset-8 sm:inset-12" : "inset-5"
-            }`}
-          >
+      <div className={`premium-grid relative overflow-hidden border-b border-white/[0.07] bg-[#0e0e0e] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,.05),transparent_55%)] opacity-80" />
+        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/[0.03] blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
+        {/* Cam vitrin — ürün cam bir pencerenin arkasında sergilenir */}
+        <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"}`}>
+          {hasLightImage ? (
+            <div className="absolute inset-3 overflow-hidden rounded-xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.1)] sm:inset-4">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+                className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+              {/* Yumuşak stüdyo vinyeti */}
+              <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.12))]" />
+            </div>
+          ) : (
             <Image
               src={product.image}
               alt={product.name}
               fill
               sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-              className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
+                shouldContainImage ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}` : "object-cover"
+              }`}
             />
-            {/* Yumuşak stüdyo vinyeti */}
-            <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.12))]" />
-          </div>
-        ) : (
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-            className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
-              shouldContainImage ? `object-contain ${featured ? "p-8 sm:p-12" : "p-5"}` : "object-cover"
-            }`}
-          />
-        )}
+          )}
+        </div>
 
-        <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
+        <div className="absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
           <div className="flex flex-wrap gap-2">
             {product.badge && (
-              <span className="spec-value border border-white/12 bg-black/70 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-white">
+              <span className="spec-value rounded-full border border-white/8 bg-black/50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-white backdrop-blur-md">
                 {product.badge}
               </span>
             )}
             {discount > 0 && (
-              <span className="spec-value border border-sand/40 bg-sand px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-background">
+              <span className="spec-value rounded-full bg-gradient-to-r from-[#e8e8e4] to-sand px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-[#0a0a0a] shadow-lg shadow-black/20">
                 %{discount} avantaj
               </span>
             )}
           </div>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/12 bg-black/60 text-white transition-all duration-300 group-hover:border-sand group-hover:bg-sand group-hover:text-background">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/8 bg-black/40 text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-background group-hover:shadow-lg">
             <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>
@@ -78,10 +78,10 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
 
       <div className={`flex min-w-0 flex-col ${featured ? "p-6 sm:p-7" : "p-5 sm:p-6"}`}>
         <div className="flex items-center justify-between gap-3">
-          <span className="spec-value text-[9px] font-semibold uppercase tracking-[0.14em] text-sand/80">
+          <span className="spec-value text-[11px] font-semibold uppercase tracking-[0.12em] text-sand/90">
             {CATEGORY_LABELS[product.category]}
           </span>
-          <span className={`inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.1em] ${product.inStock === false ? "text-amber-400/80" : "text-emerald-400/80"}`}>
+          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${product.inStock === false ? "text-amber-300" : "text-emerald-300"}`}>
             {product.inStock === false ? <Clock3Icon className="h-3 w-3" aria-hidden="true" /> : <CheckIcon className="h-3 w-3" aria-hidden="true" />}
             {product.inStock === false ? "Yakında" : "Üretime hazır"}
           </span>
@@ -97,10 +97,10 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         <div className="mt-5 flex items-end justify-between gap-4 border-t border-white/[0.05] pt-5">
           <div>
             <div className="flex flex-wrap items-baseline gap-2.5">
-              <span className={`spec-value font-bold text-white ${featured ? "text-3xl" : "text-xl"}`}>{formatPrice(product.price)}</span>
-              {product.oldPrice && <span className="spec-value text-xs text-white/35 line-through">{formatPrice(product.oldPrice)}</span>}
+              <span className={`spec-value font-mono font-bold text-white ${featured ? "text-3xl" : "text-xl"}`}>{formatPrice(product.price)}</span>
+              {product.oldPrice && <span className="spec-value font-mono text-xs text-white/35 line-through">{formatPrice(product.oldPrice)}</span>}
             </div>
-            <p className="mt-1 text-[10px] text-white/40">KDV dahil fiyat</p>
+            <p className="mt-1 text-xs text-white/65">KDV dahil fiyat</p>
           </div>
           {showSwatches ? (
             <div className="flex items-center -space-x-1.5" aria-label="Mevcut renk seçenekleri">
@@ -114,7 +114,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
               ))}
             </div>
           ) : (
-            <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/45 transition-colors group-hover:text-white">Detayları gör</span>
+            <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/65 transition-colors group-hover:text-white">Detayları gör</span>
           )}
         </div>
       </div>

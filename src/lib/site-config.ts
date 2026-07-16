@@ -49,12 +49,6 @@ export const siteConfig = {
   estimatedDispatch: readEnv(process.env.NEXT_PUBLIC_ESTIMATED_DISPATCH, "1-3 iş günü"),
   businessHours: readEnv(process.env.NEXT_PUBLIC_BUSINESS_HOURS, "Pazartesi - Cumartesi, 09:00 - 18:00"),
 
-  // Konfigüratör fiyatlandırma (TL)
-  // basePrice: araç seçilmediğinde veya "Diğer Araç" seçildiğinde kullanılan fallback
-  // İthal kalite paspas takımı: 3.500₺
-  matBasePrice: readEnvNumber(process.env.NEXT_PUBLIC_MAT_BASE_PRICE, 3500),
-  matHeelPadPrice: readEnvNumber(process.env.NEXT_PUBLIC_MAT_HEEL_PAD_PRICE, 500),
-  matTrunkPrice: readEnvNumber(process.env.NEXT_PUBLIC_MAT_TRUNK_PRICE, 1750),
 } as const;
 
 export function buildWhatsAppOrderLink(message: string) {

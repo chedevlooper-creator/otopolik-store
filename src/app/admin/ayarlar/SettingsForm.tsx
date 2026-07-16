@@ -13,8 +13,11 @@ import {
   CheckCircle2Icon,
   AlertCircleIcon,
   LoaderIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
 import type { SiteSettings } from "@/lib/site-settings";
+import { formatPrice } from "@/lib/format";
+import { MAT_PRICING } from "@/lib/mat-pricing";
 import { updateSettings } from "./actions";
 
 type FormState = SiteSettings;
@@ -26,6 +29,12 @@ type Props = {
 
 const inputClass =
   "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-sand focus:outline-none focus:ring-2 focus:ring-brand-red/15";
+
+const CANONICAL_PRICE_CARDS = [
+  { label: "Paspas seti taban fiyatı", value: MAT_PRICING.basePrice },
+  { label: "Topuk pedi", value: MAT_PRICING.heelPadPrice },
+  { label: "Bagaj paspası", value: MAT_PRICING.trunkMatPrice },
+] as const;
 
 export default function SettingsForm({ initial, dataSource }: Props) {
   const [form, setForm] = useState<FormState>(initial);
@@ -295,73 +304,43 @@ export default function SettingsForm({ initial, dataSource }: Props) {
         </div>
       </section>
 
-      {/* Konfigüratör Fiyatlandırma */}
+      {/* Merkezi paspas fiyatlandırması — salt okunur */}
       <section className="border border-border bg-surface p-6 lg:col-span-2">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center bg-green-500/10">
-            <SaveIcon
+            <ShieldCheckIcon
               className="h-4 w-4 text-green-600"
               aria-hidden="true"
             />
           </span>
           <div>
             <h2 className="font-heading text-base font-bold text-white">
-              Konfigüratör Fiyatlandırma
+              Merkezi Paspas Fiyatlandırması
             </h2>
             <p className="text-xs text-muted">
-              /olusturucu sayfasındaki paspas tasarım aracı.
+              Katalog, ana sayfa ve oluşturucu aynı sabit fiyat kaynağını kullanır.
             </p>
           </div>
         </div>
         <div className="mt-5 grid gap-5 sm:grid-cols-3">
-          <label
-            htmlFor="admin-mat-base-price"
-            className="block text-sm font-semibold text-foreground"
-          >
-            Baz taban fiyatı (₺)
-            <input
-              id="admin-mat-base-price"
-              type="number"
-              min={0}
-              step={1}
-              value={form.matBasePrice}
-              onChange={(e) => update("matBasePrice", Number(e.target.value))}
-              className={inputClass}
-            />
-          </label>
-          <label
-            htmlFor="admin-mat-heel-pad-price"
-            className="block text-sm font-semibold text-foreground"
-          >
-            Topuk pedi (₺)
-            <input
-              id="admin-mat-heel-pad-price"
-              type="number"
-              min={0}
-              step={1}
-              value={form.matHeelPadPrice}
-              onChange={(e) =>
-                update("matHeelPadPrice", Number(e.target.value))
-              }
-              className={inputClass}
-            />
-          </label>
-          <label
-            htmlFor="admin-mat-trunk-price"
-            className="block text-sm font-semibold text-foreground"
-          >
-            Bagaj paspası (₺)
-            <input
-              id="admin-mat-trunk-price"
-              type="number"
-              min={0}
-              step={1}
-              value={form.matTrunkPrice}
-              onChange={(e) => update("matTrunkPrice", Number(e.target.value))}
-              className={inputClass}
-            />
-          </label>
+          {CANONICAL_PRICE_CARDS.map(({ label, value }) => (
+            <div
+              key={label}
+              className="border border-border bg-background/55 px-4 py-3.5"
+            >
+              <span className="block text-xs font-semibold text-muted">
+                {label}
+              </span>
+              <strong className="mt-1 block text-lg font-bold text-sand">
+                {formatPrice(value)}
+              </strong>
+            </div>
+          ))}
         </div>
+        <p className="mt-4 text-xs leading-relaxed text-muted">
+          Bu alanlar sipariş tutarı tutarlılığı için salt okunurdur ve bu
+          form kaydedildiğinde değiştirilmez.
+        </p>
       </section>
 
       {/* Kaydet butonu + sonuç mesajı */}

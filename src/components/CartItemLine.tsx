@@ -47,6 +47,11 @@ export default function CartItemLine({
           <p className={`${compact ? "text-xs" : "text-sm"} text-muted`}>
             Renk: {item.color}
           </p>
+          {item.configuration?.vehicle ? (
+            <p className={`${compact ? "line-clamp-2 text-[11px]" : "text-xs"} mt-1 leading-5 text-sand/85`}>
+              Araç: {item.configuration.vehicle}
+            </p>
+          ) : null}
         </div>
 
         <div className="mt-auto flex items-center justify-between">

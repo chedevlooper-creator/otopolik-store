@@ -1,9 +1,37 @@
 import { Product } from "./types";
+import { MAT_PRICING } from "./mat-pricing";
 
-const STANDARD_COLORS = [
+const EVA_MAT_COLORS: Product["colors"] = [
   { name: "Siyah", hex: "#1a1a1a", image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png" },
   { name: "Gri", hex: "#8a8a8a", image: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg" },
   { name: "Bej", hex: "#c9b79c", image: "/media/scraped/evaotopaspas/paspas-seti/04-gallery-2.jpg" },
+];
+
+const TRUNK_LINER_COLORS: Product["colors"] = [
+  { name: "Siyah", hex: "#171717", image: "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png" },
+  { name: "Antrasit", hex: "#444444", image: "/media/scraped/evaotopaspas/bagaj-havuzu/02-antrasit-bagaj.png" },
+  { name: "Gri", hex: "#858585", image: "/media/scraped/evaotopaspas/bagaj-havuzu/03-gri-bagaj.png" },
+];
+
+const TRUNK_BAG_COLORS: Product["colors"] = [
+  { name: "Kahve", hex: "#765744", image: "/media/galeri/bagaj-cantasi/01-koleksiyon-kahve.jpg" },
+  { name: "Mavi", hex: "#344b6a", image: "/media/galeri/bagaj-cantasi/02-koleksiyon-mavi.jpg" },
+];
+
+const CARPET_MAT_COLORS: Product["colors"] = [
+  { name: "Siyah", hex: "#181818", image: "/media/galeri/hali-paspas/01-siyah-on.jpg" },
+];
+
+const STEERING_WHEEL_COLORS: Product["colors"] = [
+  { name: "Siyah", hex: "#171717", image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg" },
+];
+
+const SCREEN_PROTECTOR_VARIANTS: Product["colors"] = [
+  { name: "Şeffaf", hex: "#dce7ec", image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg" },
+];
+
+const SEAT_CUSHION_COLORS: Product["colors"] = [
+  { name: "Siyah", hex: "#202020", image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg" },
 ];
 
 type SeedProduct = {
@@ -16,6 +44,7 @@ type SeedProduct = {
   oldPrice?: number;
   badge?: string;
   image: string;
+  colors: Product["colors"];
   gallery: string[];
   description: string;
   features: string[];
@@ -31,10 +60,11 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "eva-3d",
-    price: 3500,
+    price: MAT_PRICING.basePrice,
     oldPrice: 4500,
     badge: "Çok Satan",
     image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
+    colors: EVA_MAT_COLORS,
     gallery: [
       "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
       "/media/scraped/evaotopaspas/paspas-seti/02-siyah-urun-tam.png",
@@ -112,6 +142,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 2500,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
+    colors: TRUNK_LINER_COLORS,
     gallery: [
       "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
       "/media/scraped/evaotopaspas/bagaj-havuzu/02-antrasit-bagaj.png",
@@ -142,6 +173,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 1399,
     badge: "Fırsat",
     image: "/media/scraped/evaotopaspas/bagaj-cantasi/01-bagaj-cantasi.jpg",
+    colors: TRUNK_BAG_COLORS,
     gallery: [
       "/media/scraped/evaotopaspas/bagaj-cantasi/01-bagaj-cantasi.jpg",
       "/media/galeri/bagaj-cantasi/01-koleksiyon-kahve.jpg",
@@ -171,6 +203,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 1650,
     badge: "Yeni",
     image: "/media/galeri/hali-paspas/01-siyah-on.jpg",
+    colors: CARPET_MAT_COLORS,
     gallery: [
       "/media/galeri/hali-paspas/01-siyah-on.jpg",
       "/media/galeri/hali-paspas/02-siyah-arka.jpg",
@@ -198,6 +231,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 650,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
+    colors: STEERING_WHEEL_COLORS,
     gallery: [
       "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
     ],
@@ -224,6 +258,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 500,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
+    colors: SCREEN_PROTECTOR_VARIANTS,
     gallery: [
       "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
     ],
@@ -250,6 +285,7 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 1350,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
+    colors: SEAT_CUSHION_COLORS,
     gallery: [
       "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
     ],
@@ -290,7 +326,7 @@ export const products: Product[] = SEED_PRODUCTS.map((seed) => ({
   oldPrice: seed.oldPrice,
   image: seed.image,
   gallery: seed.gallery,
-  colors: STANDARD_COLORS,
+  colors: seed.colors,
   description: seed.description,
   features: seed.features,
   compatibility: {

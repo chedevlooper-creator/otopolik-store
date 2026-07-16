@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
@@ -8,8 +8,14 @@ import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
-import { useStoreSettings } from "@/context/settings-context";
-import { getVehiclePrice } from "@/lib/vehicle-data";
+import { calculateMatPrice, MAT_PRICING } from "@/lib/mat-pricing";
+import {
+  EMPTY_VEHICLE_DETAILS,
+  formatVehicleLabel,
+  isVehicleDetailsComplete,
+  vehicleDetailsKey,
+  type VehicleDetails,
+} from "@/lib/vehicle-compatibility";
 import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
 import { GALLERY_ITEMS } from "@/lib/gallery-media";
 import GalleryLightbox from "@/components/GalleryLightbox";
@@ -39,9 +45,6 @@ const EDGE_COLORS = [
   { name: "Mor", hex: "#3d214a" },
 ];
 
-// Fiyatlar store settings'ten gelir (Convex / env fallback).
-const OTHER_VEHICLE = "diger";
-
 const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> = {
   "Siyah|Siyah": { src: "/media/configurator/siyah-siyah.png", kind: "digital" },
   "Siyah|Gri": { src: "/media/configurator/siyah-gri.png", kind: "digital" },
@@ -64,45 +67,40 @@ type Props = {
   /** URL'den gelen ön seçim (ör. ana sayfa araç bulucudan) */
   initialBrand?: string;
   initialModel?: string;
+  initialYear?: string;
+  initialBodyOrChassis?: string;
 };
 
 export default function MatConfigurator({
   initialBrand = "",
   initialModel = "",
+  initialYear = "",
+  initialBodyOrChassis = "",
 }: Props) {
   const { addItem, closeDrawer } = useCart();
-  const settings = useStoreSettings();
-  const DEFAULT_BASE_PRICE = settings.matBasePrice;
-  const HEEL_PAD_PRICE = settings.matHeelPadPrice;
-  const TRUNK_MAT_PRICE = settings.matTrunkPrice;
-
-  const [brand, setBrand] = useState(initialBrand);
-  const [slug, setSlug] = useState(initialModel);
+  const [vehicle, setVehicle] = useState<VehicleDetails>({
+    ...EMPTY_VEHICLE_DETAILS,
+    brand: initialBrand,
+    model: initialModel,
+    year: initialYear,
+    bodyOrChassis: initialBodyOrChassis,
+  });
   const [floor, setFloor] = useState(FLOOR_COLORS[0]);
   const [edge, setEdge] = useState(EDGE_COLORS[3]);
-  const [heelPad, setHeelPad] = useState(true);
+  const [heelPad, setHeelPad] = useState(false);
   const [trunkMat, setTrunkMat] = useState(false);
+  const [floorTouched, setFloorTouched] = useState(false);
+  const [edgeTouched, setEdgeTouched] = useState(false);
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
 
-  const basePrice = useMemo(() => {
-    if (!brand || !slug || brand === OTHER_VEHICLE) return DEFAULT_BASE_PRICE;
-    return getVehiclePrice(brand, slug) || DEFAULT_BASE_PRICE;
-  }, [brand, slug, DEFAULT_BASE_PRICE]);
-
-  const totalPrice =
-    basePrice + (heelPad ? HEEL_PAD_PRICE : 0) + (trunkMat ? TRUNK_MAT_PRICE : 0);
+  const totalPrice = calculateMatPrice({ heelPad, trunkMat });
 
   const previewKey = `${floor.name}|${edge.name}`;
-  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Siyah|Kırmızı"];
+  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Siyah|Siyah"];
   const hasExactPreview = previewKey in PREVIEW_IMAGES;
 
-  const vehicleLabel = brand
-    ? brand === OTHER_VEHICLE
-      ? "Diğer Araç (uyumluluk teyidiyle)"
-      : slug
-        ? `${brand} ${slug}`
-        : `${brand} (model seçin)`
-    : "";
+  const vehicleComplete = isVehicleDetailsComplete(vehicle);
+  const vehicleLabel = vehicleComplete ? formatVehicleLabel(vehicle) : "";
 
   const configSummary = [
     `${floor.name} taban`,
@@ -113,13 +111,15 @@ export default function MatConfigurator({
     .filter(Boolean)
     .join(" · ");
 
-  // Listelenen araçlarda marka ve model birlikte zorunludur. "Diğer" akışı
-  // WhatsApp ile uyumluluk teyidi gerektirdiği için ayrıca açıkça onaylanır.
-  const canAdd = Boolean(
-    brand && (brand === OTHER_VEHICLE ? slug === OTHER_VEHICLE : slug)
-  );
+  const canAdd = vehicleComplete;
 
-  const currentStep = !canAdd ? 0 : 3;
+  const currentStep = !vehicleComplete
+    ? 0
+    : !floorTouched
+      ? 1
+      : !edgeTouched
+        ? 2
+        : 3;
   const steps = [
     { label: "Aracınız", index: 0 },
     { label: "Taban", index: 1 },
@@ -129,8 +129,9 @@ export default function MatConfigurator({
 
   function handleAddToCart() {
     if (!canAdd) return;
+    const vehicleKey = vehicleDetailsKey(vehicle);
     addItem({
-      slug: `ozel-tasarim-${slug}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase("tr-TR"),
+      slug: `ozel-tasarim-${vehicleKey}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase("tr-TR"),
       name: `Özel Tasarım EVA Paspas — ${vehicleLabel}`,
       image: preview.src,
       price: totalPrice,
@@ -189,14 +190,18 @@ export default function MatConfigurator({
         })}
       </ol>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
+      <div className="grid min-w-0 max-w-full gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* Gerçek ürün görünümü */}
-      <div className="lg:sticky lg:top-32 lg:self-start">
+      <div className="min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
         <div className="relative overflow-hidden border border-border bg-surface">
           <Image
             key={preview.src}
             src={preview.src}
-            alt={`${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti araç içi görünümü`}
+            alt={
+              hasExactPreview
+                ? `${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti önizlemesi`
+                : "EVA paspas seti için temsili ürün önizlemesi"
+            }
             width={640}
             height={853}
             className="h-auto w-full object-cover"
@@ -204,19 +209,23 @@ export default function MatConfigurator({
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-5 pb-5 pt-16">
             <p className="text-sm font-semibold text-white">
-              {preview.kind === "digital" ? "Dijital renk önizlemesi" : "Gerçek araç içi uygulama"}
+              {hasExactPreview
+                ? preview.kind === "digital"
+                  ? "Dijital renk önizlemesi"
+                  : "Gerçek araç içi uygulama"
+                : "Temsili ürün görünümü"}
             </p>
             <p className="mt-1 text-xs leading-relaxed text-white/70">
               {hasExactPreview
                 ? `${floor.name} taban · ${edge.name} kenar`
-                : `Seçiminiz: ${floor.name} taban · ${edge.name} kenar — bu kombinasyonun görseli hazırlanıyor.`}
+                : `Seçiminiz: ${floor.name} taban · ${edge.name} kenar. Bu kombinasyon üretilebilir; görsel temsilidir.`}
             </p>
           </div>
         </div>
         <div className="spec-value mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-muted">
           <span className="inline-flex items-center gap-1.5">
             <PaletteIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
-            {FLOOR_COLORS.length * EDGE_COLORS.length} renk kombinasyonu
+            {FLOOR_COLORS.length * EDGE_COLORS.length} üretilebilir kombinasyon
           </span>
           <span className="inline-flex items-center gap-1.5">
             <RulerIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
@@ -241,11 +250,13 @@ export default function MatConfigurator({
               Tümünü Gör →
             </Link>
           </div>
-          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-white/10">
+          <div className="flex max-w-full gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-white/10">
             {CONFIGURATOR_GALLERY_ITEMS.map((item, idx) => (
-              <div
+              <button
                 key={item.src}
+                type="button"
                 onClick={() => setSelectedGalleryIndex(idx)}
+                aria-label={`Müşteri uygulamasını büyüt, görsel ${idx + 1}`}
                 className="relative h-20 w-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border border-white/5 bg-surface transition-all duration-300 hover:border-white/20 active:scale-95"
               >
                 {item.type === "photo" ? (
@@ -270,26 +281,24 @@ export default function MatConfigurator({
                     </span>
                   </div>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         </div>
       </div>
 
       {/* Seçenekler */}
-      <div className="space-y-7">
-        <VehicleSelector
-          brand={brand}
-          slug={slug}
-          onBrandChange={setBrand}
-          onSlugChange={setSlug}
-        />
+      <div className="min-w-0 max-w-full space-y-7">
+        <VehicleSelector value={vehicle} onChange={setVehicle} />
 
         <ColorPicker
           label="Taban Rengi"
           colors={FLOOR_COLORS}
           selected={floor}
-          onSelect={setFloor}
+          onSelect={(color) => {
+            setFloor(color);
+            setFloorTouched(true);
+          }}
           step={2}
         />
 
@@ -297,15 +306,18 @@ export default function MatConfigurator({
           label="Kenar (Overlok) Rengi"
           colors={EDGE_COLORS}
           selected={edge}
-          onSelect={setEdge}
+          onSelect={(color) => {
+            setEdge(color);
+            setEdgeTouched(true);
+          }}
           step={3}
         />
 
         <ExtrasSelector
           heelPad={heelPad}
           trunkMat={trunkMat}
-          heelPadPrice={HEEL_PAD_PRICE}
-          trunkMatPrice={TRUNK_MAT_PRICE}
+          heelPadPrice={MAT_PRICING.heelPadPrice}
+          trunkMatPrice={MAT_PRICING.trunkMatPrice}
           onHeelPadChange={setHeelPad}
           onTrunkMatChange={setTrunkMat}
         />

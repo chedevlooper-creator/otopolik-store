@@ -13,9 +13,14 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ConfiguratorPage({
   searchParams,
 }: {
-  searchParams: Promise<{ marka?: string; model?: string; yil?: string }>;
+  searchParams: Promise<{
+    marka?: string;
+    model?: string;
+    yil?: string;
+    kasa?: string;
+  }>;
 }) {
-  const { marka = "", model = "" } = await searchParams;
+  const { marka = "", model = "", yil = "", kasa = "" } = await searchParams;
   const { page, sections } = await getContentPage("olusturucu");
   const kicker = sections.find((s) => s.sectionKey === "kicker");
 
@@ -31,7 +36,12 @@ export default async function ConfiguratorPage({
             "Aracınızı seçin, taban ve kenar rengini belirleyin, topuk pedi ve bagaj paspası ekleyin."}
         </p>
       </div>
-      <MatConfigurator initialBrand={marka} initialModel={model} />
+      <MatConfigurator
+        initialBrand={marka}
+        initialModel={model}
+        initialYear={yil}
+        initialBodyOrChassis={kasa}
+      />
     </div>
   );
 }

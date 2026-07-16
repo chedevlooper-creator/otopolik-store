@@ -37,12 +37,10 @@ import {
   RecycleIcon,
   WrenchIcon,
   StarIcon,
-  PaletteIcon,
   ShoppingCartIcon,
   type LucideIcon,
 } from "lucide-react";
 import {
-  productSchema,
   breadcrumbListSchema,
   faqPageSchema,
   renderJsonLd,
@@ -118,8 +116,6 @@ export default async function VehicleLandingPage({
     .filter((p: Product) => p.category === "eva-3d")
     .slice(0, 3);
 
-  const allProducts = products.slice(0, 4);
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14">
       {/* Breadcrumb */}
@@ -172,7 +168,7 @@ export default async function VehicleLandingPage({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={`/olusturucu?marka=${encodeURIComponent(vehicle.brand)}&model=${encodeURIComponent(vehicle.model)}`}
-              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-brand-red px-8 text-sm font-bold uppercase tracking-[0.1em] text-white shadow-[0_18px_50px_rgba(227,25,55,.26)] hover:bg-[#f02142]"
+              className="btn-press btn-red-rich inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-8 text-sm font-bold uppercase tracking-[0.1em] text-white"
             >
               Hemen Tasarla
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -232,7 +228,7 @@ export default async function VehicleLandingPage({
               key={tier.label}
               className={`relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
                 tier.isPopular
-                  ? "border-sand/40 bg-gradient-to-b from-sand/[0.06] to-transparent shadow-[0_20px_60px_rgba(225,201,162,0.08)]"
+                  ? "border-sand/40 bg-gradient-to-b from-sand/[0.06] to-transparent shadow-[0_20px_60px_rgba(255,255,255,0.08)]"
                   : "border-border bg-surface/50 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
               }`}
             >
@@ -259,7 +255,7 @@ export default async function VehicleLandingPage({
                 rel="noopener noreferrer"
                 className={`btn-press mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
                   tier.isPopular
-                    ? "bg-brand-red text-white shadow-[0_14px_36px_rgba(227,25,55,.24)] hover:bg-[#f02142]"
+                    ? "btn-red-rich text-white"
                     : "border border-white/12 bg-white/[0.04] text-white hover:border-white/30 hover:bg-white/[0.08]"
                 }`}
               >

@@ -1,7 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { XIcon, ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon, Volume2Icon, VolumeXIcon } from "lucide-react";
+import {
+  XIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlayIcon,
+  PauseIcon,
+  Volume2Icon,
+  VolumeXIcon,
+} from "lucide-react";
 import { GalleryItem } from "@/lib/gallery-media";
 
 interface GalleryLightboxProps {
@@ -10,215 +19,274 @@ interface GalleryLightboxProps {
   onClose: () => void;
 }
 
-function supportsClosedBy() {
-  return typeof HTMLDialogElement !== "undefined" && "closedBy" in HTMLDialogElement.prototype;
-}
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function GalleryLightbox({ items, initialIndex, onClose }: GalleryLightboxProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [isPlaying, setIsPlaying] = useState(true);
+export default function GalleryLightbox({
+  items,
+  initialIndex,
+  onClose,
+}: GalleryLightboxProps) {
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    Math.min(Math.max(initialIndex, 0), Math.max(items.length - 1, 0))
+  );
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const onCloseRef = useRef(onClose);
-  const handlePrevRef = useRef<() => void>(() => {});
-  const handleNextRef = useRef<() => void>(() => {});
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const currentItem = items[currentIndex] ?? items[0];
-
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-    setIsPlaying(true);
-  }, [items.length]);
-
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-    setIsPlaying(true);
-  }, [items.length]);
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
 
-  useEffect(() => {
-    handlePrevRef.current = handlePrev;
-    handleNextRef.current = handleNext;
-  }, [handlePrev, handleNext]);
+  const handlePrev = useCallback(() => {
+    if (items.length < 2) return;
+    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+    setIsPlaying(false);
+  }, [items.length]);
+
+  const handleNext = useCallback(() => {
+    if (items.length < 2) return;
+    setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+    setIsPlaying(false);
+  }, [items.length]);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-    dialog.setAttribute("closedby", "any");
-    if (!dialog.open) dialog.showModal();
+    const focusFrame = requestAnimationFrame(() => closeButtonRef.current?.focus());
 
-    let ignoreClose = false;
-    const onDialogClose = () => {
-      if (!ignoreClose) onCloseRef.current();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        handlePrev();
+        return;
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        handleNext();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      ).filter(
+        (element) =>
+          element.getAttribute("aria-hidden") !== "true" &&
+          element.tabIndex >= 0
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) {
+        event.preventDefault();
+        dialogRef.current.focus();
+        return;
+      }
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    dialog.addEventListener("close", onDialogClose);
 
-    let onBackdropClick: ((event: MouseEvent) => void) | undefined;
-    if (!supportsClosedBy()) {
-      onBackdropClick = (event: MouseEvent) => {
-        if (event.target !== dialog) return;
-        const rect = dialog.getBoundingClientRect();
-        const inContent =
-          rect.top <= event.clientY &&
-          event.clientY <= rect.top + rect.height &&
-          rect.left <= event.clientX &&
-          event.clientX <= rect.left + rect.width;
-        if (inContent) return;
-        dialog.close();
-      };
-      dialog.addEventListener("click", onBackdropClick);
-    }
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") handlePrevRef.current();
-      if (e.key === "ArrowRight") handleNextRef.current();
-    };
-    dialog.addEventListener("keydown", onKeyDown);
-
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      ignoreClose = true;
-      dialog.removeEventListener("close", onDialogClose);
-      dialog.removeEventListener("keydown", onKeyDown);
-      if (onBackdropClick) dialog.removeEventListener("click", onBackdropClick);
-      if (dialog.open) dialog.close();
+      cancelAnimationFrame(focusFrame);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocusRef.current?.isConnected) previousFocusRef.current.focus();
     };
-  }, []);
+  }, [handleNext, handlePrev]);
 
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0]?.clientX ?? 0;
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const startX = event.targetTouches[0].clientX;
+    touchStartX.current = startX;
+    touchEndX.current = startX;
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0]?.clientX ?? 0;
+  const handleTouchMove = (event: React.TouchEvent) => {
+    touchEndX.current = event.targetTouches[0].clientX;
   };
 
   const handleTouchEnd = () => {
     const distance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
-    if (distance > minSwipeDistance) {
-      handleNext();
-    } else if (distance < -minSwipeDistance) {
-      handlePrev();
-    }
+    if (distance > minSwipeDistance) handleNext();
+    else if (distance < -minSwipeDistance) handlePrev();
   };
 
   const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play().catch(() => setIsPlaying(false));
     } else {
-      videoRef.current.play().catch(() => {});
-      setIsPlaying(true);
+      video.pause();
     }
   };
 
   const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+    const video = videoRef.current;
+    if (!video) return;
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
   };
 
   useEffect(() => {
-    if (currentItem?.type !== "video") return;
     const video = videoRef.current;
-    if (!video) return;
+    if (currentItem?.type !== "video" || !video) return;
+
     video.load();
-    void video.play().then(() => setIsPlaying(true)).catch(() => {});
+    void video.play().catch(() => setIsPlaying(false));
   }, [currentIndex, currentItem?.type]);
 
   if (!currentItem) return null;
 
   return (
-    <dialog
+    <div
       ref={dialogRef}
-      aria-label="Galeri görüntüleyici"
-      className="gallery-lightbox-dialog m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-0"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gallery-lightbox-title"
+      aria-describedby="gallery-lightbox-help"
+      tabIndex={-1}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-between bg-black/95 p-4 backdrop-blur-lg transition-opacity duration-300"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="flex h-full min-h-[100dvh] w-full flex-col items-center justify-between bg-black/95 p-4 backdrop-blur-lg">
-        <div className="flex w-full items-center justify-between border-b border-white/10 pb-4 text-white">
-          <span className="text-sm font-medium tracking-wide text-white/70">
-            {currentIndex + 1} / {items.length}
-          </span>
-          <button
-            type="button"
-            onClick={() => dialogRef.current?.close()}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-            aria-label="Kapat"
-          >
-            <XIcon className="h-5 w-5" aria-hidden="true" />
-          </button>
-        </div>
+      <h2 id="gallery-lightbox-title" className="sr-only">
+        Müşteri uygulaması medya görüntüleyici
+      </h2>
 
-        <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center">
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute left-2 z-10 hidden h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:flex lg:-left-16"
-            aria-label="Önceki Görsel"
-          >
-            <ChevronLeftIcon className="h-6 w-6" aria-hidden="true" />
-          </button>
-
-          <button
-            type="button"
-            onClick={handleNext}
-            className="absolute right-2 z-10 hidden h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:flex lg:-right-16"
-            aria-label="Sonraki Görsel"
-          >
-            <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
-          </button>
-
-          {currentItem.type === "photo" ? (
-            // eslint-disable-next-line @next/next/no-img-element -- gallery URLs are dynamic scraped media
-            <img
-              src={currentItem.src}
-              alt="Müşteri çekimi oto paspas"
-              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
-            />
-          ) : (
-            <div className="relative max-h-full max-w-full overflow-hidden rounded-lg bg-black shadow-2xl">
-              <video
-                ref={videoRef}
-                src={currentItem.src}
-                loop
-                muted={isMuted}
-                playsInline
-                autoPlay
-                className="max-h-[70vh] max-w-full object-contain"
-                onClick={togglePlay}
-              />
-              <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full bg-black/60 px-4 py-2 text-white backdrop-blur">
-                <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Durdur" : "Oynat"}>
-                  {isPlaying ? <PauseIcon className="h-4 w-4" aria-hidden="true" /> : <PlayIcon className="h-4 w-4" aria-hidden="true" />}
-                </button>
-                <span className="h-4 w-px bg-white/20" aria-hidden="true" />
-                <button type="button" onClick={toggleMute} aria-label={isMuted ? "Sesi Aç" : "Sesi Kapat"}>
-                  {isMuted ? <VolumeXIcon className="h-4 w-4" aria-hidden="true" /> : <Volume2Icon className="h-4 w-4" aria-hidden="true" />}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-col items-center gap-2 pb-4 text-center text-white/50">
-          <p className="text-xs sm:hidden">Görseller arasında geçiş için kaydırın</p>
-          <p className="hidden text-xs sm:block">
-            Görseller arasında geçiş için klavyedeki yön tuşlarını (← →) kullanabilirsiniz
-          </p>
-        </div>
+      <div className="flex w-full items-center justify-between border-b border-white/10 pb-4 text-white">
+        <span
+          className="text-sm font-medium tracking-wide text-white/70"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {currentIndex + 1} / {items.length}
+        </span>
+        <button
+          ref={closeButtonRef}
+          type="button"
+          onClick={() => onCloseRef.current()}
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+          aria-label="Galeri görüntüleyiciyi kapat"
+        >
+          <XIcon className="h-5 w-5" aria-hidden="true" />
+        </button>
       </div>
-    </dialog>
+
+      <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center">
+        <button
+          type="button"
+          onClick={handlePrev}
+          disabled={items.length < 2}
+          className="absolute left-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 sm:left-2 sm:h-12 sm:w-12 lg:-left-16"
+          aria-label="Önceki medya"
+        >
+          <ChevronLeftIcon className="h-6 w-6" aria-hidden="true" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          disabled={items.length < 2}
+          className="absolute right-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 sm:right-2 sm:h-12 sm:w-12 lg:-right-16"
+          aria-label="Sonraki medya"
+        >
+          <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
+        </button>
+
+        {currentItem.type === "photo" ? (
+          <div className="relative h-full w-full">
+            <Image
+              src={currentItem.src}
+              alt="Müşteri aracındaki OTO POLİK paspas uygulaması"
+              fill
+              sizes="100vw"
+              priority
+              className="object-contain px-11 py-2 drop-shadow-2xl sm:px-16"
+            />
+          </div>
+        ) : (
+          <div
+            role="group"
+            aria-label="Müşteri uygulama videosu"
+            className="relative max-h-full max-w-full overflow-hidden rounded-lg bg-black shadow-2xl"
+          >
+            <video
+              ref={videoRef}
+              src={currentItem.src}
+              loop
+              muted={isMuted}
+              playsInline
+              autoPlay
+              tabIndex={-1}
+              className="max-h-[70vh] max-w-full object-contain"
+              onClick={togglePlay}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            />
+
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/75 p-1.5 text-white backdrop-blur">
+              <button
+                type="button"
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Videoyu durdur" : "Videoyu oynat"}
+                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              >
+                {isPlaying ? (
+                  <PauseIcon className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <PlayIcon className="h-5 w-5" aria-hidden="true" />
+                )}
+              </button>
+              <span className="h-6 w-px bg-white/20" aria-hidden="true" />
+              <button
+                type="button"
+                onClick={toggleMute}
+                aria-label={isMuted ? "Videonun sesini aç" : "Videonun sesini kapat"}
+                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              >
+                {isMuted ? (
+                  <VolumeXIcon className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <Volume2Icon className="h-5 w-5" aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div
+        id="gallery-lightbox-help"
+        className="flex flex-col items-center gap-2 pb-4 text-center text-white/50"
+      >
+        <p className="text-xs sm:hidden">Görseller arasında geçiş için kaydırın veya okları kullanın</p>
+        <p className="hidden text-xs sm:block">Görseller arasında geçiş için klavyedeki yön tuşlarını (← →) kullanabilirsiniz</p>
+      </div>
+    </div>
   );
 }

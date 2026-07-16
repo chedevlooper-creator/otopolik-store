@@ -1,7 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useCallback, useEffect, useRef } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, ReactNode } from "react";
 import { XIcon, ChevronLeftIcon, ChevronRightIcon, Maximize2Icon } from "lucide-react";
 
 type Props = {
@@ -12,8 +21,60 @@ type Props = {
 };
 
 const SWIPE_THRESHOLD = 50;
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function ProductGallery({ images, alt, badge, colorImage }: Props) {
+type ProductVariantGalleryContextValue = {
+  selectedImage?: string;
+  selectImage: (image: string) => void;
+};
+
+const ProductVariantGalleryContext =
+  createContext<ProductVariantGalleryContextValue | null>(null);
+
+export function ProductVariantGalleryProvider({
+  children,
+  initialImage,
+}: {
+  children: ReactNode;
+  initialImage: string;
+}) {
+  const [selectedImage, selectImage] = useState(initialImage);
+
+  return (
+    <ProductVariantGalleryContext.Provider value={{ selectedImage, selectImage }}>
+      {children}
+    </ProductVariantGalleryContext.Provider>
+  );
+}
+
+export function useProductVariantGallery() {
+  return useContext(ProductVariantGalleryContext);
+}
+
+function getKeyboardTarget(key: string, current: number, total: number) {
+  if (total < 1) return null;
+  if (key === "ArrowRight" || key === "ArrowDown") return (current + 1) % total;
+  if (key === "ArrowLeft" || key === "ArrowUp") return (current - 1 + total) % total;
+  if (key === "Home") return 0;
+  if (key === "End") return total - 1;
+  return null;
+}
+
+export default function ProductGallery(props: Props) {
+  const variantGallery = useProductVariantGallery();
+  const selectedImage = variantGallery?.selectedImage || props.colorImage;
+
+  return (
+    <ProductGalleryView
+      key={selectedImage ?? "default-product-gallery"}
+      {...props}
+      colorImage={selectedImage}
+    />
+  );
+}
+
+function ProductGalleryView({ images, alt, badge, colorImage }: Props) {
   const [active, setActive] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -21,6 +82,14 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchDelta, setTouchDelta] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const thumbnailRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const lightboxThumbnailRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const lightboxDialogRef = useRef<HTMLDivElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const galleryId = useId();
+  const panelId = `${galleryId}-panel`;
+  const lightboxPanelId = `${galleryId}-lightbox-panel`;
 
   const gallery = colorImage
     ? [colorImage, ...images.filter((image) => image !== colorImage)]
@@ -39,32 +108,98 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
 
   // ── Lightbox ──
   function openLightbox(i: number) {
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
     setLbActive(i);
     setLightboxOpen(true);
-    document.body.style.overflow = "hidden";
   }
 
-  function closeLightbox() {
+  const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
-    document.body.style.overflow = "";
-  }
+  }, []);
 
   const goLb = useCallback(
     (dir: 1 | -1) => setLbActive((p) => (p + dir + total) % total),
     [total]
   );
 
-  // Lightbox keyboard nav
+  function handleThumbnailKeyDown(
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) {
+    const next = getKeyboardTarget(event.key, index, total);
+    if (next === null) return;
+    event.preventDefault();
+    goTo(next);
+    requestAnimationFrame(() => thumbnailRefs.current[next]?.focus());
+  }
+
+  function handleLightboxThumbnailKeyDown(
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) {
+    const next = getKeyboardTarget(event.key, index, total);
+    if (next === null) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setLbActive(next);
+    requestAnimationFrame(() => lightboxThumbnailRefs.current[next]?.focus());
+  }
+
+  // Lightbox keyboard navigation and focus containment
   useEffect(() => {
     if (!lightboxOpen) return;
-    function handler(e: KeyboardEvent) {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") goLb(-1);
-      if (e.key === "ArrowRight") goLb(1);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusFrame = requestAnimationFrame(() => lightboxCloseRef.current?.focus());
+
+    function handler(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeLightbox();
+        return;
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goLb(-1);
+        return;
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goLb(1);
+        return;
+      }
+      if (event.key !== "Tab" || !lightboxDialogRef.current) return;
+
+      const focusable = Array.from(
+        lightboxDialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      ).filter(
+        (element) =>
+          element.getAttribute("aria-hidden") !== "true" &&
+          element.tabIndex >= 0
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) {
+        event.preventDefault();
+        lightboxDialogRef.current.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [lightboxOpen, goLb]);
+
+    document.addEventListener("keydown", handler);
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.removeEventListener("keydown", handler);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocusRef.current?.isConnected) previousFocusRef.current.focus();
+    };
+  }, [closeLightbox, lightboxOpen, goLb]);
 
   // ── Touch swipe ──
   function onTouchStart(e: React.TouchEvent) {
@@ -81,9 +216,11 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
     if (touchStart === null) return;
     if (Math.abs(touchDelta) > SWIPE_THRESHOLD) {
       if (touchDelta > 0) {
-        lightboxOpen ? goLb(-1) : goTo(active - 1);
+        if (lightboxOpen) goLb(-1);
+        else goTo(active - 1);
       } else {
-        lightboxOpen ? goLb(1) : goTo(active + 1);
+        if (lightboxOpen) goLb(1);
+        else goTo(active + 1);
       }
     }
     setTouchStart(null);
@@ -106,19 +243,25 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
         <div
           role="tablist"
           aria-label="Ürün görselleri"
-          className="order-2 flex max-w-full gap-3 overflow-x-auto pb-1 sm:order-1 sm:flex-col sm:overflow-visible sm:pb-0"
+          className="order-2 flex max-w-full gap-3 overflow-x-auto pb-1 sm:order-1 sm:max-h-[70vh] sm:flex-col sm:overflow-x-hidden sm:overflow-y-auto sm:pb-0 sm:pr-1"
         >
           {gallery.map((src, i) => {
             const isActive = active === i;
             return (
               <button
                 key={src + i}
+                ref={(node) => {
+                  thumbnailRefs.current[i] = node;
+                }}
+                id={`${galleryId}-tab-${i}`}
                 type="button"
                 role="tab"
                 onClick={() => { goTo(i); }}
+                onKeyDown={(event) => handleThumbnailKeyDown(event, i)}
                 aria-label={`${alt}, görsel ${i + 1} görüntüle`}
                 aria-selected={isActive}
-                aria-current={isActive}
+                aria-controls={panelId}
+                tabIndex={isActive ? 0 : -1}
                 className={`group/thumb relative aspect-square w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-surface transition-all duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:w-20 ${
                   isActive
                     ? "border-sand shadow-[3px_3px_0_0_var(--brand-red)]"
@@ -145,7 +288,10 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
 
         {/* ── Main image with touch swipe + lightbox trigger ── */}
         <div
-          className="bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden border border-white/10 bg-[#0a0c12] sm:order-2 sm:aspect-square"
+          id={panelId}
+          role="tabpanel"
+          aria-labelledby={`${galleryId}-tab-${active}`}
+          className="group/gallery bg-eva-strong relative order-1 aspect-[4/3] min-w-0 flex-1 overflow-hidden rounded-[1.5rem] border border-white/10 bg-surface sm:order-2 sm:aspect-square"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -179,6 +325,9 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
             </button>
           </div>
 
+          {/* Cam tabakası — görsel vitrin camının arkasındaymış gibi durur */}
+          <div aria-hidden="true" className="glass-pane absolute inset-0 rounded-[1.5rem]" />
+
           {/* Dragging indicator line */}
           {isDragging && (
             <div
@@ -207,16 +356,18 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
               <button
                 type="button"
                 onClick={() => goTo(active - 1)}
+                disabled={active === 0}
                 aria-label="Önceki görsel"
-                className="absolute left-2 top-1/2 hidden -translate-y-1/2 rounded-full bg-background/60 p-1.5 text-white opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-background/85 hover:scale-110 group-hover/image:opacity-100 sm:block"
+                className="absolute left-2 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/75 text-white opacity-70 backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-background/90 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:flex sm:group-hover/gallery:opacity-100"
               >
                 <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={() => goTo(active + 1)}
+                disabled={active === total - 1}
                 aria-label="Sonraki görsel"
-                className="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-full bg-background/60 p-1.5 text-white opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-background/85 hover:scale-110 sm:block"
+                className="absolute right-2 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/75 text-white opacity-70 backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-background/90 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:flex sm:group-hover/gallery:opacity-100"
               >
                 <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -238,26 +389,39 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
       {/* ── LIGHTBOX OVERLAY ── */}
       {lightboxOpen && (
         <div
+          ref={lightboxDialogRef}
           className="fixed inset-0 z-[999] flex items-center justify-center bg-black/92 backdrop-blur-md animate-fade-in"
           role="dialog"
           aria-modal="true"
-          aria-label="Ürün görseli büyük"
+          aria-labelledby={`${galleryId}-lightbox-title`}
+          aria-describedby={`${galleryId}-lightbox-counter`}
+          tabIndex={-1}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
+          <h2 id={`${galleryId}-lightbox-title`} className="sr-only">
+            {alt} büyük görsel görüntüleyici
+          </h2>
+
           {/* Close button */}
           <button
+            ref={lightboxCloseRef}
             type="button"
             onClick={closeLightbox}
-            aria-label="Kapat"
-            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:scale-110 sm:right-6 sm:top-6"
+            aria-label="Büyük görseli kapat"
+            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:right-6 sm:top-6"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
 
           {/* Counter */}
-          <div className="absolute left-1/2 top-5 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-[0.12em] text-white/80 backdrop-blur-sm sm:top-7">
+          <div
+            id={`${galleryId}-lightbox-counter`}
+            aria-live="polite"
+            aria-atomic="true"
+            className="absolute left-1/2 top-5 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-[0.12em] text-white/80 backdrop-blur-sm sm:top-7"
+          >
             {lbActive + 1} / {total}
           </div>
 
@@ -266,7 +430,7 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
             type="button"
             onClick={() => goLb(-1)}
             aria-label="Önceki"
-            className="absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:scale-110 sm:block sm:left-5"
+            className="absolute left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:flex sm:left-5"
           >
             <ChevronLeftIcon className="h-6 w-6" aria-hidden="true" />
           </button>
@@ -274,13 +438,16 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
             type="button"
             onClick={() => goLb(1)}
             aria-label="Sonraki"
-            className="absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:scale-110 sm:block sm:right-5"
+            className="absolute right-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:flex sm:right-5"
           >
             <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
           </button>
 
           {/* Image */}
           <div
+            id={lightboxPanelId}
+            role="tabpanel"
+            aria-labelledby={`${galleryId}-lightbox-tab-${lbActive}`}
             className="relative h-full w-full max-w-5xl p-4 sm:p-10"
             style={{ opacity: dragOpacity }}
           >
@@ -297,22 +464,40 @@ export default function ProductGallery({ images, alt, badge, colorImage }: Props
           </div>
 
           {/* Thumbnail strip in lightbox */}
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 overflow-x-auto px-4 pb-4 sm:pb-6">
-            {gallery.map((src, i) => (
-              <button
-                key={`lb-thumb-${i}`}
-                type="button"
-                onClick={() => setLbActive(i)}
-                aria-label={`Görsel ${i + 1}`}
-                className={`h-12 w-12 shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 sm:h-14 sm:w-14 ${
-                  lbActive === i
-                    ? "border-sand shadow-[0_0_12px_rgba(225,201,162,0.35)]"
-                    : "border-white/15 opacity-50 hover:opacity-80"
-                }`}
-              >
-                <Image src={src} alt="" fill sizes="56px" className="object-cover" />
-              </button>
-            ))}
+          <div className="absolute bottom-0 left-0 right-0 overflow-x-auto pb-4 sm:pb-6">
+            <div
+              role="tablist"
+              aria-label="Büyük ürün görselleri"
+              className="mx-auto flex w-max min-w-full justify-center gap-2 px-4"
+            >
+              {gallery.map((src, i) => {
+                const isSelected = lbActive === i;
+                return (
+                  <button
+                    key={`lb-thumb-${i}`}
+                    ref={(node) => {
+                      lightboxThumbnailRefs.current[i] = node;
+                    }}
+                    id={`${galleryId}-lightbox-tab-${i}`}
+                    type="button"
+                    role="tab"
+                    onClick={() => setLbActive(i)}
+                    onKeyDown={(event) => handleLightboxThumbnailKeyDown(event, i)}
+                    aria-label={`Görsel ${i + 1}`}
+                    aria-selected={isSelected}
+                    aria-controls={lightboxPanelId}
+                    tabIndex={isSelected ? 0 : -1}
+                    className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:h-14 sm:w-14 ${
+                      isSelected
+                        ? "border-sand shadow-[0_0_12px_rgba(255,255,255,0.35)]"
+                        : "border-white/15 opacity-50 hover:opacity-80"
+                    }`}
+                  >
+                    <Image src={src} alt="" fill sizes="56px" className="object-cover" />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

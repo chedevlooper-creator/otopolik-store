@@ -1,34 +1,69 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { useStoreSettings } from "@/context/settings-context";
 import { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
 import { getShippingCost } from "@/lib/shipping";
+import VehicleDetailsFields from "@/components/VehicleDetailsFields";
+import { useProductVariantGallery } from "@/components/ProductGallery";
+import {
+  EMPTY_VEHICLE_DETAILS,
+  formatVehicleLabel,
+  isVehicleDetailsComplete,
+  productRequiresVehicle,
+  type VehicleDetails,
+} from "@/lib/vehicle-compatibility";
 import { TruckIcon, MinusIcon, PlusIcon, CheckIcon, ShoppingCartIcon } from "lucide-react";
 
 export default function AddToCartButton({ product }: { product: Product }) {
   const { addItem, closeDrawer } = useCart();
   const settings = useStoreSettings();
   const router = useRouter();
-  const [color, setColor] = useState(product.colors[0]?.name ?? "Siyah");
+  const variantGallery = useProductVariantGallery();
+  const [color, setColor] = useState(product.colors[0]?.name ?? "Standart");
   const [quantity, setQuantity] = useState(1);
   const [footerVisible, setFooterVisible] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
   const [animateCart, setAnimateCart] = useState(false);
+  const [vehicle, setVehicle] = useState<VehicleDetails>(EMPTY_VEHICLE_DETAILS);
+  const [vehicleError, setVehicleError] = useState(false);
+  const needsVehicle = productRequiresVehicle(product);
+  const vehicleComplete = !needsVehicle || isVehicleDetailsComplete(vehicle);
   const subtotal = product.price * quantity;
   const shippingCost = getShippingCost(subtotal, settings);
 
-  const handleAdd = useCallback(() => {
+  function ensureVehicle(): boolean {
+    if (vehicleComplete) return true;
+    setVehicleError(true);
+    window.requestAnimationFrame(() => {
+      document.getElementById("product-vehicle-brand")?.focus();
+    });
+    return false;
+  }
+
+  function handleAdd() {
+    if (!ensureVehicle()) return;
     addItem(buildLine());
     setJustAdded(true);
     setAnimateCart(true);
     window.setTimeout(() => { setAnimateCart(false); }, 500);
     window.setTimeout(() => { setJustAdded(false); }, 2000);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addItem, color, quantity]);
+  }
+
+  function handleBuyNow() {
+    if (!ensureVehicle()) return;
+    addItem(buildLine());
+    closeDrawer();
+    router.push("/odeme");
+  }
+
+  function handleColorChange(name: string, image?: string) {
+    setColor(name);
+    variantGallery?.selectImage(image || product.image);
+  }
 
   useEffect(() => {
     const footer = document.querySelector("footer");
@@ -50,13 +85,45 @@ export default function AddToCartButton({ product }: { product: Product }) {
       price: product.price,
       color,
       quantity,
+      configuration: needsVehicle
+        ? { vehicle: formatVehicleLabel(vehicle) }
+        : undefined,
     };
   }
 
   return (
     <div className="space-y-5">
-      <div>
-        <p className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
+      {needsVehicle ? (
+        <section
+          aria-labelledby="product-vehicle-heading"
+          className="rounded-2xl border border-white/10 bg-surface/55 p-4 sm:p-5"
+        >
+          <div className="mb-4">
+            <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-sand">
+              Araca özel üretim
+            </p>
+            <h2 id="product-vehicle-heading" className="mt-1 font-heading text-lg font-bold text-white">
+              Aracınızı doğrulayın
+            </h2>
+          </div>
+          <VehicleDetailsFields
+            value={vehicle}
+            onChange={(next) => {
+              setVehicle(next);
+              if (isVehicleDetailsComplete(next)) setVehicleError(false);
+            }}
+            idPrefix="product-vehicle"
+            showError={vehicleError}
+          />
+        </section>
+      ) : null}
+
+      {product.colors.length > 1 ? <div>
+        <p
+          className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           Renk — <span className="text-sand">{color}</span>
         </p>
         <div className="flex gap-2">
@@ -64,17 +131,17 @@ export default function AddToCartButton({ product }: { product: Product }) {
             <button
               key={c.name}
               type="button"
-              onClick={() => setColor(c.name)}
+              onClick={() => handleColorChange(c.name, c.image)}
               aria-label={`Renk: ${c.name}`}
               aria-pressed={color === c.name}
-              className={`h-11 w-11 rounded-full border-2 transition-transform sm:h-9 sm:w-9 ${
+              className={`h-11 w-11 rounded-full border-2 transition-transform ${
                 color === c.name ? "scale-110 border-sand" : "border-border hover:border-muted"
               }`}
               style={{ backgroundColor: c.hex }}
             />
           ))}
         </div>
-      </div>
+      </div> : null}
 
       <div>
         <p className="spec-value mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">Adet</p>
@@ -107,9 +174,10 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <button
           type="button"
           onClick={handleAdd}
-          className={`btn-press btn-sand-rich flex-1 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-background transition-all duration-200 ${
+          aria-describedby={vehicleError ? "product-vehicle-heading" : undefined}
+          className={`btn-press btn-red-rich flex-1 rounded-full px-6 py-3.5 text-sm font-bold text-white transition-all duration-200 ${
             justAdded
-              ? "!bg-emerald-500 !text-white !hover:bg-emerald-600"
+              ? "!bg-emerald-500 !hover:bg-emerald-600"
               : ""
           }`}
         >
@@ -129,12 +197,8 @@ export default function AddToCartButton({ product }: { product: Product }) {
         </button>
         <button
           type="button"
-          onClick={() => {
-            addItem(buildLine());
-            closeDrawer();
-            router.push("/odeme");
-          }}
-          className="btn-press flex-1 border border-white/12 px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-foreground transition-all duration-200 hover:border-sand hover:text-sand"
+          onClick={handleBuyNow}
+          className="btn-press flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground transition-all duration-200 hover:border-white/24 hover:bg-white/[0.04] hover:translate-y-[-1px]"
         >
           Hemen Al
         </button>
@@ -158,7 +222,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <div className="min-w-0">
             <span className="spec-value block text-[10px] uppercase tracking-[0.14em] text-muted">
-              {quantity} adet · {color}
+              {vehicleComplete ? `${quantity} adet · ${color}` : "Araç bilgisi gerekli"}
             </span>
             <strong className="spec-value block whitespace-nowrap text-lg font-semibold text-sand">
               {formatPrice(subtotal)}
@@ -168,9 +232,9 @@ export default function AddToCartButton({ product }: { product: Product }) {
             type="button"
             onClick={handleAdd}
             tabIndex={footerVisible ? -1 : undefined}
-            className={`btn-press btn-sand-rich min-h-11 flex-1 px-5 py-3 text-sm font-bold uppercase tracking-wider text-background transition-all duration-200 ${
+            className={`btn-press btn-red-rich min-h-11 flex-1 rounded-full px-5 py-3 text-sm font-bold text-white transition-all duration-200 ${
               justAdded
-                ? "!bg-emerald-500 !text-white !hover:bg-emerald-600"
+                ? "!bg-emerald-500 !hover:bg-emerald-600"
                 : ""
             }`}
           >
@@ -183,7 +247,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
               ) : (
                 <>
                   <ShoppingCartIcon className="h-4 w-4" aria-hidden="true" />
-                  Ekle
+                  {vehicleComplete ? "Ekle" : "Aracı tamamla"}
                 </>
               )}
             </span>

@@ -59,10 +59,10 @@ export default async function InfoPage({
   return (
     <div className="mx-auto max-w-3xl px-4 py-14 sm:py-20">
       <span className="section-kicker">Bilgilendirme</span>
-      <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
+      <h1 className="mt-5 font-heading text-4xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
         {page.title}
       </h1>
-      <p className="mt-3 text-sm leading-7 text-white/55">
+      <p className="section-copy mt-4">
         {interpolateCmsText(page.description, tokens)}
       </p>
       <div className="mt-10 space-y-8">
