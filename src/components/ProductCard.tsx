@@ -14,7 +14,9 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;
-  const shouldContainImage = ["eva-3d", "bagaj-havuzu", "bagaj-cantasi"].includes(product.category);
+  const isPlaceholderImage = product.image.endsWith("gorsel-yakinda.svg");
+  const shouldContainImage =
+    isPlaceholderImage || ["eva-3d", "bagaj-havuzu", "bagaj-cantasi"].includes(product.category);
   // Beyaz fonlu stüdyo çekimleri (JPG) koyu kartta sırıtmasın diye çerçeveli panel içinde gösterilir
   const hasLightImage = product.category === "bagaj-cantasi";
   const showSwatches = ["eva-3d", "eva-havuzlu", "bagaj-havuzu"].includes(product.category);
@@ -81,7 +83,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
           <span className="spec-value text-[11px] font-semibold uppercase tracking-[0.12em] text-sand/90">
             {CATEGORY_LABELS[product.category]}
           </span>
-          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${product.inStock === false ? "text-amber-300" : "text-emerald-300"}`}>
+          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${product.inStock === false ? "text-sand" : "text-emerald-300"}`}>
             {product.inStock === false ? <Clock3Icon className="h-3 w-3" aria-hidden="true" /> : <CheckIcon className="h-3 w-3" aria-hidden="true" />}
             {product.inStock === false ? "Yakında" : "Üretime hazır"}
           </span>

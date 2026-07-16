@@ -610,6 +610,15 @@ h3 {
     transition: none;
     transform: translateX(-120%) skewX(-10deg) !important;
   }
+
+  .animate-fade-in,
+  .animate-swipe-hint,
+  .animate-cart-pop,
+  .animate-check-spread {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ─── Hero başlık girişi ─── */

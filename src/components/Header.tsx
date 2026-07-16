@@ -153,8 +153,8 @@ export default function Header() {
         </div>
 
         <div className="mx-auto max-w-7xl px-4">
-          <div className="flex h-16 items-center justify-between gap-3 sm:h-[68px]">
-            <Logo variant="header" ariaLabel="Ana sayfaya git" />
+          <div className="flex h-[76px] items-center justify-between gap-3 sm:h-[82px] lg:h-[86px]">
+            <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
 
             <nav
               className="mac-glass hidden items-center gap-0.5 rounded-full p-1 lg:flex"

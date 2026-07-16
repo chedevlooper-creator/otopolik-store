@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.convex.cloud" },
       { protocol: "https", hostname: "*.eu-west-1.convex.cloud" },
     ],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
   productionBrowserSourceMaps: false,

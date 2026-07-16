@@ -51,6 +51,7 @@ type SeedProduct = {
   setContents: string[];
   optionalExtras: string[];
   dispatchEstimate: string;
+  inStock?: boolean;
 };
 
 const SEED_PRODUCTS: SeedProduct[] = [
@@ -202,12 +203,10 @@ const SEED_PRODUCTS: SeedProduct[] = [
     price: 1250,
     oldPrice: 1650,
     badge: "Yeni",
-    image: "/media/galeri/hali-paspas/01-siyah-on.jpg",
+    inStock: false,
+    image: "/media/gorsel-yakinda.svg",
     colors: CARPET_MAT_COLORS,
-    gallery: [
-      "/media/galeri/hali-paspas/01-siyah-on.jpg",
-      "/media/galeri/hali-paspas/02-siyah-arka.jpg",
-    ],
+    gallery: ["/media/gorsel-yakinda.svg"],
     description:
       "Aracınıza özel kesim, kenarları overloklu premium halı paspas seti. Yumuşak dokusuyla konfor sağlarken kaymaz tabanı sayesinde yerinden oynamaz. Ön ve arka sıra için tam takımdır.",
     features: [
@@ -338,7 +337,7 @@ export const products: Product[] = SEED_PRODUCTS.map((seed) => ({
   optionalExtras: seed.optionalExtras,
   dispatchEstimate: seed.dispatchEstimate,
   badge: seed.badge,
-  inStock: true,
+  inStock: seed.inStock ?? true,
   isActive: true,
 }));
 

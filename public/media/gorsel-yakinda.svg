@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <pattern id="eva-diamond" width="22" height="22" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="22" height="22" fill="none" />
+      <path d="M0 0 L22 0" stroke="rgba(241,239,233,0.05)" stroke-width="1" />
+    </pattern>
+    <radialGradient id="vignette" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#141414" />
+      <stop offset="100%" stop-color="#0b0b0b" />
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#vignette)" />
+  <rect width="800" height="800" fill="url(#eva-diamond)" />
+
+  <circle cx="400" cy="340" r="72" fill="none" stroke="rgba(207,207,202,0.35)" stroke-width="1.5" />
+  <path d="M368 340 l22 22 l42 -46" fill="none" stroke="rgba(207,207,202,0.55)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+
+  <text x="400" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3" fill="rgba(207,207,202,0.75)">GÖRSEL YAKINDA</text>
+  <text x="400" y="492" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" letter-spacing="1.5" fill="rgba(255,255,255,0.35)">OTO POLİK EVA PREMIUM</text>
+</svg>

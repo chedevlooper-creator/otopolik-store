@@ -43,25 +43,23 @@ export default function Logo({
 
   const content =
     variant === "header" ? (
-      <span className="group inline-flex items-center gap-2.5">
-        <span
-          className="relative inline-flex h-11 w-11 aspect-square shrink-0 overflow-hidden rounded-full border border-white/15 bg-black shadow-[0_4px_12px_rgba(0,0,0,.55)] ring-1 ring-white/[0.04]"
-        >
+      <span className="group inline-flex items-center gap-3">
+        <span className="relative inline-flex h-12 w-12 aspect-square shrink-0 overflow-hidden rounded-full border border-white/15 bg-black shadow-[0_4px_12px_rgba(0,0,0,.55)] ring-1 ring-white/[0.04] sm:h-14 sm:w-14 lg:h-16 lg:w-16">
           <Image
             src="/media/otopolik-logo-3d.png"
-            alt="OTO POLİK Logo"
+            alt=""
             fill
             quality={90}
             priority={priority}
-            sizes="44px"
+            sizes="(min-width: 1024px) 64px, (min-width: 640px) 56px, 48px"
             className="object-contain"
           />
         </span>
         <span className="flex flex-col items-start leading-none">
-          <span className="block whitespace-nowrap font-heading text-[1.15rem] font-bold tracking-[0.06em] text-white transition-colors duration-300 group-hover:text-sand sm:text-[1.25rem]">
+          <span className="block whitespace-nowrap font-heading text-[1.35rem] font-bold tracking-[0.06em] text-white transition-colors duration-300 group-hover:text-sand sm:text-[1.55rem] lg:text-[1.7rem]">
             OTO POLİK
           </span>
-          <span className="mt-1 text-[7px] font-semibold uppercase tracking-[0.32em] text-sand/75 sm:text-[8px]">
+          <span className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.32em] text-sand/75 sm:text-[9px]">
             EVA PREMIUM
           </span>
         </span>
@@ -75,11 +73,7 @@ export default function Logo({
   }
 
   const defaultAriaLabel =
-    href === "/admin"
-      ? "OTO POLİK yönetim paneli"
-      : variant === "header"
-        ? "EVA Premium ana sayfa"
-        : "OTO POLİK ana sayfa";
+    href === "/admin" ? "OTO POLİK yönetim paneli" : "OTO POLİK ana sayfa";
 
   return (
     <Link

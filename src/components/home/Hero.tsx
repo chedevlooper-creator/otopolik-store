@@ -35,7 +35,7 @@ export default function Hero({ content }: Props) {
 
   return (
     <section
-      className={`relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-black text-white ${
+      className={`relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-black text-white ${
         motionReady ? "hero-ready" : ""
       }`}
     >
@@ -47,7 +47,7 @@ export default function Hero({ content }: Props) {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.4)_0%,transparent_42%,rgba(0,0,0,.82)_100%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-20 pt-24 sm:px-6 sm:pb-24 lg:pb-28">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 py-24 sm:px-6 sm:py-28 lg:py-32">
         <div className="max-w-3xl text-left">
           <p className="hero-brand font-heading text-[clamp(3.2rem,8.5vw,7rem)] font-medium leading-[0.9] tracking-[-0.05em] text-white">
             OTOPOLİK

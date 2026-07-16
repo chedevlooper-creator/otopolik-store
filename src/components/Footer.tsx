@@ -74,16 +74,16 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_.75fr_.75fr_1fr] lg:gap-12">
           <div>
-            <Logo variant="header" ariaLabel="EVA Premium ana sayfa" />
+            <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
             <p className="mt-4 max-w-sm text-sm leading-7 text-white/50">
               {footer?.body ??
                 "Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler."}
             </p>
             <nav aria-label="Sosyal medya" className="mt-6 flex gap-2">
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="EVA Premium Instagram hesabı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300">
+              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="OTO POLİK Instagram hesabı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300">
                 <CameraIcon className="h-4 w-4" aria-hidden="true" />
               </a>
-              <a href={siteConfig.youtube} target="_blank" rel="noopener noreferrer" aria-label="EVA Premium YouTube kanalı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
+              <a href={siteConfig.youtube} target="_blank" rel="noopener noreferrer" aria-label="OTO POLİK YouTube kanalı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
                 <PlayIcon className="h-4 w-4" aria-hidden="true" />
               </a>
             </nav>

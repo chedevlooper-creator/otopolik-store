@@ -25,12 +25,12 @@ import {
   vehicleDetailsKey,
 } from "@/lib/vehicle-compatibility";
 
-// 8 brands defined in Mockup 2
+// Stüdyo kalitesinde araç fotoğrafı bulunan 6 marka (public/media/cars/)
 const QUICK_BRANDS = [
   {
     name: "Mercedes-Benz",
     short: "MERCEDES",
-    customerPhoto: "/media/galeri/musteri/photo_5906683564177165681_w.webp",
+    customerPhoto: "/media/cars/mercedes.jpg",
     logo: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <circle cx="12" cy="12" r="10" />
@@ -43,7 +43,7 @@ const QUICK_BRANDS = [
   {
     name: "BMW",
     short: "BMW",
-    customerPhoto: "/media/galeri/musteri/photo_6030412024262626515_w.webp",
+    customerPhoto: "/media/cars/bmw.jpg",
     logo: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <circle cx="12" cy="12" r="10" />
@@ -55,7 +55,7 @@ const QUICK_BRANDS = [
   {
     name: "Audi",
     short: "AUDI",
-    customerPhoto: "/media/galeri/musteri/photo_5866003077058465479_w.webp",
+    customerPhoto: "/media/cars/audi.jpg",
     logo: (
       <svg viewBox="0 0 50 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-10 w-10 mt-1">
         <circle cx="13" cy="12" r="6" />
@@ -68,7 +68,7 @@ const QUICK_BRANDS = [
   {
     name: "Toyota",
     short: "TOYOTA",
-    customerPhoto: "/media/galeri/musteri/photo_5845771899898629465_w.webp",
+    customerPhoto: "/media/cars/toyota.jpg",
     logo: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <ellipse cx="12" cy="12" rx="10" ry="6" />
@@ -78,20 +78,9 @@ const QUICK_BRANDS = [
     ),
   },
   {
-    name: "Honda",
-    short: "HONDA",
-    customerPhoto: "/media/galeri/musteri/photo_5778211377137782172_w.webp",
-    logo: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
-        <rect x="3" y="3" width="18" height="18" rx="4" />
-        <path d="M7 6v12M17 6v12M7 12h10" />
-      </svg>
-    ),
-  },
-  {
     name: "Jeep",
     short: "JEEP",
-    customerPhoto: "/media/galeri/musteri/photo_5845771899898629467_w.webp",
+    customerPhoto: "/media/cars/jeep.jpg",
     logo: (
       <span className="font-heading font-black tracking-tighter text-xs uppercase mt-1">Jeep</span>
     ),
@@ -99,23 +88,12 @@ const QUICK_BRANDS = [
   {
     name: "Ford",
     short: "FORD",
-    customerPhoto: "/media/galeri/musteri/photo_5924942011318341280_w.webp",
+    customerPhoto: "/media/cars/ford.jpg",
     logo: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <ellipse cx="12" cy="12" rx="10" ry="5.5" />
         <ellipse cx="12" cy="12" rx="8.5" ry="4" strokeDasharray="1 1" />
         <text x="12" y="14.5" fontFamily="Georgia, serif" fontSize="7" fontWeight="bold" fontStyle="italic" textAnchor="middle" fill="currentColor">Ford</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Hyundai",
-    short: "HYUNDAI",
-    customerPhoto: "/media/galeri/musteri/photo_5445155157462161183_w.webp",
-    logo: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
-        <ellipse cx="12" cy="12" rx="10" ry="6.5" />
-        <path d="M8 8l2 8M16 8l-2 8M9.5 12h5" />
       </svg>
     ),
   },
@@ -134,12 +112,13 @@ const COLOR_OPTIONS = [
 
 const YEARS = Array.from({ length: 38 }, (_, index) => String(2027 - index));
 
+// Marka rozeti fotoğrafta net teyit edilemediği için başlıklar nötr tutulur
 const REAL_APPLICATIONS = [
-  { src: "/media/galeri/musteri/photo_5906683564177165681_w.webp", brand: "Mercedes-Benz" },
-  { src: "/media/galeri/musteri/photo_5845771899898629465_w.webp", brand: "Peugeot" },
-  { src: "/media/galeri/musteri/photo_5845771899898629467_w.webp", brand: "Jeep" },
-  { src: "/media/galeri/musteri/photo_6030412024262626515_w.webp", brand: "BMW" },
-  { src: "/media/galeri/musteri/photo_5866003077058465479_w.webp", brand: "Audi" },
+  { src: "/media/galeri/musteri/photo_5906683564177165681_w.webp", label: "Ön koltuk uygulaması" },
+  { src: "/media/galeri/musteri/photo_5845771899898629465_w.webp", label: "Arka bagaj havuzu" },
+  { src: "/media/galeri/musteri/photo_5845771899898629467_w.webp", label: "Ön torpido detayı" },
+  { src: "/media/galeri/musteri/photo_6030412024262626515_w.webp", label: "Arka koltuk paspası" },
+  { src: "/media/galeri/musteri/photo_5866003077058465479_w.webp", label: "Sürücü koltuğu detayı" },
 ];
 
 export default function HomeConfiguratorShowcase() {
@@ -498,6 +477,43 @@ export default function HomeConfiguratorShowcase() {
         </div>
 
         {/* ==========================================================
+            SECTION 1.5: LUXURY INTERIOR SPLIT SHOWCASE
+            ========================================================== */}
+        <div className="mb-16 grid items-center gap-8 border-t border-white/[0.04] pt-14 lg:grid-cols-2 lg:gap-12">
+          <div className="premium-card relative overflow-hidden rounded-2xl">
+            <div className="relative aspect-[4/3] w-full">
+              <Image
+                src="/media/hero-luxury-interior.png"
+                alt="Premium EVA paspas ile döşenmiş lüks araç iç mekanı"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          </div>
+
+          <div>
+            <span className="section-kicker text-xs font-semibold uppercase tracking-[0.2em] text-sand">
+              Premium Deneyim
+            </span>
+            <h2 className="mt-3 font-heading text-3xl font-medium tracking-tight text-white sm:text-4xl">
+              Paspas Değil, Tasarımın Devamı.
+            </h2>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/55">
+              Aracınızın iç mekân tasarımını tamamlayan, milimetrik hassasiyetle kesilmiş şık ve premium bir dokunuş. Her detay, aracınızın orijinal hatlarına uyacak şekilde işlenir.
+            </p>
+            <Link
+              href="/galeri"
+              className="btn-press btn-ghost-rich mt-6 inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-xs font-semibold text-sand"
+            >
+              Galeriye git
+              <ArrowRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+
+        {/* ==========================================================
             SECTION 2: COLOR VISUALIZER & PEDESTAL PREVIEW (Mockup 1)
             ========================================================== */}
         <div id="ozellikler" className="mb-16 grid items-center gap-10 pt-8 lg:grid-cols-[240px_minmax(0,1fr)_88px]">
@@ -568,7 +584,7 @@ export default function HomeConfiguratorShowcase() {
             >
               <Image
                 src="/media/eva_mat_pedestal.jpg"
-                alt="EVA Premium mat önizleme"
+                alt="OTO POLİK EVA paspas önizleme"
                 fill
                 priority
                 className="object-contain"
@@ -736,14 +752,14 @@ export default function HomeConfiguratorShowcase() {
               >
                 <Image
                   src={item.src}
-                  alt={`${item.brand} EVA paspas uygulama fotoğrafı`}
+                  alt={`${item.label} — EVA paspas uygulama fotoğrafı`}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 1024px) 80vw, 250px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
                 <figcaption className="absolute bottom-0 left-0 p-4 text-[11px] font-medium tracking-wide text-white/70">
-                  {item.brand}
+                  {item.label}
                 </figcaption>
               </figure>
             ))}
