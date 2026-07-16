@@ -245,6 +245,13 @@ export default function HomeConfiguratorShowcase() {
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/55">
                 Marka, model ve yılı seçerek aracınıza özel paspasları görüntüleyin.
               </p>
+              <Link
+                href="/olusturucu"
+                className="btn-press btn-ghost-rich mt-4 inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold text-sand"
+              >
+                Tam oluşturucuya git
+                <ArrowRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
             </div>
 
             {/* Horizontal Brand Select Buttons Row */}

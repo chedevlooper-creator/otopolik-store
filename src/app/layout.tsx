@@ -81,10 +81,9 @@ export default async function RootLayout({
 }>) {
   const settings = await getStoreSettings();
   const products = await getProducts();
-  const [{ seo }, chrome, marquee, trust] = await Promise.all([
+  const [{ seo }, chrome, trust] = await Promise.all([
     getSiteSeo(),
     getHomeChromeContent(),
-    getPromos("marquee"),
     getPromos("trust"),
   ]);
 
@@ -134,10 +133,7 @@ export default async function RootLayout({
                 seo,
                 header,
                 footer,
-                marquee: marquee.items.map((item) => ({
-                  ...item,
-                  label: interpolateCmsText(item.label, tokens),
-                })),
+                marquee: [],
                 trust: trust.items,
               }}
             >

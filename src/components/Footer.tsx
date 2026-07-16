@@ -6,6 +6,7 @@ import {
   useStoreSettings,
 } from "@/context/settings-context";
 import { useCmsChrome } from "@/context/cms-context";
+import { siteConfig } from "@/lib/site-config";
 import {
   ArrowRightIcon,
   CameraIcon,
@@ -82,7 +83,7 @@ export default function Footer() {
               <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="EVA Premium Instagram hesabı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300">
                 <CameraIcon className="h-4 w-4" aria-hidden="true" />
               </a>
-              <a href="https://youtube.com/@otopolik" target="_blank" rel="noopener noreferrer" aria-label="EVA Premium YouTube kanalı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
+              <a href={siteConfig.youtube} target="_blank" rel="noopener noreferrer" aria-label="EVA Premium YouTube kanalı" className="social-icon flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/62 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-300">
                 <PlayIcon className="h-4 w-4" aria-hidden="true" />
               </a>
             </nav>

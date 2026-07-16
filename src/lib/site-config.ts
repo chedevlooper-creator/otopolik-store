@@ -42,6 +42,7 @@ export const siteConfig = {
 
   // Instagram
   instagram: readEnv(process.env.NEXT_PUBLIC_SITE_INSTAGRAM, "https://instagram.com/otopolik"),
+  youtube: readEnv(process.env.NEXT_PUBLIC_SITE_YOUTUBE, "https://youtube.com/@otopolik"),
 
   // Kargo
   freeShippingThreshold: readEnvNumber(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD, 3500),
@@ -51,7 +52,3 @@ export const siteConfig = {
 
 } as const;
 
-export function buildWhatsAppOrderLink(message: string) {
-  const encoded = encodeURIComponent(message);
-  return `https://wa.me/${siteConfig.whatsappNumber}?text=${encoded}`;
-}

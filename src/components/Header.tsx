@@ -17,11 +17,11 @@ import {
 import SearchModal from "@/components/SearchModal";
 import Logo from "@/components/Logo";
 
-/** Condensed Mac-pro nav. Features live inside Araç Seç. */
+/** Condensed Mac-pro nav — primary conversion path includes full configurator. */
 const NAV_LINKS = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/urunler", label: "Ürünler" },
-  { href: "/#arac-sec", label: "Araç Seç" },
+  { href: "/olusturucu", label: "Tasarla" },
   { href: "/galeri", label: "Galeri" },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
