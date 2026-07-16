@@ -216,7 +216,7 @@ export default function HomeConfiguratorShowcase() {
     const vehicleLabel = formatVehicleLabel(vehicleDetails);
     addItem({
       slug: `ozel-tasarim-${vehicleDetailsKey(vehicleDetails)}-siyah-${activeColor.name}`.toLocaleLowerCase("tr-TR"),
-      name: `Araca Özel Premium EVA Paspas — ${vehicleLabel}`,
+      name: `Araca Özel Premium EVA Paspas - ${vehicleLabel}`,
       image: activeColor.image,
       price: configuredPrice,
       color: `Siyah / ${activeColor.name}`,
@@ -234,22 +234,15 @@ export default function HomeConfiguratorShowcase() {
   };
 
   return (
-    <section id="arac-sec" className="border-y border-white/[0.07] bg-[#000000] text-white overflow-hidden py-10 md:py-14">
+    <section id="arac-sec" className="overflow-hidden border-y border-white/[0.07] bg-black py-14 text-white md:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        
-        {/* ==========================================================
-            SECTION 1: CONFIGURATOR BLOCK (Mockup 2)
-            ========================================================== */}
         <div className="mb-16">
-          <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:items-end mb-8">
+          <div className="mb-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-end">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sand/80 mb-1 block">
-                ARACINI SEÇ
-              </span>
-              <h2 className="font-heading text-3xl font-medium tracking-tight sm:text-4xl text-white">
-                Her Araca Özel Üretim
+              <h2 className="font-heading text-3xl font-medium tracking-tight text-white sm:text-4xl">
+                Her araca özel üretim
               </h2>
-              <p className="mt-2 text-xs text-white/40 leading-relaxed max-w-xs">
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/55">
                 Marka, model ve yılı seçerek aracınıza özel paspasları görüntüleyin.
               </p>
             </div>
@@ -270,10 +263,10 @@ export default function HomeConfiguratorShowcase() {
                       onClick={() => handleBrandSelect(item.name)}
                       aria-pressed={isActive}
                       aria-label={`${item.name} markasını seç`}
-                      className={`flex h-[82px] w-[104px] shrink-0 flex-col items-center justify-center rounded-sm border transition-all duration-300 ${
+                      className={`mac-glass flex h-[78px] w-[100px] shrink-0 flex-col items-center justify-center rounded-2xl transition-all duration-300 ${
                         isActive
-                          ? "border-sand bg-[linear-gradient(145deg,rgba(177,155,110,.14),rgba(177,155,110,.025))] text-sand shadow-[inset_0_1px_0_rgba(255,255,255,.08),0_18px_45px_rgba(0,0,0,.35)]"
-                          : "border-white/[0.08] bg-[linear-gradient(145deg,#111111,#090909)] hover:border-sand/35 hover:bg-[#131313]"
+                          ? "border-sand/50 text-sand shadow-[inset_0_1px_0_rgba(255,255,255,.16),0_16px_40px_rgba(0,0,0,.4)]"
+                          : "text-white/55 hover:border-white/20 hover:text-white"
                       }`}
                     >
                       <div className={`flex h-7 items-center justify-center transition-colors duration-300 ${
@@ -300,11 +293,8 @@ export default function HomeConfiguratorShowcase() {
             </div>
           </div>
 
-          {/* 3-Column Configurator Panel */}
-          <div className="premium-showroom grid gap-4 lg:grid-cols-[1.2fr_1fr_1.2fr] items-stretch overflow-hidden p-4 sm:p-5">
-            
-            {/* Column 1: Customer Photo (Live Preview) */}
-            <div className="relative min-h-[260px] sm:min-h-[320px] rounded-xl overflow-hidden border border-white/[0.04] bg-[#0a0a0a]">
+          <div className="mac-glass grid items-stretch gap-4 overflow-hidden rounded-3xl p-4 sm:p-5 lg:grid-cols-[1.15fr_1fr_1.15fr]">
+            <figure className="relative min-h-[260px] overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a0a0a] sm:min-h-[320px]">
               <Image
                 src={activeBrandDetails.customerPhoto}
                 alt={`${selectedBrand} markasına ait örnek paspas uygulaması`}
@@ -313,20 +303,16 @@ export default function HomeConfiguratorShowcase() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 400px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 border border-white/10 bg-black/60 px-3 py-1.5 rounded-full text-[9px] uppercase tracking-wider text-white/50 backdrop-blur-md">
-                MARKAYA AİT ÖRNEK UYGULAMA
-              </div>
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-4 text-[11px] font-medium tracking-wide text-white/70">
+                {selectedBrand} örnek uygulama
+              </figcaption>
+            </figure>
 
-            {/* Column 2: Customize Form */}
             <div className="flex flex-col justify-between p-2">
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-sand mb-1">
-                  KİŞİSELLEŞTİR
-                </p>
-                <h3 className="font-heading text-lg font-medium text-white mb-5">
-                  Paspasını Kişiselleştir
+                <h3 className="mb-5 font-heading text-lg font-medium text-white">
+                  Paspasını kişiselleştir
                 </h3>
 
                 <div className="space-y-4">
@@ -339,7 +325,7 @@ export default function HomeConfiguratorShowcase() {
                       id="home-config-brand"
                       value={selectedBrand}
                       onChange={(e) => handleBrandSelect(e.target.value)}
-                      className="h-10 w-full rounded-md border border-white/10 bg-black/40 px-3 text-xs text-white outline-none transition hover:border-sand/40 focus:border-sand/70"
+                      className="input-rich h-10 w-full rounded-xl border border-white/10 px-3 text-xs text-white outline-none transition hover:border-white/25 focus:border-sand/60"
                     >
                       {allBrands.map((b) => (
                         <option key={b} value={b}>
@@ -349,7 +335,6 @@ export default function HomeConfiguratorShowcase() {
                     </select>
                   </div>
 
-                  {/* Model select */}
                   <div>
                     <label htmlFor="home-config-model" className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-white/70">
                       Model
@@ -361,7 +346,7 @@ export default function HomeConfiguratorShowcase() {
                         setSelectedModel(e.target.value);
                         setSelectedBodyOrChassis("");
                       }}
-                      className="h-10 w-full rounded-md border border-white/10 bg-black/40 px-3 text-xs text-white outline-none transition hover:border-sand/40 focus:border-sand/70"
+                      className="input-rich h-10 w-full rounded-xl border border-white/10 px-3 text-xs text-white outline-none transition hover:border-white/25 focus:border-sand/60"
                     >
                       {models.map((m) => (
                         <option key={m.name} value={m.name}>
@@ -371,7 +356,6 @@ export default function HomeConfiguratorShowcase() {
                     </select>
                   </div>
 
-                  {/* Year select */}
                   <div>
                     <label htmlFor="home-config-year" className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-white/70">
                       Yıl
@@ -380,7 +364,7 @@ export default function HomeConfiguratorShowcase() {
                       id="home-config-year"
                       value={selectedYear}
                       onChange={(e) => setSelectedYear(e.target.value)}
-                      className="h-10 w-full rounded-md border border-white/10 bg-black/40 px-3 text-xs text-white outline-none transition hover:border-sand/40 focus:border-sand/70"
+                      className="input-rich h-10 w-full rounded-xl border border-white/10 px-3 text-xs text-white outline-none transition hover:border-white/25 focus:border-sand/60"
                     >
                       {YEARS.map((y) => (
                         <option key={y} value={y}>
@@ -400,11 +384,10 @@ export default function HomeConfiguratorShowcase() {
                       value={selectedBodyOrChassis}
                       onChange={(e) => setSelectedBodyOrChassis(e.target.value)}
                       placeholder="Örn. W205 / Sport"
-                      className="h-10 w-full rounded-md border border-white/10 bg-black/40 px-3 text-xs text-white outline-none transition placeholder:text-white/45 hover:border-sand/40 focus:border-sand/70"
+                      className="input-rich h-10 w-full rounded-xl border border-white/10 px-3 text-xs text-white outline-none transition placeholder:text-white/40 hover:border-white/25 focus:border-sand/60"
                     />
                   </div>
 
-                  {/* Color select */}
                   <div>
                     <label htmlFor="home-config-color" className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-white/70">
                       Kenar rengi
@@ -413,7 +396,7 @@ export default function HomeConfiguratorShowcase() {
                       id="home-config-color"
                       value={selectedColorIdx}
                       onChange={(e) => setSelectedColorIdx(Number(e.target.value))}
-                      className="h-10 w-full rounded-md border border-white/10 bg-black/40 px-3 text-xs text-white outline-none transition hover:border-sand/40 focus:border-sand/70"
+                      className="input-rich h-10 w-full rounded-xl border border-white/10 px-3 text-xs text-white outline-none transition hover:border-white/25 focus:border-sand/60"
                     >
                       {COLOR_OPTIONS.map((item, idx) => (
                         <option key={item.name} value={idx}>
@@ -438,30 +421,25 @@ export default function HomeConfiguratorShowcase() {
                 type="button"
                 onClick={handleAddToCart}
                 disabled={!canAddConfiguredSet}
-                className="btn-press mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#bfa985] to-[#9c845b] text-[10.5px] font-bold uppercase tracking-wider text-black transition hover:from-[#c9b38d] hover:to-[#a78f65] active:scale-[0.98] disabled:opacity-50"
+                className="btn-press btn-red-rich mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-full text-[10.5px] font-bold uppercase tracking-wider disabled:opacity-50"
               >
                 {added ? (
                   <>
                     <CheckIcon className="h-4 w-4 stroke-[3px]" />
-                    Sepete Eklendi
+                    Sepete eklendi
                   </>
                 ) : (
                   <>
                     <ShoppingBagIcon className="h-4 w-4" />
-                    {canAddConfiguredSet ? "SEPETE EKLE" : "ARAÇ BİLGİSİNİ TAMAMLA"}
+                    {canAddConfiguredSet ? "Sepete ekle" : "Araç bilgisini tamamla"}
                   </>
                 )}
               </button>
             </div>
 
-            {/* Column 3: 3D Product Digital Render */}
-            <div className="relative min-h-[260px] sm:min-h-[320px] rounded-xl overflow-hidden border border-white/[0.04] bg-gradient-to-br from-[#0a0a0a] to-[#040403] flex items-center justify-center group/render">
-              
-              {/* Product render render background light */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(196,165,106,0.1),transparent_70%)] z-0" />
-
-              {/* Mat render image */}
-              <div className="relative w-[85%] h-[80%] z-10 transition-transform duration-500 group-hover/render:scale-105">
+            <div className="group/render relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0c0c0c] to-[#050505] sm:min-h-[320px]">
+              <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.07),transparent_68%)]" />
+              <div className="relative z-10 h-[80%] w-[85%] transition-transform duration-500 group-hover/render:scale-105">
                 <Image
                   src={activeColor.image}
                   alt={`${activeColor.name} kenarlı EVA paspas seti`}
@@ -470,85 +448,61 @@ export default function HomeConfiguratorShowcase() {
                   sizes="(max-width: 1024px) 100vw, 400px"
                 />
               </div>
-
-              {/* 360 Badge */}
-              <div className="absolute bottom-4 right-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-md">
-                <span className="text-[8px] font-bold tracking-tighter text-sand">360°</span>
-              </div>
             </div>
-
           </div>
 
-          {/* Bottom Trust Indicators Strip */}
-          <div className="grid grid-cols-2 gap-y-4 py-6 border-b border-white/[0.05] sm:grid-cols-4 sm:gap-0 divide-white/[0.06] sm:divide-x mt-6 text-center">
-            {/* Item 1 */}
-            <div className="flex flex-col items-center justify-center px-4">
-              <span className="text-sand mb-2">
-                <TruckIcon className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-white">
-                KARGO AVANTAJI
-              </h4>
-              <p className="mt-1 text-[11px] leading-5 text-white/60">
-                {formatPrice(settings.freeShippingThreshold)} üzeri ücretsiz kargo
-              </p>
-            </div>
-
-            {/* Item 2 */}
-            <div className="flex flex-col items-center justify-center px-4">
-              <span className="text-sand mb-2">
-                <ShieldCheckIcon className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-white">
-                ARACA ÖZEL KALIP
-              </h4>
-              <p className="mt-1 text-[11px] leading-5 text-white/60">
-                Marka, model, yıl ve kasa bilgisine göre üretim
-              </p>
-            </div>
-
-            {/* Item 3 */}
-            <div className="flex flex-col items-center justify-center px-4">
-              <span className="text-sand mb-2">
-                <CreditCardIcon className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-white">
-                GÜVENLİ SİPARİŞ
-              </h4>
-              <p className="mt-1 text-[11px] leading-5 text-white/60">
-                WhatsApp onayı ve kapıda ödeme seçeneği
-              </p>
-            </div>
-
-            {/* Item 4 */}
-            <div className="flex flex-col items-center justify-center px-4">
-              <span className="text-sand mb-2">
-                <TimerIcon className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider text-white">
-                ŞEFFAF İADE
-              </h4>
-              <p className="mt-1 text-[11px] leading-5 text-white/60">
-                Standart ve özel üretim koşulları açıkça belirtilir
-              </p>
-            </div>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              {
+                icon: TruckIcon,
+                title: "Kargo avantajı",
+                body: `${formatPrice(settings.freeShippingThreshold)} üzeri ücretsiz kargo`,
+              },
+              {
+                icon: ShieldCheckIcon,
+                title: "Araca özel kalıp",
+                body: "Marka, model, yıl ve kasa bilgisine göre üretim",
+              },
+              {
+                icon: CreditCardIcon,
+                title: "Güvenli sipariş",
+                body: "WhatsApp onayı ve kapıda ödeme seçeneği",
+              },
+              {
+                icon: TimerIcon,
+                title: "Şeffaf iade",
+                body: "Standart ve özel üretim koşulları açıkça belirtilir",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="mac-glass flex flex-col items-center justify-center rounded-2xl px-4 py-5 text-center"
+              >
+                <span className="mb-2 text-sand">
+                  <item.icon className="h-5 w-5 stroke-[1.5]" />
+                </span>
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-white">
+                  {item.title}
+                </h4>
+                <p className="mt-1 text-[11px] leading-5 text-white/55">{item.body}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* ==========================================================
             SECTION 2: COLOR VISUALIZER & PEDESTAL PREVIEW (Mockup 1)
             ========================================================== */}
-        <div id="ozellikler" className="grid gap-10 lg:grid-cols-[250px_minmax(0,1fr)_100px] items-center mb-16 pt-6">
-          {/* Left Panel: Color bubbles */}
+        <div id="ozellikler" className="mb-16 grid items-center gap-10 pt-8 lg:grid-cols-[240px_minmax(0,1fr)_88px]">
           <div className="flex flex-col">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sand/80 mb-2">
-              RENK SEÇENEKLERİ
-            </span>
-            <h2 className="font-heading text-2xl font-medium tracking-tight mb-4 text-white">
-              Tarzınıza Uygun Rengi Seçin
+            <h2 className="mb-2 font-heading text-2xl font-medium tracking-tight text-white">
+              Tarzınıza uygun rengi seçin
             </h2>
-            
-            <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-wrap lg:grid lg:grid-cols-2 mt-2">
+            <p className="mb-6 text-sm text-white/50">
+              Seçili kenar: <span className="text-sand">{activeColor.name}</span>
+            </p>
+
+            <div className="mt-1 grid grid-cols-3 gap-4 sm:flex sm:flex-wrap lg:grid lg:grid-cols-2">
               {COLOR_OPTIONS.map((item, idx) => {
                 const isActive = idx === selectedColorIdx;
                 return (
@@ -556,52 +510,54 @@ export default function HomeConfiguratorShowcase() {
                     key={item.name}
                     type="button"
                     onClick={() => setSelectedColorIdx(idx)}
-                    className="flex flex-col items-center gap-2 text-[10px] tracking-wider text-white/50 hover:text-white transition group"
+                    className="group flex flex-col items-center gap-2 text-[10px] tracking-wider text-white/50 transition hover:text-white"
                   >
                     <span
                       className={`relative flex h-11 w-11 items-center justify-center rounded-full border-2 transition-all duration-300 ${
                         isActive
-                          ? "scale-105 border-sand shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                          ? "scale-105 border-sand shadow-[0_0_0_4px_rgba(255,255,255,0.08)]"
                           : "border-white/10 group-hover:border-white/30"
                       }`}
                       style={{ backgroundColor: item.hex }}
                     >
                       {isActive && (
-                        <CheckIcon className={`h-4.5 w-4.5 drop-shadow-md ${item.name === "Bej" ? "text-black" : "text-white"}`} />
+                        <CheckIcon
+                          className={`h-4 w-4 drop-shadow-md ${item.name === "Bej" ? "text-black" : "text-white"}`}
+                        />
                       )}
                     </span>
-                    <span className={isActive ? "text-sand font-medium" : ""}>
-                      {item.name}
-                    </span>
+                    <span className={isActive ? "font-medium text-sand" : ""}>{item.name}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Center: Pedestal Preview */}
-          <div className="relative flex justify-center items-center h-[340px] md:h-[420px] rounded-2xl border border-white/[0.04] bg-[#090909] overflow-hidden">
-            {/* dynamic background radial glow matching active color */}
+          <div className="mac-glass relative flex h-[340px] items-center justify-center overflow-hidden rounded-3xl md:h-[420px]">
             <div
               className="absolute inset-0 transition-all duration-700"
               style={{
                 background: `radial-gradient(circle at 50% 50%, ${activeColor.glow} 0%, transparent 65%)`,
               }}
             />
-
-            {/* Pedestal Platform */}
-            <div className="absolute bottom-8 w-[80%] max-w-[450px] h-[35px] rounded-[50%] bg-[#121212] border-t border-white/[0.08] shadow-[0_15px_35px_rgba(0,0,0,0.8)] z-0 flex items-center justify-center">
-              <div className="w-[95%] h-[90%] rounded-[50%] bg-gradient-to-b from-[#1c1c1c] to-black opacity-80" />
+            <div className="absolute bottom-8 z-0 flex h-[35px] w-[80%] max-w-[450px] items-center justify-center rounded-[50%] border-t border-white/[0.08] bg-[#121212] shadow-[0_15px_35px_rgba(0,0,0,0.8)]">
+              <div className="h-[90%] w-[95%] rounded-[50%] bg-gradient-to-b from-[#1c1c1c] to-black opacity-80" />
             </div>
-
-            {/* Pedestal Bottom Glow */}
-            <div className="absolute bottom-10 w-[70%] max-w-[400px] h-[15px] rounded-[50%] bg-sand/15 blur-md z-0" />
-
-            {/* Interactive Mat Image */}
-            <div className={`relative w-[85%] h-[80%] transition-all duration-500 z-10 ${
-              isZoomed ? "scale-125 cursor-zoom-out" : "cursor-zoom-in"
-            } ${isRotated ? "rotate-[-8deg] translate-y-[-10px]" : ""}`}
+            <div className="absolute bottom-10 z-0 h-[15px] w-[70%] max-w-[400px] rounded-[50%] bg-white/10 blur-md" />
+            <div
+              className={`relative z-10 h-[80%] w-[85%] transition-all duration-500 ${
+                isZoomed ? "scale-125 cursor-zoom-out" : "cursor-zoom-in"
+              } ${isRotated ? "translate-y-[-10px] rotate-[-8deg]" : ""}`}
               onClick={() => setIsZoomed(!isZoomed)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setIsZoomed(!isZoomed);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={isZoomed ? "Önizlemeyi küçült" : "Önizlemeyi büyüt"}
             >
               <Image
                 src="/media/eva_mat_pedestal.jpg"
@@ -612,39 +568,28 @@ export default function HomeConfiguratorShowcase() {
                 sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
-
-            {/* Small active color label */}
-            <div className="absolute bottom-4 left-4 border border-white/5 bg-black/60 px-3 py-1.5 rounded-full text-[9px] uppercase tracking-wider text-white/50 backdrop-blur-md">
-              SEÇİLİ KENAR: <span className="text-sand font-medium">{activeColor.name}</span>
-            </div>
           </div>
 
-          {/* Right Panel: Feature Action Buttons */}
-          <div className="flex justify-center gap-6 lg:flex-col lg:gap-4 lg:items-center">
-            {/* 360 View */}
+          <div className="flex justify-center gap-4 lg:flex-col lg:items-center">
             <button
+              type="button"
               onClick={() => setIsRotated(!isRotated)}
-              className={`flex flex-col items-center justify-center gap-2 h-[75px] w-[75px] rounded-lg border text-center transition duration-300 ${
-                isRotated
-                  ? "border-sand text-sand bg-sand/[0.04]"
-                  : "border-white/[0.06] text-white/50 hover:text-white hover:border-white/20"
+              className={`mac-glass flex h-[72px] w-[72px] flex-col items-center justify-center gap-2 rounded-2xl text-center transition duration-300 ${
+                isRotated ? "border-sand/50 text-sand" : "text-white/50 hover:border-white/20 hover:text-white"
               }`}
             >
               <Rotate3dIcon className="h-5 w-5" />
-              <span className="text-[9px] font-semibold uppercase tracking-wider">3D BAKIŞ</span>
+              <span className="text-[9px] font-semibold uppercase tracking-wider">3D</span>
             </button>
-
-            {/* Zoom */}
             <button
+              type="button"
               onClick={() => setIsZoomed(!isZoomed)}
-              className={`flex flex-col items-center justify-center gap-2 h-[75px] w-[75px] rounded-lg border text-center transition duration-300 ${
-                isZoomed
-                  ? "border-sand text-sand bg-sand/[0.04]"
-                  : "border-white/[0.06] text-white/50 hover:text-white hover:border-white/20"
+              className={`mac-glass flex h-[72px] w-[72px] flex-col items-center justify-center gap-2 rounded-2xl text-center transition duration-300 ${
+                isZoomed ? "border-sand/50 text-sand" : "text-white/50 hover:border-white/20 hover:text-white"
               }`}
             >
               <Maximize2Icon className="h-5 w-5" />
-              <span className="text-[9px] font-semibold uppercase tracking-wider">YAKINLAŞTIR</span>
+              <span className="text-[9px] font-semibold uppercase tracking-wider">Yakın</span>
             </button>
           </div>
         </div>
@@ -653,25 +598,19 @@ export default function HomeConfiguratorShowcase() {
             SECTION 3: COMPARISON SLIDER (Rubber vs EVA) (Mockup 1)
             ========================================================== */}
         <div className="mb-16 border-t border-white/[0.04] pt-14">
-          <div className="mb-8 grid gap-4 md:grid-cols-2 items-end">
-            <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sand/80">
-                PASPAS KARŞILAŞTIRMASI
-              </span>
-              <h2 className="font-heading text-3xl font-normal text-white mt-1">
-                Geleneksel vs. Premium EVA
-              </h2>
-            </div>
-            <p className="text-sm leading-relaxed text-white/40 max-w-md md:justify-self-end">
-              Hücresel EVA yapısı, çamur, sıvı ve tozu haznelerinde tutarak zemine geçişini engeller. Temizliği son derece kolaydır.
+          <div className="mb-8 max-w-2xl">
+            <h2 className="font-heading text-3xl font-medium tracking-tight text-white">
+              Geleneksel paspas ve Premium EVA
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-white/50">
+              Hücresel EVA yapısı çamur, sıvı ve tozu haznelerinde tutar. Temizlik saniyeler sürer.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-[1fr_minmax(0,1.2fr)_1fr] items-center">
-            {/* Left Specs List: Standard Mat */}
-            <div className="rounded-xl border border-white/[0.04] bg-[#090909] p-5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#e31937] mb-4 border-b border-[#e31937]/10 pb-2">
-                STANDART HALI/KAUÇUK PASPAS
+          <div className="grid items-center gap-6 md:grid-cols-[1fr_minmax(0,1.2fr)_1fr]">
+            <div className="mac-glass rounded-2xl p-5">
+              <p className="mb-4 border-b border-brand-red/20 pb-2 text-[11px] font-bold uppercase tracking-wider text-brand-red">
+                Standart halı / kauçuk
               </p>
               <ul className="space-y-3.5 text-xs text-white/60">
                 <li className="flex items-start gap-2.5">
@@ -693,9 +632,7 @@ export default function HomeConfiguratorShowcase() {
               </ul>
             </div>
 
-            {/* Interactive Image Split Slider */}
-            <div className="relative h-[340px] md:h-[400px] overflow-hidden rounded-xl border border-white/[0.06] bg-[#0a0a0a]">
-              {/* Right Background (Clean Premium EVA Mat) */}
+            <div className="relative h-[340px] overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0a0a0a] md:h-[400px]">
               <Image
                 src="/media/galeri/musteri/photo_6030412024262626515_w.webp"
                 alt="Temiz premium EVA paspas"
@@ -703,8 +640,6 @@ export default function HomeConfiguratorShowcase() {
                 className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 500px"
               />
-
-              {/* Left Foreground (Dirty Standard Rubber Mat) */}
               <div
                 className="absolute inset-0 z-10"
                 style={{ clipPath: `inset(0 ${100 - comparePosition}% 0 0)` }}
@@ -718,18 +653,14 @@ export default function HomeConfiguratorShowcase() {
                 />
                 <div className="absolute inset-0 bg-black/10" />
               </div>
-
-              {/* Split Bar handle */}
               <div
-                className="absolute inset-y-0 w-px bg-white/80 z-20"
+                className="absolute inset-y-0 z-20 w-px bg-white/80"
                 style={{ left: `${comparePosition}%` }}
               >
-                <span className="absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white bg-black/90 text-sm font-semibold text-white shadow-2xl">
+                <span className="mac-glass absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm font-semibold text-white">
                   ↔
                 </span>
               </div>
-
-              {/* Invisible Range Slider for dragging */}
               <input
                 type="range"
                 min="0"
@@ -737,24 +668,17 @@ export default function HomeConfiguratorShowcase() {
                 value={comparePosition}
                 onChange={(e) => setComparePosition(Number(e.target.value))}
                 aria-label="Standart paspas ile EVA paspas karşılaştırması"
-                className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0 z-30"
+                className="absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0"
               />
-
-              {/* Labels overlay */}
-              <div className="pointer-events-none absolute inset-x-0 top-4 flex justify-between px-4 z-20">
-                <span className="rounded-full border border-white/5 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-wider text-white/50 backdrop-blur-md">
-                  Geleneksel Paspas
-                </span>
-                <span className="rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-wider text-sand backdrop-blur-md">
-                  EVA Premium
-                </span>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-between bg-gradient-to-t from-black/80 to-transparent px-4 pb-4 pt-10 text-[10px] font-semibold uppercase tracking-wider">
+                <span className="text-white/55">Geleneksel</span>
+                <span className="text-sand">EVA Premium</span>
               </div>
             </div>
 
-            {/* Right Specs List: Premium EVA */}
-            <div className="rounded-xl border border-white/[0.04] bg-[#090909] p-5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-sand mb-4 border-b border-white/10 pb-2">
-                EVA PREMIUM PASPAS
+            <div className="mac-glass rounded-2xl p-5">
+              <p className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-wider text-sand">
+                EVA Premium
               </p>
               <ul className="space-y-3.5 text-xs text-white/60">
                 <li className="flex items-start gap-2.5">
@@ -781,30 +705,27 @@ export default function HomeConfiguratorShowcase() {
         {/* ==========================================================
             SECTION 4: REAL APPLICATION IMAGES (Mockup 1)
             ========================================================== */}
-        <div className="mb-8 border-t border-white/[0.04] pt-14">
-          <div className="flex items-end justify-between gap-4 mb-8">
+        <div className="mb-4 border-t border-white/[0.04] pt-14">
+          <div className="mb-8 flex items-end justify-between gap-4">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sand/80">
-                PASPASIN ARAÇ İÇİ GÖRÜNÜMÜ
-              </span>
-              <h2 className="font-heading text-3xl font-normal text-white mt-1">
-                Gerçek Müşteri Uygulamaları
+              <h2 className="font-heading text-3xl font-medium tracking-tight text-white">
+                Gerçek müşteri uygulamaları
               </h2>
+              <p className="mt-2 text-sm text-white/50">Araç içi montajlardan seçilmiş kareler.</p>
             </div>
             <Link
               href="/galeri"
-              className="hidden items-center gap-2 text-xs font-semibold text-sand hover:text-white transition sm:flex"
+              className="btn-press btn-ghost-rich mac-glass hidden items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-sand transition hover:text-white sm:inline-flex"
             >
-              Tüm galeriyi gör <ArrowRightIcon className="h-4 w-4" />
+              Tüm galeri <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </div>
 
-          {/* Carousel rows */}
           <div className="grid auto-cols-[85%] grid-flow-col gap-4 overflow-x-auto pb-4 scrollbar-none sm:auto-cols-[45%] lg:grid-cols-5 lg:auto-cols-auto lg:overflow-visible">
-            {REAL_APPLICATIONS.map((item, idx) => (
+            {REAL_APPLICATIONS.map((item) => (
               <figure
-                key={idx}
-                className="group relative h-[260px] overflow-hidden rounded-xl border border-white/[0.04] bg-[#0a0a0a]"
+                key={item.src}
+                className="group relative h-[260px] overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0a0a0a]"
               >
                 <Image
                   src={item.src}
@@ -814,19 +735,19 @@ export default function HomeConfiguratorShowcase() {
                   sizes="(max-width: 1024px) 80vw, 250px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
-                <figcaption className="absolute bottom-0 left-0 p-4 text-[10px] font-semibold uppercase tracking-wider text-white/60">
-                  {item.brand} Uygulaması
+                <figcaption className="absolute bottom-0 left-0 p-4 text-[11px] font-medium tracking-wide text-white/70">
+                  {item.brand}
                 </figcaption>
               </figure>
             ))}
           </div>
 
-          <div className="mt-4 text-center">
+          <div className="mt-6 text-center sm:hidden">
             <Link
               href="/galeri"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-sand hover:text-white"
             >
-              DAHA FAZLA GÖRSEL <ArrowRightIcon className="h-3.5 w-3.5" />
+              Daha fazla görsel <ArrowRightIcon className="h-3.5 w-3.5" />
             </Link>
           </div>
         </div>

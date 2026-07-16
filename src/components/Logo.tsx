@@ -58,7 +58,7 @@ export default function Logo({
           />
         </span>
         <span className="flex flex-col items-start leading-none">
-          <span className="block whitespace-nowrap font-heading text-[1.2rem] font-bold tracking-[0.06em] text-[#f3eee4] transition-colors duration-300 group-hover:text-sand sm:text-[1.35rem]">
+          <span className="block whitespace-nowrap font-heading text-[1.15rem] font-bold tracking-[0.06em] text-white transition-colors duration-300 group-hover:text-sand sm:text-[1.25rem]">
             OTO POLİK
           </span>
           <span className="mt-1 text-[7px] font-semibold uppercase tracking-[0.32em] text-sand/75 sm:text-[8px]">

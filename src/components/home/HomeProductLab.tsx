@@ -82,7 +82,7 @@ export default function HomeProductLab() {
                     <span
                       className={`relative h-12 w-12 rounded-full border-2 transition-all duration-300 ${
                         active
-                          ? "scale-105 border-sand shadow-[0_0_0_4px_rgba(196,165,106,.12)]"
+                          ? "scale-105 border-sand shadow-[0_0_0_4px_rgba(255,255,255,.1)]"
                           : "border-white/18 group-hover:border-white/40"
                       }`}
                       style={{ backgroundColor: item.hex }}
