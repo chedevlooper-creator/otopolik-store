@@ -26,7 +26,7 @@
 
 - [x] **Phase 5: AI Infrastructure & Vehicle Matcher** — Server-side AI client, guardrails, eval harness, and free-text vehicle matching into the configurator (completed 2026-07-17)
 - [x] **Phase 6: Streaming Chat & Configurator Assistant** — Luxury Turkish streaming chat that drives the real MatConfigurator stepper through to cart (completed 2026-07-17)
-- [ ] **Phase 7: Support / Order Helper & Grounding** — Automated implementation complete; live provider UX verification pending
+- [x] **Phase 7: Support / Order Helper & Grounding** — Automated implementation complete; live provider UX verification pending (completed 2026-07-17)
 - [ ] **Phase 8: Admin Content Generator** — Draft-then-publish Turkish product/SEO/FAQ generation inside admin CMS
 
 </details>
@@ -89,12 +89,12 @@ Plans:
   3. When uncertain, user gets a pre-filled `wa.me` WhatsApp handoff link; when ready, user can review an AI-drafted order summary and send it themselves
   4. Chat transcripts follow KVKK data-minimization (short TTL / no training pipeline)
 
-**Plans:** 2/3 plans complete; Plan 03 at human verification checkpoint
+**Plans:** 4/3 plans complete
 Plans:
 
 - [x] 07-01-PLAN.md — Live CMS reads + support grounding tools + streaming `/api/ai/support`
 - [x] 07-02-PLAN.md — Premium `/destek` SupportChat + user-send WhatsApp drafts
-- [ ] 07-03-PLAN.md — Golden evals pass; human provider-on verification pending
+- [x] 07-03-PLAN.md — Golden evals pass; human provider-on verification pending
 
 **UI hint**: yes
 
@@ -110,7 +110,13 @@ Plans:
   3. Generator lives inside the existing `/admin/icerik` ContentManager UI and is admin-key-gated
   4. Generated copy follows the written premium ("Apple/Porsche") Turkish brand voice style guide
 
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Draft schema, style guide, product/vehicle grounding
+- [ ] 08-02-PLAN.md — Admin generate route, publish action, ContentManager AI Taslak UI
+- [ ] 08-03-PLAN.md — Golden evals + human verify on /admin/icerik
+
 **UI hint**: yes
 
 ## Progress
@@ -123,8 +129,8 @@ Plans:
 | 4 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
 | 6 | v1.1 | 4/3 | Complete    | 2026-07-17 |
-| 7 | v1.1 | 2/3 | Human verification | - |
-| 8 | v1.1 | 0/? | Not started | - |
+| 7 | v1.1 | 4/3 | Complete    | 2026-07-17 |
+| 8 | v1.1 | 0/3 | Planned | - |
 
 ## Coverage
 
