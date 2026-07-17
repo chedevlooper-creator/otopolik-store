@@ -35,7 +35,7 @@ describe("generateContentDraft", () => {
     expect(generateTextMock).toHaveBeenCalledWith(
       expect.objectContaining({
         model,
-        system: expect.stringMatching(/yalnızca.*Türkçe/is),
+        system: expect.stringMatching(/yalnızca[\s\S]*Türkçe/i),
         prompt: expect.stringContaining(String(product?.price)),
       })
     );
