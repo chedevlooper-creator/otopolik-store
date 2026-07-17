@@ -1,4 +1,9 @@
-import { tool } from "ai";
+import {
+  tool,
+  type InferUITools,
+  type UIDataTypes,
+  type UIMessage,
+} from "ai";
 import { z } from "zod";
 
 import {
@@ -85,30 +90,43 @@ export const configuratorTools = {
     description:
       "Kullanıcının onayladığı aracı gerçek konfigüratör durumuna uygular.",
     inputSchema: setVehicleInputSchema,
+    outputSchema: z.object({ applied: z.boolean() }),
   }),
   set_floor_color: tool({
     description:
       "Kullanıcının seçtiği taban rengini gerçek konfigüratöre uygular.",
     inputSchema: setFloorColorInputSchema,
+    outputSchema: z.object({ applied: z.boolean() }),
   }),
   set_edge_color: tool({
     description:
       "Kullanıcının seçtiği kenar rengini gerçek konfigüratöre uygular.",
     inputSchema: setEdgeColorInputSchema,
+    outputSchema: z.object({ applied: z.boolean() }),
   }),
   set_extras: tool({
     description:
       "Topuk pedi ve bagaj paspası seçimlerini gerçek konfigüratöre uygular.",
     inputSchema: setExtrasInputSchema,
+    outputSchema: z.object({ applied: z.boolean() }),
   }),
   add_to_cart: tool({
     description:
       "Onaydan sonra mevcut gerçek konfigürasyonu gerçek sepete ekleme niyeti oluşturur. Fiyat kabul etmez.",
     inputSchema: addToCartInputSchema,
+    outputSchema: z.object({ added: z.boolean(), price: z.number() }),
   }),
   prepare_whatsapp_handoff: tool({
     description:
       "Kullanıcının kendisinin göndereceği WhatsApp taslağını hazırlar; sipariş vermez.",
     inputSchema: prepareWhatsAppHandoffInputSchema,
+    outputSchema: z.object({ prepared: z.boolean() }),
   }),
 };
+
+export type ConfiguratorChatTools = InferUITools<typeof configuratorTools>;
+export type ConfiguratorChatMessage = UIMessage<
+  never,
+  UIDataTypes,
+  ConfiguratorChatTools
+>;
