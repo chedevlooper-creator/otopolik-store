@@ -146,34 +146,52 @@ duplicate price sources).
 
 ## UI Considerations
 
-Probe coverage: 17 applicable considerations across 4 elements — 15 covered, 2 backstop, 0 unresolved.
+Probe coverage: 34 applicable considerations across 5 elements — 32 covered, 2 backstop, 0 unresolved.
 
 Elements probed: **E1 stepper** (3-step static progress indicator), **E2 color-picker** (merged
 Renkler card, two `ColorPicker` instances), **E3 extras-accordion** (collapsed/expanded Ekstralar
-section), **E4 sticky-bar** (mobile-only price + CTA bar). Kind confirmation: re-read against
-detected kinds — E1/E3/E4 are `interactive-control`, E2 is `list-collection` (color swatches) +
-`interactive-control` (selection). Product listing/detail accordions reuse E3's coverage pattern
-(native `<details>`), not separately re-probed.
+section), **E4 sticky-bar** (mobile-only price + CTA bar), **E5 product chrome** (`/urunler`
+listing controls + grid, detail purchase-first layout + accordions). Kind confirmation: engine
+kinds re-read against element prose; E4 was under-detected (overflow/long-text only) and its
+missed interactive-control kinds (empty, populated, loading, zero-one-many) were added via
+authored override — E4's state coverage rests on that confirmation, not the cue-match alone.
 
 | Element | Category | Status | Resolution |
 |---------|----------|--------|------------|
-| E1 stepper | populated | ✅ covered | 3 static steps ("Araç"/"Renkler"/"Ekstralar") always render from a hardcoded array; `currentStep` (0/1/2 after re-indexing) drives active/done styling only — no fetch |
-| E1 stepper | zero-one-many | ✅ covered | Step count is fixed at exactly 3 per D-02/CONF-01; never varies |
 | E1 stepper | loading | ✅ covered | No async data; step state derives synchronously from `ConfiguratorAssistantProvider` context |
-| E2 color-picker | empty | ✅ covered | `FLOOR_COLORS`/`EDGE_COLORS` are non-empty static consts (`mat-colors.ts`); cannot render zero swatches |
-| E2 color-picker | populated | ✅ covered | Default selections (`FLOOR_COLORS[0]`, `EDGE_COLORS[10]`) guarantee a selected swatch + live preview from first render — no unselected state |
-| E2 color-picker | overflow | ✅ covered | Existing `flex flex-wrap gap-3` wraps swatch rows at any viewport width; merging two rows into one card does not change this behavior |
-| E2 color-picker | zero-one-many | ✅ covered | Both floor and edge lists are fixed-length static arrays; the merge (D-01) does not change per-row count behavior |
-| E2 color-picker | loading | ✅ covered | Preview crossfade (D-03, ≤200ms opacity) is a CSS/motion transition on already-loaded local images (`MAT_PREVIEW_IMAGES`), not a network fetch — no loading spinner state needed |
-| E2 color-picker | long-text | ✅ covered | Color names are short fixed Turkish strings (e.g. "Antrasit", "Lacivert") from `mat-colors.ts` — no truncation risk in the merged card's swatch labels |
-| E3 extras-accordion | populated | ✅ covered | Collapsed teaser always shows "Topuk pedi, bagaj paspası" (fixed 2-item copy); expanded state always shows both extras from `MAT_PRICING` — count is fixed, never empty |
-| E3 extras-accordion | zero-one-many | ✅ covered | Exactly 2 extras (heel pad, trunk mat) per `MAT_PRICING`; accordion never needs to handle 0 or N-many extras |
-| E3 extras-accordion | loading | ✅ covered | No fetch; toggle state is local `useState` in `ExtrasSelector`, price is synchronous `calculateMatPrice()` |
-| E4 sticky-bar | empty | ✅ covered | Bar is always visible from page load per D-06 — no empty/hidden state exists on mobile |
-| E4 sticky-bar | populated | ✅ covered | Shows live `animatedPrice` when `canAdd`, or the "Araç seçin" / em-dash fallback when not — mirrors `ConfigSummary`'s existing `canAdd ? animatedPrice : "—"` pattern |
-| E4 sticky-bar | overflow | 🧪 backstop | statement: vehicle labels/price strings at max length (long brand+model combos) must not push the CTA off-screen or wrap the bar to 2 lines on narrow viewports (320px); verification: backstop — executor must visually check at 320px width since the bar has no text-truncation class specified here |
-| E4 sticky-bar | loading | ✅ covered | Price derives synchronously from `useConfiguratorAssistant()` context (no network) — bar never shows a loading skeleton |
-| E4 sticky-bar | zero-one-many | 🧪 backstop | statement: sticky bar renders exactly one CTA ("Sepete Ekle") per D-05, never a second button; verification: backstop — no automated check enforces this, executor must not add "Hemen Al" to the sticky bar despite `ConfigSummary` having two buttons |
+| E1 stepper | error | ✅ covered | No fetch/submit path — a hardcoded 3-step array cannot fail to render |
+| E1 stepper | overflow | ✅ covered | 3 short fixed labels ("Araç"/"Renkler"/"Ekstralar") in a fixed grid; fits all viewport widths without truncation logic |
+| E1 stepper | long-text | ✅ covered | Labels are hardcoded short Turkish strings; not user/CMS-driven |
+| E2 color-picker | empty | ✅ covered | `FLOOR_COLORS`/`EDGE_COLORS` are non-empty static consts; cannot render zero swatches |
+| E2 color-picker | loading | ✅ covered | Preview crossfade (D-03, ≤200ms opacity) runs on already-local images (`MAT_PREVIEW_IMAGES`); no network fetch, no spinner state |
+| E2 color-picker | error | ✅ covered | No fetch; combos without an exact pre-rendered preview fall back to the default `Siyah\|Kırmızı` image via existing `getMatPreview()` behavior |
+| E2 color-picker | populated | ✅ covered | Default selections guarantee a selected swatch + live preview from first render — no unselected state exists |
+| E2 color-picker | partial | ✅ covered | Both rows always carry a selection (defaults); a half-selected state is unrepresentable |
+| E2 color-picker | overflow | ✅ covered | Existing `flex flex-wrap gap-3` wraps swatch rows at any width; the D-01 merge does not change per-row wrap behavior |
+| E2 color-picker | zero-one-many | ✅ covered | Both color lists are fixed-length static arrays; counts never vary |
+| E2 color-picker | long-text | ✅ covered | Color names are short fixed Turkish strings ("Antrasit", "Lacivert") — no truncation risk in swatch labels |
+| E3 extras-accordion | empty | ✅ covered | Exactly 2 extras from `MAT_PRICING`; the accordion can never render empty |
+| E3 extras-accordion | loading | ✅ covered | Toggle state is local `useState`; price recomputes synchronously via `calculateMatPrice()` — no async state |
+| E3 extras-accordion | error | ✅ covered | No fetch/submit; toggling a checkbox cannot fail |
+| E3 extras-accordion | populated | ✅ covered | Collapsed teaser copy locked in Copywriting Contract ("Topuk pedi, bagaj paspası"); expanded state always shows both extras with prices |
+| E3 extras-accordion | partial | ✅ covered | Each extra toggles independently; every on/off combination is a valid rendered state of the same two rows |
+| E3 extras-accordion | overflow | ✅ covered | Two fixed rows with short labels wrap inside the card; no scroll/clip risk |
+| E3 extras-accordion | zero-one-many | ✅ covered | Exactly 2 extras, fixed by `MAT_PRICING`; never 0 or N-many |
+| E3 extras-accordion | long-text | ✅ covered | Labels are hardcoded short strings locked in the Copywriting Contract |
+| E4 sticky-bar | empty | ✅ covered | Bar is always visible from page load per D-06; when config is incomplete it shows the "Araç seçin" / em-dash fallback — no hidden state on mobile |
+| E4 sticky-bar | populated | ✅ covered | Live price + enabled "Sepete Ekle" when `canAdd` — mirrors `ConfigSummary`'s existing `canAdd ? price : "—"` pattern |
+| E4 sticky-bar | loading | ✅ covered | Price derives synchronously from `useConfiguratorAssistant()`; the bar never shows a skeleton |
+| E4 sticky-bar | overflow | 🧪 backstop | statement: price strings and helper microcopy at max length must not push the CTA off-screen or wrap the bar to 2 lines at 320px; verification: backstop — executor must visually check at 320px width since no text-truncation class is specified here |
+| E4 sticky-bar | zero-one-many | 🧪 backstop | statement: the sticky bar renders exactly ONE CTA ("Sepete Ekle") per D-05, never a second button; verification: backstop — no automated check enforces this; executor must not add "Hemen Al" despite `ConfigSummary` having two buttons |
+| E4 sticky-bar | long-text | ✅ covered | Bar content is price (bounded by `formatPrice()`) + fixed short CTA/helper strings per D-05; no variable-length vehicle label is rendered in the bar |
+| E5 product chrome | empty | ✅ covered | Zero-results state locked in Copywriting Contract: guidance copy + WhatsApp CTA ("Marka-model yazımını kontrol edin, filtreleri temizleyin…") |
+| E5 product chrome | loading | ✅ covered | Listing and detail are async server components; products resolve server-side before HTML is sent — no client loading flash |
+| E5 product chrome | error | ✅ covered | Catalog reads fall back to static `products.ts` per the data-layer pattern; pages cannot fail to render from a missing Convex deployment |
+| E5 product chrome | populated | ✅ covered | Standard ProductCard grid (glass-vitrine per D-13); detail purchase panel above the fold per D-12 |
+| E5 product chrome | partial | ✅ covered | Cards render from complete product records; missing images route through the existing `SafeImage` fallback |
+| E5 product chrome | overflow | ✅ covered | Grid and filter pills wrap via existing flex/grid layouts; collapsed accordions keep long spec content out of the initial scroll |
+| E5 product chrome | zero-one-many | ✅ covered | Grid handles 1..N products; the zero case is the locked empty state above |
+| E5 product chrome | long-text | ✅ covered | Variable product names/fit notes wrap inside existing card layouts; accordion bodies wrap in page flow — no truncation contract needed |
 
 Empty-state and error-state copy stays in `## Copywriting Contract` — rows above reference those
 rows rather than restating copy.
