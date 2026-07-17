@@ -24,7 +24,7 @@
 <details open>
 <summary>🚧 v1.1 AI Destekli Lüks Deneyim (Phases 5-8)</summary>
 
-- [ ] **Phase 5: AI Infrastructure & Vehicle Matcher** — Server-side AI client, guardrails, eval harness, and free-text vehicle matching into the configurator
+- [x] **Phase 5: AI Infrastructure & Vehicle Matcher** — Server-side AI client, guardrails, eval harness, and free-text vehicle matching into the configurator (completed 2026-07-17)
 - [ ] **Phase 6: Streaming Chat & Configurator Assistant** — Luxury Turkish streaming chat that drives the real MatConfigurator stepper through to cart
 - [ ] **Phase 7: Support / Order Helper & Grounding** — CMS-grounded Q&A, scoped refusals, WhatsApp draft handoff, KVKK-minimized transcripts
 - [ ] **Phase 8: Admin Content Generator** — Draft-then-publish Turkish product/SEO/FAQ generation inside admin CMS
@@ -46,7 +46,7 @@
   4. With `ANTHROPIC_API_KEY` unset, every AI entry point falls back to the non-AI path (manual dropdowns) without a broken UI; the API key never appears in browser bundles
   5. Public AI endpoints enforce rate limits / token caps / kill switch, and a golden eval set (incl. price-equality + Turkish checks) runs before prompt/model changes
 
-**Plans:** 3/3 plans executed
+**Plans:** 4/3 plans complete
 Plans:
 
 - [x] 05-01-PLAN.md — Shared AI client, cost controls, customer-only price tools
@@ -108,7 +108,7 @@ Plans:
 | 2 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 3 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 4 | v1.0 | 1/1 | Complete | 2026-07-17 |
-| 5 | v1.1 | 3/3 | In Progress|  |
+| 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
 | 6 | v1.1 | 0/? | Not started | - |
 | 7 | v1.1 | 0/? | Not started | - |
 | 8 | v1.1 | 0/? | Not started | - |
