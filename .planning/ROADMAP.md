@@ -67,11 +67,12 @@ Plans:
   3. User can add the configured mat to the real cart with a price that equals `calculateMatPrice` output
   4. Chat UI matches the OLED-black/glass premium system on mobile and desktop, and is clearly labeled "AI Asistan" (never impersonates a human)
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans complete; 06-03 awaits human verification
 
 Plans:
-- [ ] 06-01-PLAN.md — Streaming `/api/ai/chat` + configurator tools (reuse Phase 5 client/rate-limit/prices)
-- [ ] 06-02-PLAN.md — Premium ConfiguratorChat drives real MatConfigurator + cart + WhatsApp
+
+- [x] 06-01-PLAN.md — Streaming `/api/ai/chat` + configurator tools (reuse Phase 5 client/rate-limit/prices)
+- [x] 06-02-PLAN.md — Premium ConfiguratorChat drives real MatConfigurator + cart + WhatsApp
 - [ ] 06-03-PLAN.md — Price-equality golden evals + stream reconnect polish + human verify
 
 **UI hint**: yes
@@ -115,7 +116,7 @@ Plans:
 | 3 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 4 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
-| 6 | v1.1 | 0/? | Not started | - |
+| 6 | v1.1 | 2/3 | In Progress | - |
 | 7 | v1.1 | 0/? | Not started | - |
 | 8 | v1.1 | 0/? | Not started | - |
 
