@@ -40,18 +40,80 @@ export async function getContentPage(slug: string): Promise<{
 }> {
   const fallbackPage = getDefaultPage(slug);
   const fallbackSections = getDefaultSections(slug);
-  return {
-    page: fallbackPage,
-    sections: fallbackSections,
-    source: "fallback",
-  };
+  const client = getConvexClient();
+  if (!isConvexConfigured() || !client) {
+    return {
+      page: fallbackPage,
+      sections: fallbackSections,
+      source: "fallback",
+    };
+  }
+
+  try {
+    const pageRow = await client.query(api.cms.getPageBySlug, { slug });
+    if (!pageRow) {
+      return {
+        page: fallbackPage,
+        sections: fallbackSections,
+        source: "fallback",
+      };
+    }
+
+    const sectionRows = await client.query(api.cms.listSectionsByPage, {
+      pageSlug: slug,
+    });
+    const { _id, _creationTime, updatedAt, ...page } = pageRow;
+    void _id;
+    void _creationTime;
+    void updatedAt;
+
+    const sections = sectionRows.map((row) => {
+      const {
+        _id: sectionId,
+        _creationTime: sectionCreationTime,
+        updatedAt: sectionUpdatedAt,
+        ...section
+      } = row;
+      void sectionId;
+      void sectionCreationTime;
+      void sectionUpdatedAt;
+      return section;
+    });
+
+    return { page, sections, source: "convex" };
+  } catch (error) {
+    console.error("cms page fetch error:", error);
+    return {
+      page: fallbackPage,
+      sections: fallbackSections,
+      source: "fallback",
+    };
+  }
 }
 
 export async function getFaqs(): Promise<{
   items: FaqItem[];
   source: "convex" | "fallback";
 }> {
-  return { items: DEFAULT_FAQS, source: "fallback" };
+  const client = getConvexClient();
+  if (!isConvexConfigured() || !client) {
+    return { items: DEFAULT_FAQS, source: "fallback" };
+  }
+
+  try {
+    const rows = await client.query(api.cms.listFaqs, {});
+    const items = rows.map(
+      ({ _id, _creationTime, updatedAt, ...item }): FaqItem => {
+        void _creationTime;
+        void updatedAt;
+        return { id: String(_id), ...item };
+      }
+    );
+    return { items, source: "convex" };
+  } catch (error) {
+    console.error("cms faq fetch error:", error);
+    return { items: DEFAULT_FAQS, source: "fallback" };
+  }
 }
 
 export async function getPromos(
