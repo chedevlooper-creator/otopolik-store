@@ -53,4 +53,11 @@ describe("AI configuration", () => {
     expect(AI_MODEL_IDS["configurator-chat"]).toBe("claude-sonnet-5");
     expect(getAiMaxTokens("configurator-chat")).toBeGreaterThanOrEqual(1024);
   });
+
+  it("uses the same pinned Sonnet family for support chat", () => {
+    expect(AI_MODEL_IDS["support-chat"]).toBe(
+      AI_MODEL_IDS["configurator-chat"]
+    );
+    expect(getAiMaxTokens("support-chat")).toBeGreaterThanOrEqual(1024);
+  });
 });
