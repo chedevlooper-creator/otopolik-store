@@ -1,5 +1,16 @@
 # Milestones
 
+## v1.2 v1.2 (Shipped: 2026-07-17)
+
+**Phases completed:** 5 phases, 3 plans, 4 tasks
+
+**Key accomplishments:**
+
+- Server-only, default-off customer AI visibility now composes with existing AI readiness, while a complete homepage section matrix preserves every CMS row for reversible Phase 10 simplification.
+- A four-link conversion spine, settings-backed WhatsApp support fallback, and server-gated dynamic chat imports now keep customer AI hidden by default without weakening admin or API capabilities.
+
+---
+
 ## 1.1 AI Destekli Lüks Deneyim (Shipped: 2026-07-17)
 
 **Phases completed:** 4 phases (5-8), 12 plans
