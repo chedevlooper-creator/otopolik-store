@@ -25,6 +25,11 @@ Standard commands (lint/typecheck/build/test) are in `package.json` and `CLAUDE.
 - Create `.env.local` (gitignored) if missing. Minimum for full E2E: set `ADMIN_PASSWORD` and `ADMIN_SECRET` to any dev values, and set the **same** `ADMIN_SECRET` on Convex: `CONVEX_AGENT_MODE=anonymous npx convex env set ADMIN_SECRET "<value>"`. Admin-gated Convex functions (`seed:*`, `cms:*`, `orders:listAll`, admin CRUD) require this `adminKey`.
 - Seed data after the backend is up: `CONVEX_AGENT_MODE=anonymous npx convex run seed:seedProducts '{"adminKey":"<ADMIN_SECRET>"}'` and `... cms:seedCms '{"adminKey":"<ADMIN_SECRET>"}'` (loads 7 products + CMS content).
 
+### Testing (non-obvious)
+
+- `npm test` (Vitest) runs the unit suite. It also **picks up the Playwright specs in `tests/*.spec.ts` and reports them as 2 failed suites** ("Playwright Test did not expect test.describe()"). Those are e2e files, not Vitest — ignore those 2 failures; the ~98 unit tests still pass.
+- End-to-end tests are Playwright: `npm run test:e2e`. They require the browser first: `npx playwright install chromium` (not in the update script — heavy download). The Playwright config auto-reuses a dev server on :3000 (`reuseExistingServer` when not `CI`), so `npm run dev` doesn't need to be running beforehand.
+
 ### AI features
 
 AI (`/api/ai/*`, admin content generator) is gated off unless a real `ANTHROPIC_API_KEY` is set and `AI_FEATURES_ENABLED !== false`. Core commerce works without it; leave `AI_FEATURES_ENABLED=false` when no key is available.
