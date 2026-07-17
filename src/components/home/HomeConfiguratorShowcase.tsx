@@ -131,7 +131,6 @@ export default function HomeConfiguratorShowcase() {
   const [isZoomed, setIsZoomed] = useState(false);
   const [isRotated, setIsRotated] = useState(false);
   const [zoomCoords, setZoomCoords] = useState({ x: 50, y: 50 });
-  const [comparePosition, setComparePosition] = useState(50);
   const [added, setAdded] = useState(false);
 
   const handleZoomMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -589,113 +588,6 @@ export default function HomeConfiguratorShowcase() {
           </div>
         </div>
 
-        {/* ==========================================================
-            SECTION 3: COMPARISON SLIDER (Rubber vs EVA) (Mockup 1)
-            ========================================================== */}
-        <div className="mb-16 border-t border-white/[0.04] pt-14">
-          <div className="mb-8 max-w-2xl">
-            <h2 className="font-heading text-3xl font-medium tracking-tight text-white">
-              Geleneksel paspas ve Premium EVA
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/50">
-              Hücresel EVA yapısı çamur, sıvı ve tozu haznelerinde tutar. Temizlik saniyeler sürer.
-            </p>
-          </div>
-
-          <div className="grid items-center gap-6 md:grid-cols-[1fr_minmax(0,1.2fr)_1fr]">
-            <div className="mac-glass rounded-2xl p-5">
-              <p className="mb-4 border-b border-brand-red/20 pb-2 text-[11px] font-bold uppercase tracking-wider text-brand-red">
-                Standart halı / kauçuk
-              </p>
-              <ul className="space-y-3.5 text-xs text-white/60">
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-red-500 font-bold">✕</span>
-                  <span>Suyu ve çamuru emer, koku yapar.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-red-500 font-bold">✕</span>
-                  <span>Temizlenmesi zordur, geç kurur.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-red-500 font-bold">✕</span>
-                  <span>Zamanla yırtılır, aşınır ve formunu kaybeder.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-red-500 font-bold">✕</span>
-                  <span>Alt zemine sıvı sızdırır, paslanma yapabilir.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="relative h-[340px] overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0a0a0a] md:h-[400px]">
-              <Image
-                src="/media/galeri/musteri/photo_6030412024262626515_w.webp"
-                alt="Temiz premium EVA paspas"
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 500px"
-              />
-              <div
-                className="absolute inset-0 z-10"
-                style={{ clipPath: `inset(0 ${100 - comparePosition}% 0 0)` }}
-              >
-                <Image
-                  src="/media/scraped/evaotopaspas/paspas-seti/05-comparison.webp"
-                  alt="Kirlenmiş standart kauçuk paspas"
-                  fill
-                  className="object-cover object-center grayscale-[0.25]"
-                  sizes="(max-width: 768px) 100vw, 500px"
-                />
-                <div className="absolute inset-0 bg-black/10" />
-              </div>
-              <div
-                className="absolute inset-y-0 z-20 w-px bg-white/80"
-                style={{ left: `${comparePosition}%` }}
-              >
-                <span className="mac-glass absolute left-1/2 top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm font-semibold text-white">
-                  ↔
-                </span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={comparePosition}
-                onChange={(e) => setComparePosition(Number(e.target.value))}
-                aria-label="Standart paspas ile EVA paspas karşılaştırması"
-                className="absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0"
-              />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-between bg-gradient-to-t from-black/80 to-transparent px-4 pb-4 pt-10 text-[10px] font-semibold uppercase tracking-wider">
-                <span className="text-white/55">Geleneksel</span>
-                <span className="text-white">EVA Premium</span>
-              </div>
-            </div>
-
-            <div className="mac-glass rounded-2xl p-5">
-              <p className="mb-4 border-b border-white/10 pb-2 text-[11px] font-bold uppercase tracking-wider text-white">
-                EVA Premium
-              </p>
-              <ul className="space-y-3.5 text-xs text-white/60">
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-white font-bold">✓</span>
-                  <span>Sıvı ve kiri tutar, koku yapmaz.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-white font-bold">✓</span>
-                  <span>Sadece suyla sallayarak saniyeler içinde temizlenir.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-white font-bold">✓</span>
-                  <span>Çift katmanlı yüksek mukavemetli elastik yapı.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-0.5 text-white font-bold">✓</span>
-                  <span>Birebir kalıbıyla kaymaz, alt zemini tamamen korur.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
         {/* ==========================================================
             SECTION 4: REAL APPLICATION IMAGES (Mockup 1)
