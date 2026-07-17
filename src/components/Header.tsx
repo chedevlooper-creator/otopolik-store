@@ -21,6 +21,7 @@ import Logo from "@/components/Logo";
 const NAV_LINKS = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/urunler", label: "Ürünler" },
+  { href: "/#ozellikler", label: "Özellikler" },
   { href: "/olusturucu", label: "Tasarla" },
   { href: "/galeri", label: "Galeri" },
   { href: "/hakkimizda", label: "Hakkımızda" },
@@ -135,29 +136,29 @@ export default function Header() {
       <div
         className={`border-b transition-[background,border-color,box-shadow] duration-500 ${
           scrolled
-            ? "mac-glass-nav border-white/[0.1]"
-            : "border-white/[0.06] bg-[#050505]/72 backdrop-blur-xl"
+            ? "bg-black/85 backdrop-blur-2xl border-white/[0.08]"
+            : "bg-gradient-to-b from-black/60 to-transparent border-transparent"
         }`}
       >
         <div className="border-b border-white/[0.06] bg-white/[0.02]">
-          <div className="mx-auto flex h-7 max-w-7xl items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55 sm:justify-between">
-            <span className="inline-flex items-center gap-1.5 text-sand/80">
-              <BadgeCheckIcon className="h-3 w-3" aria-hidden="true" />
+          <div className="mx-auto flex h-7 max-w-screen-2xl 2xl:px-8 items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55 sm:justify-between">
+            <span className="inline-flex items-center gap-1.5 text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+              <BadgeCheckIcon className="h-3 w-3 text-brand-red" aria-hidden="true" />
               {cms.header?.title ?? "6.000+ araç modeli için özel kalıp"}
             </span>
-            <span className="hidden sm:inline">
+            <span className="hidden sm:inline text-white/60">
               {cms.header?.body ??
                 `${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz kargo · ${settings.estimatedDispatch} içinde kargo`}
             </span>
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex h-[76px] items-center justify-between gap-3 sm:h-[82px] lg:h-[86px]">
+        <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4">
+          <div className="flex h-[90px] items-center justify-between gap-3 sm:h-[105px] lg:h-[120px]">
             <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
 
             <nav
-              className="mac-glass hidden items-center gap-0.5 rounded-full p-1 lg:flex"
+              className="hidden items-center gap-4 lg:flex xl:gap-8"
               aria-label="Ana menü"
             >
               {NAV_LINKS.map((link) => {
@@ -167,8 +168,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`mac-nav-pill inline-flex min-h-9 items-center px-2.5 text-[11px] font-semibold tracking-[-0.01em] transition-colors xl:px-3.5 ${
-                      active ? "text-sand" : "text-white/70"
+                    className={`relative inline-flex min-h-9 items-center text-[11px] font-semibold tracking-[0.02em] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-center after:transition-transform after:duration-300 ${
+                      active
+                        ? "text-white after:scale-x-100 after:bg-brand-red"
+                        : "text-white/60 after:scale-x-0 after:bg-white/55 hover:text-white hover:after:scale-x-100"
                     }`}
                   >
                     {link.label}
@@ -188,7 +191,7 @@ export default function Header() {
               </button>
               <a
                 href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`}
-                className="spec-value hidden min-h-10 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium text-white/62 transition-colors hover:text-sand lg:flex"
+                className="spec-value hidden min-h-10 items-center gap-2 rounded-full px-3 py-2 text-xs font-medium text-white/70 transition-colors hover:text-white lg:flex"
               >
                 <PhoneIcon className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden xl:inline">{settings.phoneDisplay}</span>
@@ -202,7 +205,7 @@ export default function Header() {
                 <ShoppingBagIcon className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Sepet</span>
                 {totalItems > 0 && (
-                  <span className="spec-value flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-red px-1 text-[10px] font-bold text-white">
+                  <span className="spec-value flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-red px-1.5 text-[10px] font-bold text-white shadow-[0_0_12px_rgba(237,27,36,0.5)]">
                     {totalItems}
                   </span>
                 )}
@@ -237,7 +240,7 @@ export default function Header() {
           aria-labelledby="mobile-menu-title"
           className="absolute inset-x-0 top-full border-t border-white/[0.06] bg-background/96 px-4 py-4 shadow-2xl backdrop-blur-2xl lg:hidden"
         >
-          <div className="mac-glass mx-auto max-h-[calc(100vh-8rem)] max-w-7xl overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.08] bg-[#0b0b0b]/95 p-2">
+          <div className="mac-glass mx-auto max-h-[calc(100vh-8rem)] max-w-screen-2xl 2xl:px-8 overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.08] bg-[#0b0b0b]/95 p-2">
             <div className="flex min-h-12 items-center justify-between border-b border-white/[0.06] px-3">
               <h2
                 id="mobile-menu-title"
@@ -262,7 +265,7 @@ export default function Header() {
               }}
               className="flex min-h-12 w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-white hover:bg-white/[0.05]"
             >
-              <SearchIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+              <SearchIcon className="h-4 w-4 text-white/80" aria-hidden="true" />
               Araç veya ürün ara
             </button>
             <nav id="mobile-navigation" aria-label="Mobil ana menü">
@@ -275,7 +278,7 @@ export default function Header() {
                     aria-current={active ? "page" : undefined}
                     className={`flex min-h-12 items-center rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
                       active
-                        ? "bg-white/[0.08] text-sand"
+                        ? "bg-white/[0.08] text-white"
                         : "text-white/75 hover:bg-white/[0.04] hover:text-white"
                     }`}
                   >
@@ -288,7 +291,7 @@ export default function Header() {
               href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`}
               className="mt-1 flex min-h-12 items-center gap-3 border-t border-white/8 px-4 py-3 text-sm text-white/60"
             >
-              <PhoneIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+              <PhoneIcon className="h-4 w-4 text-white/80" aria-hidden="true" />
               {settings.phoneDisplay}
             </a>
           </div>

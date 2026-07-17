@@ -30,7 +30,7 @@ export default function Logo({
       className={`relative inline-flex aspect-square shrink-0 overflow-hidden rounded-full border border-white/15 bg-black shadow-[0_12px_32px_rgba(0,0,0,.55)] ring-1 ring-white/[0.04] ${logoSize.className}`}
     >
       <Image
-        src="/media/otopolik-logo-3d.png"
+        src="/media/logo-circle-high-res.png"
         alt=""
         fill
         quality={90}
@@ -43,23 +43,23 @@ export default function Logo({
 
   const content =
     variant === "header" ? (
-      <span className="group inline-flex items-center gap-3">
-        <span className="relative inline-flex h-12 w-12 aspect-square shrink-0 overflow-hidden rounded-full border border-white/15 bg-black shadow-[0_4px_12px_rgba(0,0,0,.55)] ring-1 ring-white/[0.04] sm:h-14 sm:w-14 lg:h-16 lg:w-16">
+      <span className="group inline-flex items-center gap-3 sm:gap-4 lg:gap-5">
+        <span className="relative inline-flex h-12 w-12 aspect-square shrink-0 overflow-hidden rounded-full border border-white/10 bg-black shadow-[0_12px_24px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.05] sm:h-16 sm:w-16 lg:h-20 lg:w-20 transition-transform duration-500 group-hover:scale-105">
           <Image
-            src="/media/otopolik-logo-3d.png"
+            src="/media/logo-circle-high-res.png"
             alt=""
             fill
-            quality={90}
+            quality={95}
             priority={priority}
-            sizes="(min-width: 1024px) 64px, (min-width: 640px) 56px, 48px"
+            sizes="(min-width: 1024px) 80px, (min-width: 640px) 64px, 48px"
             className="object-contain"
           />
         </span>
         <span className="flex flex-col items-start leading-none">
-          <span className="block whitespace-nowrap font-heading text-[1.35rem] font-bold tracking-[0.06em] text-white transition-colors duration-300 group-hover:text-sand sm:text-[1.55rem] lg:text-[1.7rem]">
+          <span className="block whitespace-nowrap font-heading text-[1.25rem] font-bold tracking-[0.06em] text-white transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] sm:text-[1.5rem] lg:text-[1.8rem]">
             OTO POLİK
           </span>
-          <span className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.32em] text-sand/75 sm:text-[9px]">
+          <span className="mt-1 text-[8px] font-bold uppercase tracking-[0.35em] text-brand-red sm:mt-1.5 sm:text-[9px] lg:text-[10px]">
             EVA PREMIUM
           </span>
         </span>
