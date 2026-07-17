@@ -19,13 +19,9 @@ import Logo from "@/components/Logo";
 
 /** Condensed Mac-pro nav — primary conversion path includes full configurator. */
 const NAV_LINKS = [
-  { href: "/", label: "Ana Sayfa" },
-  { href: "/urunler", label: "Ürünler" },
-  { href: "/#ozellikler", label: "Özellikler" },
   { href: "/olusturucu", label: "Tasarla" },
+  { href: "/urunler", label: "Ürünler" },
   { href: "/galeri", label: "Galeri" },
-  { href: "/destek", label: "Destek" },
-  { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];
 

@@ -21,16 +21,13 @@ import Logo from "@/components/Logo";
 const KURUMSAL_LINKS = [
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
-  { href: "/destek", label: "AI Destek" },
-  { href: "/#sss", label: "S.S.S." },
+  { href: "/destek", label: "Destek" },
   { href: "/bilgiler/gizlilik", label: "Gizlilik Politikası" },
 ];
 
 const URUNLER_LINKS = [
   { href: "/urunler", label: "Paspas Modelleri" },
   { href: "/olusturucu", label: "Paspas Tasarla" },
-  { href: "/#renkler", label: "Renk Seçenekleri" },
-  { href: "/#ozellikler", label: "Özellikler" },
   { href: "/galeri", label: "Uygulama Galerisi" },
 ];
 
