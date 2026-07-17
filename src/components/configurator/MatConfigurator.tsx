@@ -21,6 +21,7 @@ import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
 import { GALLERY_ITEMS } from "@/lib/gallery-media";
 import GalleryLightbox from "@/components/GalleryLightbox";
 import { StaggeredReveal } from "@/components/ui/StaggeredReveal";
+import FlatMatPreview from "./FlatMatPreview";
 
 // Select a stable mix of 12 items for the configurator sidebar to show real applications
 const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
@@ -94,6 +95,7 @@ export default function MatConfigurator({
   const [floorTouched, setFloorTouched] = useState(false);
   const [edgeTouched, setEdgeTouched] = useState(false);
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
+  const [previewMode, setPreviewMode] = useState<"cabin" | "flat">("cabin");
 
   const totalPrice = calculateMatPrice({ heelPad, trunkMat });
 
@@ -226,26 +228,56 @@ export default function MatConfigurator({
       {/* Gerçek ürün görünümü */}
       <div className="min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface">
+          {/* View Mode Toggle Switcher */}
+          <div className="absolute right-4 top-4 z-30 flex rounded-full border border-white/10 bg-black/60 p-0.5 backdrop-blur-md">
+            <button
+              type="button"
+              onClick={() => setPreviewMode("cabin")}
+              className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${
+                previewMode === "cabin"
+                  ? "bg-white text-black shadow-md"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Kabin Görünümü
+            </button>
+            <button
+              type="button"
+              onClick={() => setPreviewMode("flat")}
+              className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${
+                previewMode === "flat"
+                  ? "bg-white text-black shadow-md"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Paspas Tasarımı
+            </button>
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
-              key={previewKey}
+              key={`${previewMode}-${previewKey}`}
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.4 }}
             >
-              <Image
-                src={preview.src}
-                alt={
-                  hasExactPreview
-                    ? `${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti önizlemesi`
-                    : "EVA paspas seti için temsili ürün önizlemesi"
-                }
-                width={640}
-                height={853}
-                className="h-auto w-full object-cover"
-                priority
-              />
+              {previewMode === "cabin" ? (
+                <Image
+                  src={preview.src}
+                  alt={
+                    hasExactPreview
+                      ? `${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti önizlemesi`
+                      : "EVA paspas seti için temsili ürün önizlemesi"
+                  }
+                  width={640}
+                  height={853}
+                  className="h-auto w-full object-cover"
+                  priority
+                />
+              ) : (
+                <FlatMatPreview floor={floor} edge={edge} heelPad={heelPad} />
+              )}
             </motion.div>
           </AnimatePresence>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-5 pb-5 pt-16">
