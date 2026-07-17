@@ -14,6 +14,7 @@
     "ai:eval:vehicle-match": "vitest run src/lib/ai/evals/vehicle-match-eval.test.ts",
     "ai:eval:configurator-chat": "vitest run src/lib/ai/evals/configurator-chat-eval.test.ts",
     "ai:eval:support-chat": "vitest run src/lib/ai/evals/support-chat-eval.test.ts",
+    "ai:eval:content-generator": "vitest run src/lib/ai/evals/content-generator-eval.test.ts",
     "test:e2e": "playwright test"
   },
   "dependencies": {

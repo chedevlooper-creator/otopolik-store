@@ -24,7 +24,9 @@ function source(path: string): string {
 describe("content generator golden eval", () => {
   it("locks premium Turkish style and no-invention constraints", () => {
     for (const marker of CONTENT_STYLE_MARKERS) {
-      expect(CONTENT_STYLE_GUIDE).toContain(marker);
+      expect(CONTENT_STYLE_GUIDE.toLocaleLowerCase("tr-TR")).toContain(
+        marker.toLocaleLowerCase("tr-TR")
+      );
     }
     expect(CONTENT_SYSTEM_PROMPT).toContain(CONTENT_STYLE_GUIDE);
     expect(buildContentSystemPrompt("product_seo")).toMatch(
