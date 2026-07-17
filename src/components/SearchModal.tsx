@@ -114,7 +114,7 @@ export default function SearchModal({ open, onClose }: Props) {
           <p id="site-search-help" className="sr-only">
             Araç modeli, marka, ürün veya kategori adı yazın.
           </p>
-          <SearchIcon className="h-5 w-5 shrink-0 text-sand" aria-hidden="true" />
+          <SearchIcon className="h-5 w-5 shrink-0 text-white" aria-hidden="true" />
           <label htmlFor="site-search-input" className="sr-only">
             Araç modeli veya ürün adı
           </label>
@@ -137,7 +137,7 @@ export default function SearchModal({ open, onClose }: Props) {
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
-        <div className="max-h-[60vh] overflow-y-auto p-2">
+        <div data-lenis-prevent className="max-h-[60vh] overflow-y-auto p-2">
           <p className="sr-only" role="status" aria-live="polite">
             {query.trim()
               ? `${vehicleResults.length} araç ve ${productResults.length} ürün eşleşmesi bulundu.`
@@ -159,7 +159,7 @@ export default function SearchModal({ open, onClose }: Props) {
               <Link
                 href={catalogHref}
                 onClick={onClose}
-                className="mt-4 inline-flex min-h-11 items-center rounded-lg border border-white/15 px-4 text-sm font-semibold text-sand hover:border-sand/50"
+                className="mt-4 inline-flex min-h-11 items-center rounded-lg border border-white/15 px-4 text-sm font-semibold text-white hover:border-white/50"
               >
                 Katalogda detaylı ara
               </Link>
@@ -180,13 +180,13 @@ export default function SearchModal({ open, onClose }: Props) {
                         <Link
                           href={vehicle.href}
                           onClick={onClose}
-                          className="group flex min-h-16 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/10 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand"
+                          className="group flex min-h-16 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/10 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                         >
-                          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-sand/5 text-sand">
+                          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white">
                             <CarFrontIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="spec-value block text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                            <span className="spec-value block text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                               {vehicle.brand}
                             </span>
                             <span className="block text-sm font-semibold text-foreground">
@@ -197,7 +197,7 @@ export default function SearchModal({ open, onClose }: Props) {
                             </span>
                           </span>
                           <ArrowRightIcon
-                            className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-sand"
+                            className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-white"
                             aria-hidden="true"
                           />
                         </Link>
@@ -221,7 +221,7 @@ export default function SearchModal({ open, onClose }: Props) {
                         <Link
                           href={`/urunler/${product.slug}`}
                           onClick={onClose}
-                          className="flex min-h-16 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/8 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand"
+                          className="flex min-h-16 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/8 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                         >
                           <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/8 bg-background">
                             <Image
@@ -233,7 +233,7 @@ export default function SearchModal({ open, onClose }: Props) {
                             />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="spec-value block text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                            <span className="spec-value block text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                               {CATEGORY_LABELS[product.category]}
                             </span>
                             <span className="block truncate text-sm font-semibold text-foreground">
@@ -243,7 +243,7 @@ export default function SearchModal({ open, onClose }: Props) {
                               {product.brand} · {product.model}
                             </span>
                           </span>
-                          <span className="spec-value shrink-0 text-sm font-semibold text-sand">
+                          <span className="spec-value shrink-0 text-sm font-semibold text-white">
                             {formatPrice(product.price)}
                           </span>
                         </Link>
@@ -260,7 +260,7 @@ export default function SearchModal({ open, onClose }: Props) {
           <Link
             href={catalogHref}
             onClick={onClose}
-            className="spec-value font-bold uppercase tracking-[0.14em] text-sand hover:underline"
+            className="spec-value font-bold uppercase tracking-[0.14em] text-white hover:underline"
           >
             Tüm sonuçlar →
           </Link>

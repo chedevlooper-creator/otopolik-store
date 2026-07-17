@@ -77,14 +77,14 @@ export default function CartDrawer() {
       >
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <h2 className="font-heading text-2xl font-bold text-white">
-            Sepetim {items.length > 0 && <span className="text-sand">({items.length})</span>}
+            Sepetim {items.length > 0 && <span className="text-white">({items.length})</span>}
           </h2>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={closeDrawer}
             aria-label="Sepeti kapat"
-            className="flex h-11 w-11 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-sand"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-white"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -114,7 +114,7 @@ export default function CartDrawer() {
                 <div>
                   <p className="text-xs text-muted">
                     Ücretsiz kargoya{" "}
-                    <strong className="spec-value text-sand">{formatPrice(remaining)}</strong>{" "}
+                    <strong className="spec-value text-white">{formatPrice(remaining)}</strong>{" "}
                     kaldı
                   </p>
                   <div className="mt-2.5 h-1.5 overflow-hidden bg-background">
@@ -137,7 +137,7 @@ export default function CartDrawer() {
               )}
             </div>
 
-            <ul className="flex-1 divide-y divide-border overflow-y-auto px-5">
+            <ul data-lenis-prevent className="flex-1 divide-y divide-border overflow-y-auto px-5">
               {items.map((item) => (
                 <CartItemLine
                   key={`${item.slug}-${item.color}`}
@@ -156,7 +156,7 @@ export default function CartDrawer() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="font-heading text-lg font-bold uppercase text-white">Toplam</span>
-                <span className="spec-value text-xl font-semibold text-sand">
+                <span className="spec-value text-xl font-semibold text-white">
                   {formatPrice(orderTotal)}
                 </span>
               </div>
