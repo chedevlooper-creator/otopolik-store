@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MatConfigurator from "@/components/configurator/MatConfigurator";
 import { ConfiguratorAssistantProvider } from "@/components/configurator/ConfiguratorAssistantProvider";
+import ConfiguratorChat from "@/components/configurator/ConfiguratorChat";
 import { isAiConfigured } from "@/lib/ai/config";
 import { getContentPage } from "@/lib/cms";
 
@@ -25,6 +26,7 @@ export default async function ConfiguratorPage({
   const { marka = "", model = "", yil = "", kasa = "" } = await searchParams;
   const { page, sections } = await getContentPage("olusturucu");
   const kicker = sections.find((s) => s.sectionKey === "kicker");
+  const aiEnabled = isAiConfigured();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
@@ -46,7 +48,8 @@ export default async function ConfiguratorPage({
           bodyOrChassis: kasa,
         }}
       >
-        <MatConfigurator aiEnabled={isAiConfigured()} />
+        {aiEnabled ? <ConfiguratorChat /> : null}
+        <MatConfigurator aiEnabled={aiEnabled} />
       </ConfiguratorAssistantProvider>
     </div>
   );
