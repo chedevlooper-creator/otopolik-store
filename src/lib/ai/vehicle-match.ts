@@ -66,14 +66,32 @@ function toCandidate(
 function resolveCatalogResults(
   vehicles: VehicleSearchResult[],
   source: VehicleMatchCandidate["source"],
+  query: string,
   year?: string
 ): VehicleMatchResult | null {
-  // Exactly one catalog result is the only deterministic high-confidence rule.
-  // Multiple plausible body/model variants always require explicit user choice.
-  if (vehicles.length === 1) {
+  // A unique result or one exact brand+model/model label is high confidence.
+  // Other multi-result queries always require explicit user choice.
+  const normalizedQuery = normalizeSearchText(withoutYear(query));
+  const exactResults = vehicles.filter((vehicle) => {
+    const normalizedModel = normalizeSearchText(vehicle.model);
+    const normalizedLabel = normalizeSearchText(
+      `${vehicle.brand} ${vehicle.model}`
+    );
+    return (
+      normalizedQuery === normalizedModel || normalizedQuery === normalizedLabel
+    );
+  });
+  const matchedVehicle =
+    vehicles.length === 1
+      ? vehicles[0]
+      : exactResults.length === 1
+        ? exactResults[0]
+        : null;
+
+  if (matchedVehicle) {
     return {
       status: "matched",
-      candidate: toCandidate(vehicles[0], source, year),
+      candidate: toCandidate(matchedVehicle, source, year),
     };
   }
 
@@ -120,6 +138,7 @@ async function resolveWithLanguageModel(
     return resolveCatalogResults(
       searchVehicles(searchQuery),
       "llm",
+      searchQuery,
       parsed.year ?? extractYear(query)
     );
   } catch (error) {
@@ -149,6 +168,7 @@ export async function runVehicleMatch(
   const deterministic = resolveCatalogResults(
     withoutYearResults,
     "deterministic",
+    query,
     year
   );
   if (deterministic) return deterministic;
