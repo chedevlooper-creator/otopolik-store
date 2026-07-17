@@ -9,7 +9,7 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Boundaries & AI Visibility
 
-- [ ] **BOUND-01**: Storefront has a dedicated customer AI UI flag that defaults off without disabling admin AI or AI APIs
+- [x] **BOUND-01**: Storefront has a dedicated customer AI UI flag that defaults off without disabling admin AI or AI APIs
 - [ ] **BOUND-02**: With the customer AI UI flag off, header, footer, configurator, and support chrome show no AI/Destek entry points
 - [ ] **BOUND-03**: Visiting `/destek` lands on a non-AI WhatsApp/contact fallback (no chat UI)
 - [ ] **BOUND-04**: Primary customer navigation is reduced to essential destinations (Tasarla, Ürünler, Galeri, İletişim, Sepet) with no dead anchors
@@ -89,7 +89,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BOUND-01 | Phase 9 | Pending |
+| BOUND-01 | Phase 9 | Complete |
 | BOUND-02 | Phase 9 | Pending |
 | BOUND-03 | Phase 9 | Pending |
 | BOUND-04 | Phase 9 | Pending |
@@ -116,6 +116,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VERIFY-05 | Phase 13 | Pending |
 
 **Coverage:**
+
 - v1.2 requirements: 25 total
 - Mapped to phases: 25
 - Unmapped: 0 ✓
