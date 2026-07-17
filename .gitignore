@@ -83,3 +83,6 @@ vendor/
 coverage/
 .cache/
 tmp/
+
+# run-skill screenshots
+.claude/skills/run-otopolik-store/shots/
