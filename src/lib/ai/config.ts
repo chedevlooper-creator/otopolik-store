@@ -1,18 +1,21 @@
 export type AiFeature =
   | "vehicle-match"
   | "configurator-chat"
-  | "support-chat";
+  | "support-chat"
+  | "content-generator";
 
 export const AI_MODEL_IDS: Record<AiFeature, string> = {
   "vehicle-match": "claude-haiku-4-5-20251001",
   "configurator-chat": "claude-sonnet-5",
   "support-chat": "claude-sonnet-5",
+  "content-generator": "claude-opus-4-8",
 };
 
 const AI_MAX_TOKENS: Record<AiFeature, number> = {
   "vehicle-match": 256,
   "configurator-chat": 2048,
   "support-chat": 2048,
+  "content-generator": 4096,
 };
 
 function getAnthropicApiKey(): string | null {
