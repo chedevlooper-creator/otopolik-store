@@ -112,17 +112,34 @@ Constraint: never reintroduce "AI Destek" branding into Footer/Header while `CUS
 
 ## UI Considerations
 
-Applicable state considerations resolved: 4 covered, 1 backstop, 0 unresolved.
+Probe coverage: 20 applicable considerations across 3 elements — 19 covered, 1 backstop, 0 unresolved.
 
-This phase touches three elements: **nav** (`Header.tsx` `NAV_LINKS` + `Footer.tsx` link columns), **static-content** (`/destek` fallback page), and one **interactive-control** (the WhatsApp CTA button + secondary link row). No `form`, `list-collection`, or `media` elements are added or modified.
+Elements probed: **E1 nav** (`Header.tsx` `NAV_LINKS` + mobile dialog + `Footer.tsx` link columns), **E2 static-content** (`/destek` fallback page), **E3 interactive-control** (WhatsApp CTA + secondary link row). Kind confirmation: element prose re-read against detected kinds; nothing missed — this phase adds no `form`, `media`, or variable `list-collection` surfaces.
 
-| Category | Element(s) | Status | Resolution / Reason |
-|----------|------------|--------|---------------------|
-| overflow | nav (Header primary + mobile dialog) | ✅ covered | Nav link labels are short fixed Turkish strings ("Tasarla", "Ürünler", "Galeri", "İletişim"); existing `whitespace`/flex layout already handles this width without wrap; no truncation logic needed |
-| long-text | static-content (`/destek` fallback copy) | ✅ covered | All fallback copy is short, hardcoded Turkish strings (no CMS/user input in this phase) — no reflow risk |
-| loading | nav | ✅ covered | `NAV_LINKS` is a static const array rendered server/client without a fetch; no loading state applies |
-| loading | static-content (`/destek`) | ✅ covered | `getStoreSettings()` resolves server-side before render (async server component); no client loading flash for the WhatsApp link |
-| error | interactive-control (WhatsApp CTA) | 🧪 backstop | If `settings.whatsappNumber` were ever empty, `buildWhatsAppLink` would still produce a `wa.me/` link with no number — held-out test should assert `getStoreSettings()`'s static fallback (`site-config.ts`) always supplies a non-empty WhatsApp number so this can never render a broken CTA |
+| Element | Category | Status | Resolution |
+|---------|----------|--------|------------|
+| E1 nav | loading | ✅ covered | `NAV_LINKS` is a static const array rendered without any fetch — no loading state exists |
+| E1 nav | error | ✅ covered | No load/submit path; links are static Next.js `<Link>`s — no error state can render |
+| E1 nav | overflow | ✅ covered | Four short fixed labels (see Copywriting Contract nav row) fit the existing flex layout at desktop breakpoints; below that the mobile dialog lists links vertically full-width — no truncation logic needed |
+| E1 nav | long-text | ✅ covered | Labels are hardcoded short Turkish strings (longest: "İletişim"), not user/CMS-driven |
+| E2 `/destek` | empty | ✅ covered | Page always renders hardcoded copy (Copywriting Contract rows) — no data-dependent content, cannot be empty |
+| E2 `/destek` | loading | ✅ covered | Async server component; `getStoreSettings()` resolves before HTML is sent — no client loading flash |
+| E2 `/destek` | error | ✅ covered | `getStoreSettings()` falls back to static `site-config.ts` per the data-layer pattern — the page cannot fail to render from missing settings |
+| E2 `/destek` | populated | ✅ covered | Happy path is the only path: hero + fallback card exactly as locked in the Copywriting Contract |
+| E2 `/destek` | partial | ✅ covered | Content is not field-driven; a single settings value with a static fallback — no partial shape exists |
+| E2 `/destek` | overflow | ✅ covered | Short fixed strings wrap inside existing max-width containers (`leading-7` body) — no clip/scroll risk |
+| E2 `/destek` | zero-one-many | ✅ covered | Only collection is the fixed 3-item secondary link row — count never varies |
+| E2 `/destek` | long-text | ✅ covered | All copy hardcoded and locked in the Copywriting Contract; no user/CMS input this phase |
+| E3 WhatsApp CTA | empty | 🧪 backstop | statement: an empty `settings.whatsappNumber` would make `buildWhatsAppLink` emit a numberless `wa.me/` link (broken CTA); verification: backstop — held-out test asserts `getStoreSettings()`'s static fallback (`site-config.ts`) always supplies a non-empty WhatsApp number |
+| E3 WhatsApp CTA | loading | ✅ covered | href resolved server-side before render — the button never renders in a pending state |
+| E3 WhatsApp CTA | error | ✅ covered | No fetch/mutation; anchor navigation is browser-native — the only app-level failure shape (missing number) is the empty-state backstop above |
+| E3 WhatsApp CTA | populated | ✅ covered | Locked in Copywriting Contract: "WhatsApp'tan destek al" + prefilled message + 3 secondary links |
+| E3 WhatsApp CTA | partial | ✅ covered | Single scalar setting with fallback — no multi-field partial state |
+| E3 WhatsApp CTA | overflow | ✅ covered | Fixed short button label on a `min-h-12` target; secondary link row wraps via flex at narrow widths per the existing Footer pattern |
+| E3 WhatsApp CTA | zero-one-many | ✅ covered | One primary CTA + fixed 3 secondary links — counts never vary |
+| E3 WhatsApp CTA | long-text | ✅ covered | Labels hardcoded; the prefilled WhatsApp message travels as a URL-encoded query param, never rendered as page text |
+
+Empty-state and error-state copy stays in `## Copywriting Contract` — rows above reference those rows rather than restating copy.
 
 ---
 
