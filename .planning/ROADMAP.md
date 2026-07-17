@@ -43,7 +43,11 @@
   3. Accepting a match pre-fills the existing MatConfigurator vehicle step
   4. With `ANTHROPIC_API_KEY` unset, every AI entry point falls back to the non-AI path (manual dropdowns) without a broken UI; the API key never appears in browser bundles
   5. Public AI endpoints enforce rate limits / token caps / kill switch, and a golden eval set (incl. price-equality + Turkish checks) runs before prompt/model changes
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 05-01-PLAN.md — Shared AI client, cost controls, customer-only price tools
+- [ ] 05-02-PLAN.md — Deterministic-first vehicle match pipeline + `/api/ai/*` routes
+- [ ] 05-03-PLAN.md — VehicleMatchInput UI, MatConfigurator prefill, golden eval harness
 **UI hint**: yes
 
 ### Phase 6: Streaming Chat & Configurator Assistant
