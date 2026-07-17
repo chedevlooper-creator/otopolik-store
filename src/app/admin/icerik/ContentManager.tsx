@@ -21,6 +21,7 @@ import type {
   SiteSeo,
   TestimonialItem,
 } from "@/lib/cms-defaults";
+import ContentGeneratorPanel from "./ContentGeneratorPanel";
 import {
   deleteFaqAction,
   seedCmsAction,
@@ -36,6 +37,7 @@ const inputClass =
   "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-brand-red/15";
 
 type TabId =
+  | "ai-drafts"
   | "seo"
   | "home"
   | "pages"
@@ -45,6 +47,7 @@ type TabId =
   | "testimonials";
 
 const TABS: { id: TabId; label: string; icon: typeof SearchIcon }[] = [
+  { id: "ai-drafts", label: "AI Taslak", icon: SparklesIcon },
   { id: "seo", label: "SEO", icon: SearchIcon },
   { id: "home", label: "Ana Sayfa", icon: LayoutTemplateIcon },
   { id: "pages", label: "Sayfalar", icon: FileTextIcon },
@@ -55,6 +58,8 @@ const TABS: { id: TabId; label: string; icon: typeof SearchIcon }[] = [
 ];
 
 type Props = {
+  aiAvailable: boolean;
+  products: { slug: string; name: string }[];
   initialSeo: SiteSeo;
   seoSource: "convex" | "fallback";
   pages: ContentPage[];
@@ -66,6 +71,8 @@ type Props = {
 };
 
 export default function ContentManager({
+  aiAvailable,
+  products,
   initialSeo,
   seoSource,
   pages,
@@ -157,7 +164,7 @@ export default function ContentManager({
       ) : null}
 
       <div className="flex flex-wrap gap-2">
-        {TABS.map((t) => (
+        {TABS.filter((t) => t.id !== "ai-drafts" || aiAvailable).map((t) => (
           <button
             key={t.id}
             type="button"
@@ -186,6 +193,13 @@ export default function ContentManager({
           Varsayılanları yükle
         </button>
       </div>
+
+      {tab === "ai-drafts" ? (
+        <ContentGeneratorPanel
+          aiAvailable={aiAvailable}
+          products={products}
+        />
+      ) : null}
 
       {tab === "seo" ? (
         <form

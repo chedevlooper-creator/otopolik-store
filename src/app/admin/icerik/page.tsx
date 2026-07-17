@@ -15,18 +15,29 @@ import {
   DEFAULT_PAGES,
   DEFAULT_SECTIONS,
 } from "@/lib/cms-defaults";
+import { getProducts } from "@/lib/catalog";
+import { isAiConfigured } from "@/lib/ai/config";
+import { isConvexConfigured } from "@/lib/convex-server";
 import ContentManager from "./ContentManager";
 
 export const dynamic = "force-dynamic";
 
 async function loadAdminBundle() {
-  const [{ seo, source: seoSource }, faqs, marquee, trust, testimonials] =
+  const [
+    { seo, source: seoSource },
+    faqs,
+    marquee,
+    trust,
+    testimonials,
+    products,
+  ] =
     await Promise.all([
       getSiteSeo(),
       getFaqs(),
       getPromos("marquee"),
       getPromos("trust"),
       getTestimonials(),
+      getProducts(),
     ]);
 
   const pages: ContentPage[] = [];
@@ -50,6 +61,7 @@ async function loadAdminBundle() {
     marquee: marquee.items as PromoItem[],
     trust: trust.items as PromoItem[],
     testimonials: testimonials.items as TestimonialItem[],
+    products: products.map(({ slug, name }) => ({ slug, name })),
   };
 }
 
@@ -69,6 +81,8 @@ export default async function AdminIcerikPage() {
       </div>
 
       <ContentManager
+        aiAvailable={isAiConfigured() && isConvexConfigured()}
+        products={data.products}
         initialSeo={data.seo as SiteSeo}
         seoSource={data.seoSource}
         pages={data.pages}
