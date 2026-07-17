@@ -1,19 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: null
-milestone_name: null
-current_phase: null
-current_phase_name: null
-status: milestone_complete
-stopped_at: v1.1 shipped
-last_updated: "2026-07-17T05:12:00.000Z"
+milestone: v1.2
+milestone_name: Sade Lüks Deneyim
+status: planning
+last_updated: "2026-07-17T08:58:00.261Z"
 last_activity: 2026-07-17
-last_activity_desc: v1.1 milestone archived and shipped
 progress:
   total_phases: 0
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -27,9 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-17)
 
 ## Current Position
 
-No active milestone. v1.1 "AI Destekli Lüks Deneyim" (Phases 5-8) shipped 2026-07-17.
-
-**Next action:** Run `/gsd-new-milestone` to scope the next version. Phase numbering continues from 9.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-17 — Milestone v1.2 started
 
 ## Shipped Milestones
 
