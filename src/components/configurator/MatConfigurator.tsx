@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
-import ColorPicker from "./ColorPicker";
+import ColorPicker, { type ColorSwatch } from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
@@ -27,40 +27,60 @@ import FlatMatPreview from "./FlatMatPreview";
 const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
 
 const FLOOR_COLORS = [
-  { name: "Siyah", hex: "#0f1012" },
-  { name: "Antrasit", hex: "#25282d" },
-  { name: "Gri", hex: "#585d64" },
-  { name: "Açık Gri", hex: "#9ba0a9" },
-  { name: "Bej", hex: "#bfa985" },
-  { name: "Kahve", hex: "#4e331f" },
-  { name: "Lacivert", hex: "#111f32" },
-  { name: "Bordo", hex: "#401216" },
+  { name: "Gece Siyahı", hex: "#0b0a0a", slug: "gece-siyahi" },
+  { name: "Koyu Kahve", hex: "#170700", slug: "koyu-kahve" },
+  { name: "Espresso", hex: "#170700", slug: "espresso" },
+  { name: "Toprak Kahve", hex: "#834f3a", slug: "toprak-kahve" },
+  { name: "Tarçın Kahve", hex: "#dc7338", slug: "tarcin-kahve" },
+  { name: "Asil Bordo", hex: "#bd5c5d", slug: "asil-bordo" },
+  { name: "Sıcak Karamel", hex: "#5c1f00", slug: "sicak-karamel" },
+  { name: "Kıyı Beji", hex: "#be8861", slug: "kiyi-beji" },
+  { name: "Kum Işığı", hex: "#edd4b8", slug: "kum-isigi" },
+  { name: "Gün Işığı", hex: "#f79000", slug: "gun-isigi" },
+  { name: "Gece Mavisi", hex: "#313e5d", slug: "gece-mavisi" },
+  { name: "Saks Mavisi", hex: "#313e5d", slug: "saks-mavisi" },
+  { name: "Şehrin Grisi", hex: "#868485", slug: "sehrin-grisi" },
 ];
 
 const EDGE_COLORS = [
-  { name: "Siyah", hex: "#0f1012" },
-  { name: "Gri", hex: "#585d64" },
-  { name: "Bej", hex: "#bfa985" },
-  { name: "Kırmızı", hex: "#8c1626" },
-  { name: "Mavi", hex: "#1b3152" },
-  { name: "Turuncu", hex: "#ad5b23" },
-  { name: "Yeşil", hex: "#1b3c26" },
-  { name: "Mor", hex: "#3d214a" },
+  { name: "Gece Siyahı", hex: "#2e292c", slug: "gece-siyahi" },
+  { name: "Espresso", hex: "#56362e", slug: "espresso" },
+  { name: "Toprak Kahve", hex: "#894c2c", slug: "toprak-kahve" },
+  { name: "Haki Yeşil", hex: "#292a18", slug: "haki-yesil" },
+  { name: "Şehrin Grisi", hex: "#544648", slug: "sehrin-grisi" },
+  { name: "Kirli Beyaz", hex: "#aaa5a4", slug: "kirli-beyaz" },
+  { name: "Kum Işığı", hex: "#b79688", slug: "kum-isigi" },
+  { name: "Sıcak Karamel", hex: "#a2480b", slug: "sicak-karamel" },
+  { name: "Turuncu", hex: "#ed6b22", slug: "turuncu" },
+  { name: "Asil Bordo", hex: "#5d0007", slug: "asil-bordo" },
+  { name: "Alev Kırmızı", hex: "#ec4e3d", slug: "alev-kirmizi" },
+  { name: "Fuşya Pembesi", hex: "#ff97bb", slug: "fusya-pembesi" },
+  { name: "Pudra Pembe", hex: "#f1acc6", slug: "pudra-pembe" },
+  { name: "Lavanta Moru", hex: "#cd9ce0", slug: "lavanta-moru" },
+  { name: "Duman Moru", hex: "#795d91", slug: "duman-moru" },
+  { name: "Gece İndigosu", hex: "#39374c", slug: "gece-indigosu" },
+  { name: "Saks Mavisi", hex: "#335eb3", slug: "saks-mavisi" },
+  { name: "Kristal Mavisi", hex: "#30c3dd", slug: "kristal-mavisi" },
+  { name: "Açık Mavi", hex: "#0bb2c6", slug: "acik-mavi" },
+  { name: "Okyanus Yeşili", hex: "#002127", slug: "okyanus-yesili" },
+  { name: "Mint Yeşili", hex: "#658e58", slug: "mint-yesili" },
+  { name: "Limon Yeşili", hex: "#cfe877", slug: "limon-yesili" },
+  { name: "Canlı Sarı", hex: "#eebe00", slug: "canli-sari" },
 ];
 
 const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> = {
-  "Siyah|Siyah": { src: "/media/configurator/siyah-siyah.png", kind: "digital" },
-  "Siyah|Gri": { src: "/media/configurator/siyah-gri.png", kind: "digital" },
-  "Siyah|Bej": { src: "/media/configurator/siyah-bej.png", kind: "digital" },
-  "Siyah|Kırmızı": {
+  "Gece Siyahı|Gece Siyahı": { src: "/media/configurator/siyah-siyah.png", kind: "digital" },
+  "Gece Siyahı|Şehrin Grisi": { src: "/media/configurator/siyah-gri.png", kind: "digital" },
+  "Gece Siyahı|Kum Işığı": { src: "/media/configurator/siyah-bej.png", kind: "digital" },
+  "Gece Siyahı|Alev Kırmızı": {
     src: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
     kind: "real",
   },
-  "Siyah|Mavi": { src: "/media/configurator/siyah-mavi.png", kind: "digital" },
-  "Siyah|Turuncu": { src: "/media/configurator/siyah-turuncu.png", kind: "digital" },
-  "Siyah|Yeşil": { src: "/media/configurator/siyah-yesil.png", kind: "digital" },
-  "Siyah|Mor": { src: "/media/configurator/siyah-mor.png", kind: "digital" },
-  "Lacivert|Turuncu": {
+  "Gece Siyahı|Saks Mavisi": { src: "/media/configurator/siyah-mavi.png", kind: "digital" },
+  "Gece Siyahı|Turuncu": { src: "/media/configurator/siyah-turuncu.png", kind: "digital" },
+  "Gece Siyahı|Mint Yeşili": { src: "/media/configurator/siyah-yesil.png", kind: "digital" },
+  "Gece Siyahı|Lavanta Moru": { src: "/media/configurator/siyah-mor.png", kind: "digital" },
+  "Saks Mavisi|Turuncu": {
     src: "/media/configurator/lacivert-turuncu.png",
     kind: "digital",
   },
@@ -88,8 +108,8 @@ export default function MatConfigurator({
     year: initialYear,
     bodyOrChassis: initialBodyOrChassis,
   });
-  const [floor, setFloor] = useState(FLOOR_COLORS[0]);
-  const [edge, setEdge] = useState(EDGE_COLORS[3]);
+  const [floor, setFloor] = useState<ColorSwatch>(FLOOR_COLORS[0]);
+  const [edge, setEdge] = useState<ColorSwatch>(EDGE_COLORS[10]);
   const [heelPad, setHeelPad] = useState(false);
   const [trunkMat, setTrunkMat] = useState(false);
   const [floorTouched, setFloorTouched] = useState(false);
@@ -100,7 +120,7 @@ export default function MatConfigurator({
   const totalPrice = calculateMatPrice({ heelPad, trunkMat });
 
   const previewKey = `${floor.name}|${edge.name}`;
-  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Siyah|Siyah"];
+  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Gece Siyahı|Gece Siyahı"];
   const hasExactPreview = previewKey in PREVIEW_IMAGES;
 
   const vehicleComplete = isVehicleDetailsComplete(vehicle);

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export type ColorSwatch = {
   name: string;
   hex: string;
+  slug?: string;
 };
 
 type Props = {
