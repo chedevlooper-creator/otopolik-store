@@ -68,4 +68,27 @@ Layer AI capabilities over the shipped luxury storefront — customer-facing ass
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| _(filled by roadmap)_ | | |
+| AIINF-01 | Phase 5 | Pending |
+| AIINF-02 | Phase 5 | Pending |
+| AIINF-03 | Phase 5 | Pending |
+| AIINF-04 | Phase 5 | Pending |
+| AIINF-05 | Phase 5 | Pending |
+| AIINF-06 | Phase 5 | Pending |
+| VMATCH-01 | Phase 5 | Pending |
+| VMATCH-02 | Phase 5 | Pending |
+| VMATCH-03 | Phase 5 | Pending |
+| VMATCH-04 | Phase 5 | Pending |
+| CFGAI-01 | Phase 6 | Pending |
+| CFGAI-02 | Phase 6 | Pending |
+| CFGAI-03 | Phase 6 | Pending |
+| CFGAI-04 | Phase 6 | Pending |
+| CFGAI-05 | Phase 6 | Pending |
+| SUPAI-01 | Phase 7 | Pending |
+| SUPAI-02 | Phase 7 | Pending |
+| SUPAI-03 | Phase 7 | Pending |
+| SUPAI-04 | Phase 7 | Pending |
+| SUPAI-05 | Phase 7 | Pending |
+| CNTGEN-01 | Phase 8 | Pending |
+| CNTGEN-02 | Phase 8 | Pending |
+| CNTGEN-03 | Phase 8 | Pending |
+| CNTGEN-04 | Phase 8 | Pending |
