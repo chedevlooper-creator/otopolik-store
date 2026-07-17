@@ -48,4 +48,9 @@ describe("AI configuration", () => {
       "claude-haiku-4-5-20251001"
     );
   });
+
+  it("uses Sonnet with a conversational token budget for configurator chat", () => {
+    expect(AI_MODEL_IDS["configurator-chat"]).toBe("claude-sonnet-5");
+    expect(getAiMaxTokens("configurator-chat")).toBeGreaterThanOrEqual(1024);
+  });
 });
