@@ -10,19 +10,19 @@ Layer AI capabilities over the shipped luxury storefront — customer-facing ass
 
 ### AI Infrastructure & Guardrails (AIINF)
 
-- [ ] **AIINF-01**: The system provides a server-side AI client layer (Next.js route handlers under `src/app/api/ai/*`) that keeps the provider API key server-only and never exposes it to the browser.
-- [ ] **AIINF-02**: When the AI provider key is unset or misconfigured, every AI entry point degrades gracefully to the existing non-AI path (manual dropdowns, WhatsApp button, hand-written CMS) instead of showing a broken UI — mirroring the Convex-first + static-fallback pattern.
-- [ ] **AIINF-03**: All customer-facing AI prices and shipping/policy claims are sourced from code (`calculateMatPrice`, `getVehiclePrice`, site-settings) via tool calls — the model never free-generates a price or delivery promise.
-- [ ] **AIINF-04**: Public AI endpoints enforce cost controls — per-session/IP rate limiting, per-feature `max_tokens` caps, and a feature-flag kill switch.
-- [ ] **AIINF-05**: Customer-facing assistants are structurally isolated from any admin-key-gated (`requireAdminKey()`) mutation — untrusted chat input can never reach a privileged tool surface.
-- [ ] **AIINF-06**: An evaluation harness (golden dataset per feature, incl. price-equality assertions and Turkish-language quality checks) runs before every prompt/model change.
+- [x] **AIINF-01**: The system provides a server-side AI client layer (Next.js route handlers under `src/app/api/ai/*`) that keeps the provider API key server-only and never exposes it to the browser.
+- [x] **AIINF-02**: When the AI provider key is unset or misconfigured, every AI entry point degrades gracefully to the existing non-AI path (manual dropdowns, WhatsApp button, hand-written CMS) instead of showing a broken UI — mirroring the Convex-first + static-fallback pattern.
+- [x] **AIINF-03**: All customer-facing AI prices and shipping/policy claims are sourced from code (`calculateMatPrice`, `getVehiclePrice`, site-settings) via tool calls — the model never free-generates a price or delivery promise.
+- [x] **AIINF-04**: Public AI endpoints enforce cost controls — per-session/IP rate limiting, per-feature `max_tokens` caps, and a feature-flag kill switch.
+- [x] **AIINF-05**: Customer-facing assistants are structurally isolated from any admin-key-gated (`requireAdminKey()`) mutation — untrusted chat input can never reach a privileged tool surface.
+- [x] **AIINF-06**: An evaluation harness (golden dataset per feature, incl. price-equality assertions and Turkish-language quality checks) runs before every prompt/model change.
 
 ### AI Vehicle Matcher (VMATCH)
 
-- [ ] **VMATCH-01**: A user can type free-text vehicle info in Turkish (e.g. "2019 Passat variant", "19 model kaptan Egea") and get a resolved brand/model from `vehicle-data.ts` with the correct price tier.
-- [ ] **VMATCH-02**: Matching runs deterministic fuzzy/token search (`vehicle-search.ts`) first and only falls back to the LLM to parse messy text or disambiguate 0-/multi-match cases.
-- [ ] **VMATCH-03**: On ambiguous or no-match results, the user is shown a disambiguation prompt (candidate vehicles) rather than a wrong silent guess.
-- [ ] **VMATCH-04**: A resolved vehicle from the matcher pre-fills the existing `MatConfigurator` vehicle step.
+- [x] **VMATCH-01**: A user can type free-text vehicle info in Turkish (e.g. "2019 Passat variant", "19 model kaptan Egea") and get a resolved brand/model from `vehicle-data.ts` with the correct price tier.
+- [x] **VMATCH-02**: Matching runs deterministic fuzzy/token search (`vehicle-search.ts`) first and only falls back to the LLM to parse messy text or disambiguate 0-/multi-match cases.
+- [x] **VMATCH-03**: On ambiguous or no-match results, the user is shown a disambiguation prompt (candidate vehicles) rather than a wrong silent guess.
+- [x] **VMATCH-04**: A resolved vehicle from the matcher pre-fills the existing `MatConfigurator` vehicle step.
 
 ### AI Configurator Assistant (CFGAI)
 
@@ -68,16 +68,16 @@ Layer AI capabilities over the shipped luxury storefront — customer-facing ass
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AIINF-01 | Phase 5 | Pending |
-| AIINF-02 | Phase 5 | Pending |
-| AIINF-03 | Phase 5 | Pending |
-| AIINF-04 | Phase 5 | Pending |
-| AIINF-05 | Phase 5 | Pending |
-| AIINF-06 | Phase 5 | Pending |
-| VMATCH-01 | Phase 5 | Pending |
-| VMATCH-02 | Phase 5 | Pending |
-| VMATCH-03 | Phase 5 | Pending |
-| VMATCH-04 | Phase 5 | Pending |
+| AIINF-01 | Phase 5 | Complete |
+| AIINF-02 | Phase 5 | Complete |
+| AIINF-03 | Phase 5 | Complete |
+| AIINF-04 | Phase 5 | Complete |
+| AIINF-05 | Phase 5 | Complete |
+| AIINF-06 | Phase 5 | Complete |
+| VMATCH-01 | Phase 5 | Complete |
+| VMATCH-02 | Phase 5 | Complete |
+| VMATCH-03 | Phase 5 | Complete |
+| VMATCH-04 | Phase 5 | Complete |
 | CFGAI-01 | Phase 6 | Pending |
 | CFGAI-02 | Phase 6 | Pending |
 | CFGAI-03 | Phase 6 | Pending |
