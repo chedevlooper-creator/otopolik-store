@@ -33,7 +33,7 @@
   --color-sand: #ffffff;
   --color-sand-dim: rgba(255, 255, 255, 0.6);
   --font-sans: var(--font-body);
-  --font-heading: var(--font-heading);
+  --font-heading: var(--font-body);
   --font-mono: var(--font-spec);
 }
 
@@ -85,7 +85,9 @@ h2,
 h3,
 h4,
 .font-heading {
-  font-family: var(--font-heading), "Syne", system-ui, sans-serif;
+  font-family: var(--font-body), "Instrument Sans", system-ui, sans-serif;
+  letter-spacing: -0.035em;
+  font-weight: 800;
 }
 
 h1,
@@ -291,11 +293,11 @@ h3 {
 /* ─── Section başlık — daha cesur ─── */
 .section-title {
   color: var(--foreground);
-  font-family: var(--font-heading), "Syne", system-ui, sans-serif;
+  font-family: var(--font-body), "Instrument Sans", system-ui, sans-serif;
   font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 500; /* Slightly lighter for elegance */
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  font-weight: 800; /* Rich bold weight */
+  letter-spacing: -0.04em; /* Tight letter spacing for premium look */
+  line-height: 1.1;
   text-wrap: balance;
 }
 
@@ -1147,8 +1149,8 @@ h3 {
 }
 
 .premium-site .section-title {
-  font-weight: 500;
-  letter-spacing: -0.045em;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 

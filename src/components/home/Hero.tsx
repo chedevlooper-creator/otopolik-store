@@ -39,7 +39,7 @@ export default function Hero({ content }: Props) {
             Hassas Mühendislik Protokolü
           </span>
 
-          <p className="mt-3 font-heading text-[clamp(2.8rem,7vw,5.75rem)] font-medium leading-[0.88] tracking-[-0.055em] text-white">
+          <p className="mt-3 font-heading text-[clamp(2.8rem,7vw,5.75rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white">
             OTOPOLİK
           </p>
 
@@ -54,25 +54,25 @@ export default function Hero({ content }: Props) {
             </svg>
           </div>
 
-          <h1 className="mt-5 max-w-2xl font-heading text-[clamp(1.25rem,2.1vw,1.85rem)] font-medium leading-[1.15] tracking-[-0.03em] text-white">
+          <h1 className="mt-5 max-w-2xl font-heading text-[clamp(1.35rem,2.2vw,2rem)] font-semibold leading-[1.2] tracking-[-0.03em] text-white">
             {headline}
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base">
+          <p className="mt-3 max-w-md text-sm leading-6 text-white/70 sm:text-base">
             {hero?.body ?? "Lazer kesim kalıp. Premium EVA. 1-3 günde kargo."}
           </p>
 
           <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
             <Link
               href={primaryHref}
-              className="btn-press btn-red-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="btn-press btn-red-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[12.5px] font-bold uppercase tracking-[0.1em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {hero?.ctaLabel ?? "Aracını seç"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               href={secondary?.ctaHref ?? "/urunler"}
-              className="btn-press inline-flex min-h-12 items-center justify-center px-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white/65 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="btn-press inline-flex min-h-12 items-center justify-center px-4 text-[12.5px] font-bold uppercase tracking-[0.15em] text-white/65 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {secondary?.ctaLabel ?? "Koleksiyonu keşfet"}
             </Link>
