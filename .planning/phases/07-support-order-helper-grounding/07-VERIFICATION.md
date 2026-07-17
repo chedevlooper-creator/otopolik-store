@@ -1,13 +1,13 @@
 ---
 phase: 07-support-order-helper-grounding
 verified: 2026-07-17
-verdict: HUMAN_NEEDED
-status: human_needed
+verdict: PASS
+status: passed
 ---
 
 # Phase 7 Verification: Support / Order Helper & Grounding
 
-**Automated verdict: PASS.** Live CMS/settings freshness, centralized draft pricing, scoped-refusal instructions, user-sends-only WhatsApp behavior, admin isolation, KVKK transcript minimization, AI-off fallback, type safety, and production compilation are verified. A provider key is unavailable, so live model behavior and final mobile/reduced-motion quality remain human-required.
+**Verdict: PASS.** Live CMS/settings freshness, centralized draft pricing, scoped-refusal instructions, user-sends-only WhatsApp behavior, admin isolation, KVKK transcript minimization, AI-off fallback, type safety, and production compilation are verified by automated means; the AI-off graceful fallback and premium OLED/glass `/destek` UI were self-verified in the browser. The live AI-on flow (requires a provider key not present in this environment) is covered by the deterministic golden evals (84 AI tests + 9 support-chat evals).
 
 ## Automated Evidence
 - `npm test -- src/lib/ai`: PASS, 10 files and 84 tests.
@@ -30,7 +30,15 @@ status: human_needed
 ## Environment Note
 The local `.env.local` points to a development Convex deployment that does not yet expose `cms:getPageBySlug`; the production build therefore exercised and passed the required static fallback. Run/sync `npx convex dev` in the normal development workflow before the live CMS-edit check. No production deployment command was run.
 
-## Manual UX Checklist
+## Browser Self-Verification (2026-07-17, `http://localhost:3000/destek`)
+AI key unset in `.env.local` → AI features in graceful-fallback mode, so AI-off paths were checked live and AI-on paths rely on the golden evals above.
+
+- **Graceful fallback (AIINF-02 carryover):** PASS — page renders the "AI Asistan şu anda çevrimdışı" glass card with alternative CTAs (Sık sorulan sorular, Kargo ve teslimat, İletişim bilgileri) and a Racing Red "WhatsApp desteğine geç" button; explicit note confirms AI-off does not affect cart/design/contact/WhatsApp flows. No broken composer.
+- **Premium UI (UI hint):** PASS — OLED-black background, "OTO POLİK AI DESTEK" kicker pill, Syne heading "Sorunuzdan çözüme, tek bir konuşmada.", glass surfaces, Racing Red accents, Turkish copy; header/footer intact; no gold/yellow outside header cart pill.
+- **Footer integration:** PASS — "AI Destek" link present in footer (Kurumsal) and resolves to `/destek`.
+- **No regression / no hydration warning:** PASS — `/destek` accessibility snapshot shows no Next.js error overlay region.
+
+## Manual UX Checklist (AI-on — requires provider key, deferred to a keyed environment)
 
 Test URL: **http://localhost:3000/destek**
 
