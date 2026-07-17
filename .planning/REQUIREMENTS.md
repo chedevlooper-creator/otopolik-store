@@ -89,37 +89,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BOUND-01 | — | Pending |
-| BOUND-02 | — | Pending |
-| BOUND-03 | — | Pending |
-| BOUND-04 | — | Pending |
-| HOME-01 | — | Pending |
-| HOME-02 | — | Pending |
-| HOME-03 | — | Pending |
-| HOME-04 | — | Pending |
-| CONF-01 | — | Pending |
-| CONF-02 | — | Pending |
-| CONF-03 | — | Pending |
-| PROD-01 | — | Pending |
-| PROD-02 | — | Pending |
-| CART-01 | — | Pending |
-| CHECK-01 | — | Pending |
-| CHECK-02 | — | Pending |
-| CHECK-03 | — | Pending |
-| BRAND-01 | — | Pending |
-| TRUST-01 | — | Pending |
-| TRUST-02 | — | Pending |
-| VERIFY-01 | — | Pending |
-| VERIFY-02 | — | Pending |
-| VERIFY-03 | — | Pending |
-| VERIFY-04 | — | Pending |
-| VERIFY-05 | — | Pending |
+| BOUND-01 | Phase 9 | Pending |
+| BOUND-02 | Phase 9 | Pending |
+| BOUND-03 | Phase 9 | Pending |
+| BOUND-04 | Phase 9 | Pending |
+| HOME-01 | Phase 10 | Pending |
+| HOME-02 | Phase 10 | Pending |
+| HOME-03 | Phase 10 | Pending |
+| HOME-04 | Phase 10 | Pending |
+| BRAND-01 | Phase 10 | Pending |
+| TRUST-01 | Phase 10 | Pending |
+| TRUST-02 | Phase 10 | Pending |
+| CONF-01 | Phase 11 | Pending |
+| CONF-02 | Phase 11 | Pending |
+| CONF-03 | Phase 11 | Pending |
+| PROD-01 | Phase 11 | Pending |
+| PROD-02 | Phase 11 | Pending |
+| CART-01 | Phase 12 | Pending |
+| CHECK-01 | Phase 12 | Pending |
+| CHECK-02 | Phase 12 | Pending |
+| CHECK-03 | Phase 12 | Pending |
+| VERIFY-01 | Phase 13 | Pending |
+| VERIFY-02 | Phase 13 | Pending |
+| VERIFY-03 | Phase 13 | Pending |
+| VERIFY-04 | Phase 13 | Pending |
+| VERIFY-05 | Phase 13 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 25 total
-- Mapped to phases: 0
-- Unmapped: 25 ⚠️ (filled by roadmapper)
+- Mapped to phases: 25
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-17*
-*Last updated: 2026-07-17 — initial v1.2 scope*
+*Last updated: 2026-07-17 — roadmap traceability (Phases 9–13)*
