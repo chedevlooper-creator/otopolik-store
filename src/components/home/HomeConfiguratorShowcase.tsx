@@ -189,6 +189,26 @@ export default function HomeConfiguratorShowcase() {
     trunkMat: false,
   });
 
+  // Eksik alanı bul ve odakla (buton "ölü" görünmesin, kullanıcıyı yönlendirsin)
+  const focusFirstMissingField = () => {
+    const missingId = !selectedModel
+      ? "home-config-model"
+      : !/^\d{4}$/.test(selectedYear)
+        ? "home-config-year"
+        : "home-config-body";
+    window.requestAnimationFrame(() => {
+      document.getElementById(missingId)?.focus();
+    });
+  };
+
+  const handleCtaClick = () => {
+    if (!canAddConfiguredSet) {
+      focusFirstMissingField();
+      return;
+    }
+    handleAddToCart();
+  };
+
   // Add to Cart
   const handleAddToCart = () => {
     if (!canAddConfiguredSet) return;
@@ -406,18 +426,28 @@ export default function HomeConfiguratorShowcase() {
 
                 <button
                   type="button"
-                  onClick={handleAddToCart}
-                  disabled={!canAddConfiguredSet}
-                  className="group relative flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-red/90 text-[11px] font-black uppercase tracking-[0.15em] text-white transition-all hover:bg-brand-red hover:shadow-[0_0_24px_rgba(237,27,36,0.4)] active:scale-[0.98] disabled:opacity-50"
+                  onClick={handleCtaClick}
+                  aria-disabled={!canAddConfiguredSet}
+                  className={`group relative flex h-12 w-full items-center justify-center gap-2 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] text-white transition-all active:scale-[0.98] ${
+                    canAddConfiguredSet
+                      ? "bg-brand-red/90 hover:bg-brand-red hover:shadow-[0_0_24px_rgba(237,27,36,0.4)]"
+                      : "border border-brand-red/60 bg-brand-red/10 hover:border-brand-red hover:bg-brand-red/20"
+                  }`}
                 >
                   {added ? (
                     <>
                       <CheckIcon className="h-4 w-4 stroke-[3px]" />
                       Sepete Eklendi
                     </>
+                  ) : canAddConfiguredSet ? (
+                    <>
+                      <ShoppingBagIcon className="h-4 w-4" />
+                      Sepete Ekle
+                    </>
                   ) : (
                     <>
-                      {canAddConfiguredSet ? "Sepete Ekle" : "Araç Bilgisini Tamamla"}
+                      Araç Bilgisini Tamamla
+                      <ArrowRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
                     </>
                   )}
                 </button>
