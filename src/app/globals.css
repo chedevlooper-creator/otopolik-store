@@ -1265,3 +1265,53 @@ h3 {
     backdrop-filter: blur(16px) saturate(1.2);
   }
 }
+
+/* ─── Premium Custom Scrollbars ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Sticky Hover Prevention on Touch ─── */
+@media (hover: hover) {
+  .btn-press:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-red-rich:hover:not(:disabled) {
+    background-position: 100% 50%;
+    box-shadow: 0 4px 24px rgba(140, 22, 38, 0.5),
+      0 0 40px rgba(169, 29, 50, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+@media (hover: none) {
+  /* Remove translate transforms or sticky shadows on touch devices */
+  .btn-press:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-red-rich:hover {
+    background-position: 0% 50%;
+    box-shadow: 0 2px 12px rgba(140, 22, 38, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+

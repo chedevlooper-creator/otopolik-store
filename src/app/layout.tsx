@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
+import { NetworkToast } from "@/components/ui/NetworkToast";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { SettingsProvider } from "@/context/settings-context";
 import { CmsProvider } from "@/context/cms-context";
@@ -139,6 +140,7 @@ export default async function RootLayout({
             >
               <CatalogProvider products={products}>
                 <SiteChrome>{children}</SiteChrome>
+                <NetworkToast />
               </CatalogProvider>
             </CmsProvider>
           </SettingsProvider>

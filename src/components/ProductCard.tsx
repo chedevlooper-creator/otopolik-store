@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
+import { shimmer } from "@/lib/image-placeholders";
 import { Product } from "@/lib/types";
 import { CATEGORY_LABELS } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
@@ -29,29 +30,33 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         featured ? "min-h-[520px]" : "min-h-[360px]"
       }`}
     >
-      <div className={`premium-grid relative overflow-hidden border-b border-white/[0.07] bg-[#0e0e0e] ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
+      <div className={`premium-grid relative overflow-hidden border-b border-transparent bg-transparent ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,.05),transparent_55%)] opacity-80" />
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/[0.03] blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
         {/* Cam vitrin — ürün cam bir pencerenin arkasında sergilenir */}
         <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"}`}>
           {hasLightImage ? (
             <div className="absolute inset-3 overflow-hidden rounded-xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.1)] sm:inset-4">
-              <Image
+              <SafeImage
                 src={product.image}
                 alt={product.name}
                 fill
                 sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+                placeholder="blur"
+                blurDataURL={shimmer(300, 300)}
                 className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               {/* Yumuşak stüdyo vinyeti */}
               <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.12))]" />
             </div>
           ) : (
-            <Image
+            <SafeImage
               src={product.image}
               alt={product.name}
               fill
               sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+              placeholder="blur"
+              blurDataURL={shimmer(300, 300)}
               className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
                 shouldContainImage ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}` : "object-cover"
               }`}
@@ -67,7 +72,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
               </span>
             )}
             {discount > 0 && (
-              <span className="spec-value rounded-full bg-gradient-to-r from-[#e8e8e4] to-sand px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-[#0a0a0a] shadow-lg shadow-black/20">
+              <span className="spec-value rounded-full bg-brand-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-white shadow-[0_0_12px_rgba(237,27,36,0.5)]">
                 %{discount} avantaj
               </span>
             )}
@@ -80,16 +85,16 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
 
       <div className={`flex min-w-0 flex-col ${featured ? "p-6 sm:p-7" : "p-5 sm:p-6"}`}>
         <div className="flex items-center justify-between gap-3">
-          <span className="spec-value text-[11px] font-semibold uppercase tracking-[0.12em] text-sand/90">
+          <span className="spec-value text-[11px] font-bold uppercase tracking-[0.12em] text-white/60">
             {CATEGORY_LABELS[product.category]}
           </span>
-          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] ${product.inStock === false ? "text-sand" : "text-emerald-300"}`}>
-            {product.inStock === false ? <Clock3Icon className="h-3 w-3" aria-hidden="true" /> : <CheckIcon className="h-3 w-3" aria-hidden="true" />}
+          <span className={`inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.08em] ${product.inStock === false ? "text-brand-red" : "text-white/80"}`}>
+            {product.inStock === false ? <Clock3Icon className="h-3 w-3" aria-hidden="true" /> : <CheckIcon className="h-3 w-3 text-white" aria-hidden="true" />}
             {product.inStock === false ? "Yakında" : "Üretime hazır"}
           </span>
         </div>
 
-        <h3 className={`mt-3 line-clamp-2 font-heading font-bold leading-[1.05] text-white transition-colors duration-300 group-hover:text-sand ${featured ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
+        <h3 className={`mt-3 line-clamp-2 font-heading font-bold leading-[1.05] text-white transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] ${featured ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
           {product.name}
         </h3>
         <p className={`mt-3 line-clamp-2 leading-relaxed text-white/50 ${featured ? "max-w-xl text-sm" : "text-xs"}`}>
