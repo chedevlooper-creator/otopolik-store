@@ -110,12 +110,12 @@ Plans:
   3. Generator lives inside the existing `/admin/icerik` ContentManager UI and is admin-key-gated
   4. Generated copy follows the written premium ("Apple/Porsche") Turkish brand voice style guide
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans executed; human verification pending
 
 Plans:
-- [ ] 08-01-PLAN.md — Draft schema, style guide, product/vehicle grounding
-- [ ] 08-02-PLAN.md — Admin generate route, publish action, ContentManager AI Taslak UI
-- [ ] 08-03-PLAN.md — Golden evals + human verify on /admin/icerik
+- [x] 08-01-PLAN.md — Draft schema, style guide, product/vehicle grounding
+- [x] 08-02-PLAN.md — Admin generate route, publish action, ContentManager AI Taslak UI
+- [x] 08-03-PLAN.md — Golden evals pass; human verify pending on /admin/icerik
 
 **UI hint**: yes
 
@@ -130,7 +130,7 @@ Plans:
 | 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
 | 6 | v1.1 | 4/3 | Complete    | 2026-07-17 |
 | 7 | v1.1 | 4/3 | Complete    | 2026-07-17 |
-| 8 | v1.1 | 0/3 | Planned | - |
+| 8 | v1.1 | 3/3 | Awaiting human verification | - |
 
 ## Coverage
 
