@@ -50,17 +50,24 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
               <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.12))]" />
             </div>
           ) : (
-            <SafeImage
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-              placeholder="blur"
-              blurDataURL={shimmer(300, 300)}
-              className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
-                shouldContainImage ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}` : "object-cover"
-              }`}
-            />
+            <>
+              <SafeImage
+                src={product.image}
+                alt={product.name}
+                fill
+                sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+                placeholder="blur"
+                blurDataURL={shimmer(300, 300)}
+                className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
+                  shouldContainImage ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}` : "object-cover"
+                }`}
+              />
+              {/* Açık stüdyo fonlu ürün fotoğrafları koyu kartta "kutu" gibi durmasın diye kenar vinyeti ile temaya harmanlanır */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_center,transparent_48%,rgba(0,0,0,0.55))]"
+              />
+            </>
           )}
         </div>
 

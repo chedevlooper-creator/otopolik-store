@@ -368,6 +368,12 @@ function ProductGalleryView({ images, alt, badge, colorImage }: Props) {
             </button>
           </div>
 
+          {/* Kenar vinyeti — açık stüdyo fonlu fotoğraflar OLED panele yumuşak geçsin, sert "kutu" kenarı olmasın */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-[1.5rem] bg-[radial-gradient(ellipse_at_center,transparent_54%,rgba(0,0,0,0.5))]"
+          />
+
           {/* Cam tabakası — görsel vitrin camının arkasındaymış gibi durur */}
           <div aria-hidden="true" className="glass-pane absolute inset-0 rounded-[1.5rem]" />
 
