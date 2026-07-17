@@ -1,7 +1,5 @@
 import Hero from "@/components/home/Hero";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Faq from "@/components/home/Faq";
-import HomeConfiguratorShowcase from "@/components/home/HomeConfiguratorShowcase";
 import {
   getContentPage,
   getFaqs,
@@ -41,8 +39,6 @@ export default async function Home() {
           secondaryCta: section("hero-secondary-cta"),
         }}
       />
-      <HomeConfiguratorShowcase />
-      <FeaturedProducts content={section("featured")} />
       <Faq
         header={section("faq")}
         sidebar={section("faq-sidebar")}
