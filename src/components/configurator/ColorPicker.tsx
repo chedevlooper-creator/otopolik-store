@@ -10,7 +10,7 @@ export type ColorSwatch = {
 
 type Props = {
   label: string;
-  colors: ColorSwatch[];
+  colors: readonly ColorSwatch[];
   selected: ColorSwatch;
   onSelect: (color: ColorSwatch) => void;
   step: number;

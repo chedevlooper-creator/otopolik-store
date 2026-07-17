@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MatConfigurator from "@/components/configurator/MatConfigurator";
+import { ConfiguratorAssistantProvider } from "@/components/configurator/ConfiguratorAssistantProvider";
 import { isAiConfigured } from "@/lib/ai/config";
 import { getContentPage } from "@/lib/cms";
 
@@ -37,13 +38,16 @@ export default async function ConfiguratorPage({
             "Aracınızı seçin, taban ve kenar rengini belirleyin, topuk pedi ve bagaj paspası ekleyin."}
         </p>
       </div>
-      <MatConfigurator
-        initialBrand={marka}
-        initialModel={model}
-        initialYear={yil}
-        initialBodyOrChassis={kasa}
-        aiEnabled={isAiConfigured()}
-      />
+      <ConfiguratorAssistantProvider
+        initialConfiguration={{
+          brand: marka,
+          model,
+          year: yil,
+          bodyOrChassis: kasa,
+        }}
+      >
+        <MatConfigurator aiEnabled={isAiConfigured()} />
+      </ConfiguratorAssistantProvider>
     </div>
   );
 }

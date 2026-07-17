@@ -1,7 +1,7 @@
 export type MatColor = {
   name: string;
   hex: string;
-  slug: string;
+  slug?: string;
 };
 
 export const FLOOR_COLORS = [

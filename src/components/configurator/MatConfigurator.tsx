@@ -5,128 +5,57 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
-import ColorPicker, { type ColorSwatch } from "./ColorPicker";
+import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
 import ConfigSummary from "./ConfigSummary";
 import { useCart } from "@/context/cart-context";
-import { calculateMatPrice, MAT_PRICING } from "@/lib/mat-pricing";
+import { MAT_PRICING } from "@/lib/mat-pricing";
+import { EDGE_COLORS, FLOOR_COLORS } from "@/lib/mat-colors";
 import {
-  EMPTY_VEHICLE_DETAILS,
-  formatVehicleLabel,
-  isVehicleDetailsComplete,
-  vehicleDetailsKey,
-  type VehicleDetails,
-} from "@/lib/vehicle-compatibility";
+  getMatPreview,
+  MAT_PREVIEW_IMAGES,
+} from "@/lib/configurator-cart-item";
 import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
 import { GALLERY_ITEMS } from "@/lib/gallery-media";
 import GalleryLightbox from "@/components/GalleryLightbox";
 import { StaggeredReveal } from "@/components/ui/StaggeredReveal";
 import FlatMatPreview from "./FlatMatPreview";
+import { useConfiguratorAssistant } from "./ConfiguratorAssistantProvider";
 
 // Select a stable mix of 12 items for the configurator sidebar to show real applications
 const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
 
-const FLOOR_COLORS = [
-  { name: "Gece Siyahı", hex: "#0b0a0a", slug: "gece-siyahi" },
-  { name: "Koyu Kahve", hex: "#170700", slug: "koyu-kahve" },
-  { name: "Espresso", hex: "#170700", slug: "espresso" },
-  { name: "Toprak Kahve", hex: "#834f3a", slug: "toprak-kahve" },
-  { name: "Tarçın Kahve", hex: "#dc7338", slug: "tarcin-kahve" },
-  { name: "Asil Bordo", hex: "#bd5c5d", slug: "asil-bordo" },
-  { name: "Sıcak Karamel", hex: "#5c1f00", slug: "sicak-karamel" },
-  { name: "Kıyı Beji", hex: "#be8861", slug: "kiyi-beji" },
-  { name: "Kum Işığı", hex: "#edd4b8", slug: "kum-isigi" },
-  { name: "Gün Işığı", hex: "#f79000", slug: "gun-isigi" },
-  { name: "Gece Mavisi", hex: "#313e5d", slug: "gece-mavisi" },
-  { name: "Saks Mavisi", hex: "#313e5d", slug: "saks-mavisi" },
-  { name: "Şehrin Grisi", hex: "#868485", slug: "sehrin-grisi" },
-];
-
-const EDGE_COLORS = [
-  { name: "Gece Siyahı", hex: "#2e292c", slug: "gece-siyahi" },
-  { name: "Espresso", hex: "#56362e", slug: "espresso" },
-  { name: "Toprak Kahve", hex: "#894c2c", slug: "toprak-kahve" },
-  { name: "Haki Yeşil", hex: "#292a18", slug: "haki-yesil" },
-  { name: "Şehrin Grisi", hex: "#544648", slug: "sehrin-grisi" },
-  { name: "Kirli Beyaz", hex: "#aaa5a4", slug: "kirli-beyaz" },
-  { name: "Kum Işığı", hex: "#b79688", slug: "kum-isigi" },
-  { name: "Sıcak Karamel", hex: "#a2480b", slug: "sicak-karamel" },
-  { name: "Turuncu", hex: "#ed6b22", slug: "turuncu" },
-  { name: "Asil Bordo", hex: "#5d0007", slug: "asil-bordo" },
-  { name: "Alev Kırmızı", hex: "#ec4e3d", slug: "alev-kirmizi" },
-  { name: "Fuşya Pembesi", hex: "#ff97bb", slug: "fusya-pembesi" },
-  { name: "Pudra Pembe", hex: "#f1acc6", slug: "pudra-pembe" },
-  { name: "Lavanta Moru", hex: "#cd9ce0", slug: "lavanta-moru" },
-  { name: "Duman Moru", hex: "#795d91", slug: "duman-moru" },
-  { name: "Gece İndigosu", hex: "#39374c", slug: "gece-indigosu" },
-  { name: "Saks Mavisi", hex: "#335eb3", slug: "saks-mavisi" },
-  { name: "Kristal Mavisi", hex: "#30c3dd", slug: "kristal-mavisi" },
-  { name: "Açık Mavi", hex: "#0bb2c6", slug: "acik-mavi" },
-  { name: "Okyanus Yeşili", hex: "#002127", slug: "okyanus-yesili" },
-  { name: "Mint Yeşili", hex: "#658e58", slug: "mint-yesili" },
-  { name: "Limon Yeşili", hex: "#cfe877", slug: "limon-yesili" },
-  { name: "Canlı Sarı", hex: "#eebe00", slug: "canli-sari" },
-];
-
-const PREVIEW_IMAGES: Record<string, { src: string; kind: "real" | "digital" }> = {
-  "Gece Siyahı|Gece Siyahı": { src: "/media/configurator/siyah-siyah.png", kind: "digital" },
-  "Gece Siyahı|Şehrin Grisi": { src: "/media/configurator/siyah-gri.png", kind: "digital" },
-  "Gece Siyahı|Kum Işığı": { src: "/media/configurator/siyah-bej.png", kind: "digital" },
-  "Gece Siyahı|Alev Kırmızı": {
-    src: "/media/scraped/evaotopaspas/paspas-seti/03-gallery-1.jpg",
-    kind: "real",
-  },
-  "Gece Siyahı|Saks Mavisi": { src: "/media/configurator/siyah-mavi.png", kind: "digital" },
-  "Gece Siyahı|Turuncu": { src: "/media/configurator/siyah-turuncu.png", kind: "digital" },
-  "Gece Siyahı|Mint Yeşili": { src: "/media/configurator/siyah-yesil.png", kind: "digital" },
-  "Gece Siyahı|Lavanta Moru": { src: "/media/configurator/siyah-mor.png", kind: "digital" },
-  "Saks Mavisi|Turuncu": {
-    src: "/media/configurator/lacivert-turuncu.png",
-    kind: "digital",
-  },
-};
-
 type Props = {
-  /** URL'den gelen ön seçim (ör. ana sayfa araç bulucudan) */
-  initialBrand?: string;
-  initialModel?: string;
-  initialYear?: string;
-  initialBodyOrChassis?: string;
   aiEnabled?: boolean;
 };
 
 export default function MatConfigurator({
-  initialBrand = "",
-  initialModel = "",
-  initialYear = "",
-  initialBodyOrChassis = "",
   aiEnabled = false,
 }: Props) {
   const { addItem, closeDrawer } = useCart();
-  const [vehicle, setVehicle] = useState<VehicleDetails>({
-    ...EMPTY_VEHICLE_DETAILS,
-    brand: initialBrand,
-    model: initialModel,
-    year: initialYear,
-    bodyOrChassis: initialBodyOrChassis,
-  });
-  const [floor, setFloor] = useState<ColorSwatch>(FLOOR_COLORS[0]);
-  const [edge, setEdge] = useState<ColorSwatch>(EDGE_COLORS[10]);
-  const [heelPad, setHeelPad] = useState(false);
-  const [trunkMat, setTrunkMat] = useState(false);
-  const [floorTouched, setFloorTouched] = useState(false);
-  const [edgeTouched, setEdgeTouched] = useState(false);
+  const {
+    vehicle,
+    setVehicle,
+    floor,
+    edge,
+    heelPad,
+    setHeelPad,
+    trunkMat,
+    setTrunkMat,
+    vehicleComplete,
+    vehicleLabel,
+    totalPrice,
+    currentStep,
+    selectFloor,
+    selectEdge,
+    buildCartItem,
+  } = useConfiguratorAssistant();
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
   const [previewMode, setPreviewMode] = useState<"cabin" | "flat">("cabin");
 
-  const totalPrice = calculateMatPrice({ heelPad, trunkMat });
-
   const previewKey = `${floor.name}|${edge.name}`;
-  const preview = PREVIEW_IMAGES[previewKey] ?? PREVIEW_IMAGES["Gece Siyahı|Gece Siyahı"];
-  const hasExactPreview = previewKey in PREVIEW_IMAGES;
-
-  const vehicleComplete = isVehicleDetailsComplete(vehicle);
-  const vehicleLabel = vehicleComplete ? formatVehicleLabel(vehicle) : "";
+  const preview = getMatPreview(floor, edge);
+  const hasExactPreview = previewKey in MAT_PREVIEW_IMAGES;
 
   const configSummary = [
     `${floor.name} taban`,
@@ -138,14 +67,6 @@ export default function MatConfigurator({
     .join(" · ");
 
   const canAdd = vehicleComplete;
-
-  const currentStep = !vehicleComplete
-    ? 0
-    : !floorTouched
-      ? 1
-      : !edgeTouched
-        ? 2
-        : 3;
   const steps = [
     { label: "Aracınız", index: 0 },
     { label: "Taban", index: 1 },
@@ -154,23 +75,8 @@ export default function MatConfigurator({
   ];
 
   function handleAddToCart() {
-    if (!canAdd) return;
-    const vehicleKey = vehicleDetailsKey(vehicle);
-    addItem({
-      slug: `ozel-tasarim-${vehicleKey}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase("tr-TR"),
-      name: `Özel Tasarım EVA Paspas — ${vehicleLabel}`,
-      image: preview.src,
-      price: totalPrice,
-      color: configSummary,
-      quantity: 1,
-      configuration: {
-        vehicle: vehicleLabel,
-        baseColor: floor.name,
-        edgeColor: edge.name,
-        heelPad,
-        trunkMat,
-      },
-    });
+    const item = buildCartItem();
+    if (item) addItem(item);
   }
 
   function handleCheckout() {
@@ -394,10 +300,7 @@ export default function MatConfigurator({
           label="Taban Rengi"
           colors={FLOOR_COLORS}
           selected={floor}
-          onSelect={(color) => {
-            setFloor(color);
-            setFloorTouched(true);
-          }}
+          onSelect={selectFloor}
           step={2}
         />
 
@@ -405,10 +308,7 @@ export default function MatConfigurator({
           label="Kenar (Overlok) Rengi"
           colors={EDGE_COLORS}
           selected={edge}
-          onSelect={(color) => {
-            setEdge(color);
-            setEdgeTouched(true);
-          }}
+          onSelect={selectEdge}
           step={3}
         />
 
