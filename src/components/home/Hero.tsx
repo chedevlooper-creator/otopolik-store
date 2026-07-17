@@ -10,6 +10,14 @@ type Props = {
   };
 };
 
+// "Hassas Mühendislik Protokolü" vaadini görünür kılan kompakt teknik künye
+const HERO_SPECS = [
+  { value: "850", unit: "kg/m³", label: "Yoğunluk" },
+  { value: "%100", unit: "", label: "Premium EVA" },
+  { value: "-40°/+80°", unit: "C", label: "Sıcaklık" },
+  { value: "4", unit: "L", label: "Sıvı kapasitesi" },
+] as const;
+
 export default function Hero({ content }: Props) {
   const hero = content?.hero;
   const secondary = content?.secondaryCta;
@@ -76,6 +84,27 @@ export default function Hero({ content }: Props) {
             >
               {secondary?.ctaLabel ?? "Koleksiyonu keşfet"}
             </Link>
+          </div>
+
+          <div className="mt-10 grid w-full max-w-xl grid-cols-2 divide-x divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md sm:grid-cols-4 sm:divide-y-0">
+            {HERO_SPECS.map((spec) => (
+              <div
+                key={spec.label}
+                className="flex flex-col items-center gap-1 px-3 py-4"
+              >
+                <p className="spec-value text-lg font-semibold leading-none text-white sm:text-xl">
+                  {spec.value}
+                  {spec.unit ? (
+                    <span className="ml-1 text-xs font-normal text-white/50">
+                      {spec.unit}
+                    </span>
+                  ) : null}
+                </p>
+                <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/50">
+                  {spec.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
