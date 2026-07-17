@@ -2,6 +2,7 @@
 
 import { isAuthenticated } from "@/lib/admin-auth";
 import {
+  getFaqs,
   saveContentPage,
   saveContentSection,
   saveFaqItem,
@@ -22,6 +23,16 @@ import { revalidatePath } from "next/cache";
 export type SaveResult =
   | { ok: true }
   | { ok: false; message: string };
+
+type SeoDraft = {
+  title: string;
+  description: string;
+};
+
+type FaqDraft = {
+  question: string;
+  answer: string;
+};
 
 async function guard(): Promise<SaveResult | null> {
   if (!(await isAuthenticated())) {
@@ -154,6 +165,136 @@ export async function seedCmsAction(): Promise<SaveResult> {
     return {
       ok: false,
       message: error instanceof Error ? error.message : "Seed başarısız.",
+    };
+  }
+}
+
+function parseJsonDraft<T extends Record<string, string>>(
+  draft: string,
+  fields: (keyof T)[]
+): T | null {
+  try {
+    const parsed = JSON.parse(draft) as unknown;
+    if (!parsed || typeof parsed !== "object") return null;
+    const record = parsed as Record<string, unknown>;
+    if (
+      fields.some(
+        (field) =>
+          typeof record[String(field)] !== "string" ||
+          !(record[String(field)] as string).trim()
+      )
+    ) {
+      return null;
+    }
+    return record as T;
+  } catch {
+    return null;
+  }
+}
+
+export async function publishContentGenerationAction({
+  generationId,
+}: {
+  generationId: string;
+}): Promise<SaveResult> {
+  const auth = await guard();
+  if (auth) return auth;
+
+  const client = getConvexClient();
+  if (!isConvexConfigured() || !client) {
+    return { ok: false, message: "Convex bağlı değil." };
+  }
+
+  try {
+    const adminKey = getAdminConvexKey();
+    const generation = await client.query(api.contentGenerations.getById, {
+      adminKey,
+      id: generationId as never,
+    });
+    if (!generation) {
+      return { ok: false, message: "Taslak bulunamadı." };
+    }
+    if (generation.status !== "ready" || !generation.draft?.trim()) {
+      return {
+        ok: false,
+        message: "Yalnızca incelemeye hazır, dolu taslaklar yayımlanabilir.",
+      };
+    }
+
+    let publishResult: SaveResult;
+    if (generation.kind === "product_description") {
+      const product = await client.query(api.products.getBySlug, {
+        slug: generation.targetSlug,
+      });
+      if (!product) {
+        return { ok: false, message: "Hedef ürün bulunamadı." };
+      }
+      await client.mutation(api.products.update, {
+        adminKey,
+        id: product._id,
+        description: generation.draft.trim(),
+      });
+      publishResult = { ok: true };
+    } else if (generation.kind === "product_seo") {
+      const seo = parseJsonDraft<SeoDraft>(generation.draft, [
+        "title",
+        "description",
+      ]);
+      if (!seo) {
+        return {
+          ok: false,
+          message: "SEO taslağı title ve description alanlarını içeren JSON olmalıdır.",
+        };
+      }
+      const product = await client.query(api.products.getBySlug, {
+        slug: generation.targetSlug,
+      });
+      if (!product) {
+        return { ok: false, message: "Hedef ürün bulunamadı." };
+      }
+      await client.mutation(api.products.update, {
+        adminKey,
+        id: product._id,
+        metaTitle: seo.title.trim(),
+        metaDescription: seo.description.trim(),
+      });
+      publishResult = { ok: true };
+    } else {
+      const faq = parseJsonDraft<FaqDraft>(generation.draft, [
+        "question",
+        "answer",
+      ]);
+      if (!faq) {
+        return {
+          ok: false,
+          message: "SSS taslağı question ve answer alanlarını içeren JSON olmalıdır.",
+        };
+      }
+      const existingFaqs = await getFaqs();
+      const sortOrder =
+        Math.max(0, ...existingFaqs.items.map((item) => item.sortOrder)) + 1;
+      publishResult = await saveFaqItem({
+        sortOrder,
+        question: faq.question.trim(),
+        answer: faq.answer.trim(),
+        isPublished: true,
+      });
+    }
+
+    if (!publishResult.ok) return publishResult;
+
+    await client.mutation(api.contentGenerations.markStatus, {
+      adminKey,
+      id: generation._id,
+      status: "approved",
+    });
+    revalidateSite();
+    return { ok: true };
+  } catch (error) {
+    return {
+      ok: false,
+      message:
+        error instanceof Error ? error.message : "Taslak yayımlanamadı.",
     };
   }
 }
