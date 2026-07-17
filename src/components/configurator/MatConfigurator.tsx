@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
 import ColorPicker from "./ColorPicker";
@@ -19,6 +20,7 @@ import {
 import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
 import { GALLERY_ITEMS } from "@/lib/gallery-media";
 import GalleryLightbox from "@/components/GalleryLightbox";
+import { StaggeredReveal } from "@/components/ui/StaggeredReveal";
 
 // Select a stable mix of 12 items for the configurator sidebar to show real applications
 const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
@@ -154,59 +156,98 @@ export default function MatConfigurator({
 
   return (
     <div>
-      <ol
-        aria-label="Tasarım adımları"
-        className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-4"
-      >
-        {steps.map((step) => {
-          const isDone = step.index < currentStep;
-          const isActive = step.index === currentStep;
-          return (
-            <li
-              key={step.label}
-              aria-current={isActive ? "step" : undefined}
-              className={`flex items-center gap-2.5 border px-3 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                isActive
-                  ? "border-sand bg-surface text-white"
-                  : isDone
-                    ? "border-border bg-surface text-sand"
-                    : "border-border bg-background text-muted"
-              }`}
-            >
-              <span
-                className={`spec-value flex h-6 w-6 items-center justify-center text-[11px] font-bold ${
-                  isActive
-                    ? "icon-badge-rich text-white"
-                    : isDone
-                      ? "bg-sand/20 text-sand"
-                      : "bg-border text-muted"
-                }`}
-              >
-                {isDone ? "✓" : `0${step.index + 1}`}
-              </span>
-              {step.label}
-            </li>
-          );
-        })}
-      </ol>
+      {/* ─── Glassmorphism Step Progress ─── */}
+      <div className="mb-8">
+        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl">
+          {/* Animated fill bar */}
+          <motion.div
+            className="absolute inset-y-1 left-1 rounded-[0.85rem] bg-gradient-to-r from-white/15 via-white/10 to-white/5"
+            initial={false}
+            animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+            transition={{ type: "spring", stiffness: 200, damping: 30 }}
+          />
+          {/* Shine sweep */}
+          <motion.div
+            className="absolute inset-y-1 left-1 rounded-[0.85rem] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            initial={false}
+            animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+            transition={{ type: "spring", stiffness: 200, damping: 30, delay: 0.1 }}
+          />
+          <ol
+            aria-label="Tasarım adımları"
+            className="relative grid grid-cols-2 gap-1 sm:grid-cols-4"
+          >
+            {steps.map((step) => {
+              const isDone = step.index < currentStep;
+              const isActive = step.index === currentStep;
+              return (
+                <li
+                  key={step.label}
+                  aria-current={isActive ? "step" : undefined}
+                  className={`relative flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                    isActive
+                      ? "text-white"
+                      : isDone
+                        ? "text-white/80"
+                        : "text-white/30"
+                  }`}
+                >
+                  <motion.span
+                    layout
+                    className={`spec-value flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
+                      isActive
+                        ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                        : isDone
+                          ? "bg-white/20 text-white"
+                          : "bg-white/5 text-white/30"
+                    }`}
+                  >
+                    {isDone ? (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      >
+                        ✓
+                      </motion.span>
+                    ) : (
+                      `0${step.index + 1}`
+                    )}
+                  </motion.span>
+                  {step.label}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
 
       <div className="grid min-w-0 max-w-full gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* Gerçek ürün görünümü */}
       <div className="min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
-        <div className="relative overflow-hidden border border-border bg-surface">
-          <Image
-            key={preview.src}
-            src={preview.src}
-            alt={
-              hasExactPreview
-                ? `${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti önizlemesi`
-                : "EVA paspas seti için temsili ürün önizlemesi"
-            }
-            width={640}
-            height={853}
-            className="h-auto w-full object-cover"
-            priority
-          />
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={previewKey}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.4 }}
+            >
+              <Image
+                src={preview.src}
+                alt={
+                  hasExactPreview
+                    ? `${floor.name} taban ve ${edge.name} kenarlı EVA paspas seti önizlemesi`
+                    : "EVA paspas seti için temsili ürün önizlemesi"
+                }
+                width={640}
+                height={853}
+                className="h-auto w-full object-cover"
+                priority
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-5 pb-5 pt-16">
             <p className="text-sm font-semibold text-white">
               {hasExactPreview
@@ -224,15 +265,15 @@ export default function MatConfigurator({
         </div>
         <div className="spec-value mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-muted">
           <span className="inline-flex items-center gap-1.5">
-            <PaletteIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
+            <PaletteIcon className="h-3.5 w-3.5 text-white" aria-hidden="true" />
             {FLOOR_COLORS.length * EDGE_COLORS.length} üretilebilir kombinasyon
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <RulerIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
+            <RulerIcon className="h-3.5 w-3.5 text-white" aria-hidden="true" />
             3D lazer ölçümlü kalıp
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <TruckIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
+            <TruckIcon className="h-3.5 w-3.5 text-white" aria-hidden="true" />
             1-3 iş gününde kargoda
           </span>
         </div>
@@ -245,7 +286,7 @@ export default function MatConfigurator({
             </h3>
             <Link
               href="/galeri"
-              className="text-xs text-sand hover:underline hover:text-white transition-colors"
+              className="text-xs text-white hover:underline hover:text-white transition-colors"
             >
               Tümünü Gör →
             </Link>
@@ -288,7 +329,7 @@ export default function MatConfigurator({
       </div>
 
       {/* Seçenekler */}
-      <div className="min-w-0 max-w-full space-y-7">
+      <StaggeredReveal className="min-w-0 max-w-full space-y-7">
         <VehicleSelector value={vehicle} onChange={setVehicle} />
 
         <ColorPicker
@@ -330,7 +371,7 @@ export default function MatConfigurator({
           onCheckout={handleCheckout}
           canAdd={canAdd}
         />
-      </div>
+      </StaggeredReveal>
       </div>
 
       {selectedGalleryIndex !== null && (

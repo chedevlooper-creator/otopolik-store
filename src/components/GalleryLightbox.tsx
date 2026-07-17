@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   XIcon,
   ChevronLeftIcon,
@@ -41,6 +42,12 @@ export default function GalleryLightbox({
   const touchEndX = useRef(0);
 
   const currentItem = items[currentIndex] ?? items[0];
+  const [direction, setDirection] = useState(0); // -1 = left, 1 = right
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  useEffect(() => {
+    setIsZoomed(false);
+  }, [currentIndex]);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -48,12 +55,14 @@ export default function GalleryLightbox({
 
   const handlePrev = useCallback(() => {
     if (items.length < 2) return;
+    setDirection(-1);
     setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
     setIsPlaying(false);
   }, [items.length]);
 
   const handleNext = useCallback(() => {
     if (items.length < 2) return;
+    setDirection(1);
     setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     setIsPlaying(false);
   }, [items.length]);
@@ -190,7 +199,7 @@ export default function GalleryLightbox({
           ref={closeButtonRef}
           type="button"
           onClick={() => onCloseRef.current()}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-label="Galeri görüntüleyiciyi kapat"
         >
           <XIcon className="h-5 w-5" aria-hidden="true" />
@@ -202,7 +211,7 @@ export default function GalleryLightbox({
           type="button"
           onClick={handlePrev}
           disabled={items.length < 2}
-          className="absolute left-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 sm:left-2 sm:h-12 sm:w-12 lg:-left-16"
+          className="absolute left-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-30 sm:left-2 sm:h-12 sm:w-12 lg:-left-16"
           aria-label="Önceki medya"
         >
           <ChevronLeftIcon className="h-6 w-6" aria-hidden="true" />
@@ -212,22 +221,44 @@ export default function GalleryLightbox({
           type="button"
           onClick={handleNext}
           disabled={items.length < 2}
-          className="absolute right-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand disabled:cursor-not-allowed disabled:opacity-30 sm:right-2 sm:h-12 sm:w-12 lg:-right-16"
+          className="absolute right-0 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-30 sm:right-2 sm:h-12 sm:w-12 lg:-right-16"
           aria-label="Sonraki medya"
         >
           <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
         </button>
 
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            initial={{ opacity: 0, x: direction * 100, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: direction * -100, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="h-full w-full"
+          >
         {currentItem.type === "photo" ? (
-          <div className="relative h-full w-full">
-            <Image
-              src={currentItem.src}
-              alt="Müşteri aracındaki OTO POLİK paspas uygulaması"
-              fill
-              sizes="100vw"
-              priority
-              className="object-contain px-11 py-2 drop-shadow-2xl sm:px-16"
-            />
+          <div className="relative h-full w-full overflow-hidden">
+            <motion.div
+              animate={{ scale: isZoomed ? 2 : 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              drag={isZoomed}
+              dragConstraints={{ left: -250, right: 250, top: -250, bottom: 250 }}
+              dragElastic={0.15}
+              onClick={() => setIsZoomed((prev) => !prev)}
+              className={`relative h-full w-full transition-shadow duration-300 ${
+                isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
+              }`}
+            >
+              <Image
+                src={currentItem.src}
+                alt="Müşteri aracındaki OTO POLİK paspas uygulaması"
+                fill
+                sizes="100vw"
+                priority
+                className="pointer-events-none object-contain px-11 py-2 drop-shadow-2xl sm:px-16"
+              />
+            </motion.div>
           </div>
         ) : (
           <div
@@ -254,7 +285,7 @@ export default function GalleryLightbox({
                 type="button"
                 onClick={togglePlay}
                 aria-label={isPlaying ? "Videoyu durdur" : "Videoyu oynat"}
-                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 {isPlaying ? (
                   <PauseIcon className="h-5 w-5" aria-hidden="true" />
@@ -267,7 +298,7 @@ export default function GalleryLightbox({
                 type="button"
                 onClick={toggleMute}
                 aria-label={isMuted ? "Videonun sesini aç" : "Videonun sesini kapat"}
-                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+                className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 {isMuted ? (
                   <VolumeXIcon className="h-5 w-5" aria-hidden="true" />
@@ -278,6 +309,8 @@ export default function GalleryLightbox({
             </div>
           </div>
         )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       <div

@@ -790,8 +790,9 @@ h3 {
 .btn-press {
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease,
-    background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease, background-color 0.25s ease,
+    border-color 0.25s ease, color 0.25s ease;
 }
 
 .btn-press::before {
@@ -817,11 +818,37 @@ h3 {
 
 .btn-press:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .btn-press:active {
   transform: translateY(0) scale(0.97);
+  transition-duration: 0.08s;
 }
+
+/* ─── Premium CTA — kırmızı gradient + hover glow ─── */
+.btn-red-rich {
+  background: linear-gradient(135deg, #8c1626 0%, #a91d32 50%, #8c1626 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  box-shadow: 0 2px 12px rgba(140, 22, 38, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: background-position 0.4s ease, box-shadow 0.3s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-red-rich:hover:not(:disabled) {
+  background-position: 100% 50%;
+  box-shadow: 0 4px 24px rgba(140, 22, 38, 0.5),
+    0 0 40px rgba(169, 29, 50, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-red-rich:active:not(:disabled) {
+  box-shadow: 0 1px 6px rgba(140, 22, 38, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Kart yükselme efekti — daha yumuşak */
 .card-lift {
