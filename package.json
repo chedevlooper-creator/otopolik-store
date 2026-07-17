@@ -12,6 +12,7 @@
     "gallery:generate": "node scripts/generate-gallery-data.js",
     "test": "vitest run",
     "ai:eval:vehicle-match": "vitest run src/lib/ai/evals/vehicle-match-eval.test.ts",
+    "ai:eval:configurator-chat": "vitest run src/lib/ai/evals/configurator-chat-eval.test.ts",
     "test:e2e": "playwright test"
   },
   "dependencies": {
