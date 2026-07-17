@@ -32,11 +32,11 @@ v1.2 simplifies the customer storefront into a calm luxury path: establish rever
   3. Visiting `/destek` shows a non-AI WhatsApp/contact fallback with no chat UI
   4. Primary customer navigation is limited to essential destinations (Tasarla, Ürünler, Galeri, İletişim, Sepet) with no dead anchors
 
-**Plans**: 1/2 plans executed
+**Plans**: 2/2 plans executed
 Plans:
 
 - [x] 09-01-PLAN.md — Customer AI UI flag + homepage CMS inventory artifact
-- [ ] 09-02-PLAN.md — Nav spine, Footer cleanup, /destek WhatsApp fallback, configurator AI gate
+- [x] 09-02-PLAN.md — Nav spine, Footer cleanup, /destek WhatsApp fallback, configurator AI gate
 
 **UI hint**: yes
 
@@ -108,7 +108,7 @@ Plans:
 |-------|-----------|----------------|--------|-----------|
 | 1-4 | v1.0 | 4/4 | Complete | 2026-07-17 |
 | 5-8 | v1.1 | 12/12 | Complete | 2026-07-17 |
-| 9. Storefront Boundaries and Content Inventory | v1.2 | 1/2 | In Progress | - |
+| 9. Storefront Boundaries and Content Inventory | v1.2 | 2/2 | In Progress|  |
 | 10. Homepage and Motion Diet | v1.2 | 0/? | Not started | - |
 | 11. Configurator and Product Simplification | v1.2 | 0/? | Not started | - |
 | 12. Cart, Checkout, and WhatsApp Commit Flow | v1.2 | 0/? | Not started | - |

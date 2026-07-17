@@ -4,16 +4,16 @@ milestone: v1.2
 milestone_name: Sade Lüks Deneyim
 current_phase: 9
 current_phase_name: Storefront Boundaries and Content Inventory
-status: executing
-stopped_at: Completed 09-01-PLAN.md; ready for 09-02-PLAN.md
-last_updated: "2026-07-17T15:19:09.583Z"
+status: verifying
+stopped_at: Completed 09-02-PLAN.md
+last_updated: "2026-07-17T15:23:15.536Z"
 last_activity: 2026-07-17
-last_activity_desc: Completed 09-01 customer AI UI flag and homepage inventory
+last_activity_desc: v1.2 roadmap created (Phases 9–13)
 progress:
-  total_phases: 5
-  completed_phases: 0
+  total_phases: 1
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-17)
 
 Phase: 9 of 13 (Storefront Boundaries and Content Inventory)
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-17 — v1.2 roadmap created (Phases 9–13)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ Progress: [█████░░░░░] 50%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 09 P01 | 4min | 2 tasks | 4 files |
+| Phase 09 P02 | 3min | 2 tasks | 4 files |
 
 ## Shipped Milestones
 
@@ -83,6 +84,8 @@ Recent decisions affecting current work:
 - v1.2: Phase numbering continues from 9 after v1.1 Phase 8
 - [Phase 9]: Customer AI UI visibility requires explicit CUSTOMER_AI_UI_ENABLED true/1 plus configured AI capability.
 - [Phase 9]: Homepage simplification changes composition mounts only; CMS and seed data remain reversible.
+- [Phase 9]: The footer keeps a plain Destek link while static customer chrome remains non-AI.
+- [Phase 9]: Customer chat modules load only after the server-side customer UI flag passes.
 
 ### Pending Todos
 
@@ -110,7 +113,7 @@ None yet. Planning notes from research:
 
 ## Session Continuity
 
-Last session: 2026-07-17T15:19:09.578Z
-Stopped at: Completed 09-01-PLAN.md; ready for 09-02-PLAN.md
-Resume file: .planning/phases/09-storefront-boundaries-and-content-inventory/09-02-PLAN.md
+Last session: 2026-07-17T15:23:15.530Z
+Stopped at: Completed 09-02-PLAN.md
+Resume file: None
 Next: `/gsd-execute-phase 9`
