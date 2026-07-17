@@ -163,6 +163,32 @@ export default defineSchema(
     }).index("by_sort", ["sortOrder"]),
 
     // ---------------------------------------------------------
+    // contentGenerations — AI üretimi, yayından izole taslaklar
+    // ---------------------------------------------------------
+    contentGenerations: defineTable({
+      kind: v.union(
+        v.literal("product_description"),
+        v.literal("product_seo"),
+        v.literal("faq")
+      ),
+      targetSlug: v.string(),
+      prompt: v.string(),
+      draft: v.optional(v.string()),
+      status: v.union(
+        v.literal("pending"),
+        v.literal("ready"),
+        v.literal("approved"),
+        v.literal("rejected"),
+        v.literal("failed")
+      ),
+      failureReason: v.optional(v.string()),
+      createdAt: v.number(),
+      updatedAt: v.number(),
+    })
+      .index("by_status", ["status"])
+      .index("by_target", ["targetSlug"]),
+
+    // ---------------------------------------------------------
     // products — Katalog ürünleri
     // ---------------------------------------------------------
     products: defineTable({
