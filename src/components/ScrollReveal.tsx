@@ -9,15 +9,10 @@ type Props = {
   delay?: number;
 };
 
-function supportsScrollDrivenReveal() {
-  return (
-    typeof CSS !== "undefined" &&
-    CSS.supports("(animation-timeline: view()) and (animation-range: entry)")
-  );
-}
-
 /**
- * Scroll reveal — native view-timeline when supported; IntersectionObserver fallback.
+ * Scroll reveal via IntersectionObserver (adds `.reveal-visible`).
+ * Not: `.reveal-sda` (view-timeline) yolu için CSS tanımı yok; o yüzden
+ * IO yolu kullanılır — böylece içerik her tarayıcıda güvenle görünür.
  */
 export default function ScrollReveal({
   children,
@@ -32,11 +27,6 @@ export default function ScrollReveal({
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.classList.add("reveal-visible");
-      return;
-    }
-
-    if (supportsScrollDrivenReveal()) {
-      el.classList.add("reveal-sda");
       return;
     }
 

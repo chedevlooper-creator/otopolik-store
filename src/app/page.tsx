@@ -1,4 +1,7 @@
 import Hero from "@/components/home/Hero";
+import FeatureStrip from "@/components/home/FeatureStrip";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
+import LuxuryInterior from "@/components/home/LuxuryInterior";
 import Faq from "@/components/home/Faq";
 import {
   getContentPage,
@@ -39,6 +42,9 @@ export default async function Home() {
           secondaryCta: section("hero-secondary-cta"),
         }}
       />
+      <FeatureStrip />
+      <FeaturedProducts content={section("featured")} />
+      <LuxuryInterior />
       <Faq
         header={section("faq")}
         sidebar={section("faq-sidebar")}
