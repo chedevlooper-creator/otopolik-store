@@ -30,37 +30,28 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         featured ? "min-h-[520px]" : "min-h-[360px]"
       }`}
     >
-      <div className={`premium-grid relative overflow-hidden border-b border-transparent bg-transparent ${featured ? "min-h-[330px] flex-1" : "aspect-[5/4]"}`}>
+      <div className={`premium-grid relative overflow-hidden border-b border-transparent bg-transparent ${featured ? "min-h-[330px] flex-1" : "aspect-[16/10]"}`}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,.05),transparent_55%)] opacity-80" />
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/[0.03] blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
         {/* Cam vitrin — ürün cam bir pencerenin arkasında sergilenir */}
-        <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"}`}>
-          {hasLightImage ? (
-            <div className="absolute inset-3 overflow-hidden rounded-xl bg-white shadow-[inset_0_0_0_1px_rgba(255,255,255,.1)] sm:inset-4">
-              <SafeImage
-                src={product.image}
-                alt={product.name}
-                fill
-                sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-                placeholder="blur"
-                blurDataURL={shimmer(300, 300)}
-                className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
-              {/* Yumuşak stüdyo vinyeti */}
-              <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.12))]" />
-            </div>
-          ) : (
-            <SafeImage
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
-              placeholder="blur"
-              blurDataURL={shimmer(300, 300)}
-              className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
-                shouldContainImage ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}` : "object-cover"
-              }`}
-            />
+        <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"} ${hasLightImage ? "bg-white!" : ""}`}>
+          <SafeImage
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes={featured ? "(min-width: 1024px) 44vw, 100vw" : "(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"}
+            placeholder="blur"
+            blurDataURL={shimmer(300, 300)}
+            className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
+              hasLightImage
+                ? "object-contain p-3 sm:p-4"
+                : shouldContainImage
+                  ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}`
+                  : "object-cover"
+            }`}
+          />
+          {hasLightImage && (
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.08))]" />
           )}
         </div>
 
@@ -97,9 +88,11 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         <h3 className={`mt-3 line-clamp-2 font-heading font-bold leading-[1.05] text-white transition-all duration-300 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] ${featured ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
           {product.name}
         </h3>
-        <p className={`mt-3 line-clamp-2 leading-relaxed text-white/50 ${featured ? "max-w-xl text-sm" : "text-xs"}`}>
-          {product.features[0]}
-        </p>
+        {featured && (
+          <p className="mt-3 line-clamp-2 leading-relaxed text-white/50 max-w-xl text-sm">
+            {product.features[0]}
+          </p>
+        )}
 
         <div className="mt-5 flex items-end justify-between gap-4 border-t border-white/[0.05] pt-5">
           <div>

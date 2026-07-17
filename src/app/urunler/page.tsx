@@ -302,13 +302,13 @@ export default async function ProductsPage({
   const hasAnyResult = vehicleMatches.length > 0 || filtered.length > 0;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <div className="premium-grid mb-10 overflow-hidden rounded-xl border border-white/10 bg-surface/55 p-6 sm:p-9 shadow-2xl">
-        <span className="spec-label">{kicker?.title ?? "Katalog"}</span>
-        <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-semibold text-white sm:text-5xl">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
+      <div className="mb-8 max-w-3xl">
+        <span className="section-kicker">{kicker?.title ?? "Katalog"}</span>
+        <h1 className="mt-3 max-w-full break-words font-heading text-3xl font-semibold text-white sm:text-4xl">
           {page?.title ?? "Araca Özel EVA Paspas Setleri"}
         </h1>
-        <p className="mt-3 max-w-2xl text-muted">
+        <p className="mt-3 max-w-2xl text-xs leading-relaxed text-white/55">
           {page?.description ??
             "Modelinizi bulun, size uygun EVA paspas setini inceleyin. Listede aracınızı göremiyorsanız WhatsApp üzerinden bize ulaşın, size özel üretim yapalım."}
         </p>

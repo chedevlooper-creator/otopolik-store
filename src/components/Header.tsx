@@ -151,7 +151,7 @@ export default function Header() {
         </div>
 
         <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4">
-          <div className="flex h-[90px] items-center justify-between gap-3 sm:h-[105px] lg:h-[120px]">
+          <div className="flex h-16 items-center justify-between gap-3 sm:h-20 lg:h-20">
             <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
 
             <nav
