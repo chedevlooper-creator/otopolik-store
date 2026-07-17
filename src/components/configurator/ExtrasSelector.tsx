@@ -20,12 +20,7 @@ export default function ExtrasSelector({
   onTrunkMatChange,
 }: Props) {
   return (
-    <section>
-      <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
-        <span className="spec-value text-base font-medium text-white">04</span>
-        Ekstralar
-      </h2>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+    <div className="grid gap-3 sm:grid-cols-2">
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 bg-gradient-to-b from-white/[0.04] to-transparent px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all ${
             heelPad
@@ -69,6 +64,5 @@ export default function ExtrasSelector({
           </span>
         </label>
       </div>
-    </section>
   );
 }

@@ -18,7 +18,6 @@ import { getStoreSettings } from "@/lib/site-settings";
 import { getShippingCost } from "@/lib/shipping";
 import { CheckIcon, PlusIcon, ScissorsIcon, TruckIcon, Undo2Icon, CalendarIcon, ShieldCheckIcon, DropletIcon, WrenchIcon, SnowflakeIcon, SparklesIcon, RulerIcon, LockIcon, RecycleIcon, WindIcon, ChevronRightIcon, type LucideIcon } from "lucide-react";
 import TrustStrip from "@/components/TrustStrip";
-import Testimonials from "@/components/Testimonials";
 
 const FEATURE_ICON_RULES: { keywords: string[]; icon: LucideIcon }[] = [
   { keywords: ["su", "çamur", "kire", "su geçirmez"], icon: DropletIcon },
@@ -214,24 +213,32 @@ export default async function ProductDetailPage({
 
           <p className="mt-8 leading-relaxed text-muted">{product.description}</p>
 
-          <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2" aria-label="Ürün özellikleri">
-            {product.features.map((feature) => {
-              const Icon = pickFeatureIcon(feature);
-              return (
-                <li
-                  key={feature}
-                  className="flex items-start gap-3 border border-border bg-surface/50 p-3"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-border bg-background text-white">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <span className="text-sm leading-relaxed text-foreground/85">{feature}</span>
-                </li>
-              );
-            })}
-          </ul>
 
           <div className="mt-8 border-t border-border">
+            <details className="group border-b border-dashed border-border">
+              <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
+                Özellikler
+                <PlusIcon className="h-4 w-4 text-white transition-transform group-open:rotate-45" aria-hidden="true" />
+              </summary>
+              <div className="pb-5">
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2" aria-label="Ürün özellikleri">
+                  {product.features.map((feature) => {
+                    const Icon = pickFeatureIcon(feature);
+                    return (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-3 border border-border bg-surface/50 p-3"
+                      >
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-border bg-background text-white">
+                          <Icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <span className="text-sm leading-relaxed text-foreground/85">{feature}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </details>
             <details className="group border-b border-dashed border-border">
               <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
                 Araç uyumluluğu
@@ -296,9 +303,6 @@ export default async function ProductDetailPage({
         </section>
       )}
 
-      <div className="mt-16">
-        <Testimonials />
-      </div>
       <TrustStrip />
 
       {renderJsonLd(

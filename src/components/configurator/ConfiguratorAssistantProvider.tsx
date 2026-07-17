@@ -83,11 +83,9 @@ export function ConfiguratorAssistantProvider({
   const totalPrice = calculateMatPrice({ heelPad, trunkMat });
   const currentStep = !vehicleComplete
     ? 0
-    : !floorTouched
+    : (!floorTouched || !edgeTouched)
       ? 1
-      : !edgeTouched
-        ? 2
-        : 3;
+      : 2;
 
   const applyVehicle = useCallback(
     (next: {

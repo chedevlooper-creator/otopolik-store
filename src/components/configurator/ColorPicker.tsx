@@ -13,7 +13,8 @@ type Props = {
   colors: readonly ColorSwatch[];
   selected: ColorSwatch;
   onSelect: (color: ColorSwatch) => void;
-  step: number;
+  step?: number;
+  showHeading?: boolean;
 };
 
 export default function ColorPicker({
@@ -21,25 +22,28 @@ export default function ColorPicker({
   colors,
   selected,
   onSelect,
-  step,
+  step = 2,
+  showHeading = true,
 }: Props) {
   return (
     <section>
-      <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
-        <span className="spec-value text-base font-medium text-white">0{step}</span>
-        {label}
-        <span className="spec-value ml-1 inline-flex items-center gap-2 text-sm font-normal normal-case tracking-normal text-white">
-          <span
-            aria-hidden="true"
-            className="inline-block h-3 w-3 border border-white/40"
-            style={{ backgroundColor: selected.hex }}
-          />
-          {selected.name}
-          <span className="text-muted">·</span>
-          <span className="text-muted">{selected.hex.toUpperCase()}</span>
-        </span>
-      </h2>
-      <div className="mt-4 flex flex-wrap gap-3" role="radiogroup" aria-label={label}>
+      {showHeading && (
+        <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
+          <span className="spec-value text-base font-medium text-white">0{step}</span>
+          {label}
+          <span className="spec-value ml-1 inline-flex items-center gap-2 text-sm font-normal normal-case tracking-normal text-white">
+            <span
+              aria-hidden="true"
+              className="inline-block h-3 w-3 border border-white/40"
+              style={{ backgroundColor: selected.hex }}
+            />
+            {selected.name}
+            <span className="text-muted">·</span>
+            <span className="text-muted">{selected.hex.toUpperCase()}</span>
+          </span>
+        </h2>
+      )}
+      <div className={`${showHeading ? "mt-4" : ""} flex flex-wrap gap-3`} role="radiogroup" aria-label={label}>
         {colors.map((c) => {
           const isActive = selected.name === c.name;
           return (

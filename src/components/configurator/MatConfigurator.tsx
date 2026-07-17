@@ -18,7 +18,7 @@ import {
 import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
 import { GALLERY_ITEMS } from "@/lib/gallery-media";
 import GalleryLightbox from "@/components/GalleryLightbox";
-import { StaggeredReveal } from "@/components/ui/StaggeredReveal";
+import { formatPrice } from "@/lib/format";
 import FlatMatPreview from "./FlatMatPreview";
 import { useConfiguratorAssistant } from "./ConfiguratorAssistantProvider";
 
@@ -68,10 +68,9 @@ export default function MatConfigurator({
 
   const canAdd = vehicleComplete;
   const steps = [
-    { label: "Aracınız", index: 0 },
-    { label: "Taban", index: 1 },
-    { label: "Kenar", index: 2 },
-    { label: "Ekstralar", index: 3 },
+    { label: "Araç", index: 0 },
+    { label: "Renkler", index: 1 },
+    { label: "Ekstralar", index: 2 },
   ];
 
   function handleAddToCart() {
@@ -85,27 +84,13 @@ export default function MatConfigurator({
   }
 
   return (
-    <div>
+    <div className="pb-28 lg:pb-0">
       {/* ─── Glassmorphism Step Progress ─── */}
       <div className="mb-8">
-        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-1 backdrop-blur-xl">
-          {/* Animated fill bar */}
-          <motion.div
-            className="absolute inset-y-1 left-1 rounded-[0.85rem] bg-gradient-to-r from-white/15 via-white/10 to-white/5"
-            initial={false}
-            animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-            transition={{ type: "spring", stiffness: 200, damping: 30 }}
-          />
-          {/* Shine sweep */}
-          <motion.div
-            className="absolute inset-y-1 left-1 rounded-[0.85rem] bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            initial={false}
-            animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-            transition={{ type: "spring", stiffness: 200, damping: 30, delay: 0.1 }}
-          />
+        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-xl">
           <ol
             aria-label="Tasarım adımları"
-            className="relative grid grid-cols-2 gap-1 sm:grid-cols-4"
+            className="relative grid grid-cols-3 gap-1"
           >
             {steps.map((step) => {
               const isDone = step.index < currentStep;
@@ -114,7 +99,7 @@ export default function MatConfigurator({
                 <li
                   key={step.label}
                   aria-current={isActive ? "step" : undefined}
-                  className={`relative flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                  className={`relative flex items-center justify-center sm:justify-start gap-2.5 rounded-xl px-3 py-2.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
                     isActive
                       ? "text-white"
                       : isDone
@@ -122,9 +107,8 @@ export default function MatConfigurator({
                         : "text-white/30"
                   }`}
                 >
-                  <motion.span
-                    layout
-                    className={`spec-value flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
+                  <span
+                    className={`spec-value flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
                       isActive
                         ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.3)]"
                         : isDone
@@ -132,19 +116,9 @@ export default function MatConfigurator({
                           : "bg-white/5 text-white/30"
                     }`}
                   >
-                    {isDone ? (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                      >
-                        ✓
-                      </motion.span>
-                    ) : (
-                      `0${step.index + 1}`
-                    )}
-                  </motion.span>
-                  {step.label}
+                    {isDone ? "✓" : `0${step.index + 1}`}
+                  </span>
+                  <span className="hidden min-[380px]:inline">{step.label}</span>
                 </li>
               );
             })}
@@ -185,10 +159,10 @@ export default function MatConfigurator({
           <AnimatePresence mode="wait">
             <motion.div
               key={`${previewMode}-${previewKey}`}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.4 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
               {previewMode === "cabin" ? (
                 <Image
@@ -289,37 +263,90 @@ export default function MatConfigurator({
       </div>
 
       {/* Seçenekler */}
-      <StaggeredReveal className="min-w-0 max-w-full space-y-7">
+      <div className="min-w-0 max-w-full space-y-7">
         <VehicleSelector
           value={vehicle}
           onChange={setVehicle}
           aiEnabled={aiEnabled}
         />
 
-        <ColorPicker
-          label="Taban Rengi"
-          colors={FLOOR_COLORS}
-          selected={floor}
-          onSelect={selectFloor}
-          step={2}
-        />
+        {/* Merged Color Section (Taban + Kenar) */}
+        <section className="space-y-4">
+          <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
+            <span className="spec-value text-base font-medium text-white">02</span>
+            Renkler
+          </h2>
+          <div className="space-y-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="spec-label">Taban Rengi</span>
+                <span className="spec-value inline-flex items-center gap-2 text-xs font-normal normal-case tracking-normal text-white/80">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block h-3 w-3 border border-white/40"
+                    style={{ backgroundColor: floor.hex }}
+                  />
+                  {floor.name}
+                </span>
+              </div>
+              <ColorPicker
+                label="Taban Rengi"
+                colors={FLOOR_COLORS}
+                selected={floor}
+                onSelect={selectFloor}
+                showHeading={false}
+              />
+            </div>
+            <div className="border-t border-white/5 pt-6">
+              <div className="flex items-center justify-between mb-3">
+                <span className="spec-label">Kenar (Overlok) Rengi</span>
+                <span className="spec-value inline-flex items-center gap-2 text-xs font-normal normal-case tracking-normal text-white/80">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block h-3 w-3 border border-white/40"
+                    style={{ backgroundColor: edge.hex }}
+                  />
+                  {edge.name}
+                </span>
+              </div>
+              <ColorPicker
+                label="Kenar (Overlok) Rengi"
+                colors={EDGE_COLORS}
+                selected={edge}
+                onSelect={selectEdge}
+                showHeading={false}
+              />
+            </div>
+          </div>
+        </section>
 
-        <ColorPicker
-          label="Kenar (Overlok) Rengi"
-          colors={EDGE_COLORS}
-          selected={edge}
-          onSelect={selectEdge}
-          step={3}
-        />
-
-        <ExtrasSelector
-          heelPad={heelPad}
-          trunkMat={trunkMat}
-          heelPadPrice={MAT_PRICING.heelPadPrice}
-          trunkMatPrice={MAT_PRICING.trunkMatPrice}
-          onHeelPadChange={setHeelPad}
-          onTrunkMatChange={setTrunkMat}
-        />
+        {/* Collapsed Extras Accordion */}
+        <section className="border border-white/10 bg-white/[0.03] rounded-2xl backdrop-blur-xl">
+          <details className="group">
+            <summary className="flex cursor-pointer list-none items-center justify-between p-5 font-heading text-2xl font-bold text-white [&::-webkit-details-marker]:hidden">
+              <span className="flex items-baseline gap-3">
+                <span className="spec-value text-base font-medium text-white">03</span>
+                <span>Ekstralar</span>
+                <span className="spec-value ml-2 text-xs font-normal normal-case tracking-normal text-muted group-open:hidden">
+                  (Topuk pedi, bagaj paspası)
+                </span>
+              </span>
+              <span className="spec-value text-base font-medium text-white transition-transform group-open:rotate-45">
+                +
+              </span>
+            </summary>
+            <div className="px-5 pb-5 border-t border-white/5 pt-5">
+              <ExtrasSelector
+                heelPad={heelPad}
+                trunkMat={trunkMat}
+                heelPadPrice={MAT_PRICING.heelPadPrice}
+                trunkMatPrice={MAT_PRICING.trunkMatPrice}
+                onHeelPadChange={setHeelPad}
+                onTrunkMatChange={setTrunkMat}
+              />
+            </div>
+          </details>
+        </section>
 
         <ConfigSummary
           vehicleLabel={vehicleLabel}
@@ -329,7 +356,7 @@ export default function MatConfigurator({
           onCheckout={handleCheckout}
           canAdd={canAdd}
         />
-      </StaggeredReveal>
+      </div>
       </div>
 
       {selectedGalleryIndex !== null && (
@@ -339,6 +366,29 @@ export default function MatConfigurator({
           onClose={() => setSelectedGalleryIndex(null)}
         />
       )}
+
+      {/* Mobile Sticky Bottom Price/CTA Bar */}
+      <div className="fixed bottom-0 inset-x-0 z-40 border-t border-white/10 bg-black/80 backdrop-blur-lg p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:hidden">
+        <div className="flex items-center justify-between gap-4 max-w-xl mx-auto">
+          <div>
+            <span className="spec-label text-[10px] text-muted block mb-0.5">Toplam</span>
+            <span className="spec-value text-xl font-bold text-white">
+              {canAdd ? formatPrice(totalPrice) : "—"}
+            </span>
+            {!canAdd && (
+              <span className="text-[10px] text-muted block mt-0.5">Araç seçin</span>
+            )}
+          </div>
+          <button
+            type="button"
+            disabled={!canAdd}
+            onClick={handleAddToCart}
+            className="btn-press btn-red-rich flex-1 min-h-12 rounded-full text-xs font-bold uppercase tracking-wider text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Sepete Ekle
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

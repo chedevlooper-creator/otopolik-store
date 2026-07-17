@@ -265,7 +265,7 @@ export function generateVehicleContent(
       name: "Elif S.",
       model: `${brand} ${model}`,
       rating: 5,
-      text: "Temizlemesi inanılmaz kolay! Çamurlu bir haftasonundan sonra tek sıkım suyla tertemiz oldu. Kesinlikle tavsiye ederim.",
+      text: "Temizlemesi inanılmaz kolay! Çamurlu bir hafta sonundan sonra tek sıkım suyla tertemiz oldu. Kesinlikle tavsiye ederim.",
       date: "Mayıs 2026",
     },
   ];
