@@ -381,6 +381,30 @@ h3 {
   background-size: 18px 1px;
 }
 
+/* ─── Hero giriş — kademeli, tek seferlik (JS'siz, görünmezlik riski yok) ─── */
+.hero-enter {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hero-enter-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+  .hero-enter {
+    opacity: 0;
+    animation: hero-enter-in 0.85s cubic-bezier(0.19, 1, 0.22, 1) both;
+  }
+}
+
 /* ─── Scroll reveal — blur-in + scale ─── */
 
 /* ── Lightbox giriş animasyonu ── */

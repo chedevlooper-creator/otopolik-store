@@ -43,15 +43,21 @@ export default function Hero({ content }: Props) {
       {/* Main Content Layout */}
       <div className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-1 flex-col justify-center px-4 py-10 sm:px-6 sm:py-12 2xl:px-8 lg:py-12">
         <div className="flex flex-col items-center text-center">
-          <span className="section-kicker">
+          <span className="section-kicker hero-enter" style={{ animationDelay: "0ms" }}>
             Hassas Mühendislik Protokolü
           </span>
 
-          <p className="mt-3 font-heading text-[clamp(2.8rem,7vw,5.75rem)] font-medium leading-[0.88] tracking-[-0.055em] text-white">
+          <p
+            className="hero-enter mt-3 font-heading text-[clamp(2.8rem,7vw,5.75rem)] font-medium leading-[0.88] tracking-[-0.055em] text-white"
+            style={{ animationDelay: "90ms" }}
+          >
             OTOPOLİK
           </p>
 
-          <div className="mx-auto mt-3 h-[18px] w-full max-w-md text-brand-red">
+          <div
+            className="hero-enter mx-auto mt-3 h-[18px] w-full max-w-md text-brand-red"
+            style={{ animationDelay: "160ms" }}
+          >
             <svg viewBox="0 0 420 18" fill="none" aria-hidden="true">
               <path
                 d="M2 12 C48 4, 72 16, 118 9 S190 3, 230 11 S310 16, 360 7 L418 10"
@@ -62,15 +68,24 @@ export default function Hero({ content }: Props) {
             </svg>
           </div>
 
-          <h1 className="mt-5 max-w-2xl font-heading text-[clamp(1.25rem,2.1vw,1.85rem)] font-medium leading-[1.15] tracking-[-0.03em] text-white">
+          <h1
+            className="hero-enter mt-5 max-w-2xl font-heading text-[clamp(1.25rem,2.1vw,1.85rem)] font-medium leading-[1.15] tracking-[-0.03em] text-white"
+            style={{ animationDelay: "230ms" }}
+          >
             {headline}
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base">
+          <p
+            className="hero-enter mt-3 max-w-md text-sm leading-6 text-white/68 sm:text-base"
+            style={{ animationDelay: "300ms" }}
+          >
             {hero?.body ?? "Lazer kesim kalıp. Premium EVA. 1-3 günde kargo."}
           </p>
 
-          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div
+            className="hero-enter mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4"
+            style={{ animationDelay: "380ms" }}
+          >
             <Link
               href={primaryHref}
               className="btn-press btn-red-rich inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-8 text-[11px] font-bold uppercase tracking-[0.12em] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
@@ -86,7 +101,10 @@ export default function Hero({ content }: Props) {
             </Link>
           </div>
 
-          <div className="mt-10 grid w-full max-w-xl grid-cols-2 divide-x divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md sm:grid-cols-4 sm:divide-y-0">
+          <div
+            className="hero-enter mt-10 grid w-full max-w-xl grid-cols-2 divide-x divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md sm:grid-cols-4 sm:divide-y-0"
+            style={{ animationDelay: "470ms" }}
+          >
             {HERO_SPECS.map((spec) => (
               <div
                 key={spec.label}
