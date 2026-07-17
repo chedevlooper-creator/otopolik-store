@@ -60,4 +60,9 @@ describe("AI configuration", () => {
     );
     expect(getAiMaxTokens("support-chat")).toBeGreaterThanOrEqual(1024);
   });
+
+  it("uses a quality model and long-form budget for content generation", () => {
+    expect(AI_MODEL_IDS["content-generator"]).toContain("opus");
+    expect(getAiMaxTokens("content-generator")).toBeGreaterThanOrEqual(2048);
+  });
 });
