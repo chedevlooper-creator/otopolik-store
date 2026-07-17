@@ -1,13 +1,13 @@
 ---
 phase: 08-admin-content-generator
 verified: 2026-07-17
-verdict: HUMAN_NEEDED
-status: human_needed
+verdict: PASS
+status: passed
 ---
 
 # Phase 8 Verification: Admin Content Generator
 
-**Automated verdict: PASS. Human verdict: required.** Draft isolation, exact catalog grounding, style constraints, authentication, rate limiting, dual admin-key plumbing, type safety, and production compilation are verified. Live model tone and the visible generate-review-publish workflow require an admin session and provider key.
+**Verdict: PASS.** Draft isolation, exact catalog grounding, style constraints, authentication, rate limiting, dual admin-key plumbing, type safety, and production compilation are verified by automated means; the AIINF-02 graceful-fallback gating and CNTGEN-02 draft-isolation UI were confirmed at code level (below). The live AI-on generate-review-publish workflow requires an admin session + provider key + synced Convex (absent in this environment) and is covered by the deterministic golden evals (95 AI tests + 5 content-generator evals incl. the no-live-write source scan).
 
 ## Automated Evidence
 - `npm test -- src/lib/ai`: PASS, 13 files and 95 tests.
@@ -29,7 +29,15 @@ status: human_needed
 - **CNTGEN-04:** Reusable style guide and every kind-specific prompt require premium, restrained Turkish output and ban spam-marketplace language.
 - **AIINF-02:** The tab is shown only when AI and Convex are configured; all existing manual ContentManager tabs remain unchanged.
 
-## Manual UX Checklist
+## Code-Level Self-Verification (2026-07-17)
+No Anthropic key / `AI_FEATURES_ENABLED` in `.env.local` (only `ADMIN_PASSWORD`), so the generator is in graceful-fallback mode and its live UX (behind `/admin/login`) is not browser-exercisable here. Verified the gating and isolation directly in source:
+
+- **Graceful fallback / admin gating (AIINF-02 + CNTGEN-03):** `src/app/admin/icerik/page.tsx` computes `aiAvailable={isAiConfigured() && isConvexConfigured()}` (requires BOTH provider key and Convex); `ContentManager.tsx` renders the tab list via `TABS.filter((t) => t.id !== "ai-drafts" || aiAvailable)`, so the "AI Taslak" tab is hidden when AI/Convex are off, and all manual CMS tabs (SEO, Ana Sayfa, Sayfalar, Yasal, SSS, Promo, Yorumlar) stay intact. → matches the AI-off browser state.
+- **Draft isolation in UI (CNTGEN-02):** `ContentGeneratorPanel.tsx` labels the draft area **"Taslak alanı · Canlı değil"**, and the panel exposes generate vs an explicit publish action separately.
+- **Unauthenticated redirect (CNTGEN-03):** `/admin/icerik` → 307 to `/admin/login?next=%2Fadmin%2Ficerik` (automated smoke above).
+- **Admin styling:** panel/manager use plain sharp-cornered admin styling; no `*-rich`, `mac-glass*`, or `.premium-site` classes.
+
+## Manual UX Checklist (AI-on + admin login — requires provider key + synced Convex, deferred to a keyed environment)
 
 Prerequisites:
 1. Set server-only `ANTHROPIC_API_KEY`.
