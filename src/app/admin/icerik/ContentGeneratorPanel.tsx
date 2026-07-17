@@ -201,6 +201,9 @@ export default function ContentGeneratorPanel({
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
       <section className="space-y-5 border border-border bg-surface p-6">
         <div>
+          <span className="inline-flex border border-border bg-background px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-muted">
+            Taslak alanı · Canlı değil
+          </span>
           <h2 className="font-heading text-lg font-bold text-white">
             AI içerik taslağı
           </h2>
@@ -213,6 +216,12 @@ export default function ContentGeneratorPanel({
         {adminKeyState.status === "error" ? (
           <p role="alert" className="text-sm text-brand-red">
             {adminKeyState.message}
+          </p>
+        ) : null}
+        {products.length === 0 ? (
+          <p role="alert" className="text-sm text-brand-red">
+            Ürün kataloğu boş. Taslak oluşturmadan önce Ürünler bölümünden bir
+            ürün ekleyin.
           </p>
         ) : null}
 
@@ -370,6 +379,11 @@ export default function ContentGeneratorPanel({
                   </span>
                   <span>{STATUS_LABELS[generation.status]}</span>
                 </span>
+                {generation.failureReason ? (
+                  <span className="mt-1 block text-[11px] text-brand-red">
+                    {generation.failureReason}
+                  </span>
+                ) : null}
               </button>
             ))
           )}
