@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { href: "/#ozellikler", label: "Özellikler" },
   { href: "/olusturucu", label: "Tasarla" },
   { href: "/galeri", label: "Galeri" },
+  { href: "/destek", label: "Destek" },
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
 ];

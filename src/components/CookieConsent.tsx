@@ -38,11 +38,21 @@ function subscribeToConsent(onStoreChange: () => void) {
   };
 }
 
+/** True only after client mount — avoids SSR/hydration flash of the banner. */
+function useHasMounted(): boolean {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+}
+
 export function useStoredConsent(): ConsentValue | null {
   return useSyncExternalStore(subscribeToConsent, getStoredConsent, () => null);
 }
 
 export default function CookieConsent() {
+  const mounted = useHasMounted();
   const consent = useStoredConsent();
   const pathname = usePathname();
   const { isDrawerOpen } = useCart();
@@ -52,7 +62,8 @@ export default function CookieConsent() {
     setStoredConsent(value);
   }
 
-  if (consent !== null || isDrawerOpen) return null;
+  // Wait for mount so returning visitors with localStorage consent never flash the banner.
+  if (!mounted || consent !== null || isDrawerOpen) return null;
 
   return (
     <div

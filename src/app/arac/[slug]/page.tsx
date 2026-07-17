@@ -7,11 +7,11 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   generateVehicleContent,
   getAllVehicleSlugs,
-  slugToVehicle,
+  resolveVehicleSlug,
   type PriceTier,
 } from "@/lib/vehicle-seo";
 import { siteConfig } from "@/lib/site-config";
@@ -58,15 +58,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const vehicle = slugToVehicle(slug);
-  if (!vehicle) return {};
+  const resolved = resolveVehicleSlug(slug);
+  if (!resolved) return {};
 
-  const content = generateVehicleContent(vehicle.brand, vehicle.model);
+  const content = generateVehicleContent(resolved.brand, resolved.model);
+  const canonicalSlug = resolved.canonicalSlug;
   return {
     title: content.metaTitle,
     description: content.metaDescription,
     alternates: {
-      canonical: `${siteConfig.url}/arac/${slug}`,
+      canonical: `${siteConfig.url}/arac/${canonicalSlug}`,
     },
     openGraph: {
       title: content.metaTitle,
@@ -103,9 +104,13 @@ export default async function VehicleLandingPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const vehicle = slugToVehicle(slug);
-  if (!vehicle) notFound();
+  const resolved = resolveVehicleSlug(slug);
+  if (!resolved) notFound();
+  if (resolved.canonicalSlug !== slug) {
+    redirect(`/arac/${resolved.canonicalSlug}`);
+  }
 
+  const vehicle = { brand: resolved.brand, model: resolved.model };
   const content = generateVehicleContent(vehicle.brand, vehicle.model);
   const settings = await getStoreSettings();
   const products = await getProducts();
@@ -275,13 +280,6 @@ export default async function VehicleLandingPage({
           </h2>
           <p className="mt-4 leading-relaxed text-muted">
             {content.description}
-          </p>
-          <p className="mt-4 leading-relaxed text-muted">
-            Her {vehicle.brand} {vehicle.model} sahibi bilir: standart paspaslar
-            araç tabanına tam oturmaz, kayar, su ve çamuru içinde tutamaz. OTO
-            POLİK olarak {vehicle.brand} {vehicle.model} modelinin taban
-            ölçülerini biliyor, her bir paspası CNC kesimle aracınıza özel
-            üretiyoruz.
           </p>
         </div>
       </section>

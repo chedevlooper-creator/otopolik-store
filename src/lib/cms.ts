@@ -26,6 +26,16 @@ import {
 export type { ContentPage, ContentSection, FaqItem, PromoItem, SiteSeo, TestimonialItem };
 export { interpolateCmsText } from "@/lib/cms-defaults";
 
+/** Stale Convex deployments throw "Could not find public function" — expected until `npx convex dev` syncs. */
+function logCmsFallback(context: string, error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+  if (message.includes("Could not find public function")) {
+    console.warn(`cms ${context}: Convex function missing — using static fallback`);
+    return;
+  }
+  console.error(`cms ${context} fetch error:`, error);
+}
+
 export async function getSiteSeo(): Promise<{
   seo: SiteSeo;
   source: "convex" | "fallback";
@@ -82,7 +92,7 @@ export async function getContentPage(slug: string): Promise<{
 
     return { page, sections, source: "convex" };
   } catch (error) {
-    console.error("cms page fetch error:", error);
+    logCmsFallback("page", error);
     return {
       page: fallbackPage,
       sections: fallbackSections,
@@ -111,7 +121,7 @@ export async function getFaqs(): Promise<{
     );
     return { items, source: "convex" };
   } catch (error) {
-    console.error("cms faq fetch error:", error);
+    logCmsFallback("faq", error);
     return { items: DEFAULT_FAQS, source: "fallback" };
   }
 }

@@ -421,6 +421,11 @@ export default function HomeConfiguratorShowcase() {
                     </>
                   )}
                 </button>
+                {!canAddConfiguredSet && !added ? (
+                  <p className="mt-2 text-center text-[11px] leading-relaxed text-white/40">
+                    Devam için marka, model, 4 haneli yıl ve kasa/versiyon alanlarını doldurun.
+                  </p>
+                ) : null}
               </div>
             </div>
 

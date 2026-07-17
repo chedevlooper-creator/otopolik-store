@@ -94,6 +94,60 @@ export function slugToVehicle(slug: string): { brand: string; model: string } | 
   return null;
 }
 
+/**
+ * Resolve a vehicle from an exact or abbreviated slug.
+ * e.g. `bmw-3-serisi` → canonical `bmw-3-serisi-sedan` (prefers Sedan when ambiguous).
+ */
+export function resolveVehicleSlug(slug: string): {
+  brand: string;
+  model: string;
+  canonicalSlug: string;
+} | null {
+  const exact = slugToVehicle(slug);
+  if (exact) {
+    return {
+      brand: exact.brand,
+      model: exact.model,
+      canonicalSlug: vehicleToSlug(exact.brand, exact.model),
+    };
+  }
+
+  const brands = getAllBrands();
+  for (const brand of brands) {
+    const brandSlug = slugify(brand);
+    if (!slug.startsWith(`${brandSlug}-`)) continue;
+
+    const modelPart = slug.slice(brandSlug.length + 1);
+    if (!modelPart) continue;
+
+    const matches = getModelsByBrand(brand).filter((vehicle) => {
+      const modelSlug = slugify(vehicle.name);
+      return (
+        modelSlug === modelPart ||
+        modelSlug.startsWith(`${modelPart}-`) ||
+        modelPart.startsWith(`${modelSlug}-`)
+      );
+    });
+
+    if (matches.length === 0) continue;
+
+    const preferred =
+      matches.find((m) => /sedan/i.test(m.name)) ??
+      matches.find((m) => /hatchback/i.test(m.name)) ??
+      matches[0];
+
+    if (!preferred) continue;
+
+    return {
+      brand,
+      model: preferred.name,
+      canonicalSlug: vehicleToSlug(brand, preferred.name),
+    };
+  }
+
+  return null;
+}
+
 // ── Body type labels (Turkish) ──
 
 const BODY_LABELS: Record<string, string> = {
@@ -134,7 +188,8 @@ export function generateVehicleContent(
   const cleanModel = model.replace(/\s*(Hatchback|Sedan|SUV|Coupe|Cabrio|MPV|Van|Station Wagon|Crossover|Pickup|Liftback|Sportback|Fastback|Roadster|Microcar)$/i, "").trim();
 
   const title = `${brand} ${cleanModel} Paspas — Araca Özel EVA Paspas Seti`;
-  const metaTitle = `${brand} ${cleanModel} Paspas | OTO POLİK — Araca Özel EVA`;
+  // Layout titleTemplate is already "%s | OTO POLİK" — do not embed the brand again.
+  const metaTitle = `${brand} ${cleanModel} Paspas — Araca Özel EVA`;
   const metaDescription = `${brand} ${cleanModel} modeli için CNC kesim, araca özel EVA paspas seti. Su geçirmez, 4 mevsim koruma. Ücretsiz kargo ve kapıda ödeme seçeneği.`;
 
   const h1 = `${brand} ${cleanModel}\nAraca Özel Paspas`;
