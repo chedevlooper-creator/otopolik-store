@@ -56,7 +56,7 @@ export default function ConfigSummary({
   return (
     <section
       aria-label="Sipariş özeti"
-      className="border-t border-white/35 bg-surface/95 p-4 shadow-[0_-8px_32px] shadow-black/40 backdrop-blur lg:sticky lg:bottom-4 lg:z-20 lg:rounded-[1.4rem] lg:border lg:p-6"
+      className="border-t border-white/35 bg-surface/95 p-4 shadow-[0_-8px_32px] shadow-black/40 backdrop-blur lg:rounded-2xl lg:border lg:border-white/10 lg:bg-white/[0.03] lg:p-6 lg:shadow-none lg:backdrop-blur-none"
     >
       <div className="flex items-center justify-between gap-3 sm:items-start">
         <div className="min-w-0">
