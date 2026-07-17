@@ -11,6 +11,7 @@
 import type * as _types from "../_types.js";
 import type * as cms from "../cms.js";
 import type * as cmsSeedData from "../cmsSeedData.js";
+import type * as contentGenerations from "../contentGenerations.js";
 import type * as defaults from "../defaults.js";
 import type * as files from "../files.js";
 import type * as lib_adminAuth from "../lib/adminAuth.js";
@@ -32,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   _types: typeof _types;
   cms: typeof cms;
   cmsSeedData: typeof cmsSeedData;
+  contentGenerations: typeof contentGenerations;
   defaults: typeof defaults;
   files: typeof files;
   "lib/adminAuth": typeof lib_adminAuth;
