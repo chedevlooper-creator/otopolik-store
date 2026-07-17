@@ -1,157 +1,206 @@
 # Feature Research
 
-**Domain:** AI-augmented e-commerce (single-brand premium car-accessory storefront, Turkish market, WhatsApp-checkout, Convex backend)
+**Domain:** Premium-minimal commerce storefront simplification (Turkish single-SKU-category EVA mat brand; WhatsApp checkout; brownfield Next.js + Convex)
 **Researched:** 2026-07-17
-**Confidence:** MEDIUM (cross-checked web sources on established production patterns; no project-specific case studies of single-brand EVA-mat stores exist, so specifics are triangulated from general e-commerce AI patterns)
+**Confidence:** MEDIUM (industry UX/CRO patterns + luxury ecommerce guidance cross-checked; Otopolik-specific mapping from live codebase inventory; no A/B data from this store yet)
+
+**Milestone focus:** v1.2 Sade Lüks Deneyim — simplify all customer UI; delete/repetition-cut before adding; preserve OLED black/red, WhatsApp order flow, core mat configuration; hide customer AI UI, keep code.
 
 ## Feature Landscape
 
-### Table Stakes (Users Expect These — Once You Ship "AI Chat" At All)
+### Table Stakes (Users Expect These After a "Sade Lüks" Pass)
 
-These aren't required to exist at all (OTO POLİK works fine today without any AI). But once you commit to shipping an AI configurator/support surface, these behaviors are the bar users will silently expect — missing them makes the AI feel broken, not "beta."
+For a premium single-product-category store, "simplification" is judged by whether the path to order still feels complete — not by how many sections remain. Missing these after a declutter pass feels broken or cheap, not luxurious.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Streaming responses (token-by-token) | Any modern AI chat that "types" instantly-in-full feels laggy/fake next to ChatGPT-trained user expectations | LOW | Vercel AI SDK `streamText` + `useChat`/`useObject` gives this for free over a Next.js route handler |
-| Grounded answers only (RAG over real site content, not free invention) | Users will ask exact shipping cost, sizing, care instructions — a hallucinated answer here is a trust-breaking and potentially legal/financial liability (wrong price, wrong delivery promise) | MEDIUM | Ground in `cms.ts`/`cms-defaults.ts` FAQ + `site-config.ts`/`site-settings.ts` (shipping, prices) content, not general web knowledge. Do not let the model "guess" a price — always compute via `mat-pricing.ts` |
-| Clear scope boundary / on-topic refusal | An assistant that answers general car-repair or unrelated questions looks unprofessional for a premium brand and invites abuse | LOW–MEDIUM | System-prompt hardening + a short deny-list response ("Bu konuda size yardımcı olamıyorum, ancak paspas seçimi/sipariş konusunda...") |
-| Escalation to a human/WhatsApp when uncertain | Users expect an "I don't know, let me connect you" path rather than a dead end or a confident wrong answer | LOW | Trivial here — WhatsApp is *already* the checkout channel (`src/lib/whatsapp.ts`), so "escalate" = generate a pre-filled `wa.me` link, no new channel needed |
-| Conversation → cart/checkout handoff that actually adds real items | If the assistant recommends a config, it must call into the *real* `MatConfigurator`/cart logic (`useCart().addItem()`, `mat-pricing.ts`), not describe a fictional price | MEDIUM | Must be implemented as a tool-call into existing pricing/cart functions, never a free-text price computed by the LLM itself |
-| Visible "AI" disclosure | Turkish consumer-protection norms and general trust expectations mean users should know they're talking to a bot, not a human rep | LOW | Simple UI label ("AI Asistan") — avoid impersonating a human sales rep |
-| Mobile-first chat UI matching existing OLED-black/glass design system | The site has a very deliberate premium visual language (`premium-card`, `mac-glass`, Racing Red) — a generic white chatbox widget would look like a third-party plugin bolted on | LOW–MEDIUM | Reuse `surface-glass`/`mac-glass` classes; this is UI work, not AI work |
-| Graceful degradation when AI is unavailable/misconfigured | Following the codebase's existing lazy-client + fallback pattern (Convex-first with static fallback) | LOW | If `OPENAI_API_KEY`/model provider env var is unset, hide/disable the AI entry points rather than showing a broken chat — same philosophy as `convex-server.ts` returning `null` |
+| One clear primary action from first viewport | Shoppers must know the next step in &lt;3 seconds (configure / WhatsApp) | LOW | Hero budget: brand + one headline + one short line + one primary CTA (+ optional secondary text link). No stats strips, promo chips, or floating badges on hero media |
+| Intact configure → cart → WhatsApp path | Simplification must not break the revenue path | LOW | Preserve `MatConfigurator` core (vehicle, floor/edge color, extras, `calculateMatPrice`) + cart + `/odeme` WhatsApp handoff. Shorten chrome around it; do not invent a parallel checkout |
+| Product/value clarity without section spam | Luxury buyers still need rational support for emotional decisions (material, fit, shipping) | LOW–MEDIUM | Prefer one concise proof block or FAQ over repeated "premium story" sections. Controlled clarity ≠ empty minimalism (Uxphoria luxury CRO) |
+| Short checkout, WhatsApp-native | ~18% abandon for "checkout too long/complicated" (Baymard); this store already has no payment gateway | LOW | Keep required fields lean (name, phone, city, address; note optional). Avoid adding account creation, multi-step checkout wizard, or credit-card UI reactivation in v1.2 |
+| Trust at decision points, not as wallpaper | High-ticket hesitation needs reassurance near CTA, not banner farms | LOW | Shipping / özel kesim / WhatsApp onay — one line or icon row near configurator CTA and checkout submit; not homepage promo ribbons |
+| Mobile thumb path (sticky price + CTA) | Most sessions are mobile; long vertical configs drop off when price/CTA scroll away | MEDIUM | Sticky summary bar on `/olusturucu` and checkout primary button always reachable; large tap targets; no hover-only affordances |
+| Consistent OLED black / Racing Red brand | Brand is the product experience; flattening to a generic dark template kills positioning | LOW | Keep `--brand-red`, OLED black surfaces, Syne/Instrument/JetBrains. Cut gold/glow/EVA spectacle density, not the identity |
+| `prefers-reduced-motion` respected | Accessibility expectation + Turkish KVKK-adjacent "respectful UX" bar | LOW | Gate Lenis parallax, scroll-linked hero scale/blur, spring steppers. Reduced-motion users get static layout, same content hierarchy |
+| Nav that matches real destinations | Dead or redundant links (`/#ozellikler` if section gone; AI Destek) erode trust | LOW | Cap primary nav ~5–7 items (luxury IA guidance). Hide `/destek` and AI entry points from customer chrome |
+| AI surfaces hidden but recoverable | Milestone requirement: hide customer AI UI, retain code | LOW | Feature-flag / render-gate `ConfiguratorChat`, `VehicleMatchInput` customer chrome, `/destek` nav. Keep routes/API/admin AI intact for later re-enable |
 
-### Differentiators (Where This Actually Adds Value for a Small Premium Single-Brand Store)
+### Differentiators (Competitive Advantage — Deletion Done Well)
+
+Differentiation for v1.2 is **editorial restraint**, not new capabilities. Competitors (generic Turkish mat stores) stay noisy; premium-minimal brands win by looking confident enough to remove.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Vehicle matcher with fuzzy-first + LLM-fallback + confidence-based disambiguation | Solves a real, narrow, high-value problem: users type "2019 Passat variant" or "kaptan koltuğu Egea 2016" instead of using dropdowns. This is the single highest-leverage AI feature because it removes friction at the *first* configurator step | MEDIUM | Layer LLM only on top of existing `vehicle-search.ts` token/prefix matcher (already normalizes Turkish chars, already ranks matches) — don't replace it. LLM's job: parse free text into brand+model+year+trim tokens the existing matcher can search on, and handle cases the matcher returns 0 or many ambiguous results for |
-| Configurator assistant that pre-fills the real stepper (not a parallel checkout path) | Differentiator vs. generic chatbot-bolted-on-top: the assistant *drives* the existing `MatConfigurator` (vehicle → floor/edge color → extras → price) via tool calls, so the user lands in the same trusted UI they'd use manually, just pre-filled | MEDIUM–HIGH | Requires exposing the configurator's step state as callable tools; guardrail: LLM should never itself state a final price — always defer to `calculateMatPrice` |
-| WhatsApp message drafting (support + order) | Reduces the classic "user has to write the WhatsApp message themselves" friction; since checkout literally *is* WhatsApp here, an AI-drafted order summary (vehicle + colors + price + delivery notes) handed to the user to review-and-send is a natural fit unique to this business model | LOW–MEDIUM | Draft-then-user-sends preserves the existing "opens WhatsApp window synchronously" UX pattern in `odeme/` — AI drafts text, human still presses send, so no new liability/automation risk |
-| Admin bulk content generation grounded in existing product/vehicle data | For a catalog with many brand+model landing pages (`/arac/[slug]`) and product descriptions, AI-assisted drafting genuinely saves admin time vs. writing dozens of near-identical Turkish descriptions by hand | LOW–MEDIUM | Feed the model structured facts (vehicle brand/model/bodyType from `vehicle-data.ts`, price tier from `mat-pricing.ts`, existing FAQ tone) rather than open-ended prompts, to keep brand voice and factual accuracy consistent |
-| Turkish-native tone control tuned to "premium/Apple-Porsche" brand voice | Generic AI content generators default to generic marketing tone; a system prompt encoding the project's specific brand voice (premium, confident, not salesy-cheap) is a real differentiator vs. just pasting into ChatGPT | LOW | This is a prompt-engineering asset (a written style guide/system prompt), not a technical build — cheap to do well, easy to do badly |
+| Ruthless homepage section budget | Feels like a flagship, not a landing-page template | MEDIUM | Current live home is already Hero → HomeConfiguratorShowcase → FeaturedProducts → Faq. Audit for *functional duplication*: showcase mini-configurator vs `/olusturucu` full flow. Prefer one deep configure entry + light social/FAQ proof over two config UIs |
+| Micro-interaction over spectacle | Apple/Porsche cue: restraint signals quality | MEDIUM | Replace scroll-blur, multi-layer shine sweeps, and continuous Lenis theater with 2–3 intentional motions (CTA press, cart confirm, step change). Heavy animation is a documented luxury conversion drag (slow / complex feel) |
+| Configurator step compression | Fewer decisions → higher completion for made-to-order | MEDIUM | Today: Aracınız → Taban → Kenar → Ekstralar (4). Strong candidate: merge Taban+Kenar into one "Renkler" step, or make Ekstralar an optional accordion on the color step. Keep live preview + sticky price (Cartier / Nissan light-configurator pattern: progressive disclosure + always-visible price) |
+| Single conversion spine in nav | Less choice paralysis; brand confidence | LOW | Primary: Tasarla / Ürünler / Galeri / İletişim (+ Sepet). Demote or footer-only: Hakkımızda, Destek, dead hash links |
+| Quiet cart & checkout chrome | Commitment stage should feel calm, not promotional | LOW | On `/sepet` and `/odeme`, strip marketing sections, secondary CTAs, and AI offers. Logo + support/WhatsApp escape hatch only (checkout-header simplification pattern) |
+| Proof without collage clutter | Gallery/FAQ as curated evidence, not infinite masonry theater | LOW–MEDIUM | Galeri remains, but homepage should not re-embed a second full gallery experience. One featured strip max if needed |
 
-### Anti-Features (Commonly Requested, Often Problematic for This Store's Size/Model)
+### Anti-Features (Seem Premium / Helpful — Harm This Milestone)
+
+Prioritize **not building** these. Deletion/simplification is the product work.
 
 | Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|------------------|-------------|
-| Fully autonomous order placement by the AI (no human review) | "Let the bot just complete the checkout for the user" sounds efficient | This business has **no payment gateway** — every order is a manual WhatsApp negotiation/confirmation. An AI that "places orders" autonomously breaks the entire trust model (a human at OTO POLİK currently confirms every order by reading the WhatsApp message) and risks wrong-price/wrong-vehicle orders going out uncontrolled | AI drafts the WhatsApp message; the customer (not the AI) sends it, exactly as the current manual flow works today |
-| General-purpose open-domain chatbot ("ask me anything") | Feels more impressive/flexible in a demo | For a single-brand store with ~one product category (EVA mats), an open-domain assistant invites off-topic abuse, higher token cost, higher hallucination surface, and dilutes brand focus — plus more prompt-injection attack surface | Narrow, tool-gated assistant scoped strictly to vehicle matching, configuration, pricing, and site-content Q&A |
-| Real-time inventory/stock-aware AI recommendations | Sounds like standard "smart retail AI" | This catalog is a made-to-order EVA mat business (per-vehicle, per-color config) — there is no meaningful "stock" concept to reason about; building this borrows complexity from a different business model (rack-and-stock retail) that doesn't apply here | None needed — the configurator already handles product/price logic deterministically |
-| AI auto-publishing generated content directly to the live CMS | Saves an admin click | AI content generators hallucinate specs/claims; auto-publish to a live product page risks factual errors (wrong compatible vehicle, wrong price claim) reaching customers with zero human check — especially risky for SEO meta/legal-adjacent claims | Draft → admin review/edit → explicit "Publish" action, mirroring the existing `/admin/icerik` (ContentManager) manual-edit pattern |
-| Multi-turn "AI sales agent" that can override discounts/pricing | Feels like a powerful upsell tool | Any AI capable of asserting a price outside `mat-pricing.ts`'s single-source-of-truth math immediately creates two sources of truth and a business risk (an AI could quote a lower price than the real config) | AI can *describe* extras/upsells in natural language, but every price shown to the user must be computed via the existing `calculateMatPrice`/site-settings pricing, never generated by the LLM |
-| Voice assistant / voice ordering | Trendy, "the future of shopping" | Disproportionate build cost (speech-to-text, Turkish accent handling, telephony) vs. value for a low-volume premium accessory store; no existing infrastructure to hook into | Text chat is sufficient; revisit only if message volume data later justifies it |
-| Replacing the existing manual dropdown configurator with chat-only flow | "AI-first" feels modern | The existing spring-physics/glassmorphism stepper configurator (Phase 3, already shipped) is a core piece of the "luxury Apple/Porsche" UX investment — forcing everyone through chat would regress a polished, tested UI for a subset of users who prefer typing | AI assistant is an *optional accelerant/entry point* alongside the existing configurator, not a replacement — "chat to pre-fill" not "chat instead of" |
-| Storing/training on raw customer chat transcripts without care | Assumed necessary "to improve the AI" | Turkish KVKK (personal data protection law) exposure for a small store with no dedicated legal/compliance function; unnecessary retention risk for a support chatbot that doesn't need to fine-tune anything | Stateless or short-TTL conversation logging only as needed for debugging; no training pipeline; scope this explicitly in any privacy copy shown near the chat |
+|---------|---------------|-----------------|-------------|
+| More animations / 3D / glass layers to "feel luxury" | v1.0 equated polish with motion density | Over-animation slows mobile, triggers vestibular issues, and reads as insecure luxury (trying too hard). Documented conversion risk for heavy luxury visuals | Cut to intentional micro-interactions; keep OLED/red static craft |
+| Re-adding removed homepage story blocks (LuxuryInterior / PremiumExperience / FeatureStrip style) | "Homepage feels empty" after declutter | Empty feeling is usually weak hierarchy or weak hero, not missing sections. Re-adding repeats the clutter problem | Fix hero composition and one proof block; do not restore orphan components to the page |
+| Parallel mini-configurator + full configurator both heavily promoted | Showcase feels interactive and premium | Two config mental models → abandonment and inconsistent pricing UX if one drifts | One configure surface owns depth; homepage at most deep-links or a thin teaser |
+| Re-surfacing customer AI (chat, Destek, vehicle-match chrome) for "modern" | v1.1 investment feels wasted if hidden | Competing entry points increase cognitive load; AI chat lengthens time-to-order for users who just want dropdowns; milestone explicitly hides customer AI | Keep code + admin AI; customer path is manual configure → WhatsApp. Revisit AI UX only after simplification metrics |
+| Empty minimalism (strip shipping/FAQ/materials copy) | "Apple-like white space" misread as delete all text | Over-minimal luxury sites confuse value and raise hesitation (Uxphoria) | Sparse but specific: fit guarantee, EVA material, shipping/dispatch, WhatsApp onay — once each |
+| Multi-step checkout wizard / account gate | Feels "enterprise" | Extra steps contradict WhatsApp-native flow; Baymard field-count research argues fewer fields, not more pages | Single-page checkout; guest-only (already true) |
+| Enabling disabled credit-card payment UI | Looks more "real store" | Half-disabled payment options create distrust and support load | Keep WhatsApp + kapıda only until a real gateway ships in a later milestone |
+| New promo banners, countdown timers, badge clusters | CRO folklore | Mass-market tactics cheapen luxury positioning | One quiet trust line near CTA |
+| Auto-playing video / ambient motion behind copy | Cinematic brand films | Competes with CTA readability; battery/data cost on mobile TR networks | Static hero media or user-initiated play |
+| Expanding nav with SEO landing dumps (`/arac/*` mega-menu) | SEO discovery | Primary nav overload; vehicle SEO pages can stay linked from products/search | Keep `/arac/[slug]` for SEO; do not promote dozens in header |
+
+## Observable UX Outcomes (Success Signals)
+
+Use these as acceptance criteria for roadmap phases — behavior, not "looks nicer."
+
+| Outcome | Observable signal | Failure signal |
+|---------|-------------------|----------------|
+| Faster path to configure | From `/`, primary CTA lands on `/olusturucu` (or equivalent) without scrolling past ≥2 marketing sections | User must hunt past showcase + featured + FAQ before finding configure |
+| Lower scroll tax on home | Above-the-fold communicates brand + offer + CTA; subsequent sections each have one job | Repeated "premium" claims / duplicate CTAs every screenful |
+| Configurator completion feels short | ≤3 decision screens for core config (vehicle + colors + optional extras); price always visible on mobile | 4+ full-screen steps with price only at end; spring theater delaying taps |
+| Checkout calm | `/odeme` is form + order summary + WhatsApp CTA; no AI, no promos, no competing nav | Header still offers 8 destinations during commit |
+| AI invisible to customers | No Destek/AI Asistan entry in header/footer/configurator when flag off; direct `/destek` URL either redirects or soft-lands without chat chrome (policy choice) | Chat widgets, "AI Destek" footer label, VehicleMatchInput still prominent |
+| Motion respects preference | With `prefers-reduced-motion: reduce`, no scroll-linked scale/blur/parallax; content still readable | Reduced-motion users get broken opacity/transform states |
+| Brand preserved | First viewport still reads OTO POLİK (OLED + red) without nav | After removing nav, page could be any dark Shopify theme |
+| Conversion risk contained | WhatsApp open-on-submit still sync during user gesture; cart line still keyed by config | Simplification refactors break popup timing or price source |
+
+### Mobile implications
+
+- Prefer vertical compression (fewer sections, shorter steps) over desktop-only multi-column showcases.
+- Sticky configure/checkout CTAs beat another "luxury panel."
+- Touch: color swatches and vehicle picks need ≥44px targets; remove hover-sheen as the only feedback.
+- Network: fewer animated layers and autoplay media → better LCP/INP on mid-range Android (primary TR audience).
+
+### Accessibility implications
+
+- Reduced motion is mandatory for any retained Framer/Lenis effects.
+- Do not rely on animation to communicate step progress — keep `aria-current` / text labels on stepper.
+- Hiding AI must not leave focus traps or empty landmarks (`/destek` if kept as page).
+- Contrast: platinum `--sand` on OLED must remain readable after glass/opacity cuts.
+
+### Conversion risks (what simplification can break)
+
+| Risk | Why it happens | Mitigation |
+|------|----------------|------------|
+| Over-deletion removes trust | FAQ/shipping cut entirely → hesitation on made-to-order | Keep one FAQ or shipping line near purchase |
+| Showcase deletion without CTA upgrade | Removing `HomeConfiguratorShowcase` without strengthening hero → drop in configure starts | Hero primary CTA + optional featured products must clearly lead to `/olusturucu` |
+| Merging color steps without preview | Users lose floor/edge mental model | Keep dual pickers on one screen with live preview |
+| Hiding AI without flag discipline | Env mismatch shows broken chat or 404 Destek | Explicit `AI_FEATURES_ENABLED` / storefront chrome flag; soft-hide components, keep APIs |
+| Checkout field over-trimming | Dropping city/address breaks fulfillment WhatsApp message | Do not remove fields required for dispatch; only remove UI chrome around them |
 
 ## Feature Dependencies
 
 ```
-AI Configurator Assistant
-    └──requires──> Existing MatConfigurator step/state API (vehicle, colors, extras)
-    └──requires──> mat-pricing.ts (calculateMatPrice) as the only price source
-    └──requires──> useCart().addItem() (real cart write, not simulated)
-    └──enhances──> AI Vehicle Matcher (assistant's first step is often "which car?")
+Homepage section budget
+    └──requires──> Hero primary CTA clarity
+    └──conflicts──> Dual heavy configurators (home showcase + /olusturucu both deep)
+    └──enhances──> Nav link reduction (fewer hash/dead links)
 
-AI Vehicle Matcher
-    └──requires──> vehicle-search.ts (existing fuzzy/token matcher) as primary matcher
-    └──requires──> vehicle-data.ts (brand/model/bodyType catalog) as ground truth
-    └──requires──> mat-pricing.ts / getVehiclePrice() for correct price tier on match
-    └──enhances──> AI Configurator Assistant (feeds it a resolved vehicle)
-    └──enhances──> /arac/[slug] SEO landing pages (could route ambiguous matches there)
+Motion reduction
+    └──requires──> prefers-reduced-motion policy on Hero / Lenis / stepper
+    └──enhances──> Mobile performance perception
+    └──conflicts──> "More glass/shine to compensate for deleted sections"
 
-AI Content Generator (admin)
-    └──requires──> Convex CMS schema (contentSections, faqItems, products, siteSeo)
-    └──requires──> Admin auth (admin_session cookie / ADMIN_SECRET) — reuse requireAdminKey()
-    └──requires──> Human review/publish step (draft state before live)
-    └──conflicts──with──> Auto-publish (see anti-features)
+Configurator shorten
+    └──requires──> Intact calculateMatPrice + cart addItem
+    └──requires──> Live preview + sticky price/CTA
+    └──enhances──> Cart/checkout calm (fewer confused configs)
+    └──conflicts──> Customer AI chat as default entry (hides manual shorten wins)
 
-AI Support / Order Helper
-    └──requires──> Grounded content sources: cms.ts/cms-defaults.ts (FAQ), site-config.ts/site-settings.ts (shipping/pricing)
-    └──requires──> whatsapp.ts (existing wa.me link builder) for message drafting/handoff
-    └──enhances──> AI Configurator Assistant (can hand off "let's build your mat" mid-support-chat)
-    └──enhances──> AI Vehicle Matcher (support chat may need to resolve a vehicle mid-conversation)
+Hide customer AI
+    └──requires──> Feature flag / conditional render (keep code)
+    └──requires──> Nav/footer label cleanup (Destek / AI Destek)
+    └──conflicts──> Homepage or checkout AI upsell modules
+
+Checkout/cart calm chrome
+    └──requires──> WhatsApp sync-open pattern preserved
+    └──enhances──> Trust-near-CTA (shipping line by submit)
+    └──conflicts──> Promo strips / disabled card payment tease
 ```
 
 ### Dependency Notes
 
-- **AI Configurator Assistant requires the existing MatConfigurator's step/state logic:** the assistant should be a *controller* over the same state (vehicle, floor/edge color, extras) that the manual stepper uses, exposed as tool calls — not a separate reimplementation, or the two paths will drift and produce inconsistent prices/previews.
-- **AI Configurator Assistant requires `mat-pricing.ts` as the only price source:** this is the most important guardrail dependency in the whole milestone — every AI-quoted price must trace back to `calculateMatPrice`, never be composed by the LLM from training-data guesses about "typical mat prices."
-- **AI Vehicle Matcher requires `vehicle-search.ts` as primary matcher, LLM as fallback/parser:** the existing normalized-token search (already handles Turkish diacritics, brand/model/bodyType) is fast, free, deterministic, and already ranks results — the LLM's value-add is narrowly parsing messy free text ("19 model passat," "kaptan pikap 4x4") into the tokens that matcher expects, and handling disambiguation dialogue when multiple/zero results come back. Skipping the existing matcher and routing every query straight to an LLM would be slower, costlier, and less deterministic for the common case (a typo of an exact brand+model).
-- **AI Content Generator requires a human review/publish step, conflicts with auto-publish:** the existing `/admin/icerik` pattern is manual-edit-then-save; AI content generation should produce a *draft* state reviewable in the same UI before it becomes the live `ContentSection`/product description, preserving the "admin controls what's live" invariant the CMS already has.
-- **AI Support Helper requires grounded content sources, not open knowledge:** shipping thresholds, prices, and care instructions are business facts that live in Convex/static config and change over time (editable at `/admin/ayarlar`) — the assistant must re-fetch these at answer-time (or be re-grounded on every deploy), never bake them into a static system prompt that goes stale.
-- **AI Support Helper enhances but doesn't replace WhatsApp checkout:** all "helper" output should culminate in either an informative Turkish answer or a pre-filled WhatsApp handoff — never a competing checkout path, since there is no payment gateway to complete an order any other way.
+- **Homepage budget requires hero CTA clarity:** Deleting the home mini-configurator only works if the hero (and maybe featured products) unambiguously start configuration. Otherwise conversion regresses.
+- **Configurator shorten requires pricing/cart invariants:** UI step merge is cosmetic; price must still come from `mat-pricing.ts`, line identity from `(slug, color/config)`.
+- **Hide AI conflicts with using AI as a crutch for long flows:** Do not lengthen the manual stepper "because chat will fix it later." Shorten the manual path first.
+- **Motion reduction conflicts with compensating spectacle:** After cutting sections, resist filling whitespace with new effects.
 
 ## MVP Definition
 
-### Launch With (v1.1 — this milestone)
+### Launch With (v1.2 — this milestone)
 
-- [ ] AI Vehicle Matcher (free text → resolved brand/model with confidence, disambiguation UI on ties/misses) — highest leverage-to-effort ratio, directly reduces configurator drop-off, builds on existing `vehicle-search.ts`
-- [ ] AI Configurator Assistant (Turkish chat that walks vehicle → colors/extras → price → WhatsApp) — the flagship customer-facing feature named in PROJECT.md; must call real pricing/cart functions, not simulate them
-- [ ] AI Support/Order Helper scoped to shipping/sizing/care Q&A + WhatsApp message drafting — narrow scope (grounded RAG over existing CMS/FAQ content), reuses existing WhatsApp link-building
-- [ ] AI Content Generator (admin) for product descriptions + SEO titles/meta + FAQ copy, draft-only until admin publishes — internal tool, lower risk surface, big time-save for a catalog with many vehicle landing pages
+Minimum successful "Sade Lüks" ship — deletion and shortening first.
 
-### Add After Validation (v1.x)
+- [ ] Homepage section budget enforced (no redundant story/config blocks; one primary path) — essential to stop cognitive overload
+- [ ] Hero first-viewport discipline (brand + headline + support + CTA; no overlay clutter) — brand test + conversion
+- [ ] Motion diet (micro-interactions only; reduced-motion safe) — premium feel without performance/a11y tax
+- [ ] Configurator shortened (≤3 decision surfaces; sticky price/CTA; core config preserved) — main drop-off risk
+- [ ] Products / cart / checkout chrome shortened (no marketing theater on commit pages) — Baymard-aligned calm commit
+- [ ] Customer AI UI hidden (code retained; nav cleaned) — explicit milestone requirement
+- [ ] OLED/red brand + WhatsApp order flow unchanged — non-negotiable constraints
 
-- [ ] Conversation analytics (which questions the AI can't answer / where users abandon) — needed to prove the ROI case before investing further, and to find real gaps in the grounded knowledge base
-- [ ] Proactive assistant nudges (e.g., "not sure which mat fits? ask the assistant") surfaced contextually on `/arac/[slug]` pages — only once the core assistant's answer quality is proven
-- [ ] Multi-language content generation (if OTO POLİK ever serves non-Turkish markets) — explicitly out of scope now since "UI copy, routes, and validation are all in Turkish"
+### Add After Validation (v1.2.x / next)
+
+- [ ] Re-enable customer AI behind improved short manual flow — only if analytics show demand and short path already converts
+- [ ] Homepage A/B: teaser vs no home configurator — needs traffic
+- [ ] Further checkout field UX (phone mask polish, city autocomplete) — after chrome is calm
 
 ### Future Consideration (v2+)
 
-- [ ] Voice ordering / voice assistant — disproportionate cost for current message volume; revisit only with real usage data
-- [ ] AI-personalized product recommendations based on browsing history — requires a tracking/personalization layer this brownfield app doesn't have yet, and the catalog is narrow enough (EVA mats only) that personalization has limited headroom
-- [ ] Full autonomous order-taking without human-visible WhatsApp step — blocked on this business adopting a real payment gateway first; today's "no payment gateway, WhatsApp-confirmed" model is a deliberate trust mechanism, not a gap to automate away
+- [ ] Real payment gateway (then redesign checkout; not a simplification project)
+- [ ] Concierge booking / phone appointment luxury pattern — only if ASP and volume justify
+- [ ] AR try-on / 3D cabin view — high cost; defer until core path is quiet and converting
 
 ## Feature Prioritization Matrix
 
 | Feature | User Value | Implementation Cost | Priority |
 |---------|------------|---------------------|----------|
-| AI Vehicle Matcher (fuzzy+LLM fallback) | HIGH | MEDIUM | P1 |
-| AI Configurator Assistant | HIGH | HIGH | P1 |
-| AI Support/Order Helper (grounded Q&A + WhatsApp drafting) | MEDIUM | MEDIUM | P1 |
-| AI Content Generator (admin) | MEDIUM | LOW–MEDIUM | P1 |
-| Conversation analytics/observability | MEDIUM | LOW | P2 |
-| Proactive contextual nudges | LOW–MEDIUM | LOW | P2 |
-| Voice ordering | LOW (for this store's size) | HIGH | P3 |
-| Personalized recommendations | LOW (narrow catalog) | HIGH | P3 |
-| Fully autonomous checkout | N/A — anti-feature | — | Not planned |
+| Hide customer AI chrome (keep code) | HIGH (focus) | LOW | P1 |
+| Homepage delete/dedupe sections | HIGH | LOW–MEDIUM | P1 |
+| Hero viewport discipline | HIGH | LOW | P1 |
+| Motion diet + reduced-motion | HIGH | MEDIUM | P1 |
+| Configurator step compression + sticky CTA | HIGH | MEDIUM | P1 |
+| Cart/checkout calm chrome | HIGH | LOW | P1 |
+| Nav reduction (≤7, remove Destek/dead links) | MEDIUM–HIGH | LOW | P1 |
+| Trust line near CTA (not badge farm) | MEDIUM | LOW | P2 |
+| Products listing/detail copy/layout tighten | MEDIUM | MEDIUM | P2 |
+| Gallery homepage re-embed | LOW | LOW | P3 (avoid) |
+| New animation systems | LOW (negative) | HIGH | P3 (anti) |
+| Payment card UI | LOW now | HIGH | P3 (defer) |
 
 **Priority key:**
-- P1: Must have for this milestone (v1.1)
-- P2: Should have, add once v1.1 usage data exists
-- P3: Nice to have, future consideration only
+- P1: Must have for v1.2 launch
+- P2: Should have once P1 deletion lands
+- P3: Nice / future / actively avoid in this milestone
 
-## Competitor Feature Analysis
+## Competitor / Pattern Feature Analysis
 
-Direct competitor case studies for "single-brand premium EVA car-mat storefront with AI chat" don't exist publicly; the closest comparable patterns come from general e-commerce AI-assistant deployments and configurator-heavy verticals (made-to-order/customizable products).
-
-| Feature | General e-commerce AI assistants (industry pattern) | Made-to-order/configurator businesses (industry pattern) | Our Approach |
-|---------|--------------------------------------------------------|------------------------------------------------------------|--------------|
-| Conversation entry point | Persistent floating chat widget, always available | Often embedded *inside* the configurator flow as a "need help?" assist, not a separate general widget | Both: a scoped floating assistant entry point, but its main job is to pre-fill/accelerate the existing stepper, not run a parallel flow |
-| Catalog/SKU matching | Full-text/semantic search across large catalogs (thousands of SKUs) | Structured attribute matching (size/fit/variant) since the "catalog" is really a config space | Attribute-based fuzzy+LLM matching against `vehicle-data.ts` (brand/model/bodyType), which is structurally closer to the configurator pattern than to open catalog search |
-| Escalation channel | Live chat agent, ticketing system, sometimes phone | Often email or a sales-rep callback for complex custom orders | WhatsApp — already the sole checkout channel, so escalation is "continue in the channel you'd checkout in anyway," a natural fit unique to this store |
-| Content generation scope | Bulk SKU description generation across huge catalogs (thousands of items, heavy automation bias) | Smaller, more tightly curated content sets (fewer SKUs/variants, more brand-voice sensitivity) | Closer to the configurator-business pattern: modest number of vehicle landing pages + FAQ, favor quality/review over bulk automation |
+| Feature | Mass-market TR mat stores | Luxury DTC / Apple-like flagships | OTO POLİK v1.2 approach |
+|---------|---------------------------|-----------------------------------|-------------------------|
+| Homepage length | Long: promo, features, testimonials, blog, chat | Short: hero, product, proof, buy | Short editorial; delete repetition before adding proof |
+| Configurator | Often absent or WhatsApp-only | Guided few steps + live preview + sticky price | Keep config; shorten steps; hide AI chat overlay |
+| Motion | Cheap sliders / popups | Sparse, intentional | Cut v1.0 spectacle density |
+| Checkout | Form + bank transfer noise | Minimal fields, calm chrome | Keep WhatsApp fields; strip chrome |
+| Trust | Badge walls, countdowns | Quiet policy near CTA | One quiet trust cluster |
+| AI chat | Generic widgets | Rare on flagship configure path | Hide customer AI; retain code |
 
 ## Sources
 
-- [Conversational Commerce in the Age of AI Assistants](https://insiderone.com/conversational-commerce-ai-assistants/)
-- [Human handoff for ecommerce chat: A 2025 guide to a seamless experience](https://www.eesel.ai/blog/human-handoff-for-ecommerce-chat)
-- [Retail Chatbot: Metrics, Examples & How-To (Botpress)](https://botpress.com/blog/retail-chatbot)
-- [Prompt Injection in Ecommerce AI: How to Stop All 6 Types](https://alhena.ai/blog/prompt-injection-ecommerce-ai-chatbot/)
-- [LLM Guardrails Explained: Prompt Injection, PII Detection & Content Moderation](https://llmgateway.io/blog/llm-guardrails-explained)
-- [LLM Guardrails for Data Leakage, Prompt Injection, and More (Confident AI)](https://www.confident-ai.com/blog/llm-guardrails-the-ultimate-guide-to-safeguard-llm-systems)
-- [Fuzzy Matching and Semantic Search](https://ipullrank.com/fuzzy-matching-semantic-search)
-- [TimeStampEval: A Simple LLM Eval and a Little Fuzzy Matching Trick](https://arxiv.org/html/2511.11594v1)
-- [Product Content Generation Software for eCommerce (Describely)](https://describely.ai/)
-- [AI Workflows E-Commerce Brands Can Use to Grow Faster](https://editorialge.com/ai-workflows-e-commerce/)
-- [How RAG Chatbots Reduce Average Handle Time by 40% in Enterprises](https://wonderchat.io/blog/chatbot-with-rag)
-- [RAG for Customer Support Automation](https://ai.exoticaitsolutions.com/blog/rag-for-customer-support-automation-how-to-deploy-ai/)
-- [Best AI Chatbots with Human Handoff and Live Agent Escalation (2026)](https://sitegpt.ai/resources/best-ai-chatbots-human-handoff)
-- [AI Chatbot ROI for Small Businesses: Real Numbers from Real Stores](https://thikaa.com/blog/small-business-ai-chatbot-roi?lang=en)
-- [Getting Started: Next.js App Router — Vercel AI SDK docs](https://ai-sdk.dev/docs/getting-started/nextjs-app-router)
-- Internal codebase review: `src/lib/vehicle-search.ts`, `src/lib/vehicle-data.ts`, `CLAUDE.md`, `.planning/PROJECT.md`
+- Live codebase inventory: `src/app/page.tsx` (Hero, HomeConfiguratorShowcase, FeaturedProducts, Faq); unused home orphans `LuxuryInterior`, `PremiumExperience`, `FeatureStrip`; `MatConfigurator` 4-step labels; `Header` 8-link nav incl. Destek; `CheckoutPageClient` WhatsApp/kapıda fields; AI surfaces `ConfiguratorChat`, `SupportChat`, `/destek`
+- `.planning/PROJECT.md` — v1.2 Sade Lüks goals and constraints
+- Uxphoria — *How to Improve Conversion for Luxury Ecommerce Brands* (controlled clarity vs empty minimalism; heavy visuals/animation as conversion drag) — MEDIUM confidence
+- Hubako / KN Digital luxury ecommerce UX roundups — nav limits, whitespace, avoid popup/badge clutter — MEDIUM confidence
+- Baymard Institute — checkout complexity abandonment (~18% cite "too long/complicated"); field minimization guidance (target ~6–8 vs bloated averages) — MEDIUM confidence (verified web summaries; full Baymard paywall)
+- Configurator UX: Cartier progressive disclosure; Nissan light configurator (phased &gt; all-at-once; price each step; mobile gaps); Vervaunt configurable-product sticky price/CTA — MEDIUM confidence
+- Industry cart abandonment ~70% average (multiple secondary citations of Baymard meta) — use as context, not Otopolik baseline — LOW for this store specifically
 
 ---
-*Feature research for: AI-augmented e-commerce (single-brand storefront)*
+*Feature research for: OTO POLİK storefront simplification (v1.2 Sade Lüks Deneyim)*
 *Researched: 2026-07-17*
+*Downstream use: requirements scoping — prefer deletion/simplification over new features*

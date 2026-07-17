@@ -1,330 +1,324 @@
 # Architecture Research
 
-**Domain:** AI features layered onto an existing Next.js 16 + Convex Turkish e-commerce storefront (OTO POLİK)
+**Domain:** Brownfield Next.js App Router + Convex storefront simplification (v1.2 Sade Lüks Deneyim)
 **Researched:** 2026-07-17
-**Confidence:** HIGH (grounded directly in read code: `CLAUDE.md`, `convex/schema.ts`, `convex/orderNotify.ts`, `convex/lib/adminAuth.ts`, `src/lib/vehicle-data.ts`, `src/hooks/useAdminConvexKey.ts`, `src/app/admin/icerik/ContentManager.tsx`, `src/components/SiteChrome.tsx`) plus current Claude API guidance (`claude-api` skill, cached 2026-06-24).
+**Confidence:** HIGH for repo contracts (read from live source); MEDIUM for feature-flag integration patterns (cross-checked with current Next.js App Router flag guidance)
 
 ## Standard Architecture
 
 ### System Overview
 
+v1.2 must change **presentation and composition only**. Data, commerce, and admin boundaries stay intact.
+
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│                     Customer-facing (.premium-site)                   │
-│  ┌──────────────┐  ┌───────────────────┐  ┌────────────────────┐     │
-│  │ ChatWidget    │  │ MatConfigurator    │  │ VehicleMatchInput  │     │
-│  │ (floating,    │  │ (existing, adds   │  │ (existing free-    │     │
-│  │  SiteChrome)  │  │  "Ask AI" bridge) │  │  text search box)  │     │
-│  └──────┬───────┘  └─────────┬─────────┘  └──────────┬─────────┘     │
-│         │ POST/stream         │ tool-calls the same    │ POST         │
-│         ▼                     ▼ matcher function        ▼             │
-├──────────────────────────────────────────────────────────────────────┤
-│                    Next.js Route Handlers (src/app/api/ai/*)          │
-│  ┌────────────────┐ ┌───────────────────┐ ┌────────────────────┐     │
-│  │ /api/ai/chat    │ │ /api/ai/vehicle-  │ │ /api/ai/support    │     │
-│  │ (SSE stream,    │ │  match (sync,     │ │  (SSE stream,       │     │
-│  │  Anthropic SDK) │ │  Anthropic SDK)   │ │  Anthropic SDK)     │     │
-│  └────────┬────────┘ └─────────┬─────────┘ └──────────┬──────────┘     │
-│           │ tool_use: matchVehicle, getPricing, addToCartIntent       │
-├───────────┼────────────────────┼───────────────────────┼──────────────┤
-│           ▼                    ▼                       ▼             │
-│   vehicle-data.ts (static, in-process — no embeddings needed)         │
-│   mat-pricing.ts (calculateMatPrice — same source of truth)           │
-├──────────────────────────────────────────────────────────────────────┤
-│                          Convex (convex/*.ts)                         │
-│  ┌───────────────┐ ┌────────────────┐ ┌────────────────────────┐     │
-│  │ chatSessions   │ │ chatMessages    │ │ contentGenerations      │     │
-│  │ (new table)    │ │ (new table)     │ │ (new table, admin-only) │     │
-│  └───────────────┘ └────────────────┘ └────────────────────────┘     │
-│  aiContent.ts ("use node" internalAction — admin content generator,   │
-│    mirrors convex/orderNotify.ts pattern: server-side fetch to        │
-│    Anthropic, writes result into contentGenerations, admin approves   │
-│    → applies into contentSections/products via existing mutations)    │
-├──────────────────────────────────────────────────────────────────────┤
-│                        Admin (/admin, plain styling)                  │
-│  ContentManager.tsx + new "AI Taslak" tab → useAdminConvexKey() →      │
-│  Convex mutations gated by requireAdminKey() — same plumbing as       │
-│  existing product/CMS CRUD, no new auth mechanism                     │
-└──────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│ ROOT LAYOUT (server)                                                      │
+│  getStoreSettings / getProducts / getHomeChromeContent / getSiteSeo       │
+│  → SettingsProvider + CatalogProvider + CmsProvider + ConvexClientProvider│
+│  → SiteChrome                                                             │
+└────────────────────────────────┬─────────────────────────────────────────┘
+                                 │
+          ┌──────────────────────┴──────────────────────┐
+          ▼                                             ▼
+┌─────────────────────────────┐           ┌─────────────────────────────┐
+│ CUSTOMER (.premium-site)    │           │ ADMIN (no SiteChrome wrap)  │
+│ Header / main / Footer      │           │ /admin/* plain UI           │
+│ CartDrawer · WhatsappFloat  │           │ ContentManager · AI draft   │
+│ CookieConsent · SmoothScroll│           │ requireAdminKey plumbing    │
+└──────────────┬──────────────┘           └──────────────▲──────────────┘
+               │                                         │
+               │ compose pages from CMS keys             │ edits live content
+               ▼                                         │
+┌─────────────────────────────┐           ┌─────────────┴──────────────┐
+│ PAGE COMPOSITION (RSC)      │           │ CMS + SETTINGS LAYERS       │
+│ page.tsx mounts sections    │◄──────────│ cms.ts → Convex | defaults  │
+│ by sectionKey + ?? copy     │           │ site-settings.ts            │
+└──────────────┬──────────────┘           │ catalog.ts                  │
+               │                          └─────────────┬──────────────┘
+               ▼                                        │
+┌─────────────────────────────┐                         │
+│ CLIENT INTERACTION          │                         ▼
+│ cart-context → cart-store   │           ┌─────────────────────────────┐
+│ MatConfigurator + pricing   │           │ CONVEX (untouched in v1.2)  │
+│ odeme: sync window.open WA  │           │ products · orders · CMS     │
+└─────────────────────────────┘           │ siteSettings · files        │
+                                          └─────────────────────────────┘
+
+AI (v1.1) — PRESERVE, HIDE FROM CUSTOMER UI
+  src/app/api/ai/*  +  SupportChat / ConfiguratorChat / VehicleMatchInput
+  + admin ContentGeneratorPanel
+  Gate: customer mount points + nav links OFF; implementations + admin ON
 ```
 
 ### Component Responsibilities
 
-| Component | Responsibility | Typical Implementation |
-|-----------|---------------|-------------------------|
-| Next.js Route Handlers (`src/app/api/ai/*`) | Own every LLM call — hold `ANTHROPIC_API_KEY`, run the Claude SDK, stream SSE back to the client, call `vehicle-data.ts`/`mat-pricing.ts` as in-process tool functions | `app/api/ai/chat/route.ts` using `client.messages.stream(...)`, `export const runtime = "nodejs"` |
-| Vehicle matcher tool | Deterministic lookup: free-text vehicle description → `{brand, model, price}` from the static catalog | Plain TS function passed to Claude as a tool (`function calling`), no vector DB |
-| Convex `chatSessions`/`chatMessages` tables | Durable transcript for support/configurator chat (optional but recommended for WhatsApp handoff + abuse auditing) | Written by the route handler via `ConvexHttpClient` (server-to-server), not by the browser directly |
-| Convex `aiContent.ts` ("use node" internalAction) | Admin content generation — long-running batch call to Claude that must not block a browser request and needs no per-request secret exposure | Scheduled via `ctx.scheduler.runAfter(0, …)`, mirrors `convex/orderNotify.ts` |
-| `contentGenerations` Convex table | Draft storage: AI output pending human review before it touches `products`/`contentSections` | `status: "pending" | "approved" | "rejected"`, admin-key-gated mutations |
-| `ChatWidget` (new client component) | Floating chat UI in `SiteChrome.tsx`, `.premium-site` scoped, streams tokens, hands off to WhatsApp on "ready to order" | `"use client"`, `fetch(..., {body, signal})` + `ReadableStream` reader, no Vercel AI SDK dependency required |
-| `ContentManager.tsx` "AI Taslak" tab | Admin UI to request a generation, poll/subscribe to `contentGenerations`, edit, then Approve → existing `updateSectionAction`/product mutation | Reuses `useAdminConvexKey()` + existing Convex `useMutation` pattern already in `/admin/urunler` |
+| Component | Responsibility | v1.2 Rule |
+|-----------|----------------|-----------|
+| `src/app/page.tsx` | Homepage composition from `getContentPage("home")` | Primary slim seam — stop mounting sections; do not delete CMS rows |
+| `Hero.tsx` / home sections | Visual first viewport + secondary blocks | Reduce motion/density inside components; keep CMS `content` props + `??` fallbacks |
+| `SiteChrome.tsx` | Customer chrome vs admin passthrough; `CartProvider` | Keep `isAdminRoute` early return; do not wrap admin in `.premium-site` |
+| `cart-context` / `cart-store` | `useSyncExternalStore` + `isHydrated` + localStorage | Do not change hydrate contract or line key `(slug, color)` |
+| `CheckoutPageClient` | Sync `window.open` → WA, then best-effort Convex order | Preserve interaction-time popup sequence; UI-only streamlining |
+| `MatConfigurator` + `ConfiguratorAssistantProvider` | Vehicle → colors → extras → `calculateMatPrice` → `addItem` | Keep state machine + pricing; hide AI mounts; simplify chrome around steps |
+| `cms.ts` / `cms-defaults.ts` | Convex-first with static fallback | Do not break fallback when Convex missing; orphan unused `sectionKey`s OK |
+| `Header` / `Footer` | Nav conversion + AI Destek links | Remove/hide customer AI entry points; fix dead hash anchors after section cuts |
+| `src/lib/ai/*` + `/api/ai/*` | Customer + admin AI backends | Keep files, routes, evals; stop customer mounts |
+| `/admin/*` | CMS/products/settings/AI drafts | Out of visual scope; isolation must remain |
 
 ## Recommended Project Structure
+
+No new top-level architecture. Prefer one small flag module over new folders.
 
 ```
 src/
 ├── app/
-│   ├── api/
-│   │   └── ai/                        # NEW — all LLM calls live here, not in Convex
-│   │       ├── chat/route.ts          # configurator assistant, SSE stream
-│   │       ├── support/route.ts       # support/order-helper, SSE stream
-│   │       ├── vehicle-match/route.ts # sync JSON, no streaming needed (short call)
-│   │       └── content/route.ts       # admin content generator kickoff (POST → enqueues Convex action)
-│   └── admin/
-│       └── icerik/
-│           └── AIGeneratorPanel.tsx   # NEW — tab inside ContentManager.tsx
+│   ├── page.tsx                 # MODIFY — fewer home mounts
+│   ├── olusturucu/page.tsx      # MODIFY — force customer AI off at mount
+│   ├── destek/page.tsx          # MODIFY — WhatsApp/manual fallback only (keep SupportChat file)
+│   ├── sepet|odeme|urunler/…    # MODIFY — layout/copy density only
+│   ├── api/ai/**                # KEEP — do not delete
+│   └── admin/**                 # KEEP — AI content generator stays
 ├── components/
-│   ├── ai/                            # NEW
-│   │   ├── ChatWidget.tsx             # floating widget, mounted in SiteChrome.tsx
-│   │   ├── ChatMessageList.tsx
-│   │   ├── VehicleMatchInput.tsx      # used inside MatConfigurator.tsx step 1
-│   │   └── useChatStream.ts           # fetch+ReadableStream hook, no external chat SDK
-│   └── configurator/
-│       └── MatConfigurator.tsx        # MODIFIED — mounts VehicleMatchInput, keeps existing manual pickers as fallback
+│   ├── SiteChrome.tsx           # KEEP contract; optional float/chrome trim
+│   ├── Header.tsx / Footer.tsx  # MODIFY — nav + anchors
+│   ├── home/*                   # MODIFY / leave unmounted
+│   ├── configurator/*           # MODIFY UI; KEEP assistant provider wiring
+│   └── support/SupportChat.tsx  # KEEP file; unmount from storefront
+├── context/                     # KEEP — cart/cms/settings/catalog contracts
 ├── lib/
-│   ├── ai/                            # NEW
-│   │   ├── anthropic-client.ts        # lazy client, same null-if-unset pattern as convex-server.ts
-│   │   ├── tools.ts                   # tool defs + handlers: matchVehicle, getMatPrice, summarizeCart
-│   │   ├── system-prompts.ts          # Turkish system prompts per assistant (versioned, testable)
-│   │   └── grounding.ts               # builds the "site content" context block (FAQ, shipping, sizing) from cms.ts/site-settings.ts
-│   └── vehicle-data.ts                # UNCHANGED — becomes the tool's data source, no new index
-convex/
-├── schema.ts                          # MODIFIED — add chatSessions, chatMessages, contentGenerations
-├── aiChat.ts                          # NEW — public mutations to persist transcript (called server-side only)
-├── aiContent.ts                       # NEW — "use node" internalAction, same shape as orderNotify.ts
-└── lib/
-    └── adminAuth.ts                   # UNCHANGED — reused by aiContent.ts mutations
+│   ├── cms.ts / cms-defaults.ts # KEEP fallback pair
+│   ├── cart-store.ts            # KEEP
+│   ├── mat-pricing.ts           # KEEP single price source
+│   ├── ai/**                    # KEEP
+│   └── storefront-flags.ts      # NEW (recommended) — customer UI visibility gates
+└── convex/                      # DO NOT TOUCH for simplification
 ```
 
 ### Structure Rationale
 
-- **`src/app/api/ai/`:** All LLM calls are Next.js route handlers, not Convex actions. Convex `"use node"` actions exist for the admin generator (long-running, no streaming UX needed, benefits from Convex's scheduler/retry semantics) but the customer-facing streaming chat stays in Next.js because Vercel's route handlers support token-by-token SSE natively and keep `ANTHROPIC_API_KEY` out of the Convex deployment env entirely — one secret, one place.
-- **`src/lib/ai/`:** Mirrors the existing `src/lib/` lazy-client convention (`convex-server.ts`, `convex-client.ts`) — `anthropic-client.ts` returns `null` when `ANTHROPIC_API_KEY` is unset, and every caller degrades gracefully (see Graceful Fallback pattern below).
-- **`convex/aiChat.ts` vs `convex/aiContent.ts` split:** `aiChat.ts` holds plain public mutations (`createSession`, `appendMessage`) called *from the route handler* (server-to-server via `ConvexHttpClient`, never from the browser) so transcripts land in the same Convex deployment as orders — useful for correlating a chat session with the order it produced. `aiContent.ts` is the only new `"use node"` action, because only the admin generator needs outbound `fetch` to Anthropic from inside Convex.
+- **Composition over deletion:** Unmounting in RSC pages is reversible and CMS-safe; deleting seed/Convex rows is not.
+- **Flag module next to AI config:** Mirrors existing `isAiConfigured()` graceful-degradation pattern without inventing a third-party flag service.
+- **Admin stays outside `.premium-site`:** Simplification CSS must remain under `.premium-site` / customer routes only.
 
 ## Architectural Patterns
 
-### Pattern 1: LLM calls live in Next.js route handlers, not Convex actions
+### Pattern 1: Composition-Layer Slimming (homepage & content pages)
 
-**What:** All three customer-facing AI features (configurator assistant, vehicle matcher, support helper) call Anthropic directly from `src/app/api/ai/*/route.ts`. Only the admin content generator uses a Convex `"use node"` internalAction.
+**What:** Keep fetching CMS pages/settings; change which React trees mount.
+**When to use:** Removing homepage sections, reducing product-page chrome, shortening cart/checkout layouts.
+**Trade-offs:** Unused CMS keys remain editable in `/admin/icerik` (good for re-enable; slightly noisy admin). Deleting seeds would desync Convex vs `cms-defaults.ts`.
 
-**When to use:** Default to route handlers whenever the caller is a browser needing a **streamed** response, or when you want to keep the LLM API key out of a second deployment target.
+**Example:**
+```tsx
+// src/app/page.tsx — keep fetch + tokens; mount fewer sections
+const [{ sections }, { items: faqs }] = await Promise.all([
+  getContentPage("home"),
+  getFaqs(),
+]);
+const section = (key: string) =>
+  sections.find((s) => s.sectionKey === key) ?? null;
 
-**Trade-offs:**
+return (
+  <>
+    <Hero content={{ hero: section("hero"), secondaryCta: section("hero-secondary-cta") }} />
+    <HomeConfiguratorShowcase /> {/* primary conversion — keep unless explicitly cut */}
+    <FeaturedProducts content={section("featured")} />
+    <Faq /* keep for SEO JSON-LD */ … />
+    {renderJsonLd(faqPageSchema(faqItems))}
+  </>
+);
+```
 
-| Concern | Next.js Route Handler | Convex `"use node"` Action |
-|---|---|---|
-| Streaming (SSE) to browser | Native — `ReadableStream` response, works with Vercel's edge/node runtime | Convex actions cannot stream partial results to the browser directly (client would need to poll a mutating document instead) — awkward for a chat UI |
-| Secrets | `ANTHROPIC_API_KEY` lives in Vercel env only | Would need the key duplicated into Convex deployment env (`npx convex env set`) — one more place to rotate |
-| Rate limiting | Standard Next.js middleware / `proxy.ts` matcher, or an in-memory/edge KV limiter per IP | Convex has no built-in per-IP rate limit primitive; would need a Convex table + mutation-side counter, more moving parts for no benefit here |
-| Long-running / fire-and-forget work | Route handlers time out on Vercel (10s Hobby / 60s+ Pro, streaming extends this) — fine for chat turns, risky for a multi-minute batch job | `ctx.scheduler.runAfter(0, …)` internalActions run detached from any HTTP request — ideal for "generate descriptions for 40 products overnight" |
-| Existing precedent in this repo | None yet, but matches `src/app/odeme/` and other route-handler-style server logic | `convex/orderNotify.ts` is the exact template: `"use node"`, reads env vars, does `fetch()`, best-effort |
+### Pattern 2: Hide-Without-Delete for Customer AI UI
 
-**Conclusion:** chat/support/vehicle-match → route handlers (streaming, short-lived, one secret). Admin batch content generation → Convex `"use node"` action (long-running, benefits from Convex's job-like scheduling and the fact the result must land in Convex anyway).
+**What:** Gate customer mounts and nav links; leave implementations, API routes, admin generator, and evals intact.
+**When to use:** v1.2 requirement to hide customer AI while preserving code.
+**Trade-offs:** Direct URL `/destek` still exists unless redirected — prefer soft redirect or WhatsApp-only page over 404 (SEO/bookmarks). Do **not** set `AI_FEATURES_ENABLED=false` alone if that also disables admin content generation.
 
-**Example (chat route handler, Node runtime, SSE):**
-```typescript
-// src/app/api/ai/chat/route.ts
-import Anthropic from "@anthropic-ai/sdk";
-import { getAnthropicClient } from "@/lib/ai/anthropic-client";
-import { CONFIGURATOR_SYSTEM_PROMPT } from "@/lib/ai/system-prompts";
-import { configuratorTools, runConfiguratorTool } from "@/lib/ai/tools";
+**Recommended gate (compose with existing AI config):**
+```ts
+// src/lib/storefront-flags.ts (new)
+import { isAiConfigured } from "@/lib/ai/config";
 
-export const runtime = "nodejs"; // needs Node APIs (fetch to Convex, etc.)
-
-export async function POST(req: Request) {
-  const client = getAnthropicClient();
-  if (!client) {
-    return new Response(JSON.stringify({ error: "ai_unavailable" }), { status: 503 });
-  }
-  const { messages } = await req.json();
-
-  const stream = client.messages.stream({
-    model: "claude-opus-4-8",
-    max_tokens: 4096,
-    system: CONFIGURATOR_SYSTEM_PROMPT,
-    tools: configuratorTools,
-    messages,
-  });
-
-  const encoder = new TextEncoder();
-  const body = new ReadableStream({
-    async start(controller) {
-      for await (const event of stream) {
-        if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: event.delta.text })}\n\n`));
-        }
-        // tool_use handling: run runConfiguratorTool(...) then continue the loop —
-        // see Tool Runner pattern in claude-api skill for the full agentic loop.
-      }
-      controller.close();
-    },
-  });
-
-  return new Response(body, {
-    headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache" },
-  });
+/** Customer-visible AI chrome. Default OFF for v1.2 sade lüks. */
+export function isCustomerAiUiEnabled(): boolean {
+  const raw = process.env.CUSTOMER_AI_UI_ENABLED?.trim().toLowerCase();
+  if (raw === "true" || raw === "1") return isAiConfigured();
+  return false; // hide even when Anthropic is configured
 }
 ```
 
-### Pattern 2: Vehicle matcher as a tool-call function over static data, not an embedding index
-
-**What:** `matchVehicle(freeTextInput: string)` is a plain TypeScript function that fuzzy-matches against the already-in-memory `vehicle-data.ts` catalog (currently ~brand → model[] records with `bodyType`, price derived from `mat-pricing.ts` via `getVehiclePrice()`), exposed to Claude as a **tool** (function-calling), not backed by a vector database.
-
-**When to use:** The catalog is small (dozens of brands, low hundreds of models total, all in one static TS file, no runtime growth), fits entirely in a single Claude request as either (a) a tool the model calls with a query string it resolves fuzzy-matching in code, or (b) inlined directly into the system/tool-result context for the model to reason over. Neither needs retrieval infrastructure.
-
-**Trade-offs:**
-
-| Approach | Fit for this catalog | Cost |
-|---|---|---|
-| **Tool/function-calling over static array** (recommended) | Exact — reuses the same `vehicle-data.ts` + `getVehiclePrice()`/`calculateMatPrice()` that `MatConfigurator.tsx` and `vehicle-seo.ts` already depend on. Zero new infra, zero data drift risk (single source of truth stays `vehicle-data.ts`) | One extra tool-call round trip per turn; negligible for a catalog this size |
-| Embedding index (e.g. pgvector, Pinecone, Convex vector search) | Overkill — buys nothing when the whole catalog fits in a few KB of text and simple string similarity (Levenshtein / token overlap) already resolves "2019 Passat variant" → `Volkswagen Passat Station Wagon` reliably | New infra (embedding pipeline, index sync job whenever `vehicle-data.ts` changes), new failure mode, no accuracy gain at this catalog size |
-
-**Recommended implementation:** two-stage — (1) deterministic fuzzy match in plain code (normalize Turkish text, token-overlap or a small library like `fastest-levenshtein` against `brand + model` strings) as the *first* pass, tried before ever calling Claude; (2) if ambiguous/no-match, hand the top-N candidates plus the user's raw text to Claude as a tool result and let it pick/ask a clarifying question in Turkish. This keeps the common case fast and cheap (no LLM call at all for a clean match like "BMW 3 Serisi 2020") and reserves the LLM for genuinely ambiguous free text ("beyaz passat aracım, 2019 sanırım").
-
-```typescript
-// src/lib/ai/tools.ts
-export const matchVehicleTool = {
-  name: "match_vehicle",
-  description:
-    "Serbest metin araç tanımını (marka, model, yıl, varyant) statik araç kataloğuyla eşleştirir ve fiyatı döner. " +
-    "Kullanıcı aracını net şekilde belirtmediğinde veya emin olunamadığında çağır.",
-  input_schema: {
-    type: "object",
-    properties: {
-      query: { type: "string", description: "Kullanıcının yazdığı araç tanımı, ör. '2019 passat variant'" },
-    },
-    required: ["query"],
-  },
-};
-
-export function runMatchVehicle(query: string) {
-  const candidates = fuzzyMatchVehicles(query); // token-overlap over brandData from vehicle-data.ts
-  if (candidates.length === 1) {
-    return { match: candidates[0], price: getVehiclePrice(candidates[0].brand, candidates[0].model) };
-  }
-  return { candidates: candidates.slice(0, 5) }; // let Claude ask a clarifying question in Turkish
-}
+```tsx
+// src/app/olusturucu/page.tsx
+const aiEnabled = isCustomerAiUiEnabled(); // not bare isAiConfigured()
+{aiEnabled ? <ConfiguratorChat /> : null}
+<MatConfigurator aiEnabled={aiEnabled} />
 ```
 
-This tool is shared: the **configurator assistant** calls it when the user types a vehicle in chat instead of using the dropdowns, and the standalone **VehicleMatchInput** free-text box calls the same `/api/ai/vehicle-match` route (non-streaming, single tool round trip) directly — one implementation, two entry points. Build the matcher first; the configurator assistant depends on it.
+Mount points to gate (do not delete files):
 
-### Pattern 3: Admin content generation as a draft-and-approve Convex flow, gated by the existing admin key
+| Surface | File | Action |
+|---------|------|--------|
+| Configurator chat | `ConfiguratorChat.tsx` via `olusturucu/page.tsx` | Unmount |
+| Vehicle free-text AI | `VehicleMatchInput.tsx` via `VehicleSelector` `aiEnabled` | Pass `false` |
+| Support page chat | `SupportChat.tsx` via `destek/page.tsx` | Unmount; WhatsApp fallback |
+| Nav/footer | `Header.tsx`, `Footer.tsx` | Remove `/destek` / "AI Destek" |
+| Admin AI | `ContentGeneratorPanel` + `/api/admin/ai/content` | Leave on `isAiConfigured()` |
+| API + libs | `src/app/api/ai/*`, `src/lib/ai/*` | Leave |
 
-**What:** Admin clicks "AI ile oluştur" in `ContentManager.tsx` (new tab) → Next.js server action or `/api/ai/content` route calls Claude with product/section context → result is written to a new `contentGenerations` Convex table with `status: "pending"` via an admin-key-gated mutation → admin reviews/edits inline → "Onayla" calls the **existing** `updateSectionAction`/product-update mutation (unchanged) to publish, and marks the generation `status: "approved"`.
+### Pattern 3: Preserve Commerce Contracts While Restyling Flows
 
-**When to use:** Any admin-facing AI output that writes into `products`/`contentSections`/`faqItems` (SEO meta, descriptions, FAQ copy) — never auto-publish LLM output directly into customer-facing CMS tables.
+**What:** Cart and checkout UX can get shorter forms/less chrome, but hydration and WhatsApp popup timing are hard contracts.
+**When to use:** Any edit under `/sepet`, `/odeme`, `CartDrawer`, configurator add-to-cart.
+**Trade-offs:** Skipping `isHydrated` causes SSR flicker/wrong empty states; moving `window.open` after `await createOrder` reintroduces popup blockers.
 
-**Trade-offs:** Adds one extra table and one extra click vs. writing directly, but matches the site's existing "admin reviews everything before it's live" posture (CLAUDE.md: admin CRUD already goes through explicit mutations, no auto-publish anywhere) and gives you an audit trail / undo point for free.
+**Contracts (do not break):**
+```tsx
+// Cart — gate UI on hydration
+if (!isHydrated) return <Skeleton… />;
 
-**Example (Convex side, mirrors `adminAuth.ts` usage elsewhere):**
-```typescript
-// convex/aiContent.ts
-"use node";
-import { v } from "convex/values";
-import { internalAction } from "./_generated/server";
-import { internal } from "./_generated/api";
-
-export const generateProductCopy = internalAction({
-  args: { generationId: v.id("contentGenerations"), adminKey: v.string() },
-  handler: async (ctx, { generationId, adminKey }) => {
-    const gen = await ctx.runQuery(internal.aiContentQueries.getById, { id: generationId });
-    if (!gen) return null;
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      await ctx.runMutation(internal.aiContentQueries.markFailed, { id: generationId, reason: "no_api_key" });
-      return null;
-    }
-    // fetch() to Anthropic here, same best-effort try/catch shape as orderNotify.ts
-    const draft = await callAnthropicForCopy(gen.productSlug, gen.kind, apiKey);
-    await ctx.runMutation(internal.aiContentQueries.markReady, { id: generationId, draft });
-    return null;
-  },
-});
+// Checkout — open WA synchronously in the submit handler, before awaits
+const whatsappWindow = window.open("", "_blank");
+if (!whatsappWindow) { /* error */ return; }
+whatsappWindow.location.replace(href);
+// THEN best-effort Convex createOrder → clearCart → /tesekkurler
 ```
 
-`requireAdminKey()` from `convex/lib/adminAuth.ts` is reused unchanged on the *public* mutations that create/approve/reject a `contentGenerations` row — the internalAction itself doesn't need it (Convex internal functions aren't browser-reachable), matching how `orderNotify.notifyAdmin` is scheduled internally without re-checking a key.
+### Pattern 4: Motion Reduction Inside Existing Design System
+
+**What:** Prefer dialing down Framer scroll/stagger and heavy overlays; keep Lenis + `prefers-reduced-motion` rules in `globals.css`.
+**When to use:** Hero, showcase, configurator step transitions, gallery loupe excess.
+**Trade-offs:** Removing Lenis entirely changes site feel more than needed; stripping `.premium-site` utilities risks brand regression.
 
 ## Data Flow
 
-### Request Flow — configurator chat turn
+### Request Flow (unchanged spine)
 
 ```
-ChatWidget (browser)
-    ↓ fetch POST /api/ai/chat  {messages: [...]}
-Next.js route handler (Node runtime)
-    ↓ client.messages.stream({tools: [matchVehicleTool, getPriceTool], ...})
-Claude API ──tool_use: match_vehicle──→ runMatchVehicle() (in-process, reads vehicle-data.ts)
-    ↓ tool_result appended, loop continues
-Claude API ──text deltas──→ SSE chunks ──→ ChatWidget renders incrementally
-    ↓ (best-effort, fire-and-forget) POST to Convex via ConvexHttpClient
-convex/aiChat.ts: appendMessage(sessionId, role, content)  [chatMessages table]
-    ↓ when user confirms configuration in chat
-ChatWidget calls the SAME useCart().addItem() the manual configurator uses
-    → checkout flow (src/app/odeme/) is completely unchanged from here on
+Browser
+  → Next.js RSC (catalog/cms/settings via src/lib/*)
+      → ConvexHttpClient if configured
+      → else cms-defaults / products / site-config
+  → Client islands (Hero, MatConfigurator, Cart, Checkout)
+      → cart-store (localStorage)
+      → on order: WhatsApp (sync) + Convex orders (async best-effort)
 ```
 
 ### State Management
 
 ```
-Chat transcript (client) ─┬─ ephemeral React state (message list, streaming buffer)
-                           └─ mirrored best-effort to Convex chatMessages
-                                (server-to-server write only — browser never
-                                 gets a direct Convex mutation for this, avoiding
-                                 a new admin-key-shaped auth surface for chat)
-
-Cart state ─── UNCHANGED: still src/context/cart-context.tsx / cart-store.ts.
-               The AI assistant's only integration point is calling the existing
-               useCart().addItem() — it does not get its own cart representation.
+cart-store (external)
+   ↑ useSyncExternalStore
+cart-context (CartProvider in SiteChrome only)
+   ↑ useCart()
+MatConfigurator / CartDrawer / CartPage / CheckoutPage
 ```
+
+CMS/settings/catalog remain **server-fetched → provider props**, not browser Convex queries (admin product CRUD is the exception).
 
 ### Key Data Flows
 
-1. **Configurator assistant → cart:** chat turns never touch Convex `orders` or `products` directly. The assistant's terminal action is calling the existing `addItem()` from `cart-context.tsx`, after which the existing checkout flow (WhatsApp handoff, best-effort Convex order write) takes over completely unmodified. This is the cleanest integration seam in the whole feature set — the AI features are additive to cart population, not a parallel checkout path.
-2. **Vehicle matcher → configurator/chat:** a single pure function (`runMatchVehicle`) is the shared dependency of both `VehicleMatchInput` (used inside `MatConfigurator.tsx`) and the chat tool. Build this once; both features consume it.
-3. **Admin content generator → CMS:** LLM output never writes to `products`/`contentSections` directly — it lands in `contentGenerations` first, then flows through the *existing* `updateSectionAction`/product-update Convex mutations only after human approval, so no new write path is added to customer-facing content tables.
-4. **Support helper → grounding:** `/api/ai/support` builds its context block from `getContentPage("home")`/FAQ data (already fetched via `cms.ts`) and `site-settings.ts` (shipping fee, thresholds, phone) at request time — no separate knowledge base to keep in sync; it reads the same server-side functions the storefront pages already call.
+1. **Homepage CMS:** `getContentPage("home")` → `section(key)` → component props → hardcoded Turkish `??` if null. Slimming = fewer `section()` consumers.
+2. **Configurator → cart:** `ConfiguratorAssistantProvider` state → `buildCartItem()` / `calculateMatPrice` → `addItem` → drawer open. AI tools must stay able to drive the same provider when re-enabled later.
+3. **Checkout → WhatsApp + Convex:** Form validate → sync WA window → `createOrder` if Convex ready → clear cart → thank-you. Visual simplification must not reorder these steps.
+4. **AI hide:** Customer RSC/client mounts read `isCustomerAiUiEnabled()`; API routes continue to honor `isAiFeaturesEnabled()` + key checks for admin/evals.
+5. **Admin isolation:** `SiteChrome` pathname `/admin` → children only (no cart provider, no premium chrome). Storefront CSS/motion work must not leak into admin layouts.
 
-## Scalability Considerations
+## New vs Modified Areas (v1.2 map)
 
-| Concern | At current scale (single storefront, low-hundreds orders/mo) | If traffic grows 10x | If this becomes multi-tenant |
-|---|---|---|---|
-| LLM cost | Negligible — gate everything behind lazy-init so cost is zero when `ANTHROPIC_API_KEY` is unset (dev/preview envs) | Cache the vehicle-match fast-path (deterministic, no LLM call) aggressively; only the ambiguous-match and open-ended chat turns hit the API | N/A — out of scope for this milestone |
-| Rate limiting | None needed initially, but add a simple per-IP counter (edge KV or in-memory with `proxy.ts`) before public launch to prevent chat abuse driving up API spend | Move to a real rate limiter (Upstash Redis, Vercel KV) keyed by session/IP | — |
-| Convex chat tables | `chatSessions`/`chatMessages` grow linearly with usage; no special indexing needed beyond `by_session` | Add a TTL/cleanup job (Convex cron) to prune old anonymous sessions | — |
-| Admin content generation | Single admin, occasional batch runs — a Convex `"use node"` action per product is fine | If generating for the full catalog (hundreds of products) becomes routine, batch multiple products into fewer Claude calls (prompt caching on the shared system prompt) rather than one internalAction per product | — |
+| Area | Kind | Notes |
+|------|------|-------|
+| `storefront-flags.ts` (or equivalent) | **New** | Customer AI UI gate separate from admin AI kill switch |
+| `app/page.tsx`, home components | **Modified** | Composition + density |
+| `Hero.tsx` motion | **Modified** | Reduce scroll-linked / blur stagger; keep CMS props |
+| `Header.tsx` / `Footer.tsx` | **Modified** | Nav, AI links, hash targets (`/#ozellikler`, `/#renkler`) |
+| `olusturucu/page.tsx`, `VehicleSelector` props | **Modified** | AI mounts off |
+| `destek/page.tsx` | **Modified** | Non-AI fallback; optionally `robots` noindex |
+| Cart / checkout client UIs | **Modified** | Shorter layout; keep hydrate + popup |
+| Product detail / listing chrome | **Modified** | Less gallery chrome / fewer stacked sections |
+| `globals.css` motion utilities | **Modified** | Softer effects under `.premium-site` |
+| `convex/*`, `cart-store.ts`, `mat-pricing.ts`, `cms.ts` fallback | **Unchanged** | Hard contracts |
+| `src/lib/ai/**`, `/api/ai/**`, admin AI panel | **Unchanged files** | Hidden from customer, not removed |
+| `proxy.ts` / admin auth | **Unchanged** | Isolation |
+
+## Safe Build Order (by dependency)
+
+Execute in this order so each step preserves contracts and is revertible:
+
+1. **Customer AI surface gate + nav cleanup**  
+   Add `isCustomerAiUiEnabled()`; wire `olusturucu`, `VehicleSelector`, `destek`; remove Header/Footer AI links.  
+   *Avoids:* Killing admin AI via `AI_FEATURES_ENABLED=false`.  
+   *Validates:* Manual configurator + WhatsApp still work; `/api/admin/ai/content` still gated by real AI config.
+
+2. **Homepage composition slim**  
+   Edit `page.tsx` mounts only. Leave `CONTENT_SECTIONS_SEED` / Convex rows.  
+   *Avoids:* Orphaned admin data loss; broken `getContentPage` fallback.  
+   *Validates:* FAQ JSON-LD still present if FAQ section kept; no Convex schema change.
+
+3. **Fix navigation anchors & SEO side-effects**  
+   Update `/#ozellikler`, `/#renkler`, footer deep links to surviving section ids; decide `/destek` redirect vs WhatsApp page; confirm `sitemap.ts` (already omits `/destek`) and `robots.ts`.  
+   *Avoids:* Soft-404 UX and broken in-page nav after section removal.
+
+4. **Hero + motion dial-down**  
+   Simplify `Hero.tsx` / showcase animations; keep `HeroMedia` brand plane; respect `prefers-reduced-motion`.  
+   *Avoids:* New set-state-in-effect lint debt; warm/gold color regressions.
+
+5. **Configurator UI streamline**  
+   Reduce gallery sidebar / step chrome / preview modes inside `MatConfigurator`; do not fork pricing or cart item builder. Keep `ConfiguratorAssistantProvider` so AI can remount later.  
+   *Avoids:* Dual price sources; breaking URL prefill `?marka&model&yil&kasa`.
+
+6. **Product → cart → checkout visual streamline**  
+   Shorter pages; preserve `isHydrated` empty-state gating and checkout `window.open` order.  
+   *Avoids:* Popup-blocker regressions; hydration mismatch empty cart flashes.
+
+7. **Global polish under `.premium-site` only**  
+   Effect density in CSS utilities; never apply luxury overrides to `/admin`.  
+   *Avoids:* Admin isolation break.
+
+## Scaling Considerations
+
+| Scale | Architecture Adjustments |
+|-------|--------------------------|
+| Current (single brand, WhatsApp orders) | Composition + flags are enough; no new services |
+| More CMS editors | Optionally tag sections `storefrontVisible` later — not required for v1.2 |
+| Re-enable customer AI | Flip `CUSTOMER_AI_UI_ENABLED`; remount existing components — no rewrite |
 
 ### Scaling Priorities
 
-1. **First bottleneck:** unbounded chat usage driving Claude API spend before any rate limiting exists. Fix: add basic per-IP/session throttling in the route handler before the customer-facing chat ships to production, not after.
-2. **Second bottleneck:** none expected at this project's scale — the vehicle catalog is static and small, Convex read/write volume for chat is trivial next to `orders`/`products` traffic this app already handles.
+1. **First bottleneck:** Accidental contract breaks (cart hydrate, WA popup, CMS fallback) — mitigate with ordered phases and smoke checks.
+2. **Second bottleneck:** Admin CMS noise from unused section keys — mitigate later with visibility metadata, not by deleting seeds in v1.2.
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Putting `ANTHROPIC_API_KEY` on both Vercel and Convex "just in case"
+### Anti-Pattern 1: Delete AI / CMS implementations to “simplify”
 
-**What people do:** Set the same secret in both deployment targets so either layer can call Claude.
-**Why it's wrong:** Duplicated secrets are a rotation and leakage surface with no benefit here — this project's `"use node"` Convex actions are reserved for the one feature (admin content generation) that genuinely needs server-to-server calls outside an HTTP request lifecycle; everything else runs in Next.js.
-**Instead:** `ANTHROPIC_API_KEY` lives in Vercel env for the three customer-facing route handlers. Only set it as a Convex env var (`npx convex env set`) if/when the admin content generator (the one Convex-side caller) is built — and even then, it's a second copy of one key for one well-defined reason, not a default.
+**What people do:** Remove `SupportChat`, `ConfiguratorChat`, `api/ai/*`, or CMS seed keys.
+**Why it's wrong:** Violates milestone “preserve implementations”; breaks admin AI, evals, and re-enable path; desyncs Convex vs `cms-defaults.ts`.
+**Do this instead:** Unmount + flag + leave seeds/files.
 
-### Anti-Pattern 2: Auto-publishing LLM-generated copy straight into `products`/`contentSections`
+### Anti-Pattern 2: Use `AI_FEATURES_ENABLED=false` as the only hide switch
 
-**What people do:** Wire the "Generate" button directly to the existing `updateSectionAction`/product mutation so AI output goes live immediately.
-**Why it's wrong:** Breaks the site's existing admin-review posture (every other CMS edit in this codebase is an explicit, reviewed action) and risks publishing incorrect Turkish copy, wrong pricing claims, or hallucinated compatibility notes straight to the storefront.
-**Instead:** Always land generations in `contentGenerations` as `pending` drafts; publishing is a separate, explicit admin action that reuses the existing mutation.
+**What people do:** Disable the global AI kill switch to hide customer chat.
+**Why it's wrong:** Also disables admin content generation and API status that still depend on `isAiConfigured()`.
+**Do this instead:** Separate **customer UI** flag from **AI configured/enabled**.
 
-### Anti-Pattern 3: Building a vector database for a few hundred static vehicle records
+### Anti-Pattern 3: Refactor cart/checkout data flow while redesigning UI
 
-**What people do:** Reach for embeddings/RAG by default whenever "match free text to catalog" is the task.
-**Why it's wrong:** `vehicle-data.ts` is small, static, and already fully in-memory; a vector index adds a sync problem (index goes stale the moment someone edits `vehicle-data.ts` without also re-embedding) for no measurable accuracy gain over simple fuzzy string matching plus an LLM disambiguation fallback.
-**Instead:** Tool-call function over the existing array (Pattern 2 above). Revisit only if the catalog moves to Convex and grows by orders of magnitude.
+**What people do:** Move WA open after await; drop `isHydrated` gates; sync cart to Convex early.
+**Why it's wrong:** Popup blockers, SSR mismatches, scope creep into backend milestone.
+**Do this instead:** CSS/structure-only changes around the existing handlers.
 
-### Anti-Pattern 4: Blocking the checkout flow on the AI assistant
+### Anti-Pattern 4: Apply storefront simplification inside `/admin`
 
-**What people do:** Route "confirm order" through the chat assistant, having it call Convex or trigger the WhatsApp handoff itself.
-**Why it's wrong:** `src/app/odeme/` has a specific, already-correct sequence (open WhatsApp window synchronously on user interaction to dodge popup blockers, *then* write to Convex best-effort). Reimplementing or wrapping that inside an LLM tool call risks breaking the popup-blocker workaround (the `window.open` must happen synchronously inside the *original* user click/tap handler) and duplicates checkout logic in two places.
-**Instead:** The assistant's job stops at `useCart().addItem()` plus optionally deep-linking to `/odeme`. The existing checkout page owns the WhatsApp handoff unchanged.
+**What people do:** Reuse `premium-site` / motion classes in admin for “consistency.”
+**Why it's wrong:** Breaks intentional admin isolation (`SiteChrome` bypass).
+**Do this instead:** Scope all luxury CSS to customer chrome.
+
+### Anti-Pattern 5: Leave dead hash nav after cutting sections
+
+**What people do:** Remove FeatureStrip/PremiumExperience mounts but keep `/#ozellikler` links.
+**Why it's wrong:** Feels broken on a “sade” site.
+**Do this instead:** Retarget anchors or remove nav entries in the same PR as composition cuts.
 
 ## Integration Points
 
@@ -332,119 +326,36 @@ Cart state ─── UNCHANGED: still src/context/cart-context.tsx / cart-store.
 
 | Service | Integration Pattern | Notes |
 |---------|---------------------|-------|
-| Anthropic Claude API | `@anthropic-ai/sdk` in Next.js route handlers (`src/lib/ai/anthropic-client.ts`, lazy singleton returning `null` if `ANTHROPIC_API_KEY` unset — same shape as `convex-server.ts`) | Model: `claude-opus-4-8` for chat/support (quality-sensitive, Turkish generation); consider `claude-haiku-4-5` for the vehicle-match disambiguation fallback only if cost becomes a concern — start with one model (`claude-opus-4-8`) everywhere for simplicity, optimize later |
-| Anthropic Claude API (admin) | `@anthropic-ai/sdk` inside `convex/aiContent.ts` `"use node"` internalAction | Needs `ANTHROPIC_API_KEY` set as a Convex deployment env var (separate from/duplicate of the Vercel one) — only required once this feature is built |
+| Convex | Server libs via `getConvexClient()` + fallback | No schema/function changes for v1.2 simplification |
+| WhatsApp (`wa.me`) | Sync window in checkout; float CTA in chrome | Keep as primary order path |
+| Anthropic / AI routes | Existing `/api/ai/*` | Customer UI off; admin may stay on |
+| Vercel | Hosting only | Flag via env (`CUSTOMER_AI_UI_ENABLED`) is enough — no LaunchDarkly required |
 
 ### Internal Boundaries
 
 | Boundary | Communication | Notes |
 |----------|---------------|-------|
-| `ChatWidget` (client) ↔ `/api/ai/chat` (server) | `fetch` + SSE (`ReadableStream`) | No Convex client SDK on this path — the browser never talks to Convex for chat, avoiding a new client-side auth story |
-| Route handler ↔ Convex (chat persistence) | `ConvexHttpClient` (server-to-server, using a plain public mutation, not admin-key-gated — this is app-level telemetry, not admin data) | New file: `convex/aiChat.ts` |
-| Route handler ↔ `vehicle-data.ts`/`mat-pricing.ts` | Direct in-process TS import (no network hop) | Reuses `getVehiclePrice()`, `calculateMatPrice()` — the assistant must produce the exact same price the manual configurator would, so it must call the same functions, not reimplement pricing logic in a prompt |
-| Chat assistant ↔ Cart | `useCart().addItem()` from `cart-context.tsx`, called client-side once the assistant proposes a final configuration and the user confirms in the UI (not silently on the model's say-so) | Keeps a human-in-the-loop confirmation step before anything enters the cart |
-| Admin "AI Taslak" tab ↔ Convex | `useAdminConvexKey()` + `useMutation`/`useQuery` against new `contentGenerations` table, admin-key-gated exactly like `/admin/urunler` | No new auth mechanism — reuses `requireAdminKey()` |
-| `/api/ai/content` (kickoff) ↔ `convex/aiContent.ts` | Route handler calls a Convex mutation that schedules the internalAction (`ctx.scheduler.runAfter(0, …)`), mirroring how order creation schedules `orderNotify.notifyAdmin` | Keeps the actual Anthropic call inside Convex so it can retry/complete even if the admin closes the browser tab |
+| RSC pages ↔ CMS libs | async server calls | Slim mounts, not fetch deletion |
+| Client islands ↔ cart-store | context + external store | Hydration contract sacred |
+| Configurator ↔ pricing | `mat-pricing.ts` only | AI remount must reuse same path |
+| Customer ↔ Admin | pathname split in `SiteChrome` | Never share CartProvider with admin |
+| Customer AI UI ↔ AI libs | flag at mount sites | Libs remain importable for admin/tests |
 
-## New Convex Tables
+## Phase Research Flags
 
-Add to `convex/schema.ts`, following the existing style (indexes, `updatedAt: v.number()`, discriminated `v.union` for status/kind fields):
-
-```typescript
-// Chat sessions — one per widget conversation (anonymous or tied to a future order)
-chatSessions: defineTable({
-  kind: v.union(v.literal("configurator"), v.literal("support")),
-  status: v.union(v.literal("active"), v.literal("closed")),
-  clientId: v.optional(v.string()), // anonymous localStorage-generated id, not a user account
-  orderId: v.optional(v.id("orders")), // linked after checkout, if the session led to an order
-  createdAt: v.number(),
-  updatedAt: v.number(),
-}).index("by_client", ["clientId"]).index("by_status", ["status"]),
-
-// Chat messages — transcript, mirrored best-effort from the route handler
-chatMessages: defineTable({
-  sessionId: v.id("chatSessions"),
-  role: v.union(v.literal("user"), v.literal("assistant"), v.literal("tool")),
-  content: v.string(),
-  toolName: v.optional(v.string()), // set when role === "tool"
-  createdAt: v.number(),
-}).index("by_session_created", ["sessionId", "createdAt"]),
-
-// Admin content generation drafts — pending review before publishing
-contentGenerations: defineTable({
-  kind: v.union(
-    v.literal("product_description"),
-    v.literal("product_seo"),
-    v.literal("faq")
-  ),
-  targetSlug: v.string(), // product slug or contentSections sectionKey this draft is for
-  prompt: v.string(), // what was asked, for audit/regeneration
-  draft: v.optional(v.string()), // the generated content (JSON-encoded for multi-field drafts like SEO title+description)
-  status: v.union(
-    v.literal("pending"),
-    v.literal("ready"),
-    v.literal("approved"),
-    v.literal("rejected"),
-    v.literal("failed")
-  ),
-  failureReason: v.optional(v.string()),
-  createdAt: v.number(),
-  updatedAt: v.number(),
-})
-  .index("by_status", ["status"])
-  .index("by_target", ["targetSlug"]),
-```
-
-`chatSessions`/`chatMessages` are optional for a v1 configurator assistant (the assistant can work statelessly per-request, re-sending the transcript from client state each turn) but recommended before the **support helper** ships, since correlating "what did the AI tell the customer" with a subsequent order/WhatsApp conversation is valuable for a small team fielding real customer questions.
-
-## Should the graceful-fallback pattern extend to "site works without an LLM key"?
-
-**Yes — required, not optional**, and it's a small lift given the existing convention. `src/lib/convex-server.ts`/`convex-client.ts` already establish the exact shape to copy:
-
-```typescript
-// src/lib/ai/anthropic-client.ts
-import Anthropic from "@anthropic-ai/sdk";
-
-let client: Anthropic | null | undefined;
-
-export function getAnthropicClient(): Anthropic | null {
-  if (client !== undefined) return client;
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    client = null;
-    return null;
-  }
-  client = new Anthropic({ apiKey });
-  return client;
-}
-```
-
-Every AI surface must degrade rather than break when this returns `null`:
-
-- **Chat widget:** don't render the floating widget at all if `/api/ai/chat` reports `503`/unavailable on first load (or simplest: the route handler returns 503 immediately, `ChatWidget` catches that and either hides itself or shows a static "WhatsApp'tan yazın" fallback pointing at the existing `WhatsappFloat` component).
-- **Vehicle matcher:** `VehicleMatchInput` is strictly *additive* to the existing brand/model dropdowns in `MatConfigurator.tsx` — if the AI route is unavailable, the manual pickers (already built, already the primary path) keep working exactly as today. This is the easiest fallback in the whole feature set because the fallback UI already exists and ships today.
-- **Support helper:** same widget-hide-or-static-fallback treatment as chat.
-- **Admin content generator:** the "AI ile oluştur" button either doesn't render or shows a disabled state with a tooltip when `ANTHROPIC_API_KEY` isn't configured on Convex — admins can still write descriptions/SEO/FAQ by hand through the existing `ContentManager.tsx` fields, unchanged.
-
-This mirrors the Convex fallback pattern's actual purpose in this codebase: the site must be deployable and fully functional (minus the new AI layer) with zero AI configuration, exactly as it's already deployable with zero Convex configuration.
-
-## Build Order
-
-Ordered by dependency, not by feature-list order in the milestone doc:
-
-1. **`src/lib/ai/anthropic-client.ts` + `src/lib/ai/tools.ts` (vehicle matcher tool + fuzzy-match function).** Foundational — nothing else can be tested without it, and it has zero UI surface of its own to design, making it the fastest way to de-risk the "does tool-calling over `vehicle-data.ts` actually resolve real free-text input well" question before building any chat UI on top of it.
-2. **`/api/ai/vehicle-match` route handler + `VehicleMatchInput` component, wired into `MatConfigurator.tsx`.** Smallest complete vertical slice: one route, one component, additive to an existing working flow, immediately demoable, and validates the fallback pattern (manual dropdowns keep working if this fails) end-to-end before more AI surfaces depend on the same pattern.
-3. **`/api/ai/chat` route handler + `ChatWidget` (configurator assistant), reusing the vehicle-match tool from step 1.** This is where streaming, SSE, and the tool-calling loop get built once and then reused by step 4. Cart handoff (`useCart().addItem()`) is the terminal integration point — no checkout changes needed.
-4. **`/api/ai/support` route handler, reusing `ChatWidget`'s streaming plumbing with a different system prompt and grounding context (FAQ/shipping/site-settings).** Cheap once step 3 exists — mostly a new system prompt, a grounding-context builder (`src/lib/ai/grounding.ts`), and possibly the `chatSessions`/`chatMessages` Convex tables if transcript persistence is wanted for this feature specifically (recommended here, optional for step 3).
-5. **`contentGenerations` Convex table + `convex/aiContent.ts` + admin "AI Taslak" tab in `ContentManager.tsx`.** Fully independent of steps 1–4 (different auth model, different Convex-vs-Next.js split, different UI surface) — can be built in parallel by a different work stream, or last, since it's admin tooling rather than customer-facing and has the smallest blast radius if delayed.
-
-Steps 1–2 are the correct "phase 1" of a roadmap: they deliver a complete, demoable, low-risk feature (vehicle matcher) that also validates the exact tool-calling and fallback patterns every subsequent AI feature reuses.
+| Phase topic | Needs deeper research? | Why |
+|-------------|------------------------|-----|
+| Homepage section cut list (which keys stay) | Yes (product/UX) | Architecture says *how* to cut; not *which* marketing blocks survive |
+| Exact Hero motion target | Light UI pass | Pattern clear; visual taste TBD in UI-SPEC |
+| `/destek` redirect vs soft fallback | Light | SEO impact small (not in sitemap); UX choice |
+| Cart/checkout field reduction | Yes if removing legal/vehicle fields | Legal/KVKK + vehicle-required cart items are business rules, not pure UI |
+| Convex CMS visibility field | No for v1.2 | Premature; composition gating sufficient |
 
 ## Sources
 
-- Direct codebase reads (HIGH confidence, primary source): `CLAUDE.md`, `.planning/PROJECT.md`, `convex/schema.ts`, `convex/orderNotify.ts`, `convex/lib/adminAuth.ts`, `src/lib/vehicle-data.ts`, `src/lib/mat-pricing.ts`, `src/hooks/useAdminConvexKey.ts`, `src/app/admin/icerik/ContentManager.tsx`, `src/components/SiteChrome.tsx`, `src/app/api/admin/convex-key/route.ts`
-- `claude-api` skill (bundled, cached 2026-06-24): model selection (`claude-opus-4-8` default), streaming via `client.messages.stream()`, tool use / Tool Runner patterns, Next.js App Router route handler conventions for streaming SSE responses, Managed Agents vs plain API tradeoffs (Managed Agents explicitly not recommended here — this is simple tool-calling over a small static dataset, not an open-ended agent needing a hosted sandbox)
+- Repo contracts: `CLAUDE.md`, `.planning/PROJECT.md`, `src/app/page.tsx`, `src/components/SiteChrome.tsx`, `src/context/cart-context.tsx`, `src/app/odeme/CheckoutPageClient.tsx`, `src/app/olusturucu/page.tsx`, `src/lib/ai/config.ts`, `src/lib/cms.ts`, `src/app/sitemap.ts`, `src/app/robots.ts`, `src/components/Header.tsx`, `src/components/Footer.tsx`
+- Next.js App Router feature-flag placement (server evaluate for first paint; separate routing vs render flags): [Aurora Scharff — Feature flagging with App Router](https://aurorascharff.no/posts/implementing-feature-flagging-with-nextjs-app-router/), [Rollgate — Feature Flags in Next.js](https://rollgate.io/blog/feature-flags-nextjs) (MEDIUM confidence; pattern confirmation only — this project should use a tiny env flag, not a SaaS flag service)
 
 ---
-*Architecture research for: AI features on Next.js + Convex e-commerce storefront*
+*Architecture research for: OTO POLİK v1.2 Sade Lüks Deneyim — storefront simplification integration*
 *Researched: 2026-07-17*
