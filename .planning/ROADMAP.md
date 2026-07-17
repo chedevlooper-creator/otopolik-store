@@ -12,8 +12,8 @@ v1.2 simplifies the customer storefront into a calm luxury path: establish rever
 
 ## Phases
 
-- [ ] **Phase 9: Storefront Boundaries and Content Inventory** - Customer AI UI flag, nav spine, `/destek` fallback, homepage section matrix
-- [ ] **Phase 10: Homepage and Motion Diet** - Fewer homepage jobs, disciplined hero, motion allowlist, brand + trust surfaces
+- [x] **Phase 9: Storefront Boundaries and Content Inventory** - Customer AI UI flag, nav spine, `/destek` fallback, homepage section matrix
+- [x] **Phase 10: Homepage and Motion Diet** - Fewer homepage jobs, disciplined hero, motion allowlist, brand + trust surfaces
 - [ ] **Phase 11: Configurator and Product Simplification** - ≤3 decision surfaces, mobile CTA, lean product chrome, single price source
 - [ ] **Phase 12: Cart, Checkout, and WhatsApp Commit Flow** - Calm cart/checkout, sync WhatsApp open, no credit-card theater
 - [ ] **Phase 13: Cross-Surface Verification and Conditional Cleanup** - Critical-path QA, a11y, admin AI smoke, lint/typecheck, Lenis decision
@@ -53,7 +53,10 @@ Plans:
   4. Customer surfaces still show OLED black, Racing Red, and existing premium typography
   5. At least one concise trust/FAQ or shipping/proof surface remains near the purchase path, consistent with structured data/SEO where applicable
 
-**Plans**: TBD
+**Plans**: 1/1 plan executed
+Plans:
+
+- [x] 10-PLAN.md — Homepage composition, hero motion diet, brand and trust preservation
 **UI hint**: yes
 
 ### Phase 11: Configurator and Product Simplification
@@ -108,8 +111,8 @@ Plans:
 |-------|-----------|----------------|--------|-----------|
 | 1-4 | v1.0 | 4/4 | Complete | 2026-07-17 |
 | 5-8 | v1.1 | 12/12 | Complete | 2026-07-17 |
-| 9. Storefront Boundaries and Content Inventory | v1.2 | 2/2 | In Progress|  |
-| 10. Homepage and Motion Diet | v1.2 | 0/? | Not started | - |
+| 9. Storefront Boundaries and Content Inventory | v1.2 | 2/2 | Complete | 2026-07-17 |
+| 10. Homepage and Motion Diet | v1.2 | 1/1 | Complete | 2026-07-17 |
 | 11. Configurator and Product Simplification | v1.2 | 0/? | Not started | - |
 | 12. Cart, Checkout, and WhatsApp Commit Flow | v1.2 | 0/? | Not started | - |
 | 13. Cross-Surface Verification and Conditional Cleanup | v1.2 | 0/? | Not started | - |

@@ -16,10 +16,10 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Homepage & Motion
 
-- [ ] **HOME-01**: Homepage mounts only sections with a distinct job; duplicate or redundant marketing sections are unmounted (CMS rows retained for reversibility)
-- [ ] **HOME-02**: First viewport communicates brand, one headline, one short supporting line, and one primary CTA to configure
-- [ ] **HOME-03**: Decorative parallax, dense stagger, and glow spectacle are removed or heavily reduced
-- [ ] **HOME-04**: Retained motion is limited to a small allowlist of purposeful micro-interactions and respects `prefers-reduced-motion`
+- [x] **HOME-01**: Homepage mounts only sections with a distinct job; duplicate or redundant marketing sections are unmounted (CMS rows retained for reversibility)
+- [x] **HOME-02**: First viewport communicates brand, one headline, one short supporting line, and one primary CTA to configure
+- [x] **HOME-03**: Decorative parallax, dense stagger, and glow spectacle are removed or heavily reduced
+- [x] **HOME-04**: Retained motion is limited to a small allowlist of purposeful micro-interactions and respects `prefers-reduced-motion`
 
 ### Configurator & Products
 
@@ -38,9 +38,9 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Brand & Trust
 
-- [ ] **BRAND-01**: Customer storefront retains OLED black surfaces, Racing Red accent, and existing premium typography
-- [ ] **TRUST-01**: At least one concise trust/FAQ or shipping/proof surface remains near the purchase path
-- [ ] **TRUST-02**: Visible FAQ/proof content stays consistent with structured data / SEO where applicable
+- [x] **BRAND-01**: Customer storefront retains OLED black surfaces, Racing Red accent, and existing premium typography
+- [x] **TRUST-01**: At least one concise trust/FAQ or shipping/proof surface remains near the purchase path
+- [x] **TRUST-02**: Visible FAQ/proof content stays consistent with structured data / SEO where applicable
 
 ### Verification
 
@@ -93,13 +93,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOUND-02 | Phase 9 | Complete |
 | BOUND-03 | Phase 9 | Complete |
 | BOUND-04 | Phase 9 | Complete |
-| HOME-01 | Phase 10 | Pending |
-| HOME-02 | Phase 10 | Pending |
-| HOME-03 | Phase 10 | Pending |
-| HOME-04 | Phase 10 | Pending |
-| BRAND-01 | Phase 10 | Pending |
-| TRUST-01 | Phase 10 | Pending |
-| TRUST-02 | Phase 10 | Pending |
+| HOME-01 | Phase 10 | Complete |
+| HOME-02 | Phase 10 | Complete |
+| HOME-03 | Phase 10 | Complete |
+| HOME-04 | Phase 10 | Complete |
+| BRAND-01 | Phase 10 | Complete |
+| TRUST-01 | Phase 10 | Complete |
+| TRUST-02 | Phase 10 | Complete |
 | CONF-01 | Phase 11 | Pending |
 | CONF-02 | Phase 11 | Pending |
 | CONF-03 | Phase 11 | Pending |
