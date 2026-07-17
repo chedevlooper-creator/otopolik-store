@@ -25,7 +25,7 @@
 <summary>🚧 v1.1 AI Destekli Lüks Deneyim (Phases 5-8)</summary>
 
 - [x] **Phase 5: AI Infrastructure & Vehicle Matcher** — Server-side AI client, guardrails, eval harness, and free-text vehicle matching into the configurator (completed 2026-07-17)
-- [ ] **Phase 6: Streaming Chat & Configurator Assistant** — Luxury Turkish streaming chat that drives the real MatConfigurator stepper through to cart
+- [x] **Phase 6: Streaming Chat & Configurator Assistant** — Luxury Turkish streaming chat that drives the real MatConfigurator stepper through to cart (completed 2026-07-17)
 - [ ] **Phase 7: Support / Order Helper & Grounding** — CMS-grounded Q&A, scoped refusals, WhatsApp draft handoff, KVKK-minimized transcripts
 - [ ] **Phase 8: Admin Content Generator** — Draft-then-publish Turkish product/SEO/FAQ generation inside admin CMS
 
@@ -67,13 +67,13 @@ Plans:
   3. User can add the configured mat to the real cart with a price that equals `calculateMatPrice` output
   4. Chat UI matches the OLED-black/glass premium system on mobile and desktop, and is clearly labeled "AI Asistan" (never impersonates a human)
 
-**Plans:** 2/3 plans complete; 06-03 awaits human verification
+**Plans:** 4/3 plans complete
 
 Plans:
 
 - [x] 06-01-PLAN.md — Streaming `/api/ai/chat` + configurator tools (reuse Phase 5 client/rate-limit/prices)
 - [x] 06-02-PLAN.md — Premium ConfiguratorChat drives real MatConfigurator + cart + WhatsApp
-- [ ] 06-03-PLAN.md — Price-equality golden evals + stream reconnect polish + human verify
+- [x] 06-03-PLAN.md — Price-equality golden evals + stream reconnect polish + human verify
 
 **UI hint**: yes
 
@@ -89,7 +89,13 @@ Plans:
   3. When uncertain, user gets a pre-filled `wa.me` WhatsApp handoff link; when ready, user can review an AI-drafted order summary and send it themselves
   4. Chat transcripts follow KVKK data-minimization (short TTL / no training pipeline)
 
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+
+- [ ] 07-01-PLAN.md — Live CMS reads + support grounding tools + streaming `/api/ai/support`
+- [ ] 07-02-PLAN.md — Premium `/destek` SupportChat + user-send WhatsApp drafts
+- [ ] 07-03-PLAN.md — Grounding/refusal/user-sends golden evals + human verify
+
 **UI hint**: yes
 
 ### Phase 8: Admin Content Generator
@@ -116,8 +122,8 @@ Plans:
 | 3 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 4 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
-| 6 | v1.1 | 2/3 | In Progress | - |
-| 7 | v1.1 | 0/? | Not started | - |
+| 6 | v1.1 | 4/3 | Complete    | 2026-07-17 |
+| 7 | v1.1 | 0/3 | Planned | - |
 | 8 | v1.1 | 0/? | Not started | - |
 
 ## Coverage
