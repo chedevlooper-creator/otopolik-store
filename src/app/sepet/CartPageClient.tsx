@@ -67,7 +67,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
         </p>
         <Link
           href="/urunler"
-          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
+          className="btn-press btn-red-rich mt-6 inline-flex rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -128,13 +128,13 @@ export default function CartPageClient({ content }: { content: CartContent }) {
           </div>
           <Link
             href="/odeme"
-            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-lg px-6 py-3.5 text-xs font-bold uppercase tracking-wider"
+            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-xs font-bold uppercase tracking-wider"
           >
             Sipariş Talebine Geç
           </Link>
           <Link
             href="/urunler"
-            className="btn-press mt-3 flex w-full items-center justify-center rounded-lg border border-border px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
+            className="btn-press mt-3 flex w-full items-center justify-center rounded-full border border-border px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
           >
             Alışverişe Devam Et
           </Link>

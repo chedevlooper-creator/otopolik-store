@@ -66,7 +66,7 @@ export default function Footer() {
             </div>
             <Link
               href={footer?.ctaHref ?? "/olusturucu"}
-              className="btn-press btn-red-rich inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-lg px-7 text-xs font-bold uppercase tracking-[0.08em]"
+              className="btn-press btn-red-rich inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em]"
             >
               {footer?.ctaLabel ?? "Tasarımını başlat"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

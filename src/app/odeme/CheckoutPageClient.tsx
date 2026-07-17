@@ -167,7 +167,7 @@ export default function CheckoutPageClient({
         </p>
         <Link
           href="/urunler"
-          className="btn-press btn-red-rich mt-6 inline-flex px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
+          className="btn-press btn-red-rich mt-6 inline-flex rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
           {content.ctaLabel ?? "Ürünleri İncele"}
         </Link>
@@ -602,7 +602,7 @@ export default function CheckoutPageClient({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-xl px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Hazırlanıyor..." : "WhatsApp'ta Sipariş Özetini Aç"}
           </button>
