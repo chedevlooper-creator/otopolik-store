@@ -33,9 +33,9 @@ export default function Logo({
         src="/media/logo-circle-high-res.png"
         alt=""
         fill
-        quality={90}
+        quality={100}
+        unoptimized
         priority={priority}
-        sizes={`${logoSize.pixels}px`}
         className="object-contain"
       />
     </span>
@@ -49,9 +49,9 @@ export default function Logo({
             src="/media/logo-circle-high-res.png"
             alt=""
             fill
-            quality={95}
+            quality={100}
+            unoptimized
             priority={priority}
-            sizes="(min-width: 1024px) 56px, (min-width: 640px) 48px, 40px"
             className="object-contain"
           />
         </span>

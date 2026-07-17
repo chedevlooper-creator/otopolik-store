@@ -138,7 +138,7 @@ export default function Header() {
         }`}
       >
         <div className="border-b border-white/[0.06] bg-white/[0.02]">
-          <div className="mx-auto flex h-7 max-w-screen-2xl 2xl:px-8 items-center justify-center gap-2 px-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55 sm:justify-between">
+          <div className="mx-auto flex h-7 max-w-screen-2xl 2xl:px-8 items-center justify-center gap-2 px-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55 sm:justify-between">
             <span className="inline-flex items-center gap-1.5 text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
               <BadgeCheckIcon className="h-3 w-3 text-brand-red" aria-hidden="true" />
               {cms.header?.title ?? "6.000+ araç modeli için özel kalıp"}
@@ -165,7 +165,7 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative inline-flex min-h-9 items-center text-[11px] font-semibold tracking-[0.02em] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-center after:transition-transform after:duration-300 ${
+                    className={`relative inline-flex min-h-9 items-center text-[13.5px] font-medium tracking-[0.02em] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-center after:transition-transform after:duration-300 ${
                       active
                         ? "text-white after:scale-x-100 after:bg-brand-red"
                         : "text-white/60 after:scale-x-0 after:bg-white/55 hover:text-white hover:after:scale-x-100"
@@ -197,7 +197,7 @@ export default function Header() {
                 type="button"
                 onClick={openDrawer}
                 aria-label={totalItems > 0 ? `Sepetim, ${totalItems} ürün` : "Sepetim"}
-                className="btn-press btn-light-rich relative flex h-10 items-center justify-center gap-2 rounded-full px-3 text-[10px] font-bold uppercase tracking-[0.12em] text-background sm:px-4"
+                className="btn-press btn-light-rich relative flex h-10 items-center justify-center gap-2 rounded-full px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-background sm:px-4"
               >
                 <ShoppingBagIcon className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Sepet</span>
