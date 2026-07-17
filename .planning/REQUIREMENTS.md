@@ -26,26 +26,26 @@ Layer AI capabilities over the shipped luxury storefront — customer-facing ass
 
 ### AI Configurator Assistant (CFGAI)
 
-- [ ] **CFGAI-01**: A Turkish streaming chat assistant walks the user through vehicle selection → floor/edge colors → extras → price → WhatsApp handoff.
-- [ ] **CFGAI-02**: The assistant drives the existing `MatConfigurator` stepper state via tool calls (does not run a parallel/fictional checkout).
-- [ ] **CFGAI-03**: The assistant adds the configured item to the real cart via `useCart().addItem()` with a price computed by `calculateMatPrice`.
-- [ ] **CFGAI-04**: The chat UI matches the OLED-black/glass premium design system (`surface-glass`/`mac-glass`, Racing Red) and is mobile-first.
-- [ ] **CFGAI-05**: The assistant is clearly labeled as an AI ("AI Asistan") and never impersonates a human rep.
+- [x] **CFGAI-01**: A Turkish streaming chat assistant walks the user through vehicle selection → floor/edge colors → extras → price → WhatsApp handoff.
+- [x] **CFGAI-02**: The assistant drives the existing `MatConfigurator` stepper state via tool calls (does not run a parallel/fictional checkout).
+- [x] **CFGAI-03**: The assistant adds the configured item to the real cart via `useCart().addItem()` with a price computed by `calculateMatPrice`.
+- [x] **CFGAI-04**: The chat UI matches the OLED-black/glass premium design system (`surface-glass`/`mac-glass`, Racing Red) and is mobile-first.
+- [x] **CFGAI-05**: The assistant is clearly labeled as an AI ("AI Asistan") and never impersonates a human rep.
 
 ### AI Support / Order Helper (SUPAI)
 
-- [ ] **SUPAI-01**: A user can ask shipping, sizing, and care questions and receive answers grounded only in current CMS/site-settings content (re-fetched at answer time, not baked into a stale prompt).
-- [ ] **SUPAI-02**: The assistant refuses off-topic / open-domain questions with a scoped Turkish redirect back to mat selection/orders.
-- [ ] **SUPAI-03**: When uncertain, the assistant escalates by generating a pre-filled `wa.me` WhatsApp handoff link (reusing `whatsapp.ts`).
-- [ ] **SUPAI-04**: The assistant can draft a WhatsApp order/summary message (vehicle + colors + price + notes) for the user to review and send — the user, not the AI, presses send.
-- [ ] **SUPAI-05**: Chat transcript handling follows KVKK data-minimization (short-TTL/stateless logging, no training pipeline).
+- [x] **SUPAI-01**: A user can ask shipping, sizing, and care questions and receive answers grounded only in current CMS/site-settings content (re-fetched at answer time, not baked into a stale prompt).
+- [x] **SUPAI-02**: The assistant refuses off-topic / open-domain questions with a scoped Turkish redirect back to mat selection/orders.
+- [x] **SUPAI-03**: When uncertain, the assistant escalates by generating a pre-filled `wa.me` WhatsApp handoff link (reusing `whatsapp.ts`).
+- [x] **SUPAI-04**: The assistant can draft a WhatsApp order/summary message (vehicle + colors + price + notes) for the user to review and send — the user, not the AI, presses send.
+- [x] **SUPAI-05**: Chat transcript handling follows KVKK data-minimization (short-TTL/stateless logging, no training pipeline).
 
 ### AI Content Generator — Admin (CNTGEN)
 
-- [ ] **CNTGEN-01**: An admin can generate Turkish product descriptions, SEO titles/meta, and FAQ copy grounded in structured product/vehicle facts.
-- [ ] **CNTGEN-02**: Generated content is saved as a draft and requires an explicit admin publish action before going live — never auto-published to the CMS.
-- [ ] **CNTGEN-03**: The generator is exposed inside the existing admin content UI (`ContentManager.tsx` / `/admin/icerik`) and is admin-key-gated.
-- [ ] **CNTGEN-04**: Generated copy follows the project's premium ("Apple/Porsche") Turkish brand voice via a written system-prompt style guide.
+- [x] **CNTGEN-01**: An admin can generate Turkish product descriptions, SEO titles/meta, and FAQ copy grounded in structured product/vehicle facts.
+- [x] **CNTGEN-02**: Generated content is saved as a draft and requires an explicit admin publish action before going live — never auto-published to the CMS.
+- [x] **CNTGEN-03**: The generator is exposed inside the existing admin content UI (`ContentManager.tsx` / `/admin/icerik`) and is admin-key-gated.
+- [x] **CNTGEN-04**: Generated copy follows the project's premium ("Apple/Porsche") Turkish brand voice via a written system-prompt style guide.
 
 ## Future Requirements (v1.x — after validation)
 
@@ -78,17 +78,17 @@ Layer AI capabilities over the shipped luxury storefront — customer-facing ass
 | VMATCH-02 | Phase 5 | Complete |
 | VMATCH-03 | Phase 5 | Complete |
 | VMATCH-04 | Phase 5 | Complete |
-| CFGAI-01 | Phase 6 | Pending |
-| CFGAI-02 | Phase 6 | Pending |
-| CFGAI-03 | Phase 6 | Pending |
-| CFGAI-04 | Phase 6 | Pending |
-| CFGAI-05 | Phase 6 | Pending |
-| SUPAI-01 | Phase 7 | Pending |
-| SUPAI-02 | Phase 7 | Pending |
-| SUPAI-03 | Phase 7 | Pending |
-| SUPAI-04 | Phase 7 | Pending |
-| SUPAI-05 | Phase 7 | Pending |
-| CNTGEN-01 | Phase 8 | Pending |
-| CNTGEN-02 | Phase 8 | Pending |
-| CNTGEN-03 | Phase 8 | Pending |
-| CNTGEN-04 | Phase 8 | Pending |
+| CFGAI-01 | Phase 6 | Complete |
+| CFGAI-02 | Phase 6 | Complete |
+| CFGAI-03 | Phase 6 | Complete |
+| CFGAI-04 | Phase 6 | Complete |
+| CFGAI-05 | Phase 6 | Complete |
+| SUPAI-01 | Phase 7 | Complete |
+| SUPAI-02 | Phase 7 | Complete |
+| SUPAI-03 | Phase 7 | Complete |
+| SUPAI-04 | Phase 7 | Complete |
+| SUPAI-05 | Phase 7 | Complete |
+| CNTGEN-01 | Phase 8 | Complete |
+| CNTGEN-02 | Phase 8 | Complete |
+| CNTGEN-03 | Phase 8 | Complete |
+| CNTGEN-04 | Phase 8 | Complete |
