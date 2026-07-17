@@ -26,7 +26,7 @@
 
 - [x] **Phase 5: AI Infrastructure & Vehicle Matcher** — Server-side AI client, guardrails, eval harness, and free-text vehicle matching into the configurator (completed 2026-07-17)
 - [x] **Phase 6: Streaming Chat & Configurator Assistant** — Luxury Turkish streaming chat that drives the real MatConfigurator stepper through to cart (completed 2026-07-17)
-- [ ] **Phase 7: Support / Order Helper & Grounding** — CMS-grounded Q&A, scoped refusals, WhatsApp draft handoff, KVKK-minimized transcripts
+- [ ] **Phase 7: Support / Order Helper & Grounding** — Automated implementation complete; live provider UX verification pending
 - [ ] **Phase 8: Admin Content Generator** — Draft-then-publish Turkish product/SEO/FAQ generation inside admin CMS
 
 </details>
@@ -89,12 +89,12 @@ Plans:
   3. When uncertain, user gets a pre-filled `wa.me` WhatsApp handoff link; when ready, user can review an AI-drafted order summary and send it themselves
   4. Chat transcripts follow KVKK data-minimization (short TTL / no training pipeline)
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans complete; Plan 03 at human verification checkpoint
 Plans:
 
-- [ ] 07-01-PLAN.md — Live CMS reads + support grounding tools + streaming `/api/ai/support`
-- [ ] 07-02-PLAN.md — Premium `/destek` SupportChat + user-send WhatsApp drafts
-- [ ] 07-03-PLAN.md — Grounding/refusal/user-sends golden evals + human verify
+- [x] 07-01-PLAN.md — Live CMS reads + support grounding tools + streaming `/api/ai/support`
+- [x] 07-02-PLAN.md — Premium `/destek` SupportChat + user-send WhatsApp drafts
+- [ ] 07-03-PLAN.md — Golden evals pass; human provider-on verification pending
 
 **UI hint**: yes
 
@@ -123,7 +123,7 @@ Plans:
 | 4 | v1.0 | 1/1 | Complete | 2026-07-17 |
 | 5 | v1.1 | 4/3 | Complete    | 2026-07-17 |
 | 6 | v1.1 | 4/3 | Complete    | 2026-07-17 |
-| 7 | v1.1 | 0/3 | Planned | - |
+| 7 | v1.1 | 2/3 | Human verification | - |
 | 8 | v1.1 | 0/? | Not started | - |
 
 ## Coverage
