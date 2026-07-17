@@ -21,6 +21,7 @@ import Logo from "@/components/Logo";
 const KURUMSAL_LINKS = [
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
+  { href: "/destek", label: "AI Destek" },
   { href: "/#sss", label: "S.S.S." },
   { href: "/bilgiler/gizlilik", label: "Gizlilik Politikası" },
 ];
