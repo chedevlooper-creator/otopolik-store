@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import HeroMedia from "@/components/home/HeroMedia";
@@ -26,6 +26,7 @@ export default function Hero({ content }: Props) {
   const hero = content?.hero;
   const secondary = content?.secondaryCta;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Scroll animations for Apple launch scaling effect
   const { scrollYProgress } = useScroll({
@@ -57,6 +58,7 @@ export default function Hero({ content }: Props) {
   function handleMouseLeave() {
     mouseX.set(0);
     mouseY.set(0);
+    setIsHovered(false);
   }
 
   const headline =
@@ -115,6 +117,7 @@ export default function Hero({ content }: Props) {
   return (
     <section
       ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative flex min-h-[calc(100svh-7.375rem)] flex-col justify-center overflow-hidden bg-black text-white sm:min-h-[calc(100svh-8.3125rem)] lg:min-h-[calc(100svh-9.25rem)]"
@@ -219,103 +222,56 @@ export default function Hero({ content }: Props) {
           </motion.div>
         </motion.div>
 
-        {/* Symmetric engineering grid: spec panel / 3D car / diagnostic panel */}
+        {/* Left absolute spec panel (Desktop HUD) */}
         <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-8 grid grid-cols-1 items-center gap-5 lg:mt-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-10"
+          initial={{ opacity: 0, x: -100 }}
+          animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="absolute left-6 top-1/2 z-20 hidden w-72 -translate-y-1/2 xl:block"
         >
-          {/* Left: Material Analysis */}
-          <div className="hidden lg:block">
-            <div className="premium-card mx-auto max-w-xs rounded-2xl p-5">
-              <span className="spec-label">Malzeme Analizi</span>
-              <div className="mt-5 space-y-3">
-                {MATERIAL_SPECS.map((spec) => (
-                  <div
-                    key={spec.label}
-                    className="flex items-center justify-between border-b border-white/8 pb-3 last:border-0 last:pb-0"
-                  >
-                    <span className="text-[11px] uppercase tracking-[0.08em] text-white/45">
-                      {spec.label}
-                    </span>
-                    <span className="spec-value text-sm text-white">{spec.value}</span>
-                  </div>
-                ))}
-              </div>
+          <div className="premium-card rounded-2xl p-6 bg-black/60 backdrop-blur-md border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <span className="spec-label text-brand-red font-bold tracking-[0.15em]">Malzeme Analizi</span>
+            <div className="mt-5 space-y-4">
+              {MATERIAL_SPECS.map((spec) => (
+                <div
+                  key={spec.label}
+                  className="flex items-center justify-between border-b border-white/8 pb-3 last:border-0 last:pb-0"
+                >
+                  <span className="text-[10px] uppercase tracking-[0.15em] text-white/45">
+                    {spec.label}
+                  </span>
+                  <span className="spec-value text-xs font-semibold text-white">{spec.value}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </motion.div>
 
-          {/* Center: 3D Mouse Parallax Floating Car Card */}
-          <div className="flex justify-center">
-            <motion.div
-              style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-              }}
-              className="premium-card group relative flex h-80 w-72 flex-col items-center justify-between overflow-hidden rounded-[1.75rem] p-7 sm:h-[21rem] sm:w-80"
-            >
-              {/* Backlight red glow inside the card */}
-              <div className="absolute top-1/2 left-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-red/10 blur-[60px] pointer-events-none transition-all duration-500 group-hover:bg-brand-red/15 group-hover:scale-110" />
-
-              <div className="w-full text-center" style={{ transform: "translateZ(30px)" }}>
-                <span className="text-[9px] font-black tracking-[0.2em] text-brand-red uppercase sm:text-[10px]">
-                  Hücresel Mimari
-                </span>
-                <h3 className="mt-1 font-heading text-lg font-medium text-white sm:text-xl">
-                  Premium EVA Koruma
-                </h3>
+        {/* Right absolute spec panel (Desktop HUD) */}
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="absolute right-6 top-1/2 z-20 hidden w-72 -translate-y-1/2 xl:block"
+        >
+          <div className="premium-card rounded-2xl p-6 bg-black/60 backdrop-blur-md border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <span className="spec-label text-brand-red font-bold tracking-[0.15em]">Performans & Dayanım</span>
+            <div className="mt-5 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/8 pb-3">
+                <span className="text-[10px] uppercase tracking-[0.15em] text-white/45">Uyum Hassasiyeti</span>
+                <span className="spec-value text-xs text-emerald-400 font-bold">Sıfır Boşluk</span>
               </div>
-
-              {/* Floating 3D Car Image — engineered drift, not a cartoon bounce */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative h-40 w-56 select-none sm:h-44 sm:w-64"
-                style={{ transform: "translateZ(60px)" }}
-              >
-                <Image
-                  src="/media/car-icon-3d.png"
-                  alt="3D Car"
-                  fill
-                  className="object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] filter brightness-110"
-                  sizes="256px"
-                  priority
-                />
-              </motion.div>
-
-              <div className="w-full text-center" style={{ transform: "translateZ(30px)" }}>
-                <p className="text-xs text-white/55 leading-relaxed">
-                  Sıvı ve kiri elmas hücrelerinde
-                  <br />
-                  hapsederek zemini korur.
-                </p>
+              <div className="flex items-center justify-between border-b border-white/8 pb-3">
+                <span className="text-[10px] uppercase tracking-[0.15em] text-white/45">Sıvı Kapasitesi</span>
+                <span className="spec-value text-xs text-white font-semibold">4 Litre / m²</span>
               </div>
-            </motion.div>
-          </div>
-
-          {/* Right: Fitment Diagnostic */}
-          <div className="hidden lg:block">
-            <div className="premium-card mx-auto max-w-xs rounded-2xl p-5">
-              <span className="spec-label">Performans & Dayanım</span>
-              <div className="mt-5 space-y-4">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[11px] text-white/70">Kontur Uyum Hassasiyeti</span>
-                  <span className="spec-value text-xs text-emerald-400 font-bold">Sıfır Boşluk</span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[11px] text-white/70">Sıvı Kapasitesi</span>
-                  <span className="spec-value text-xs text-white">4 Litre / m²</span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[11px] text-white/70">Kolay Temizlik</span>
-                  <span className="spec-value text-xs text-white">15 saniye (Salla & Yıka)</span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="text-[11px] text-white/70">Yüzey Kaymazlık Katsayısı</span>
-                  <span className="spec-value text-xs text-white">0.98</span>
-                </div>
+              <div className="flex items-center justify-between border-b border-white/8 pb-3">
+                <span className="text-[10px] uppercase tracking-[0.15em] text-white/45">Kolay Temizlik</span>
+                <span className="spec-value text-xs text-white font-semibold">15 saniye (Salla & Yıka)</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-[0.15em] text-white/45">Kaymazlık Katsayısı</span>
+                <span className="spec-value text-xs text-white font-semibold">0.98</span>
               </div>
             </div>
           </div>
