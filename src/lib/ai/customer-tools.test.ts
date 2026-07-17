@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
@@ -24,10 +24,10 @@ describe("customer-only AI tools", () => {
   });
 
   it("has no admin authentication or mutation imports", () => {
-    const sourcePath = fileURLToPath(
-      new URL("./customer-tools.ts", import.meta.url)
+    const source = readFileSync(
+      resolve(process.cwd(), "src/lib/ai/customer-tools.ts"),
+      "utf8"
     );
-    const source = readFileSync(sourcePath, "utf8");
 
     expect(source).not.toMatch(/adminKey|requireAdminKey|convex\/.*admin/i);
     expect(source).not.toMatch(/\b(useMutation|mutation|internalMutation)\b/);

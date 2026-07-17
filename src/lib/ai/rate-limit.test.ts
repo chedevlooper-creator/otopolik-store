@@ -12,6 +12,9 @@ describe("AI rate limiting", () => {
 
     const limited = checkAiRateLimit(key);
     expect(limited.allowed).toBe(false);
+    if (limited.allowed) {
+      throw new Error("Expected the request to be rate limited");
+    }
     expect(limited.retryAfterSec).toBeGreaterThan(0);
     expect(limited.retryAfterSec).toBeLessThanOrEqual(60);
   });
