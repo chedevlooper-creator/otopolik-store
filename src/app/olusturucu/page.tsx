@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MatConfigurator from "@/components/configurator/MatConfigurator";
+import { isAiConfigured } from "@/lib/ai/config";
 import { getContentPage } from "@/lib/cms";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -41,6 +42,7 @@ export default async function ConfiguratorPage({
         initialModel={model}
         initialYear={yil}
         initialBodyOrChassis={kasa}
+        aiEnabled={isAiConfigured()}
       />
     </div>
   );

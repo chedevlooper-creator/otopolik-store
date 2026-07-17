@@ -5,13 +5,19 @@ import {
   isVehicleDetailsComplete,
   type VehicleDetails,
 } from "@/lib/vehicle-compatibility";
+import VehicleMatchInput from "./VehicleMatchInput";
 
 type Props = {
   value: VehicleDetails;
   onChange: (next: VehicleDetails) => void;
+  aiEnabled: boolean;
 };
 
-export default function VehicleSelector({ value, onChange }: Props) {
+export default function VehicleSelector({
+  value,
+  onChange,
+  aiEnabled,
+}: Props) {
   const complete = isVehicleDetailsComplete(value);
 
   return (
@@ -23,6 +29,20 @@ export default function VehicleSelector({ value, onChange }: Props) {
         <span className="spec-value text-base font-medium text-white">01</span>
         Aracınızı Seçin
       </h2>
+
+      {aiEnabled ? (
+        <VehicleMatchInput
+          onResolved={(candidate) =>
+            onChange({
+              ...value,
+              brand: candidate.brand,
+              model: candidate.model,
+              year: candidate.year ?? "",
+              bodyOrChassis: candidate.bodyType,
+            })
+          }
+        />
+      ) : null}
 
       <VehicleDetailsFields
         value={value}

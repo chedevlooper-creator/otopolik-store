@@ -92,6 +92,7 @@ type Props = {
   initialModel?: string;
   initialYear?: string;
   initialBodyOrChassis?: string;
+  aiEnabled?: boolean;
 };
 
 export default function MatConfigurator({
@@ -99,6 +100,7 @@ export default function MatConfigurator({
   initialModel = "",
   initialYear = "",
   initialBodyOrChassis = "",
+  aiEnabled = false,
 }: Props) {
   const { addItem, closeDrawer } = useCart();
   const [vehicle, setVehicle] = useState<VehicleDetails>({
@@ -382,7 +384,11 @@ export default function MatConfigurator({
 
       {/* Seçenekler */}
       <StaggeredReveal className="min-w-0 max-w-full space-y-7">
-        <VehicleSelector value={vehicle} onChange={setVehicle} />
+        <VehicleSelector
+          value={vehicle}
+          onChange={setVehicle}
+          aiEnabled={aiEnabled}
+        />
 
         <ColorPicker
           label="Taban Rengi"
