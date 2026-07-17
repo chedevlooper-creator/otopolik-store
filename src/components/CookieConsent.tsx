@@ -69,24 +69,23 @@ export default function CookieConsent() {
     <div
       role="dialog"
       aria-label="Çerez ve gizlilik bildirimi"
-      className={`fixed inset-x-3 z-[70] border border-white/10 bg-[#0b0b0b]/96 p-4 shadow-[0_24px_80px_rgba(0,0,0,.72)] backdrop-blur-xl sm:bottom-5 sm:left-auto sm:right-5 sm:max-w-xl sm:p-5 ${
+      className={`fixed inset-x-3 z-[70] rounded-2xl border border-white/10 bg-[#0b0b0b]/96 p-4 shadow-[0_24px_80px_rgba(0,0,0,.72)] backdrop-blur-xl sm:right-auto sm:left-5 sm:max-w-xs sm:p-4 ${
         hasMobilePurchaseBar ? "bottom-[6.25rem]" : "bottom-3"
-      }`}
+      } sm:bottom-5`}
     >
-      <div className="flex flex-col gap-4">
-        <div className="max-w-2xl">
-          <p className="font-heading text-sm font-bold uppercase tracking-wide text-white">
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="font-heading text-xs font-bold uppercase tracking-wide text-white">
             Çerez ve gizlilik
           </p>
-          <p className="mt-2 text-xs leading-5 text-muted sm:text-sm sm:leading-6">
-            Site deneyimi ve sipariş süreci için gerekli çerezleri kullanırız.
-            İsteğe bağlı olarak ziyaret istatistiklerini (Vercel Analytics)
-            de açabilirsiniz. Ayrıntılar için{" "}
+          <p className="mt-1.5 text-xs leading-5 text-muted">
+            Sipariş süreci için gerekli çerezleri kullanırız; isteğe bağlı
+            ziyaret istatistiklerini (Vercel Analytics) açabilirsiniz.{" "}
             <Link
               href="/bilgiler/gizlilik"
               className="font-semibold text-white underline-offset-2 hover:underline"
             >
-              gizlilik politikası
+              Gizlilik politikası
             </Link>
             .
           </p>
@@ -95,14 +94,14 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("essential")}
-            className="btn-press min-h-11 border border-border px-5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
+            className="btn-press min-h-10 rounded-lg border border-border px-3 text-[11px] font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
           >
             Yalnızca gerekli
           </button>
           <button
             type="button"
             onClick={() => choose("accepted")}
-            className="btn-press btn-red-rich min-h-11 px-5 text-xs font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-red-rich min-h-10 rounded-lg px-3 text-[11px] font-bold uppercase tracking-wider text-white"
           >
             Kabul et
           </button>

@@ -110,15 +110,20 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
             <p className="mt-1 text-xs text-white/65">KDV dahil fiyat</p>
           </div>
           {showSwatches ? (
-            <div className="flex items-center -space-x-1.5" aria-label="Mevcut renk seçenekleri">
-              {product.colors.slice(0, 3).map((color) => (
-                <span
-                  key={color.name}
-                  title={color.name}
-                  className="h-5 w-5 rounded-full border-2 border-surface shadow-sm"
-                  style={{ backgroundColor: color.hex }}
-                />
-              ))}
+            <div className="flex items-center gap-2" aria-label={`${product.colors.length} renk seçeneği`}>
+              <div className="flex items-center -space-x-1.5">
+                {product.colors.slice(0, 3).map((color) => (
+                  <span
+                    key={color.name}
+                    title={color.name}
+                    className="h-5 w-5 rounded-full border-2 border-surface shadow-sm"
+                    style={{ backgroundColor: color.hex }}
+                  />
+                ))}
+              </div>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/65">
+                {product.colors.length} renk
+              </span>
             </div>
           ) : (
             <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/65 transition-colors group-hover:text-white">Detayları gör</span>
