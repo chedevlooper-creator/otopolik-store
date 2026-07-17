@@ -69,7 +69,7 @@ Today customer AI mounts are gated only by `isAiConfigured()` (`AI_FEATURES_ENAB
 | Customer AI UI flag (`isCustomerAiUiEnabled`) | Frontend Server (SSR) | — | Server-only env read; defaults off; never `NEXT_PUBLIC_` for capability secrets (flag is visibility, still prefer server eval) |
 | Gate ConfiguratorChat / VehicleMatchInput | Frontend Server (SSR) | Browser / Client | Server page computes `aiEnabled`; client receives boolean prop |
 | Gate SupportChat / `/destek` fallback | Frontend Server (SSR) | — | `src/app/destek/page.tsx` is already async server component |
-| Header / Footer Destek links | Frontend Server (SSR) → Client | Browser / Client | Header/Footer are client; pass flag from root `layout.tsx` via context/prop |
+| Header / Footer Destek links | Browser / Client | — | Static non-AI chrome: slim `NAV_LINKS` / footer constants; no layout flags-provider (server gates only on AI mount routes) |
 | Primary nav spine | Browser / Client | — | `NAV_LINKS` in `Header.tsx` |
 | WhatsApp contact on `/destek` | Frontend Server (SSR) | CDN / Static | `getStoreSettings()` + `buildWhatsAppLink` |
 | AI API cost/auth kill switch | API / Backend | — | Keep `isAiFeaturesEnabled` / `isAiConfigured` on routes |
@@ -192,10 +192,9 @@ const aiEnabled = isCustomerAiUiEnabled() && isAiConfigured();
 // ConfiguratorChat + MatConfigurator aiEnabled={aiEnabled}
 ```
 
-### Pattern 3: Server → client flag plumbing
+### Pattern 3: Server gates on AI mounts only (no chrome flags-provider)
 
-Root `layout.tsx` already fetches settings/CMS server-side and wraps `CmsProvider` / `SettingsProvider`. [VERIFIED: codebase `src/app/layout.tsx`]  
-**Use:** evaluate `isCustomerAiUiEnabled()` there and pass boolean into client Header/Footer (new field on an existing provider **or** a 10-line `StorefrontFlagsProvider`). Do **not** read non-`NEXT_PUBLIC_` env from `"use client"` Header/Footer.
+**RESOLVED:** Do **not** add layout/provider plumbing for Header/Footer. Static customer chrome uses fixed non-AI navigation (`NAV_LINKS` + footer constants). Evaluate `isCustomerAiUiEnabled()` only on server pages that mount customer AI (`/destek`, `/olusturucu`). Do **not** read non-`NEXT_PUBLIC_` env from `"use client"` Header/Footer. This supersedes the earlier optional `StorefrontFlagsProvider` / layout prop suggestion.
 
 ### Pattern 4: Avoid shipping chat when flag off
 
@@ -375,15 +374,21 @@ When flag **on** and configured: existing SupportChat path may remain for FUT-05
 
 **If empty verified claims dominate:** A1–A3 are naming/UX discretion only; core architecture is verified.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Footer link to `/destek` when flag off**
-   - What we know: Locked to remove AI entry points; route must remain.
-   - What's unclear: Omit Destek from footer entirely vs "Destek" → non-AI page.
-   - Recommendation: Keep one non-AI "Destek" or rely on İletişim + WhatsApp float; avoid "AI Destek" label.
+1. **Footer link to `/destek` when flag off** — **RESOLVED**
+   - Footer may omit support from the primary link groups **or** use plain `Destek` → `/destek`.
+   - Never use an AI-branded Destek label (no `AI Destek`).
+   - Prefer plain non-AI `Destek` in the footer when it aids contact discoverability.
 
-2. **Order of `NAV_LINKS`**
-   - Recommendation: Tasarla first (conversion), then Ürünler, Galeri, İletişim — matches locked labels; Sepet as button.
+2. **Order of `NAV_LINKS`** — **RESOLVED**
+   - Primary order is Tasarla, Ürünler, Galeri, İletişim.
+   - Sepet remains its dedicated header control (drawer button), not a `NAV_LINKS` item.
+
+3. **Layout / flags-provider for Header/Footer** — **RESOLVED**
+   - Static Header/Footer chrome does **not** require `layout.tsx` or a flags provider.
+   - Server-evaluated `isCustomerAiUiEnabled()` gates apply only to AI mount routes (`/destek`, `/olusturucu`).
+   - This supersedes the earlier optional layout flags-provider suggestion in Architecture Patterns / Pattern 3.
 
 ## Environment Availability
 
