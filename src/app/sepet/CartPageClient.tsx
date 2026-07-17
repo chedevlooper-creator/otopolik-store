@@ -116,13 +116,13 @@ export default function CartPageClient({ content }: { content: CartContent }) {
             </span>
           </div>
           {remainingForFreeShipping > 0 && (
-            <p className="mt-3 border border-dashed border-border bg-background px-3 py-2 text-xs text-sand">
+            <p className="mt-3 border border-dashed border-border bg-background px-3 py-2 text-xs text-white">
               Ücretsiz kargo için <span className="spec-value">{formatPrice(remainingForFreeShipping)}</span> kaldı.
             </p>
           )}
           <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
             <span className="font-heading text-lg font-bold uppercase text-white">Toplam</span>
-            <span className="spec-value text-xl font-semibold text-sand">
+            <span className="spec-value text-xl font-semibold text-white">
               {formatPrice(orderTotal)}
             </span>
           </div>
@@ -134,7 +134,7 @@ export default function CartPageClient({ content }: { content: CartContent }) {
           </Link>
           <Link
             href="/urunler"
-            className="btn-press mt-3 flex w-full items-center justify-center rounded-lg border border-border px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
+            className="btn-press mt-3 flex w-full items-center justify-center rounded-lg border border-border px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
           >
             Alışverişe Devam Et
           </Link>

@@ -15,7 +15,7 @@ export default async function NotFound() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-24">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="font-heading text-[12rem] font-extrabold leading-none text-sand/15" aria-hidden="true">
+        <p className="font-heading text-[12rem] font-extrabold leading-none text-white/15" aria-hidden="true">
           404
         </p>
         <h1 className="-mt-8 font-heading text-4xl font-bold text-white sm:text-5xl">

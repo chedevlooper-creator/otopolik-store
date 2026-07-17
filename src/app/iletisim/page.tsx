@@ -36,7 +36,7 @@ export default async function ContactPage() {
     {
       href: `tel:${settings.phoneDisplay.replace(/\s/g, "")}`,
       icon: PhoneIcon,
-      iconClass: "text-sand",
+      iconClass: "text-white",
       title: "Telefon",
       detail: settings.phoneDisplay,
       detailClass: "spec-value",
@@ -54,7 +54,7 @@ export default async function ContactPage() {
     {
       href: `mailto:${settings.email}`,
       icon: MailIcon,
-      iconClass: "text-sand",
+      iconClass: "text-white",
       title: "E-posta",
       detail: settings.email,
       detailClass: "spec-value",
@@ -65,7 +65,7 @@ export default async function ContactPage() {
   return (
     <div className="relative overflow-hidden">
       <div
-        className="pointer-events-none absolute -top-40 left-[-8%] h-[26rem] w-[26rem] rounded-full bg-sand/[0.05] blur-[120px]"
+        className="pointer-events-none absolute -top-40 left-[-8%] h-[26rem] w-[26rem] rounded-full bg-white/[0.05] blur-[120px]"
         aria-hidden="true"
       />
 
@@ -96,7 +96,7 @@ export default async function ContactPage() {
                       aria-hidden="true"
                     />
                   </span>
-                  <p className="mt-5 font-heading text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-sand">
+                  <p className="mt-5 font-heading text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-white">
                     {channel.title}
                   </p>
                   <p className={`${channel.detailClass} mt-1.5 text-sm text-muted`}>
@@ -111,7 +111,7 @@ export default async function ContactPage() {
               <div className="grid gap-7 p-7 min-[480px]:grid-cols-2 sm:grid-cols-1 sm:p-8 lg:grid-cols-2">
                 <div>
                   <p className="inline-flex items-center gap-2.5 font-heading text-lg font-bold uppercase text-white">
-                    <MapPinIcon className="h-5 w-5 text-sand" aria-hidden="true" />
+                    <MapPinIcon className="h-5 w-5 text-white" aria-hidden="true" />
                     Adres
                   </p>
                   <p className="mt-3 text-sm leading-7 text-muted">
@@ -121,7 +121,7 @@ export default async function ContactPage() {
                     href={mapsHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-slide mt-4 inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-sand hover:text-white"
+                    className="link-slide mt-4 inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-[0.08em] text-white hover:text-white"
                   >
                     Yol tarifi al
                     <ArrowRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -129,7 +129,7 @@ export default async function ContactPage() {
                 </div>
                 <div>
                   <p className="inline-flex items-center gap-2.5 font-heading text-lg font-bold uppercase text-white">
-                    <ClockIcon className="h-5 w-5 text-sand" aria-hidden="true" />
+                    <ClockIcon className="h-5 w-5 text-white" aria-hidden="true" />
                     Çalışma saatleri
                   </p>
                   <p className="spec-value mt-3 text-sm leading-7 text-muted">
@@ -172,7 +172,7 @@ export default async function ContactPage() {
                 "Renk ve set önerisi",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-sand/8 text-sand">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/8 text-white">
                     <CheckIcon className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                   {item}

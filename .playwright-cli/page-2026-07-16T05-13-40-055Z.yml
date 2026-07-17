@@ -1,0 +1,168 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - banner [ref=f5e3]:
+      - generic [ref=f5e4]: 6.000+ araç modeli için özel kalıp
+      - generic [ref=f5e11]:
+        - link "OTO POLİK ana sayfa" [ref=f5e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f5e13]:
+            - generic [ref=f5e14]: EVA
+            - generic [ref=f5e15]: PREMIUM
+        - generic [ref=f5e16]:
+          - button "Sepetim, 1 ürün" [ref=f5e17]:
+            - generic [ref=f5e21]: "1"
+          - button "Menüyü aç" [ref=f5e22]
+    - main [ref=f5e24]:
+      - main [ref=f5e25]:
+        - generic [ref=f5e26]:
+          - generic [ref=f5e27]:
+            - generic [ref=f5e28]: Gerçek Uygulamalar
+            - heading "Gerçek Araçlar. Gerçek Uyum." [level=1] [ref=f5e29]
+            - paragraph [ref=f5e30]: 6.000'den fazla araç için ürettiğimiz premium EVA paspasların gerçek araç içi çekimleri. Kaliteyi ve uyumu kendi gözlerinizle görün.
+          - generic [ref=f5e32]:
+            - button "Tümü (353)" [ref=f5e33]
+            - button "Fotoğraflar (343)" [ref=f5e36]
+            - button "Videolar (10)" [ref=f5e40]
+          - generic [ref=f5e44]:
+            - generic [ref=f5e45] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e55] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e65] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e75] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e85] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e95] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e105] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e115] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e125] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e135] [cursor=pointer]: Büyütmek için tıklayın
+            - generic [ref=f5e145] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e147]
+              - generic [ref=f5e148]: Büyütmek için tıklayın
+            - generic [ref=f5e150] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e152]
+              - generic [ref=f5e153]: Büyütmek için tıklayın
+            - generic [ref=f5e155] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e157]
+              - generic [ref=f5e158]: Büyütmek için tıklayın
+            - generic [ref=f5e160] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e162]
+              - generic [ref=f5e163]: Büyütmek için tıklayın
+            - generic [ref=f5e165] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e167]
+              - generic [ref=f5e168]: Büyütmek için tıklayın
+            - generic [ref=f5e170] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e172]
+              - generic [ref=f5e173]: Büyütmek için tıklayın
+            - generic [ref=f5e175] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e177]
+              - generic [ref=f5e178]: Büyütmek için tıklayın
+            - generic [ref=f5e180] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e182]
+              - generic [ref=f5e183]: Büyütmek için tıklayın
+            - generic [ref=f5e185] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e187]
+              - generic [ref=f5e188]: Büyütmek için tıklayın
+            - generic [ref=f5e190] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e192]
+              - generic [ref=f5e193]: Büyütmek için tıklayın
+            - generic [ref=f5e195] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e197]
+              - generic [ref=f5e198]: Büyütmek için tıklayın
+            - generic [ref=f5e200] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e202]
+              - generic [ref=f5e203]: Büyütmek için tıklayın
+            - generic [ref=f5e205] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e207]
+              - generic [ref=f5e208]: Büyütmek için tıklayın
+            - generic [ref=f5e210] [cursor=pointer]:
+              - img "Oto Polik Müşteri Çekimi" [ref=f5e212]
+              - generic [ref=f5e213]: Büyütmek için tıklayın
+          - button "Daha Fazla Göster (329 kalan)" [ref=f5e216]
+        - generic [ref=f5e304]:
+          - generic [ref=f5e305]:
+            - generic [ref=f5e306]: 1 / 353
+            - button "Kapat" [ref=f5e307]
+          - generic [ref=f5e314]:
+            - button "Durdur" [ref=f5e315]
+            - button "Sesi Aç" [ref=f5e320]
+          - paragraph [ref=f5e326]: Görseller arasında geçiş için kaydırın
+    - contentinfo [ref=f5e217]:
+      - generic [ref=f5e220]:
+        - generic [ref=f5e221]:
+          - paragraph [ref=f5e222]: Aracınıza özel üretim
+          - heading "Doğru kalıbı seçin, tarzınızı yola taşıyın." [level=2] [ref=f5e223]
+        - link "Tasarımını başlat" [ref=f5e224] [cursor=pointer]:
+          - /url: /olusturucu
+      - generic [ref=f5e228]:
+        - generic [ref=f5e229]:
+          - link "OTO POLİK ana sayfa" [ref=f5e230] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f5e231]:
+              - generic [ref=f5e232]: EVA
+              - generic [ref=f5e233]: PREMIUM
+          - paragraph [ref=f5e234]: Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler.
+          - generic [ref=f5e235]:
+            - link "Instagram" [ref=f5e236] [cursor=pointer]:
+              - /url: https://instagram.com/otopolik
+            - link "YouTube" [ref=f5e240] [cursor=pointer]:
+              - /url: https://youtube.com/@otopolik
+        - generic [ref=f5e243]:
+          - heading "Keşfet" [level=3] [ref=f5e244]
+          - list [ref=f5e245]:
+            - listitem [ref=f5e246]:
+              - link "Tüm ürünler" [ref=f5e247] [cursor=pointer]:
+                - /url: /urunler
+            - listitem [ref=f5e248]:
+              - link "Paspas tasarla" [ref=f5e249] [cursor=pointer]:
+                - /url: /olusturucu
+            - listitem [ref=f5e250]:
+              - link "Uygulama galerisi" [ref=f5e251] [cursor=pointer]:
+                - /url: /galeri
+            - listitem [ref=f5e252]:
+              - link "Hakkımızda" [ref=f5e253] [cursor=pointer]:
+                - /url: /hakkimizda
+            - listitem [ref=f5e254]:
+              - link "İletişim" [ref=f5e255] [cursor=pointer]:
+                - /url: /iletisim
+        - generic [ref=f5e256]:
+          - heading "Destek" [level=3] [ref=f5e257]
+          - list [ref=f5e258]:
+            - listitem [ref=f5e259]:
+              - link "Kargo ve teslimat" [ref=f5e260] [cursor=pointer]:
+                - /url: /bilgiler/kargo
+            - listitem [ref=f5e261]:
+              - link "İade ve değişim" [ref=f5e262] [cursor=pointer]:
+                - /url: /bilgiler/iade
+            - listitem [ref=f5e263]:
+              - link "Mesafeli satış" [ref=f5e264] [cursor=pointer]:
+                - /url: /bilgiler/mesafeli-satis
+            - listitem [ref=f5e265]:
+              - link "Ön bilgilendirme" [ref=f5e266] [cursor=pointer]:
+                - /url: /bilgiler/on-bilgilendirme
+            - listitem [ref=f5e267]:
+              - link "Gizlilik" [ref=f5e268] [cursor=pointer]:
+                - /url: /bilgiler/gizlilik
+            - listitem [ref=f5e269]:
+              - link "Özel üretim" [ref=f5e270] [cursor=pointer]:
+                - /url: /bilgiler/ozel-uretim
+            - listitem [ref=f5e271]:
+              - link "Sepetim" [ref=f5e272] [cursor=pointer]:
+                - /url: /sepet
+        - generic [ref=f5e273]:
+          - heading "Bize ulaşın" [level=3] [ref=f5e274]
+          - generic [ref=f5e275]:
+            - link "0537 267 26 89" [ref=f5e276] [cursor=pointer]:
+              - /url: tel:05372672689
+            - link "info@otopolik.com" [ref=f5e279] [cursor=pointer]:
+              - /url: mailto:info@otopolik.com
+            - paragraph [ref=f5e283]: İOSB Mah. Sefaköy San. Sit. 7.Blok No:10-12, Başakşehir/İstanbul
+          - link "WhatsApp desteği" [ref=f5e287] [cursor=pointer]:
+            - /url: https://wa.me/905372672689?text=Merhaba%2C%20arac%C4%B1ma%20uygun%20EVA%20paspas%20seti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic [ref=f5e291]:
+        - generic [ref=f5e292]: © 2026 OTO POLİK
+        - generic [ref=f5e293]: İstanbul'da üretilir · Türkiye'ye gönderilir
+    - link:
+      - /url: https://wa.me/905372672689?text=Merhaba%2C%20oto%20paspas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic: Bize yazın
+    - button
+  - button "Open Next.js Dev Tools" [ref=f5e299] [cursor=pointer]
+  - alert [ref=f5e303]

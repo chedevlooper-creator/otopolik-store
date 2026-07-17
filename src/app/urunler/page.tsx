@@ -60,7 +60,7 @@ function buildQuery(params: Params, overrides: Partial<Params>) {
 const FILTER_PILL =
   "rounded-full border px-4 py-2 text-sm font-semibold transition-colors";
 const FIELD =
-  "min-h-12 w-full rounded-xl border border-white/10 bg-surface px-4 text-sm text-white placeholder:text-muted focus:border-sand focus:outline-none focus:ring-2 focus:ring-sand/20";
+  "min-h-12 w-full rounded-xl border border-white/10 bg-surface px-4 text-sm text-white placeholder:text-muted focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all";
 
 function FilterControls({
   idPrefix,
@@ -153,8 +153,8 @@ function FilterControls({
           aria-current={!kategori ? "page" : undefined}
           className={`${FILTER_PILL} ${
             !kategori
-              ? "border-sand bg-surface text-sand"
-              : "border-border text-muted hover:border-sand hover:text-sand"
+              ? "border-white bg-surface text-white"
+              : "border-border text-muted hover:border-white/50 hover:text-white"
           }`}
         >
           Tüm Kategoriler
@@ -166,8 +166,8 @@ function FilterControls({
             aria-current={kategori === category.key ? "page" : undefined}
             className={`${FILTER_PILL} ${
               kategori === category.key
-                ? "border-sand bg-surface text-sand"
-                : "border-border text-muted hover:border-sand hover:text-sand"
+                ? "border-white bg-surface text-white"
+                : "border-border text-muted hover:border-white/50 hover:text-white"
             }`}
           >
             {category.label}
@@ -212,13 +212,13 @@ function VehicleMatches({
           <Link
             key={`${vehicle.brand}-${vehicle.model}`}
             href={vehicle.href}
-            className="group flex min-h-20 items-center gap-3 rounded-xl border border-white/8 bg-background/45 p-3.5 transition-colors hover:border-sand/35 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand"
+            className="group flex min-h-20 items-center gap-3 rounded-xl border border-white/8 bg-background/45 p-3.5 transition-colors hover:border-white/30 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-sand/5 text-sand">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white">
               <CarFrontIcon className="h-5 w-5" aria-hidden="true" />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="spec-value block text-[11px] font-bold uppercase tracking-[0.12em] text-sand">
+              <span className="spec-value block text-[11px] font-bold uppercase tracking-[0.12em] text-white/80">
                 {vehicle.brand}
               </span>
               <span className="mt-0.5 block text-sm font-semibold text-white">
@@ -229,7 +229,7 @@ function VehicleMatches({
               </span>
             </span>
             <ArrowRightIcon
-              className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-sand"
+              className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-white"
               aria-hidden="true"
             />
           </Link>
@@ -303,7 +303,7 @@ export default async function ProductsPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <div className="premium-grid mb-10 overflow-hidden rounded-xl border border-sand/10 bg-surface/55 p-6 sm:p-9">
+      <div className="premium-grid mb-10 overflow-hidden rounded-xl border border-white/10 bg-surface/55 p-6 sm:p-9 shadow-2xl">
         <span className="spec-label">{kicker?.title ?? "Katalog"}</span>
         <h1 className="mt-4 max-w-full break-words font-heading text-3xl font-semibold text-white sm:text-5xl">
           {page?.title ?? "Araca Özel EVA Paspas Setleri"}
@@ -321,7 +321,7 @@ export default async function ProductsPage({
         <summary
           role="button"
           aria-controls="mobile-product-filters"
-          className="btn-press flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand [&::-webkit-details-marker]:hidden"
+          className="btn-press flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white [&::-webkit-details-marker]:hidden"
         >
           <span>
             Ara ve filtrele
@@ -360,13 +360,13 @@ export default async function ProductsPage({
 
       <div className="mb-5 flex items-center justify-between gap-4 text-sm text-muted">
         <span className="spec-value" aria-live="polite">
-          <strong className="text-sand">{filtered.length}</strong>{" "}
+          <strong className="text-white">{filtered.length}</strong>{" "}
           {vehicleMatches.length > 0 ? "uyumlu ürün" : "ürün"} bulundu
         </span>
         {activeFilterCount > 0 && (
           <Link
             href="/urunler"
-            className="inline-flex min-h-11 items-center gap-1 font-semibold text-sand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand"
+            className="inline-flex min-h-11 items-center gap-1 font-semibold text-white/80 hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             Filtreleri temizle
             <XIcon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -389,7 +389,7 @@ export default async function ProductsPage({
           <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/urunler"
-              className="btn-press inline-flex min-h-11 items-center rounded-lg border border-white/10 px-5 text-sm font-semibold text-white hover:border-sand/40"
+              className="btn-press inline-flex min-h-11 items-center rounded-lg border border-white/10 px-5 text-sm font-semibold text-white hover:border-white/40"
             >
               Filtreleri temizle
             </Link>

@@ -123,14 +123,14 @@ export default async function VehicleLandingPage({
         aria-label="Konum"
         className="spec-value mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.14em] text-muted"
       >
-        <Link href="/" className="hover:text-sand">
+        <Link href="/" className="hover:text-white">
           Ana Sayfa
         </Link>
-        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
-        <Link href="/urunler" className="hover:text-sand">
+        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
+        <Link href="/urunler" className="hover:text-white">
           Ürünler
         </Link>
-        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
+        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
         <span className="text-foreground">
           {vehicle.brand} {vehicle.model}
         </span>
@@ -143,7 +143,7 @@ export default async function VehicleLandingPage({
           <span className="spec-label">Araca özel üretim</span>
           <h1 className="mt-4 font-heading text-4xl font-bold leading-[0.94] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
             <span className="block">{vehicle.brand}</span>
-            <span className="block mt-1 text-sand">{vehicle.model}</span>
+            <span className="block mt-1 text-white">{vehicle.model}</span>
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
             {content.subtitle}
@@ -151,14 +151,14 @@ export default async function VehicleLandingPage({
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <div className="flex items-baseline gap-2">
-              <span className="spec-value text-3xl font-semibold text-sand">
+              <span className="spec-value text-3xl font-semibold text-white">
                 {formatPrice(content.price)}
               </span>
               <span className="text-sm text-muted">başlangıç</span>
             </div>
             <div className="h-6 w-px bg-border" aria-hidden="true" />
             <div className="flex items-center gap-2 text-sm text-muted">
-              <TruckIcon className="h-4 w-4 text-sand" aria-hidden="true" />
+              <TruckIcon className="h-4 w-4 text-white" aria-hidden="true" />
               {shippingCost === 0
                 ? "Ücretsiz kargo"
                 : `Kargo: ${formatPrice(shippingCost)}`}
@@ -200,7 +200,7 @@ export default async function VehicleLandingPage({
                 key={index}
                 className="premium-card flex items-start gap-4 rounded-2xl p-5 transition-all duration-300 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-sand">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <p className="text-sm leading-relaxed text-foreground/85">
@@ -228,12 +228,12 @@ export default async function VehicleLandingPage({
               key={tier.label}
               className={`relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
                 tier.isPopular
-                  ? "border-sand/40 bg-gradient-to-b from-sand/[0.06] to-transparent shadow-[0_20px_60px_rgba(255,255,255,0.08)]"
+                  ? "border-white/40 bg-gradient-to-b from-white/[0.06] to-transparent shadow-[0_20px_60px_rgba(255,255,255,0.08)]"
                   : "border-border bg-surface/50 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
               }`}
             >
               {tier.isPopular && (
-                <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1.5 rounded-full bg-sand px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-background">
+                <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-background">
                   <StarIcon className="h-3 w-3" aria-hidden="true" />
                   En çok tercih edilen
                 </span>
@@ -245,7 +245,7 @@ export default async function VehicleLandingPage({
                 {tier.description}
               </p>
               <p className="mt-4">
-                <span className="spec-value text-2xl font-semibold text-sand">
+                <span className="spec-value text-2xl font-semibold text-white">
                   {formatPrice(tier.price)}
                 </span>
               </p>
@@ -315,7 +315,7 @@ export default async function VehicleLandingPage({
             >
               <summary className="flex cursor-pointer list-none items-center justify-between p-6 font-heading text-lg font-bold text-white [&::-webkit-details-marker]:hidden">
                 {faq.q}
-                <PlusIcon className="h-5 w-5 shrink-0 text-sand transition-transform duration-200 group-open:rotate-45" />
+                <PlusIcon className="h-5 w-5 shrink-0 text-white transition-transform duration-200 group-open:rotate-45" />
               </summary>
               <div className="px-6 pb-6">
                 <p className="leading-relaxed text-muted">{faq.a}</p>
@@ -338,7 +338,7 @@ export default async function VehicleLandingPage({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={`/olusturucu?marka=${encodeURIComponent(vehicle.brand)}&model=${encodeURIComponent(vehicle.model)}`}
-              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-white px-8 text-sm font-bold text-background shadow-xl shadow-black/20 hover:bg-sand"
+              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-white px-8 text-sm font-bold text-background shadow-xl shadow-black/20 hover:bg-white"
             >
               Tasarlamaya Başla
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />

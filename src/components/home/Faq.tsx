@@ -24,12 +24,12 @@ export default function Faq({ header, sidebar, items, whatsappHref }: Props) {
       : "Sık sorulanlar";
 
   return (
-    <section className="home-section relative overflow-hidden border-t border-white/[0.04]">
+    <section id="sss" className="home-section relative overflow-hidden border-t border-white/[0.04]">
       <div
         className="pointer-events-none absolute bottom-[-14rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-brand-red/[0.03] blur-[140px]"
         aria-hidden="true"
       />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+      <div className="relative mx-auto grid max-w-screen-2xl 2xl:px-8 gap-12 px-4 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
         <div>
           {eyebrow ? <span className="section-kicker">{eyebrow}</span> : null}
           <h2 className={`section-title ${eyebrow ? "mt-6" : ""}`}>
@@ -41,10 +41,10 @@ export default function Faq({ header, sidebar, items, whatsappHref }: Props) {
                 key={faq.q}
                 className="group overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] transition-all duration-300 open:border-white/[0.14] open:bg-white/[0.035]"
               >
-                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-sm font-semibold text-white transition-colors hover:text-sand [&::-webkit-details-marker]:hidden">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-sm font-semibold text-white transition-colors hover:text-white [&::-webkit-details-marker]:hidden">
                   {faq.q}
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 group-open:border-brand-red/30 group-open:bg-brand-red/[0.08]">
-                    <PlusIcon className="h-4 w-4 text-sand transition-transform duration-300 group-open:rotate-45 group-open:text-brand-red" aria-hidden="true" />
+                    <PlusIcon className="h-4 w-4 text-white transition-transform duration-300 group-open:rotate-45 group-open:text-brand-red" aria-hidden="true" />
                   </span>
                 </summary>
                 <p className="border-t border-white/[0.06] px-6 py-5 text-sm leading-7 text-white/55">
@@ -56,7 +56,7 @@ export default function Faq({ header, sidebar, items, whatsappHref }: Props) {
         </div>
 
         <div className="lg:pt-8">
-          <div className="mac-glass sticky top-24 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0b0b0b]/92 p-7 sm:p-8">
+          <div className="mac-glass sticky top-24 overflow-hidden rounded-2xl border border-white/[0.04] bg-[#000000]/92 p-7 sm:p-8">
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#25D366]/20 bg-[#25D366]/[0.06] text-[#68e99a]">
               <MessageCircleIcon className="h-6 w-6" aria-hidden="true" />
             </div>
@@ -77,7 +77,7 @@ export default function Faq({ header, sidebar, items, whatsappHref }: Props) {
                   ]
               ).map((item) => (
                 <li key={item} className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-sand/8 text-sand">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/8 text-white">
                     <CheckIcon className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                   {item}

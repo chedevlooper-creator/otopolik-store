@@ -18,21 +18,27 @@ import {
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
-const PAGE_LINKS = [
-  { href: "/urunler", label: "Tüm ürünler" },
-  { href: "/olusturucu", label: "Paspas tasarla" },
-  { href: "/galeri", label: "Uygulama galerisi" },
+const KURUMSAL_LINKS = [
   { href: "/hakkimizda", label: "Hakkımızda" },
   { href: "/iletisim", label: "İletişim" },
+  { href: "/#sss", label: "S.S.S." },
+  { href: "/bilgiler/gizlilik", label: "Gizlilik Politikası" },
 ];
 
-const INFO_LINKS = [
-  { href: "/bilgiler/kargo", label: "Kargo ve teslimat" },
-  { href: "/bilgiler/iade", label: "İade ve değişim" },
-  { href: "/bilgiler/mesafeli-satis", label: "Mesafeli satış" },
-  { href: "/bilgiler/on-bilgilendirme", label: "Ön bilgilendirme" },
-  { href: "/bilgiler/gizlilik", label: "Gizlilik" },
-  { href: "/bilgiler/ozel-uretim", label: "Özel üretim" },
+const URUNLER_LINKS = [
+  { href: "/urunler", label: "Paspas Modelleri" },
+  { href: "/olusturucu", label: "Paspas Tasarla" },
+  { href: "/#renkler", label: "Renk Seçenekleri" },
+  { href: "/#ozellikler", label: "Özellikler" },
+  { href: "/galeri", label: "Uygulama Galerisi" },
+];
+
+const DESTEK_LINKS = [
+  { href: "/bilgiler/kargo", label: "Kargo ve Teslimat" },
+  { href: "/bilgiler/iade", label: "İade ve Değişim" },
+  { href: "/bilgiler/mesafeli-satis", label: "Mesafeli Satış" },
+  { href: "/bilgiler/on-bilgilendirme", label: "Ön Bilgilendirme" },
+  { href: "/bilgiler/ozel-uretim", label: "Özel Üretim" },
   { href: "/sepet", label: "Sepetim" },
 ];
 
@@ -46,9 +52,9 @@ export default function Footer() {
   const footer = cms.footer;
 
   return (
-    <footer className="border-t border-white/[0.07] bg-[#030303] text-white">
-      <div className="mx-auto max-w-7xl px-4 pt-6">
-        <div className="relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[#161616] via-[#0f0f0f] to-[#060606] px-6 py-8 shadow-[0_30px_90px_rgba(0,0,0,.28)] sm:px-9 sm:py-10">
+    <footer className="border-t border-white/[0.02] bg-[#000000] text-white">
+      <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 pt-6">
+        <div className="relative overflow-hidden rounded-xl border border-white/[0.02] bg-[#000000] px-6 py-8 sm:px-9 sm:py-10">
           <div className="premium-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
           <div className="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full bg-white/[0.03] blur-[90px]" aria-hidden="true" />
           <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -71,8 +77,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_.75fr_.75fr_1fr] lg:gap-12">
+      <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 py-12 sm:py-16">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_.6fr_.65fr_.65fr_1fr] lg:gap-10">
           <div>
             <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
             <p className="mt-4 max-w-sm text-sm leading-7 text-white/50">
@@ -89,37 +95,46 @@ export default function Footer() {
             </nav>
           </div>
 
-          <nav aria-labelledby="footer-explore-title">
-            <h3 id="footer-explore-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Keşfet</h3>
+          <nav aria-labelledby="footer-corporate-title">
+            <h3 id="footer-corporate-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Kurumsal</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
-              {PAGE_LINKS.map((item) => (
+              {KURUMSAL_LINKS.map((item) => (
+                <li key={item.href}><Link href={item.href} className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-products-title">
+            <h3 id="footer-products-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Ürünler</h3>
+            <ul className="mt-3 space-y-0.5 text-sm">
+              {URUNLER_LINKS.map((item) => (
                 <li key={item.href}><Link href={item.href} className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
               ))}
             </ul>
           </nav>
 
           <nav aria-labelledby="footer-support-title">
-            <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand/80">Destek</h3>
+            <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Destek</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
-              {INFO_LINKS.map((item) => (
+              {DESTEK_LINKS.map((item) => (
                 <li key={item.href}><Link href={item.href} className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
               ))}
             </ul>
           </nav>
 
           <section aria-labelledby="footer-contact-title">
-            <h3 id="footer-contact-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-sand">Bize ulaşın</h3>
+            <h3 id="footer-contact-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">Bize ulaşın</h3>
             <address className="mt-3 not-italic text-sm text-white/65">
               <a href={`tel:${settings.phoneDisplay.replace(/\s/g, "")}`} className="link-slide-reverse flex min-h-11 items-center gap-3 text-white/65 hover:text-white">
-                <PhoneIcon className="h-4 w-4 shrink-0 text-sand transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+                <PhoneIcon className="h-4 w-4 shrink-0 text-white transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
                 {settings.phoneDisplay}
               </a>
               <a href={`mailto:${settings.email}`} className="link-slide-reverse flex min-h-11 items-center gap-3 text-white/65 hover:text-white">
-                <MailIcon className="h-4 w-4 shrink-0 text-sand" aria-hidden="true" />
+                <MailIcon className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
                 {settings.email}
               </a>
               <p className="mt-2 flex items-start gap-3 leading-6">
-                <MapPinIcon className="mt-1 h-4 w-4 shrink-0 text-sand/80" aria-hidden="true" />
+                <MapPinIcon className="mt-1 h-4 w-4 shrink-0 text-white/80" aria-hidden="true" />
                 {settings.address}
               </p>
             </address>
@@ -132,7 +147,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/[0.04]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-[10px] uppercase tracking-[0.12em] text-white/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex max-w-screen-2xl 2xl:px-8 flex-col gap-2 px-4 py-5 text-[10px] uppercase tracking-[0.12em] text-white/40 sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} {cms.seo.siteName}</span>
           <span>{footer?.subtitle ?? "İstanbul'da üretilir · Türkiye'ye gönderilir"}</span>
         </div>

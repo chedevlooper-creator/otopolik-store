@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import MatConfigurator from "@/components/configurator/MatConfigurator";
 import { getContentPage } from "@/lib/cms";
 
@@ -26,7 +26,7 @@ export default async function ConfiguratorPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:py-16">
-      <div className="mb-10 max-w-3xl border border-white/10 bg-[#0a0c12] p-6 sm:p-9">
+      <div className="mb-10 max-w-3xl border border-white/[0.04] bg-transparent p-6 sm:p-9">
         <span className="section-kicker">{kicker?.title ?? "Online paspas oluşturucu"}</span>
         <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
           {page?.title ?? "Kendi paspasını tasarla"}

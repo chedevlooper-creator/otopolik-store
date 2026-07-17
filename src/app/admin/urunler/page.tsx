@@ -442,7 +442,7 @@ export default function AdminUrunler() {
                   <div className="flex items-center gap-2 self-end sm:self-auto">
                     <Link
                       href={`/urunler/${p.slug}`}
-                      className="inline-flex h-9 items-center gap-1 border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:border-sand hover:text-white"
+                      className="inline-flex h-9 items-center gap-1 border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:border-white hover:text-white"
                     >
                       <ExternalLinkIcon className="h-3.5 w-3.5" aria-hidden="true" />
                       Önizle
@@ -450,7 +450,7 @@ export default function AdminUrunler() {
                     <button
                       type="button"
                       onClick={() => openEdit(p)}
-                      className="inline-flex h-9 w-9 items-center justify-center border border-border bg-background text-foreground transition-colors hover:border-sand hover:text-white"
+                      className="inline-flex h-9 w-9 items-center justify-center border border-border bg-background text-foreground transition-colors hover:border-white hover:text-white"
                       aria-label="Düzenle"
                     >
                       <PencilIcon className="h-4 w-4" aria-hidden="true" />
@@ -551,7 +551,7 @@ function ProductFormModal({
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               onBlur={() => !isEdit && autoSlugFromName()}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground">
@@ -561,7 +561,7 @@ function ProductFormModal({
               value={form.slug}
               onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
               disabled={isEdit}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-sand focus:outline-none disabled:opacity-50"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-white focus:outline-none disabled:opacity-50"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground">
@@ -571,7 +571,7 @@ function ProductFormModal({
               onChange={(e) =>
                 setForm((f) => ({ ...f, category: e.target.value }))
               }
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             >
               {CATEGORIES.map((c) => (
                 <option key={c.key} value={c.key}>
@@ -585,7 +585,7 @@ function ProductFormModal({
             <input
               value={form.brand}
               onChange={(e) => setForm((f) => ({ ...f, brand: e.target.value }))}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground">
@@ -593,7 +593,7 @@ function ProductFormModal({
             <input
               value={form.model}
               onChange={(e) => setForm((f) => ({ ...f, model: e.target.value }))}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground">
@@ -607,7 +607,7 @@ function ProductFormModal({
               onChange={(e) =>
                 setForm((f) => ({ ...f, price: Number(e.target.value) }))
               }
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground">
@@ -624,7 +624,7 @@ function ProductFormModal({
                     e.target.value === "" ? null : Number(e.target.value),
                 }))
               }
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground sm:col-span-2">
@@ -633,7 +633,7 @@ function ProductFormModal({
               value={form.image}
               onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
               placeholder="/media/products/..."
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
             <ImageUploadButton
               onUploaded={(url) => setForm((f) => ({ ...f, image: url }))}
@@ -651,7 +651,7 @@ function ProductFormModal({
                 setForm((f) => ({ ...f, galleryText: e.target.value }))
               }
               rows={3}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 font-mono text-sm text-foreground focus:border-white focus:outline-none"
             />
             <ImageUploadButton
               onUploaded={(url) =>
@@ -792,7 +792,7 @@ function ProductFormModal({
                   ],
                 }))
               }
-              className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-sand hover:text-white"
+              className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-white hover:text-white"
             >
               <PlusIcon className="h-3.5 w-3.5" />
               Renk ekle
@@ -806,7 +806,7 @@ function ProductFormModal({
                 setForm((f) => ({ ...f, description: e.target.value }))
               }
               rows={3}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground sm:col-span-2">
@@ -817,7 +817,7 @@ function ProductFormModal({
                 setForm((f) => ({ ...f, featuresText: e.target.value }))
               }
               rows={4}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="block text-sm font-semibold text-foreground sm:col-span-2">
@@ -825,7 +825,7 @@ function ProductFormModal({
             <input
               value={form.badge}
               onChange={(e) => setForm((f) => ({ ...f, badge: e.target.value }))}
-              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-sand focus:outline-none"
+              className="mt-1.5 w-full border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-white focus:outline-none"
             />
           </label>
           <label className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
@@ -1021,7 +1021,7 @@ function BuiltInProducts() {
           <div className="flex items-center gap-2 self-end sm:self-auto">
             <Link
               href={`/urunler/${p.slug}`}
-              className="inline-flex h-9 items-center gap-1 border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:border-sand hover:text-white"
+              className="inline-flex h-9 items-center gap-1 border border-border bg-background px-3 text-xs font-semibold text-foreground transition-colors hover:border-white hover:text-white"
             >
               <ExternalLinkIcon className="h-3.5 w-3.5" aria-hidden="true" />
               Önizle

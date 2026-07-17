@@ -1,0 +1,555 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]: 6.000+ araç modeli için özel kalıp
+      - generic [ref=e12]:
+        - link "OTO POLİK ana sayfa" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e14]:
+            - generic [ref=e15]: EVA
+            - generic [ref=e16]: PREMIUM
+        - generic [ref=e25]:
+          - button "Sepetim" [ref=e34]
+          - button "Menüyü aç" [ref=e818]
+    - main [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e47]:
+          - generic [ref=e48]: Araca Özel Kalıp • Premium EVA • 1-3 Günde Kargo
+          - heading "Aracınızın Zeminine Kusursuz Uyum." [level=1] [ref=e51]:
+            - generic [ref=e52]: Aracınızın Zeminine
+            - generic [ref=e53]: Kusursuz Uyum.
+          - paragraph [ref=e55]: Premium EVA teknolojisi ile üretilen, her araca özel tasarlanmış havuzlu paspaslar.
+          - generic [ref=e56]:
+            - link "ARACINI SEÇ" [ref=e57] [cursor=pointer]:
+              - /url: /olusturucu
+            - link "KOLEKSİYONU KEŞFET" [ref=e60] [cursor=pointer]:
+              - /url: /urunler
+        - generic [ref=e75]:
+          - generic [ref=e81]:
+            - heading "SU GEÇİRMEZ" [level=4] [ref=e82]
+            - paragraph [ref=e83]: Sıvıyı yüzeyde tutar, aracınızı korur.
+          - generic [ref=e89]:
+            - heading "KAYMAZ YÜZEY" [level=4] [ref=e90]
+            - paragraph [ref=e91]: Araç zeminine tam oturur, kayma yapmaz.
+          - generic [ref=e97]:
+            - heading "KOLAY TEMİZLİK" [level=4] [ref=e98]
+            - paragraph [ref=e99]: Tek yıkamada ilk günkü gibi.
+          - generic [ref=e105]:
+            - heading "KOKUSUZ EVA" [level=4] [ref=e106]
+            - paragraph [ref=e107]: Sağlığa zararsız, koku yapmaz.
+          - generic [ref=e113]:
+            - heading "UZUN ÖMÜRLÜ" [level=4] [ref=e114]
+            - paragraph [ref=e115]: Aşınmaya karşı dayanıklı özel malzeme.
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e121]: ARACINI SEÇ
+              - heading "Her Araca Özel Üretim" [level=2] [ref=e122]
+              - paragraph [ref=e123]: Marka, model ve yılı seçerek aracınıza özel paspasları görüntüleyin.
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - button "MERCEDES" [ref=e126]
+                - button "BMW" [ref=e133]
+                - button "AUDI" [ref=e140]
+                - button "TOYOTA" [ref=e148]
+                - button "HONDA" [ref=e155]
+                - button "Jeep JEEP" [ref=e161]:
+                  - generic [ref=e162]: Jeep
+                  - generic [ref=e164]: JEEP
+                - button "FORD" [ref=e165]:
+                  - img [ref=e167]:
+                    - generic [ref=e170]: Ford
+                - button "HYUNDAI" [ref=e172]
+              - button "Markaları Kaydır" [ref=e178]
+          - generic [ref=e181]:
+            - generic [ref=e182]:
+              - img "Mercedes-Benz iç mekân paspas uygulaması" [ref=e183]
+              - generic [ref=e185]: GERÇEK ARAÇ İÇİ GÖRÜNÜMÜ
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - paragraph [ref=e188]: KİŞİSELLEŞTİR
+                - heading "Paspasını Kişiselleştir" [level=3] [ref=e189]
+                - generic [ref=e190]:
+                  - generic [ref=e191]:
+                    - generic [ref=e192]: Marka
+                    - combobox [ref=e193]:
+                      - option "Alfa Romeo"
+                      - option "Audi"
+                      - option "BMW"
+                      - option "BYD"
+                      - option "Chery"
+                      - option "Chevrolet"
+                      - option "Citroen"
+                      - option "Cupra"
+                      - option "DS Automobiles"
+                      - option "Dacia"
+                      - option "Fiat"
+                      - option "Ford"
+                      - option "Honda"
+                      - option "Hyundai"
+                      - option "Isuzu"
+                      - option "Jaecoo"
+                      - option "Jaguar"
+                      - option "Jeep"
+                      - option "Kia"
+                      - option "Land Rover"
+                      - option "Lexus"
+                      - option "MG"
+                      - option "MINI"
+                      - option "Mazda"
+                      - option "Mercedes-Benz" [selected]
+                      - option "Mitsubishi"
+                      - option "Nissan"
+                      - option "Opel"
+                      - option "Peugeot"
+                      - option "Porsche"
+                      - option "Renault"
+                      - option "Seat"
+                      - option "Skoda"
+                      - option "SsangYong"
+                      - option "Subaru"
+                      - option "Suzuki"
+                      - option "Tesla"
+                      - option "Tofaş"
+                      - option "Togg"
+                      - option "Toyota"
+                      - option "Volkswagen"
+                      - option "Volvo"
+                  - generic [ref=e194]:
+                    - generic [ref=e195]: Model
+                    - combobox [ref=e196]:
+                      - option "A Serisi Hatchback" [selected]
+                      - option "A Serisi Sedan"
+                      - option "B Serisi MPV"
+                      - option "C Serisi Cabrio"
+                      - option "C Serisi Coupe"
+                      - option "C Serisi Sedan"
+                      - option "C Serisi Station Wagon"
+                      - option "Citan Van"
+                      - option "CLA Coupe"
+                      - option "CLS Coupe"
+                      - option "E Serisi Cabrio"
+                      - option "E Serisi Coupe"
+                      - option "E Serisi Sedan"
+                      - option "E Serisi Station Wagon"
+                      - option "EQA SUV"
+                      - option "EQB SUV"
+                      - option "EQC SUV"
+                      - option "EQE Sedan"
+                      - option "EQE SUV SUV"
+                      - option "EQS Sedan"
+                      - option "EQS SUV SUV"
+                      - option "EQV MPV"
+                      - option "G Serisi SUV"
+                      - option "GLA SUV"
+                      - option "GLB SUV"
+                      - option "GLC Coupe"
+                      - option "GLC SUV"
+                      - option "GLE Coupe"
+                      - option "GLE SUV"
+                      - option "GLK SUV"
+                      - option "GLS SUV"
+                      - option "ML SUV"
+                      - option "R Serisi MPV"
+                      - option "S Serisi Sedan"
+                      - option "SLC Roadster"
+                      - option "SLK Roadster"
+                      - option "T Serisi MPV"
+                      - option "V Serisi MPV"
+                      - option "X-Class Pickup"
+                  - generic [ref=e197]:
+                    - generic [ref=e198]: Yıl
+                    - combobox [ref=e199]:
+                      - option "2020 - 2024" [selected]
+                      - option "2015 - 2019"
+                      - option "2010 - 2014"
+                      - option "2005 - 2009"
+                  - generic [ref=e200]:
+                    - generic [ref=e201]: Renk
+                    - combobox [ref=e202]:
+                      - option "Siyah" [selected]
+                      - option "Gri"
+                      - option "Bej"
+                      - option "Kırmızı"
+                      - option "Mavi"
+                      - option "Beyaz"
+              - button "SEPETE EKLE" [ref=e203]
+            - generic [ref=e207]:
+              - img "Siyah kenarlı EVA paspas seti" [ref=e210]
+              - generic [ref=e211]: 360°
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - heading "ÜCRETSİZ KARGO" [level=4] [ref=e221]
+              - paragraph [ref=e222]: Tüm Türkiye'ye Ücretsiz Gönderim
+            - generic [ref=e223]:
+              - heading "%100 MÜŞTERI MEMNUNİYETİ" [level=4] [ref=e228]
+              - paragraph [ref=e229]: Binlerce Mutlu Müşteri
+            - generic [ref=e230]:
+              - heading "GÜVENLİ ÖDEME" [level=4] [ref=e234]
+              - paragraph [ref=e235]: SSL ile Korumalı Alışveriş ve Kapıda Ödeme
+            - generic [ref=e236]:
+              - heading "KOLAY İADE" [level=4] [ref=e241]
+              - paragraph [ref=e242]: 14 Gün Koşulsuz İade Hakkı
+        - generic [ref=e243]:
+          - generic [ref=e244]:
+            - generic [ref=e245]: RENK SEÇENEKLERİ
+            - heading "Tarzınıza Uygun Rengi Seçin" [level=2] [ref=e246]
+            - generic [ref=e247]:
+              - button "Siyah" [ref=e248]
+              - button "Gri" [ref=e253]
+              - button "Bej" [ref=e256]
+              - button "Kırmızı" [ref=e259]
+              - button "Mavi" [ref=e262]
+              - button "Beyaz" [ref=e265]
+          - generic [ref=e268]:
+            - img "EVA Premium mat önizleme" [ref=e274]
+            - generic [ref=e275]:
+              - text: "SEÇİLİ RENK:"
+              - generic [ref=e276]: Siyah KENAR
+          - generic [ref=e277]:
+            - button "3D BAKIŞ" [ref=e278]
+            - button "YAKINLAŞTIR" [ref=e284]
+        - generic [ref=e291]:
+          - generic [ref=e292]:
+            - generic [ref=e293]:
+              - text: PASPAS KARŞILAŞTIRMASI
+              - heading "Geleneksel vs. Premium EVA" [level=2] [ref=e294]
+            - paragraph [ref=e295]: Hücresel EVA yapısı, çamur, sıvı ve tozu haznelerinde tutarak zemine geçişini engeller. Temizliği son derece kolaydır.
+          - generic [ref=e296]:
+            - generic [ref=e297]:
+              - paragraph [ref=e298]: STANDART HALI/KAUÇUK PASPAS
+              - list [ref=e299]:
+                - listitem [ref=e300]:
+                  - generic [ref=e301]: ✕
+                  - generic [ref=e302]: Suyu ve çamuru emer, koku yapar.
+                - listitem [ref=e303]:
+                  - generic [ref=e304]: ✕
+                  - generic [ref=e305]: Temizlenmesi zordur, geç kurur.
+                - listitem [ref=e306]:
+                  - generic [ref=e307]: ✕
+                  - generic [ref=e308]: Zamanla yırtılır, aşınır ve formunu kaybeder.
+                - listitem [ref=e309]:
+                  - generic [ref=e310]: ✕
+                  - generic [ref=e311]: Alt zemine sıvı sızdırır, paslanma yapabilir.
+            - generic [ref=e312]:
+              - img "Temiz premium EVA paspas" [ref=e313]
+              - img "Kirlenmiş standart kauçuk paspas" [ref=e315]
+              - generic [ref=e317]: ↔
+              - slider "Standart paspas ile EVA paspas karşılaştırması" [ref=e319]: "50"
+              - generic:
+                - generic: Geleneksel Paspas
+                - generic: EVA Premium
+            - generic [ref=e320]:
+              - paragraph [ref=e321]: EVA PREMIUM PASPAS
+              - list [ref=e322]:
+                - listitem [ref=e323]:
+                  - generic [ref=e324]: ✓
+                  - generic [ref=e325]: Sıvı ve kiri tutar, koku yapmaz.
+                - listitem [ref=e326]:
+                  - generic [ref=e327]: ✓
+                  - generic [ref=e328]: Sadece suyla sallayarak saniyeler içinde temizlenir.
+                - listitem [ref=e329]:
+                  - generic [ref=e330]: ✓
+                  - generic [ref=e331]: Çift katmanlı yüksek mukavemetli elastik yapı.
+                - listitem [ref=e332]:
+                  - generic [ref=e333]: ✓
+                  - generic [ref=e334]: Birebir kalıbıyla kaymaz, alt zemini tamamen korur.
+        - generic [ref=e335]:
+          - generic [ref=e337]:
+            - text: PASPASIN ARAÇ İÇİ GÖRÜNÜMÜ
+            - heading "Gerçek Müşteri Uygulamaları" [level=2] [ref=e338]
+          - generic [ref=e342]:
+            - figure "Mercedes-Benz Uygulaması" [ref=e343]:
+              - img "Mercedes-Benz EVA paspas uygulama fotoğrafı" [ref=e344]
+            - figure "Peugeot Uygulaması" [ref=e347]:
+              - img "Peugeot EVA paspas uygulama fotoğrafı" [ref=e348]
+            - figure "Jeep Uygulaması" [ref=e351]:
+              - img "Jeep EVA paspas uygulama fotoğrafı" [ref=e352]
+            - figure "BMW Uygulaması" [ref=e355]:
+              - img "BMW EVA paspas uygulama fotoğrafı" [ref=e356]
+            - figure "Audi Uygulaması" [ref=e359]:
+              - img "Audi EVA paspas uygulama fotoğrafı" [ref=e360]
+          - link "DAHA FAZLA GÖRSEL" [ref=e364] [cursor=pointer]:
+            - /url: /galeri
+      - generic [ref=e368]:
+        - generic [ref=e369]: 1.500₺ üzeri ücretsiz kargo
+        - generic [ref=e371]: Araca özel milimetrik kalıp
+        - generic [ref=e373]: Su ile kolay temizlik
+        - generic [ref=e375]: Sipariş öncesi uyumluluk onayı
+        - generic [ref=e377]: Kokusuz premium EVA
+        - generic [ref=e379]: 1.500₺ üzeri ücretsiz kargo
+        - generic [ref=e381]: Araca özel milimetrik kalıp
+        - generic [ref=e383]: Su ile kolay temizlik
+        - generic [ref=e385]: Sipariş öncesi uyumluluk onayı
+        - generic [ref=e387]: Kokusuz premium EVA
+      - generic [ref=e390]:
+        - generic [ref=e392]:
+          - generic [ref=e393]:
+            - generic [ref=e394]: Öne çıkan ürünler
+            - heading "Aracınıza yakışan koruma" [level=2] [ref=e395]
+            - paragraph [ref=e396]: Araca özel paspas setinden bagaj düzenine kadar, aynı malzeme disipliniyle üretilen üç temel çözüm.
+          - link "Tüm ürünleri gör" [ref=e397] [cursor=pointer]:
+            - /url: /urunler
+        - generic [ref=e400]:
+          - link "Eva Oto Paspas Seti Çok Satan %22 avantaj 3D EVA Paspas Üretime hazır Eva Oto Paspas Seti Araca özel CNC kesim, milimetrik uyum ₺3.500 ₺4.500 KDV dahil fiyat Mevcut renk seçenekleri" [ref=e402] [cursor=pointer]:
+            - /url: /urunler/eva-oto-paspas-seti
+            - generic [ref=e403]:
+              - img "Eva Oto Paspas Seti" [ref=e406]
+              - generic [ref=e408]:
+                - generic [ref=e409]: Çok Satan
+                - generic [ref=e410]: "%22 avantaj"
+            - generic [ref=e415]:
+              - generic [ref=e416]:
+                - generic [ref=e417]: 3D EVA Paspas
+                - generic [ref=e418]: Üretime hazır
+              - heading "Eva Oto Paspas Seti" [level=3] [ref=e421]
+              - paragraph [ref=e422]: Araca özel CNC kesim, milimetrik uyum
+              - generic [ref=e423]:
+                - generic [ref=e424]:
+                  - generic [ref=e425]:
+                    - generic [ref=e426]: ₺3.500
+                    - generic [ref=e427]: ₺4.500
+                  - paragraph [ref=e428]: KDV dahil fiyat
+                - generic "Mevcut renk seçenekleri" [ref=e429]:
+                  - generic "Siyah" [ref=e430]
+                  - generic "Gri" [ref=e431]
+                  - generic "Bej" [ref=e432]
+          - link "Eva Oto Bagaj Havuzu Yeni %30 avantaj Bagaj Havuzu Üretime hazır Eva Oto Bagaj Havuzu Araca özel üretim — 6000'den fazla model için kalıp ₺1.750 ₺2.500 KDV dahil fiyat Mevcut renk seçenekleri" [ref=e434] [cursor=pointer]:
+            - /url: /urunler/eva-oto-bagaj-havuzu
+            - generic [ref=e435]:
+              - img "Eva Oto Bagaj Havuzu" [ref=e438]
+              - generic [ref=e440]:
+                - generic [ref=e441]: Yeni
+                - generic [ref=e442]: "%30 avantaj"
+            - generic [ref=e447]:
+              - generic [ref=e448]:
+                - generic [ref=e449]: Bagaj Havuzu
+                - generic [ref=e450]: Üretime hazır
+              - heading "Eva Oto Bagaj Havuzu" [level=3] [ref=e453]
+              - paragraph [ref=e454]: Araca özel üretim — 6000'den fazla model için kalıp
+              - generic [ref=e455]:
+                - generic [ref=e456]:
+                  - generic [ref=e457]:
+                    - generic [ref=e458]: ₺1.750
+                    - generic [ref=e459]: ₺2.500
+                  - paragraph [ref=e460]: KDV dahil fiyat
+                - generic "Mevcut renk seçenekleri" [ref=e461]:
+                  - generic "Siyah" [ref=e462]
+                  - generic "Gri" [ref=e463]
+                  - generic "Bej" [ref=e464]
+          - link "Eva Bagaj Çantası Fırsat %36 avantaj Bagaj Çantası Üretime hazır Eva Bagaj Çantası Dayanıklı EVA malzeme ₺899 ₺1.399 KDV dahil fiyat Detayları gör" [ref=e466] [cursor=pointer]:
+            - /url: /urunler/eva-bagaj-cantasi
+            - generic [ref=e467]:
+              - img "Eva Bagaj Çantası" [ref=e471]
+              - generic [ref=e473]:
+                - generic [ref=e474]: Fırsat
+                - generic [ref=e475]: "%36 avantaj"
+            - generic [ref=e480]:
+              - generic [ref=e481]:
+                - generic [ref=e482]: Bagaj Çantası
+                - generic [ref=e483]: Üretime hazır
+              - heading "Eva Bagaj Çantası" [level=3] [ref=e486]
+              - paragraph [ref=e487]: Dayanıklı EVA malzeme
+              - generic [ref=e488]:
+                - generic [ref=e489]:
+                  - generic [ref=e490]:
+                    - generic [ref=e491]: ₺899
+                    - generic [ref=e492]: ₺1.399
+                  - paragraph [ref=e493]: KDV dahil fiyat
+                - generic [ref=e494]: Detayları gör
+      - generic [ref=e496]:
+        - generic [ref=e498]:
+          - generic [ref=e499]:
+            - generic [ref=e500]: Size özel üretim
+            - heading "Üç adımda kusursuz uyum" [level=2] [ref=e501]
+          - link "Tasarlamaya başla" [ref=e502] [cursor=pointer]:
+            - /url: /olusturucu
+        - generic [ref=e505]:
+          - article [ref=e508]:
+            - generic [ref=e509]: "01"
+            - generic [ref=e510]: ADIM 01
+            - heading "Aracını seç" [level=3] [ref=e516]
+            - paragraph [ref=e517]: Marka, model ve model yılını seç; aracına özel kalıbı saniyeler içinde bul.
+          - article [ref=e521]:
+            - generic [ref=e522]: "02"
+            - generic [ref=e523]: ADIM 02
+            - heading "Tarzını belirle" [level=3] [ref=e532]
+            - paragraph [ref=e533]: Taban ve kenar rengini eşleştir, aracının iç mekânına özel kombinasyonunu oluştur.
+          - article [ref=e537]:
+            - generic [ref=e538]: "03"
+            - generic [ref=e539]: ADIM 03
+            - heading "Üretime gönder" [level=3] [ref=e547]
+            - paragraph [ref=e548]: Uyumluluğu birlikte teyit edelim; setin 1-3 iş günü içinde kargoya çıksın.
+      - generic [ref=e552]:
+        - generic [ref=e554]:
+          - generic [ref=e555]:
+            - generic [ref=e556]: Malzeme ve gerçek uygulama
+            - heading "Yakından bakınca fark edilen EVA işçiliği." [level=2] [ref=e557]
+            - paragraph [ref=e558]: Gösteriş için değil, araç tabanında kusursuz çalışması için tasarlandı. Görsellerin tamamı gerçek EVA set ve uygulama detaylarıdır.
+          - link "Kendi setini oluştur" [ref=e559] [cursor=pointer]:
+            - /url: /olusturucu
+        - generic [ref=e562]:
+          - figure [ref=e564]:
+            - img "Kırmızı kenarlı siyah EVA paspasın araç içindeki gerçek uygulaması" [ref=e565]
+            - generic [ref=e567]:
+              - text: 01 · Gerçek uygulama
+              - paragraph [ref=e568]: Taban hattını eksiksiz takip eder
+              - paragraph [ref=e569]: Kenar kıvrımları, sabitleme noktaları ve pedal boşluğu araca göre kesilir.
+          - figure [ref=e571]:
+            - img "Beş parçalı siyah EVA oto paspas seti" [ref=e572]
+            - generic [ref=e574]:
+              - text: 02 · Tam set
+              - paragraph [ref=e575]: Ön ve arka sıra birlikte
+          - figure [ref=e577]:
+            - img "Bej EVA paspasın araç içindeki gerçek uygulaması" [ref=e578]
+            - generic [ref=e580]:
+              - text: 03 · Renk uyumu
+              - paragraph [ref=e581]: İç mekâna göre seçim
+          - figure [ref=e583]:
+            - img "EVA paspas üzerindeki metal sürücü topukluğu" [ref=e584]
+            - generic [ref=e586]:
+              - text: 04 · Detay
+              - paragraph [ref=e587]: Metal topukluk
+        - generic [ref=e588]:
+          - article [ref=e590]:
+            - generic [ref=e598]:
+              - heading "Milimetrik kalıp" [level=3] [ref=e599]
+              - paragraph [ref=e600]: Aracın taban hattına özel CNC kesim
+          - article [ref=e602]:
+            - generic [ref=e607]:
+              - heading "Hücreli yüzey" [level=3] [ref=e608]
+              - paragraph [ref=e609]: Su ve çamuru paspasın içinde tutar
+          - article [ref=e611]:
+            - generic [ref=e617]:
+              - heading "Güçlendirilmiş set" [level=3] [ref=e618]
+              - paragraph [ref=e619]: Sürücü topukluğu ve sabitleme noktaları
+          - article [ref=e621]:
+            - generic [ref=e626]:
+              - heading "Dört mevsim" [level=3] [ref=e627]
+              - paragraph [ref=e628]: Kokusuz, esnek ve su geçirmez EVA
+      - region [ref=e631]:
+        - generic [ref=e633]:
+          - generic [ref=e634]: Müşteri Yorumları
+          - heading "Araç sahipleri ne diyor?" [level=2] [ref=e635]
+        - generic [ref=e637]:
+          - article [ref=e638]:
+            - generic: “
+            - generic "5 yıldız" [ref=e639]
+            - paragraph [ref=e650]: “Tam oturdu, 5 dakikada taktım. Çamurlu haftalarda bile zemin kuru kalıyor. Kargo da beklediğimden hızlı geldi.”
+            - generic [ref=e651]:
+              - paragraph [ref=e652]: Mehmet K.
+              - paragraph [ref=e653]: İstanbul · VW Passat 2021
+          - article [ref=e654]:
+            - generic: “
+            - generic "5 yıldız" [ref=e655]
+            - paragraph [ref=e666]: “Öncekinden çok farklı, su tutmuyor. Kokusuz olması en büyük artısı, yeni araç kokusu gitmedi.”
+            - generic [ref=e667]:
+              - paragraph [ref=e668]: Ayşe D.
+              - paragraph [ref=e669]: Ankara · Hyundai i20 2022
+          - article [ref=e670]:
+            - generic: “
+            - generic "5 yıldız" [ref=e671]
+            - paragraph [ref=e682]: “Aracıma özel kesilmesi büyük konfor. Standart paspaslardan çok daha sağlam görünüyor, kayma yok.”
+            - generic [ref=e683]:
+              - paragraph [ref=e684]: Burak S.
+              - paragraph [ref=e685]: İzmir · BMW 3 Seri 2019
+      - generic [ref=e687]:
+        - generic [ref=e688]:
+          - generic [ref=e689]: Sık sorulanlar
+          - heading "Karar vermeden önce bilmeniz gerekenler" [level=2] [ref=e690]
+          - generic [ref=e691]:
+            - group [ref=e692]
+            - group [ref=e696]
+            - group [ref=e700]
+            - group [ref=e704]
+        - generic [ref=e709]:
+          - heading "Aracınız listede yok mu?" [level=3] [ref=e713]
+          - paragraph [ref=e714]: Marka, model, yıl ve kasa bilginizi gönderin. Doğru kalıbı birlikte teyit edip size uygun seti belirleyelim.
+          - list [ref=e715]:
+            - listitem [ref=e716]: Ücretsiz uyumluluk kontrolü
+            - listitem [ref=e720]: Sipariş öncesi kalıp teyidi
+            - listitem [ref=e724]: Renk ve set önerisi
+          - link "WhatsApp'tan sor" [ref=e729] [cursor=pointer]:
+            - /url: https://wa.me/905372672689?text=Merhaba%2C%20arac%C4%B1ma%20%C3%B6zel%20EVA%20paspas%20sipari%C5%9Fi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+    - contentinfo [ref=e732]:
+      - generic [ref=e735]:
+        - generic [ref=e736]:
+          - paragraph [ref=e737]: Aracınıza özel üretim
+          - heading "Doğru kalıbı seçin, tarzınızı yola taşıyın." [level=2] [ref=e738]
+        - link "Tasarımını başlat" [ref=e739] [cursor=pointer]:
+          - /url: /olusturucu
+      - generic [ref=e743]:
+        - generic [ref=e744]:
+          - link "OTO POLİK ana sayfa" [ref=e745] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e746]:
+              - generic [ref=e747]: EVA
+              - generic [ref=e748]: PREMIUM
+          - paragraph [ref=e749]: Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler.
+          - generic [ref=e750]:
+            - link "Instagram" [ref=e751] [cursor=pointer]:
+              - /url: https://instagram.com/otopolik
+            - link "YouTube" [ref=e755] [cursor=pointer]:
+              - /url: https://youtube.com/@otopolik
+        - generic [ref=e758]:
+          - heading "Keşfet" [level=3] [ref=e759]
+          - list [ref=e760]:
+            - listitem [ref=e761]:
+              - link "Tüm ürünler" [ref=e762] [cursor=pointer]:
+                - /url: /urunler
+            - listitem [ref=e763]:
+              - link "Paspas tasarla" [ref=e764] [cursor=pointer]:
+                - /url: /olusturucu
+            - listitem [ref=e765]:
+              - link "Uygulama galerisi" [ref=e766] [cursor=pointer]:
+                - /url: /galeri
+            - listitem [ref=e767]:
+              - link "Hakkımızda" [ref=e768] [cursor=pointer]:
+                - /url: /hakkimizda
+            - listitem [ref=e769]:
+              - link "İletişim" [ref=e770] [cursor=pointer]:
+                - /url: /iletisim
+        - generic [ref=e771]:
+          - heading "Destek" [level=3] [ref=e772]
+          - list [ref=e773]:
+            - listitem [ref=e774]:
+              - link "Kargo ve teslimat" [ref=e775] [cursor=pointer]:
+                - /url: /bilgiler/kargo
+            - listitem [ref=e776]:
+              - link "İade ve değişim" [ref=e777] [cursor=pointer]:
+                - /url: /bilgiler/iade
+            - listitem [ref=e778]:
+              - link "Mesafeli satış" [ref=e779] [cursor=pointer]:
+                - /url: /bilgiler/mesafeli-satis
+            - listitem [ref=e780]:
+              - link "Ön bilgilendirme" [ref=e781] [cursor=pointer]:
+                - /url: /bilgiler/on-bilgilendirme
+            - listitem [ref=e782]:
+              - link "Gizlilik" [ref=e783] [cursor=pointer]:
+                - /url: /bilgiler/gizlilik
+            - listitem [ref=e784]:
+              - link "Özel üretim" [ref=e785] [cursor=pointer]:
+                - /url: /bilgiler/ozel-uretim
+            - listitem [ref=e786]:
+              - link "Sepetim" [ref=e787] [cursor=pointer]:
+                - /url: /sepet
+        - generic [ref=e788]:
+          - heading "Bize ulaşın" [level=3] [ref=e789]
+          - generic [ref=e790]:
+            - link "0537 267 26 89" [ref=e791] [cursor=pointer]:
+              - /url: tel:05372672689
+            - link "info@otopolik.com" [ref=e794] [cursor=pointer]:
+              - /url: mailto:info@otopolik.com
+            - paragraph [ref=e798]: İOSB Mah. Sefaköy San. Sit. 7.Blok No:10-12, Başakşehir/İstanbul
+          - link "WhatsApp desteği" [ref=e802] [cursor=pointer]:
+            - /url: https://wa.me/905372672689?text=Merhaba%2C%20arac%C4%B1ma%20uygun%20EVA%20paspas%20seti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic [ref=e806]:
+        - generic [ref=e807]: © 2026 OTO POLİK
+        - generic [ref=e808]: İstanbul'da üretilir · Türkiye'ye gönderilir
+    - link:
+      - /url: https://wa.me/905372672689?text=Merhaba%2C%20oto%20paspas%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic: Bize yazın
+    - button
+  - button "Open Next.js Dev Tools" [ref=e814] [cursor=pointer]
+  - alert [ref=e829]

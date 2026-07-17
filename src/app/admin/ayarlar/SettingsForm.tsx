@@ -28,7 +28,7 @@ type Props = {
 };
 
 const inputClass =
-  "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-sand focus:outline-none focus:ring-2 focus:ring-brand-red/15";
+  "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-brand-red/15";
 
 const CANONICAL_PRICE_CARDS = [
   { label: "Paspas seti taban fiyatı", value: MAT_PRICING.basePrice },
@@ -72,7 +72,7 @@ export default function SettingsForm({ initial, dataSource }: Props) {
       {!isConvex ? (
         <div
           role="status"
-          className="flex items-start gap-3 border border-sand/30 bg-sand/10 px-4 py-3 text-sm text-foreground lg:col-span-2"
+          className="flex items-start gap-3 border border-white/30 bg-white/10 px-4 py-3 text-sm text-foreground lg:col-span-2"
         >
           <AlertCircleIcon className="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
           <p>
@@ -331,7 +331,7 @@ export default function SettingsForm({ initial, dataSource }: Props) {
               <span className="block text-xs font-semibold text-muted">
                 {label}
               </span>
-              <strong className="mt-1 block text-lg font-bold text-sand">
+              <strong className="mt-1 block text-lg font-bold text-white">
                 {formatPrice(value)}
               </strong>
             </div>

@@ -16,7 +16,7 @@ type Props = {
 };
 
 const fieldClass =
-  "input-rich mt-1.5 min-h-12 w-full rounded-xl border border-white/10 px-4 py-3 text-sm font-medium focus:border-sand focus:outline-none";
+  "input-rich mt-1.5 min-h-12 w-full rounded-xl border border-white/10 px-4 py-3 text-sm font-medium focus:border-white focus:outline-none";
 
 export default function VehicleDetailsFields({
   value,

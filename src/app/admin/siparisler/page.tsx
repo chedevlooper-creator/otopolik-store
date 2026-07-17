@@ -298,7 +298,7 @@ export default function AdminSiparisler() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Müşteri veya sipariş ara..."
-            className="w-full border border-border py-2 pl-10 pr-4 text-sm focus:border-sand focus:outline-none sm:w-64"
+            className="w-full border border-border py-2 pl-10 pr-4 text-sm focus:border-white focus:outline-none sm:w-64"
           />
         </div>
       </div>
@@ -307,7 +307,7 @@ export default function AdminSiparisler() {
       <div className="overflow-hidden border border-border bg-surface">
         {loading ? (
           <div className="px-6 py-16 text-center" role="status">
-            <RefreshCwIcon className="mx-auto h-7 w-7 animate-spin text-sand" aria-hidden="true" />
+            <RefreshCwIcon className="mx-auto h-7 w-7 animate-spin text-white" aria-hidden="true" />
             <p className="mt-3 text-sm font-semibold text-foreground">Siparişler yükleniyor</p>
             <p className="mt-1 text-xs text-muted">Bu işlem bağlantı hızına göre birkaç saniye sürebilir.</p>
           </div>
@@ -327,7 +327,7 @@ export default function AdminSiparisler() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="px-6 py-16 text-center">
-            <FilterIcon className="mx-auto h-8 w-8 text-sand" aria-hidden="true" />
+            <FilterIcon className="mx-auto h-8 w-8 text-white" aria-hidden="true" />
             <p className="mt-3 text-sm font-semibold text-foreground">
               {siparisler.length === 0 ? "Henüz sipariş yok" : "Eşleşen sipariş bulunamadı"}
             </p>

@@ -22,7 +22,7 @@ export default async function FeaturedProducts({ content }: Props) {
         className="parallax-float pointer-events-none absolute right-[-14rem] top-10 h-[30rem] w-[30rem] rounded-full bg-brand-red/[0.04] blur-[130px]"
         aria-hidden="true"
       />
-      <div className="relative mx-auto max-w-7xl px-4">
+      <div className="relative mx-auto max-w-screen-2xl 2xl:px-8 px-4">
         <ScrollReveal>
           <div className="mb-10 flex flex-col gap-5 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">

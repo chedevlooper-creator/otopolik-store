@@ -73,7 +73,7 @@ export default function CookieConsent() {
             de açabilirsiniz. Ayrıntılar için{" "}
             <Link
               href="/bilgiler/gizlilik"
-              className="font-semibold text-sand underline-offset-2 hover:underline"
+              className="font-semibold text-white underline-offset-2 hover:underline"
             >
               gizlilik politikası
             </Link>
@@ -84,7 +84,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("essential")}
-            className="btn-press min-h-11 border border-border px-5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-sand hover:text-sand"
+            className="btn-press min-h-11 border border-border px-5 text-xs font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
           >
             Yalnızca gerekli
           </button>

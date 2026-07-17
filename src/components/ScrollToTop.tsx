@@ -34,7 +34,7 @@ export default function ScrollToTop() {
       aria-label="Sayfanın başına dön"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`fixed bottom-20 right-4 z-40 flex h-11 w-11 items-center justify-center border border-border bg-background/90 text-muted backdrop-blur-md transition-all duration-200 hover:border-sand hover:text-sand sm:bottom-24 sm:right-5 ${
+      className={`fixed bottom-20 right-4 z-40 flex h-11 w-11 items-center justify-center border border-border bg-background/90 text-muted backdrop-blur-md transition-all duration-200 hover:border-white hover:text-white sm:bottom-24 sm:right-5 ${
         visible ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
       }`}
     >

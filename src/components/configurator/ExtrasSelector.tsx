@@ -22,14 +22,14 @@ export default function ExtrasSelector({
   return (
     <section>
       <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
-        <span className="spec-value text-base font-medium text-sand">04</span>
+        <span className="spec-value text-base font-medium text-white">04</span>
         Ekstralar
       </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 bg-gradient-to-b from-white/[0.04] to-transparent px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all ${
             heelPad
-              ? "border-sand bg-surface-hover"
+              ? "border-white bg-surface-hover"
               : "border-border bg-surface hover:border-muted"
           }`}
         >
@@ -38,7 +38,7 @@ export default function ExtrasSelector({
             <span className="text-xs text-muted">Sürücü tarafına metal görünümlü koruma</span>
           </span>
           <span className="flex items-center gap-2">
-            <span className="spec-value text-sm font-medium text-sand">+{formatPrice(heelPadPrice)}</span>
+            <span className="spec-value text-sm font-medium text-white">+{formatPrice(heelPadPrice)}</span>
             <input
               type="checkbox"
               checked={heelPad}
@@ -50,7 +50,7 @@ export default function ExtrasSelector({
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 bg-gradient-to-b from-white/[0.04] to-transparent px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all ${
             trunkMat
-              ? "border-sand bg-surface-hover"
+              ? "border-white bg-surface-hover"
               : "border-border bg-surface hover:border-muted"
           }`}
         >
@@ -59,7 +59,7 @@ export default function ExtrasSelector({
             <span className="text-xs text-muted">Aynı renk kombinasyonuyla bagaj koruması</span>
           </span>
           <span className="flex items-center gap-2">
-            <span className="spec-value text-sm font-medium text-sand">+{formatPrice(trunkMatPrice)}</span>
+            <span className="spec-value text-sm font-medium text-white">+{formatPrice(trunkMatPrice)}</span>
             <input
               type="checkbox"
               checked={trunkMat}

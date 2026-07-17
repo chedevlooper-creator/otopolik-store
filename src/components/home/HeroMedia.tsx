@@ -122,7 +122,7 @@ export default function HeroMedia() {
         <button
           type="button"
           onClick={togglePlay}
-          className="absolute bottom-4 right-4 z-20 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/90 backdrop-blur-sm hover:border-white/45 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+          className="absolute bottom-4 right-4 z-20 rounded-full border border-white/25 bg-black/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/90 backdrop-blur-sm hover:border-white/45 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-label={playing ? "Videoyu duraklat" : "Videoyu oynat"}
         >
           {playing ? "Duraklat" : "Oynat"}

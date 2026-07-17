@@ -1,0 +1,283 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: 6.000+ araç modeli için özel kalıp
+        - generic [ref=e10]: 1.500₺ üzeri ücretsiz kargo · 1-3 iş günü içinde kargo
+      - generic [ref=e12]:
+        - link "OTO POLİK ana sayfa" [ref=e13] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e14]:
+            - generic [ref=e15]: EVA
+            - generic [ref=e16]: PREMIUM
+        - navigation "Ana menü" [ref=e17]:
+          - link "Ana Sayfa" [ref=e18] [cursor=pointer]:
+            - /url: /
+          - link "Ürünler" [ref=e19] [cursor=pointer]:
+            - /url: /urunler
+          - link "Özellikler" [ref=e20] [cursor=pointer]:
+            - /url: /#ozellikler
+          - link "Araç Seç" [ref=e21] [cursor=pointer]:
+            - /url: /#arac-sec
+          - link "Galeri" [ref=e22] [cursor=pointer]:
+            - /url: /galeri
+          - link "Hakkımızda" [ref=e23] [cursor=pointer]:
+            - /url: /hakkimizda
+          - link "İletişim" [ref=e24] [cursor=pointer]:
+            - /url: /iletisim
+        - generic [ref=e25]:
+          - button "Ürün arama" [ref=e26]
+          - link "0537 267 26 89" [ref=e30] [cursor=pointer]:
+            - /url: tel:05372672689
+          - button "Sepetim" [ref=e34]:
+            - generic [ref=e38]: Sepet
+    - main [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: Özel tasarım
+          - heading "Paspasınızı Tasarlayın" [level=1] [ref=e43]
+          - paragraph [ref=e44]: Marka ve modelinizi seçin, renkleri belirleyin, ekstraları ekleyin.
+        - generic [ref=e45]:
+          - list "Tasarım adımları" [ref=e46]:
+            - listitem [ref=e47]:
+              - generic [ref=e48]: "01"
+              - text: Aracınız
+            - listitem [ref=e49]:
+              - generic [ref=e50]: "02"
+              - text: Taban
+            - listitem [ref=e51]:
+              - generic [ref=e52]: "03"
+              - text: Kenar
+            - listitem [ref=e53]:
+              - generic [ref=e54]: "04"
+              - text: Ekstralar
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - generic [ref=e57]:
+                - img "Siyah taban ve Kırmızı kenarlı EVA paspas seti araç içi görünümü" [ref=e58]
+                - generic [ref=e59]:
+                  - paragraph [ref=e60]: Gerçek araç içi uygulama
+                  - paragraph [ref=e61]: Siyah taban · Kırmızı kenar
+              - generic [ref=e62]:
+                - generic [ref=e63]: 64 renk kombinasyonu
+                - generic [ref=e70]: 3D lazer ölçümlü kalıp
+                - generic [ref=e77]: 1-3 iş gününde kargoda
+              - generic [ref=e83]:
+                - generic [ref=e84]:
+                  - heading "Müşterilerimizin Paspas Tasarımları" [level=3] [ref=e85]
+                  - link "Tümünü Gör →" [ref=e86] [cursor=pointer]:
+                    - /url: /galeri
+                - generic [ref=e87]:
+                  - img "Müşteri Paspası" [ref=e89] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e91] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e93] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e95] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e97] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e99] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e101] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e103] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e105] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e107] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e109] [cursor=pointer]
+                  - img "Müşteri Paspası" [ref=e111] [cursor=pointer]
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - heading "01 Aracınızı Seçin" [level=2] [ref=e114]:
+                  - generic [ref=e115]: "01"
+                  - text: Aracınızı Seçin
+                - generic [ref=e116]:
+                  - combobox "Marka" [ref=e117]:
+                    - option "Marka seçin" [selected]
+                    - option "Alfa Romeo"
+                    - option "Audi"
+                    - option "BMW"
+                    - option "BYD"
+                    - option "Chery"
+                    - option "Chevrolet"
+                    - option "Citroen"
+                    - option "Cupra"
+                    - option "DS Automobiles"
+                    - option "Dacia"
+                    - option "Fiat"
+                    - option "Ford"
+                    - option "Honda"
+                    - option "Hyundai"
+                    - option "Isuzu"
+                    - option "Jaecoo"
+                    - option "Jaguar"
+                    - option "Jeep"
+                    - option "Kia"
+                    - option "Land Rover"
+                    - option "Lexus"
+                    - option "MG"
+                    - option "MINI"
+                    - option "Mazda"
+                    - option "Mercedes-Benz"
+                    - option "Mitsubishi"
+                    - option "Nissan"
+                    - option "Opel"
+                    - option "Peugeot"
+                    - option "Porsche"
+                    - option "Renault"
+                    - option "Seat"
+                    - option "Skoda"
+                    - option "SsangYong"
+                    - option "Subaru"
+                    - option "Suzuki"
+                    - option "Tesla"
+                    - option "Tofaş"
+                    - option "Togg"
+                    - option "Toyota"
+                    - option "Volkswagen"
+                    - option "Volvo"
+                    - option "Diğer / Listede yok"
+                  - combobox "Model" [disabled] [ref=e118]:
+                    - option "Önce marka seçin" [selected]
+                - paragraph [ref=e119]: Devam etmek için marka ve modelinizi seçin.
+              - generic [ref=e120]:
+                - 'heading "02 Taban Rengi Siyah · #0F1012" [level=2] [ref=e121]':
+                  - generic [ref=e122]: "02"
+                  - text: Taban Rengi
+                  - generic [ref=e123]:
+                    - text: Siyah
+                    - generic [ref=e125]: ·
+                    - generic [ref=e126]: "#0F1012"
+                - radiogroup "Taban Rengi" [ref=e127]:
+                  - radio "Siyah (#0F1012)" [checked] [ref=e128]:
+                    - generic [ref=e129]: ✓
+                  - radio "Antrasit (#25282D)" [ref=e130]
+                  - radio "Gri (#585D64)" [ref=e131]
+                  - radio "Açık Gri (#9BA0A9)" [ref=e132]
+                  - radio "Bej (#BFA985)" [ref=e133]
+                  - radio "Kahve (#4E331F)" [ref=e134]
+                  - radio "Lacivert (#111F32)" [ref=e135]
+                  - radio "Bordo (#401216)" [ref=e136]
+              - generic [ref=e137]:
+                - 'heading "03 Kenar (Overlok) Rengi Kırmızı · #8C1626" [level=2] [ref=e138]':
+                  - generic [ref=e139]: "03"
+                  - text: Kenar (Overlok) Rengi
+                  - generic [ref=e140]:
+                    - text: Kırmızı
+                    - generic [ref=e142]: ·
+                    - generic [ref=e143]: "#8C1626"
+                - radiogroup "Kenar (Overlok) Rengi" [ref=e144]:
+                  - radio "Siyah (#0F1012)" [ref=e145]
+                  - radio "Gri (#585D64)" [ref=e146]
+                  - radio "Bej (#BFA985)" [ref=e147]
+                  - radio "Kırmızı (#8C1626)" [checked] [ref=e148]:
+                    - generic [ref=e149]: ✓
+                  - radio "Mavi (#1B3152)" [ref=e150]
+                  - radio "Turuncu (#AD5B23)" [ref=e151]
+                  - radio "Yeşil (#1B3C26)" [ref=e152]
+                  - radio "Mor (#3D214A)" [ref=e153]
+              - generic [ref=e154]:
+                - heading "04 Ekstralar" [level=2] [ref=e155]:
+                  - generic [ref=e156]: "04"
+                  - text: Ekstralar
+                - generic [ref=e157]:
+                  - generic [ref=e158] [cursor=pointer]:
+                    - generic [ref=e159]:
+                      - generic [ref=e160]: Topuk Pedi
+                      - text: Sürücü tarafına metal görünümlü koruma
+                    - generic [ref=e161]:
+                      - generic [ref=e162]: +₺149
+                      - checkbox "Topuk Pedi Sürücü tarafına metal görünümlü koruma +₺149" [checked] [ref=e163]
+                  - generic [ref=e164] [cursor=pointer]:
+                    - generic [ref=e165]:
+                      - generic [ref=e166]: Bagaj Paspası
+                      - text: Aynı renk kombinasyonuyla bagaj koruması
+                    - generic [ref=e167]:
+                      - generic [ref=e168]: +₺349
+                      - checkbox "Bagaj Paspası Aynı renk kombinasyonuyla bagaj koruması +₺349" [ref=e169]
+              - region "Sipariş özeti" [ref=e170]:
+                - generic [ref=e171]:
+                  - generic [ref=e172]:
+                    - paragraph [ref=e173]: Tasarımınız
+                    - paragraph [ref=e174]: Araç seçilmedi
+                    - paragraph [ref=e175]: Siyah taban · Kırmızı kenar · Topuk pedi
+                  - generic [ref=e176]:
+                    - paragraph [ref=e177]: Toplam
+                    - paragraph [ref=e178]: —
+                - generic [ref=e179]:
+                  - button "Sepete Ekle" [disabled] [ref=e180]
+                  - button "Hemen Sipariş Ver" [disabled] [ref=e181]
+                - link "Kararsız mısınız? Tasarımı WhatsApp'tan danışın" [ref=e182] [cursor=pointer]:
+                  - /url: https://wa.me/905372672689?text=Merhaba%2C%20%C3%B6zel%20tasar%C4%B1m%20paspas%20istiyorum.%0AAra%C3%A7%3A%20(belirtilecek)%0ATasar%C4%B1m%3A%20Siyah%20taban%20%C2%B7%20K%C4%B1rm%C4%B1z%C4%B1%20kenar%20%C2%B7%20Topuk%20pedi%0ATahmini%20fiyat%3A%20(ara%C3%A7%20se%C3%A7ilince%20belirlenir)
+                - paragraph [ref=e185]: Sepete eklemek için önce marka ve modelinizi seçin.
+    - contentinfo [ref=e186]:
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - paragraph [ref=e191]: Aracınıza özel üretim
+          - heading "Doğru kalıbı seçin, tarzınızı yola taşıyın." [level=2] [ref=e192]
+        - link "Tasarımını başlat" [ref=e193] [cursor=pointer]:
+          - /url: /olusturucu
+      - generic [ref=e197]:
+        - generic [ref=e198]:
+          - link "OTO POLİK ana sayfa" [ref=e199] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e200]:
+              - generic [ref=e201]: EVA
+              - generic [ref=e202]: PREMIUM
+          - paragraph [ref=e203]: Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler.
+          - generic [ref=e204]:
+            - link "Instagram" [ref=e205] [cursor=pointer]:
+              - /url: https://instagram.com/otopolik
+            - link "YouTube" [ref=e209] [cursor=pointer]:
+              - /url: https://youtube.com/@otopolik
+        - generic [ref=e212]:
+          - heading "Keşfet" [level=3] [ref=e213]
+          - list [ref=e214]:
+            - listitem [ref=e215]:
+              - link "Tüm ürünler" [ref=e216] [cursor=pointer]:
+                - /url: /urunler
+            - listitem [ref=e217]:
+              - link "Paspas tasarla" [ref=e218] [cursor=pointer]:
+                - /url: /olusturucu
+            - listitem [ref=e219]:
+              - link "Uygulama galerisi" [ref=e220] [cursor=pointer]:
+                - /url: /galeri
+            - listitem [ref=e221]:
+              - link "Hakkımızda" [ref=e222] [cursor=pointer]:
+                - /url: /hakkimizda
+            - listitem [ref=e223]:
+              - link "İletişim" [ref=e224] [cursor=pointer]:
+                - /url: /iletisim
+        - generic [ref=e225]:
+          - heading "Destek" [level=3] [ref=e226]
+          - list [ref=e227]:
+            - listitem [ref=e228]:
+              - link "Kargo ve teslimat" [ref=e229] [cursor=pointer]:
+                - /url: /bilgiler/kargo
+            - listitem [ref=e230]:
+              - link "İade ve değişim" [ref=e231] [cursor=pointer]:
+                - /url: /bilgiler/iade
+            - listitem [ref=e232]:
+              - link "Mesafeli satış" [ref=e233] [cursor=pointer]:
+                - /url: /bilgiler/mesafeli-satis
+            - listitem [ref=e234]:
+              - link "Ön bilgilendirme" [ref=e235] [cursor=pointer]:
+                - /url: /bilgiler/on-bilgilendirme
+            - listitem [ref=e236]:
+              - link "Gizlilik" [ref=e237] [cursor=pointer]:
+                - /url: /bilgiler/gizlilik
+            - listitem [ref=e238]:
+              - link "Özel üretim" [ref=e239] [cursor=pointer]:
+                - /url: /bilgiler/ozel-uretim
+            - listitem [ref=e240]:
+              - link "Sepetim" [ref=e241] [cursor=pointer]:
+                - /url: /sepet
+        - generic [ref=e242]:
+          - heading "Bize ulaşın" [level=3] [ref=e243]
+          - generic [ref=e244]:
+            - link "0537 267 26 89" [ref=e245] [cursor=pointer]:
+              - /url: tel:05372672689
+            - link "info@otopolik.com" [ref=e248] [cursor=pointer]:
+              - /url: mailto:info@otopolik.com
+            - paragraph [ref=e252]: İOSB Mah. Sefaköy San. Sit. 7.Blok No:10-12, Başakşehir/İstanbul
+          - link "WhatsApp desteği" [ref=e256] [cursor=pointer]:
+            - /url: https://wa.me/905372672689?text=Merhaba%2C%20arac%C4%B1ma%20uygun%20EVA%20paspas%20seti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic [ref=e260]:
+        - generic [ref=e261]: © 2026 OTO POLİK
+        - generic [ref=e262]: İstanbul'da üretilir · Türkiye'ye gönderilir
+    - button
+  - button "Open Next.js Dev Tools" [ref=e268] [cursor=pointer]

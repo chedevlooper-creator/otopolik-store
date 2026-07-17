@@ -68,7 +68,7 @@ export default async function InfoPage({
       <div className="mt-10 space-y-8">
         {bodySections.map((section) => (
           <section key={section.sectionKey}>
-            <h2 className="font-heading text-xl font-bold text-sand">
+            <h2 className="font-heading text-xl font-bold text-white">
               {section.title}
             </h2>
             <p className="mt-2 text-sm leading-7 text-foreground/80">
@@ -79,7 +79,7 @@ export default async function InfoPage({
       </div>
       <p className="mt-12 text-sm text-muted">
         Sorularınız için{" "}
-        <Link href="/iletisim" className="font-semibold text-sand hover:underline">
+        <Link href="/iletisim" className="font-semibold text-white hover:underline">
           iletişim
         </Link>{" "}
         sayfasını kullanabilirsiniz.

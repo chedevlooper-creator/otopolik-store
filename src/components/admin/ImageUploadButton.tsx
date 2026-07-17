@@ -99,7 +99,7 @@ export default function ImageUploadButton({
         type="button"
         disabled={uploading || !convexReady}
         onClick={() => inputRef.current?.click()}
-        className="inline-flex items-center gap-1.5 border border-border bg-background px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-foreground transition-colors hover:border-sand hover:text-sand disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 border border-border bg-background px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-foreground transition-colors hover:border-white hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
       >
         {uploading ? (
           <LoaderIcon className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />

@@ -35,7 +35,7 @@ function AdminLoginForm() {
         <div className="mb-6 flex items-center gap-3">
           <span
             aria-hidden="true"
-            className="flex h-10 w-10 items-center justify-center bg-brand-black text-sand"
+            className="flex h-10 w-10 items-center justify-center bg-brand-black text-white"
           >
             <LockIcon className="h-5 w-5" />
           </span>
@@ -63,7 +63,7 @@ function AdminLoginForm() {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:border-sand focus:outline-none focus:ring-2 focus:ring-sand/20"
+              className="w-full border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20"
               placeholder="••••••••"
             />
           </div>
@@ -80,7 +80,7 @@ function AdminLoginForm() {
           <button
             type="submit"
             disabled={isPending || password.length === 0}
-            className="flex w-full items-center justify-center gap-2 bg-brand-black px-4 py-3 text-sm font-bold uppercase tracking-wider text-sand transition-colors hover:bg-brand-red hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 bg-brand-black px-4 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-brand-red hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isPending ? (
               <>
@@ -102,7 +102,7 @@ function LoginFallback() {
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center py-12">
       <div className="border border-border bg-surface p-8" role="status">
         <div className="flex items-center gap-3 text-sm font-semibold text-muted">
-          <LoaderIcon className="h-5 w-5 animate-spin text-sand" aria-hidden="true" />
+          <LoaderIcon className="h-5 w-5 animate-spin text-white" aria-hidden="true" />
           Giriş ekranı hazırlanıyor
         </div>
       </div>

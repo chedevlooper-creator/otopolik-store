@@ -20,15 +20,15 @@ export default function TrustStrip() {
   const { trust } = useCmsChrome();
 
   return (
-    <section aria-label="Ürün ve alışveriş güvenceleri" className="border-y border-white/[0.07] bg-[#060606]">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-sand/[0.08] px-4 sm:grid-cols-3 lg:grid-cols-5 lg:divide-y-0 lg:px-0">
+    <section aria-label="Ürün ve alışveriş güvenceleri" className="border-y border-white/[0.02] bg-[#000000]">
+      <div className="mx-auto grid max-w-screen-2xl 2xl:px-8 grid-cols-2 divide-x divide-y divide-white/[0.08] px-4 sm:grid-cols-3 lg:grid-cols-5 lg:divide-y-0 lg:px-0">
         {trust.slice(0, 4).map((item) => {
           const Icon =
             (item.iconKey && ICON_MAP[item.iconKey as keyof typeof ICON_MAP]) ||
             RulerIcon;
           return (
-            <div key={item.label} className="group flex min-h-[86px] items-center gap-3 bg-[#060606] px-4 py-4 transition-all duration-400 hover:bg-surface sm:px-5">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center text-sand transition-transform duration-400 group-hover:scale-105">
+            <div key={item.label} className="group flex min-h-[86px] items-center gap-3 bg-[#000000] px-4 py-4 transition-all duration-400 hover:bg-surface-hover sm:px-5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center text-white transition-transform duration-400 group-hover:scale-105">
                 <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
               </span>
               <div>
@@ -40,8 +40,8 @@ export default function TrustStrip() {
             </div>
           );
         })}
-        <div className="group flex min-h-[86px] items-center gap-3 bg-[#060606] px-4 py-4 transition-all duration-400 hover:bg-surface sm:px-5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center text-sand transition-transform duration-400 group-hover:scale-105">
+        <div className="group flex min-h-[86px] items-center gap-3 bg-[#000000] px-4 py-4 transition-all duration-400 hover:bg-surface-hover sm:px-5">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center text-white transition-transform duration-400 group-hover:scale-105">
             <GemIcon className="h-[19px] w-[19px]" aria-hidden="true" />
           </span>
           <div>

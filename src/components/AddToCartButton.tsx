@@ -99,7 +99,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           className="rounded-2xl border border-white/10 bg-surface/55 p-4 sm:p-5"
         >
           <div className="mb-4">
-            <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-sand">
+            <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-white">
               Araca özel üretim
             </p>
             <h2 id="product-vehicle-heading" className="mt-1 font-heading text-lg font-bold text-white">
@@ -124,7 +124,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           aria-live="polite"
           aria-atomic="true"
         >
-          Renk — <span className="text-sand">{color}</span>
+          Renk — <span className="text-white">{color}</span>
         </p>
         <div className="flex gap-2">
           {product.colors.map((c) => (
@@ -135,7 +135,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
               aria-label={`Renk: ${c.name}`}
               aria-pressed={color === c.name}
               className={`h-11 w-11 rounded-full border-2 transition-transform ${
-                color === c.name ? "scale-110 border-sand" : "border-border hover:border-muted"
+                color === c.name ? "scale-110 border-white" : "border-border hover:border-muted"
               }`}
               style={{ backgroundColor: c.hex }}
             />
@@ -151,7 +151,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             disabled={quantity === 1}
             aria-label="Adedi azalt"
-            className="inline-flex h-11 w-11 items-center justify-center font-semibold text-muted hover:text-sand disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex h-11 w-11 items-center justify-center font-semibold text-muted hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <MinusIcon className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -163,7 +163,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
             onClick={() => setQuantity((q) => Math.min(9, q + 1))}
             disabled={quantity === 9}
             aria-label="Adedi artır"
-            className="inline-flex h-11 w-11 items-center justify-center font-semibold text-muted hover:text-sand disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex h-11 w-11 items-center justify-center font-semibold text-muted hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <PlusIcon className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -205,7 +205,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
       </div>
 
       <p className="flex items-center gap-1.5 border-t border-dashed border-border pt-4 text-xs text-muted">
-        <TruckIcon className="h-3.5 w-3.5 text-sand" aria-hidden="true" />
+        <TruckIcon className="h-3.5 w-3.5 text-white" aria-hidden="true" />
         {shippingCost === 0
           ? "Bu sipariş için kargo ücretsiz."
           : `Kargo: ${formatPrice(settings.shippingFee)} — ${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz.`}
@@ -219,12 +219,12 @@ export default function AddToCartButton({ product }: { product: Product }) {
           footerVisible ? "pointer-events-none translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-screen-2xl 2xl:px-8 items-center justify-between gap-4">
           <div className="min-w-0">
             <span className="spec-value block text-[10px] uppercase tracking-[0.14em] text-muted">
               {vehicleComplete ? `${quantity} adet · ${color}` : "Araç bilgisi gerekli"}
             </span>
-            <strong className="spec-value block whitespace-nowrap text-lg font-semibold text-sand">
+            <strong className="spec-value block whitespace-nowrap text-lg font-semibold text-white">
               {formatPrice(subtotal)}
             </strong>
           </div>

@@ -47,7 +47,7 @@ export default function GalleryPage() {
       <div className="mx-auto max-w-7xl px-4">
         {/* Header */}
         <div className="mb-10 max-w-4xl">
-          <span className="section-kicker text-sand text-xs font-semibold uppercase tracking-[0.2em]">
+          <span className="section-kicker text-white text-xs font-semibold uppercase tracking-[0.2em]">
             Gerçek Uygulamalar
           </span>
           <h1 className="section-title mt-4 font-heading text-4xl font-semibold text-white sm:text-6xl">
@@ -72,9 +72,9 @@ export default function GalleryPage() {
               aria-controls="gallery-grid"
               className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
                 filter === "all"
-                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  ? "bg-white text-[#0a0a0a] shadow-md"
                   : "text-white/60 hover:text-white"
-              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
             >
               <Grid3X3Icon className="h-3.5 w-3.5" aria-hidden="true" />
               Tümü ({GALLERY_ITEMS.length})
@@ -86,9 +86,9 @@ export default function GalleryPage() {
               aria-controls="gallery-grid"
               className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
                 filter === "photo"
-                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  ? "bg-white text-[#0a0a0a] shadow-md"
                   : "text-white/60 hover:text-white"
-              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
             >
               <CameraIcon className="h-3.5 w-3.5" aria-hidden="true" />
               Fotoğraflar ({GALLERY_ITEMS.filter((i) => i.type === "photo").length})
@@ -100,9 +100,9 @@ export default function GalleryPage() {
               aria-controls="gallery-grid"
               className={`flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
                 filter === "video"
-                  ? "bg-sand text-[#0a0a0a] shadow-md"
+                  ? "bg-white text-[#0a0a0a] shadow-md"
                   : "text-white/60 hover:text-white"
-              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand`}
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
             >
               <VideoIcon className="h-3.5 w-3.5" aria-hidden="true" />
               Videolar ({GALLERY_ITEMS.filter((i) => i.type === "video").length})
@@ -123,7 +123,7 @@ export default function GalleryPage() {
                 type="button"
                 onClick={() => setLightboxIndex(index)}
                 aria-label={`${item.type === "photo" ? "Müşteri uygulama fotoğrafını" : "Müşteri uygulama videosunu"} aç, ${index + 1}. öğe`}
-                className="group relative mb-3 block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg border border-white/[0.07] bg-surface p-0 text-left transition-all duration-300 hover:border-white/15 hover:shadow-[0_20px_55px_rgba(0,0,0,.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand sm:mb-4"
+                className="group relative mb-3 block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg border border-white/[0.07] bg-surface p-0 text-left transition-all duration-300 hover:border-white/15 hover:shadow-[0_20px_55px_rgba(0,0,0,.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mb-4"
               >
                 {item.type === "photo" ? (
                   <div className={`relative w-full overflow-hidden ${index % 7 === 0 ? "aspect-square" : index % 5 === 0 ? "aspect-[3/4]" : "aspect-[4/5]"}`}>
@@ -155,7 +155,7 @@ export default function GalleryPage() {
                 )}
                 {/* Hover overlay detail */}
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-sand">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-white">
                     Büyütmek için tıklayın
                   </span>
                 </div>

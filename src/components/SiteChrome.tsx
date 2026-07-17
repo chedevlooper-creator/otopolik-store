@@ -36,7 +36,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
         <a
           href="#main-content"
           onClick={focusMainContent}
-          className="fixed left-4 top-4 z-[200] inline-flex min-h-11 -translate-y-24 items-center rounded-lg bg-sand px-4 py-2 text-sm font-bold text-background opacity-0 shadow-2xl transition focus:translate-y-0 focus:opacity-100"
+          className="fixed left-4 top-4 z-[200] inline-flex min-h-11 -translate-y-24 items-center rounded-lg bg-white px-4 py-2 text-sm font-bold text-background opacity-0 shadow-2xl transition focus:translate-y-0 focus:opacity-100"
         >
           Ana içeriğe geç
         </a>

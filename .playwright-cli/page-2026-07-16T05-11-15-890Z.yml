@@ -1,0 +1,152 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - banner [ref=f2e3]:
+      - generic [ref=f2e4]: 6.000+ araç modeli için özel kalıp
+      - generic [ref=f2e11]:
+        - link "OTO POLİK ana sayfa" [ref=f2e12] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f2e13]:
+            - generic [ref=f2e14]: EVA
+            - generic [ref=f2e15]: PREMIUM
+        - generic [ref=f2e16]:
+          - button "Sepetim, 1 ürün" [ref=f2e551]:
+            - generic [ref=f2e552]: "1"
+          - button "Menüyü aç" [ref=f2e21]
+    - main [ref=f2e23]:
+      - generic [ref=f2e610]:
+        - generic [ref=f2e611]: Sipariş
+        - heading "Siparişi Tamamla" [level=1] [ref=f2e612]
+        - paragraph [ref=f2e613]: Bilgilerinizi girin. Siparişiniz WhatsApp üzerinden teyit edilecek; kapıda ödeme seçebilirsiniz.
+        - generic [ref=f2e614]:
+          - generic [ref=f2e615]:
+            - generic [ref=f2e616]:
+              - generic [ref=f2e617]:
+                - text: Ad Soyad
+                - textbox "Ad Soyad" [ref=f2e618]
+              - generic [ref=f2e619]:
+                - text: Telefon
+                - textbox "Telefon" [ref=f2e620]:
+                  - /placeholder: 05XX XXX XX XX
+            - generic [ref=f2e621]:
+              - text: Şehir
+              - textbox "Şehir" [ref=f2e622]
+            - generic [ref=f2e623]:
+              - text: Adres
+              - textbox "Adres" [ref=f2e624]
+            - generic [ref=f2e625]:
+              - text: Sipariş Notu (opsiyonel)
+              - textbox "Sipariş Notu (opsiyonel)" [ref=f2e626]
+            - group "Ödeme Şekli" [ref=f2e627]:
+              - generic [ref=f2e629]:
+                - generic [ref=f2e630]:
+                  - radio "WhatsApp üzerinden sipariş onayı" [checked] [ref=f2e631]
+                  - generic [ref=f2e632]: WhatsApp üzerinden sipariş onayı
+                - generic [ref=f2e633]:
+                  - radio "Kapıda Ödeme" [ref=f2e634]
+                  - generic [ref=f2e635]: Kapıda Ödeme
+            - generic [ref=f2e636]:
+              - checkbox "Ön bilgilendirme ve mesafeli satış sözleşmesi metinlerini okudum, kabul ediyorum." [ref=f2e637]
+              - generic [ref=f2e638]:
+                - link "Ön bilgilendirme" [ref=f2e639] [cursor=pointer]:
+                  - /url: /bilgiler/on-bilgilendirme
+                - text: ve
+                - link "mesafeli satış sözleşmesi" [ref=f2e640] [cursor=pointer]:
+                  - /url: /bilgiler/mesafeli-satis
+                - text: metinlerini okudum, kabul ediyorum.
+          - complementary [ref=f2e641]:
+            - heading "Sipariş Özeti" [level=2] [ref=f2e642]
+            - list [ref=f2e643]:
+              - listitem [ref=f2e644]:
+                - generic [ref=f2e645]: Eva Oto Paspas Seti (Siyah) × 1
+                - generic [ref=f2e646]: ₺3.500
+            - generic [ref=f2e647]:
+              - generic [ref=f2e648]: Kargo
+              - generic [ref=f2e649]: Ücretsiz
+            - generic [ref=f2e650]:
+              - generic [ref=f2e651]: Toplam
+              - generic [ref=f2e652]: ₺3.500
+            - paragraph [ref=f2e653]: WhatsApp penceresinde hazırlanan özeti göndermeden sipariş kesinleşmez. Ekibimiz mesajınızın ardından uyumluluğu teyit eder.
+            - button "Sipariş Talebini Gönder" [ref=f2e654]
+            - list [ref=f2e655]:
+              - listitem [ref=f2e656]:
+                - generic [ref=f2e660]: Uyumluluk siparişten önce teyit edilir
+              - listitem [ref=f2e661]:
+                - generic [ref=f2e667]: 1-3 iş günü içinde kargoda
+    - contentinfo [ref=f2e464]:
+      - generic [ref=f2e467]:
+        - generic [ref=f2e468]:
+          - paragraph [ref=f2e469]: Aracınıza özel üretim
+          - heading "Doğru kalıbı seçin, tarzınızı yola taşıyın." [level=2] [ref=f2e470]
+        - link "Tasarımını başlat" [ref=f2e471] [cursor=pointer]:
+          - /url: /olusturucu
+      - generic [ref=f2e475]:
+        - generic [ref=f2e476]:
+          - link "OTO POLİK ana sayfa" [ref=f2e477] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f2e478]:
+              - generic [ref=f2e479]: EVA
+              - generic [ref=f2e480]: PREMIUM
+          - paragraph [ref=f2e481]: Her araca özel kalıp, premium EVA malzeme ve titiz işçilik. Aracınızın iç mekânını koruyan modern çözümler.
+          - generic [ref=f2e482]:
+            - link "Instagram" [ref=f2e483] [cursor=pointer]:
+              - /url: https://instagram.com/otopolik
+            - link "YouTube" [ref=f2e487] [cursor=pointer]:
+              - /url: https://youtube.com/@otopolik
+        - generic [ref=f2e490]:
+          - heading "Keşfet" [level=3] [ref=f2e491]
+          - list [ref=f2e492]:
+            - listitem [ref=f2e493]:
+              - link "Tüm ürünler" [ref=f2e494] [cursor=pointer]:
+                - /url: /urunler
+            - listitem [ref=f2e495]:
+              - link "Paspas tasarla" [ref=f2e496] [cursor=pointer]:
+                - /url: /olusturucu
+            - listitem [ref=f2e497]:
+              - link "Uygulama galerisi" [ref=f2e498] [cursor=pointer]:
+                - /url: /galeri
+            - listitem [ref=f2e499]:
+              - link "Hakkımızda" [ref=f2e500] [cursor=pointer]:
+                - /url: /hakkimizda
+            - listitem [ref=f2e501]:
+              - link "İletişim" [ref=f2e502] [cursor=pointer]:
+                - /url: /iletisim
+        - generic [ref=f2e503]:
+          - heading "Destek" [level=3] [ref=f2e504]
+          - list [ref=f2e505]:
+            - listitem [ref=f2e506]:
+              - link "Kargo ve teslimat" [ref=f2e507] [cursor=pointer]:
+                - /url: /bilgiler/kargo
+            - listitem [ref=f2e508]:
+              - link "İade ve değişim" [ref=f2e509] [cursor=pointer]:
+                - /url: /bilgiler/iade
+            - listitem [ref=f2e510]:
+              - link "Mesafeli satış" [ref=f2e511] [cursor=pointer]:
+                - /url: /bilgiler/mesafeli-satis
+            - listitem [ref=f2e512]:
+              - link "Ön bilgilendirme" [ref=f2e513] [cursor=pointer]:
+                - /url: /bilgiler/on-bilgilendirme
+            - listitem [ref=f2e514]:
+              - link "Gizlilik" [ref=f2e515] [cursor=pointer]:
+                - /url: /bilgiler/gizlilik
+            - listitem [ref=f2e516]:
+              - link "Özel üretim" [ref=f2e517] [cursor=pointer]:
+                - /url: /bilgiler/ozel-uretim
+            - listitem [ref=f2e518]:
+              - link "Sepetim" [ref=f2e519] [cursor=pointer]:
+                - /url: /sepet
+        - generic [ref=f2e520]:
+          - heading "Bize ulaşın" [level=3] [ref=f2e521]
+          - generic [ref=f2e522]:
+            - link "0537 267 26 89" [ref=f2e523] [cursor=pointer]:
+              - /url: tel:05372672689
+            - link "info@otopolik.com" [ref=f2e526] [cursor=pointer]:
+              - /url: mailto:info@otopolik.com
+            - paragraph [ref=f2e530]: İOSB Mah. Sefaköy San. Sit. 7.Blok No:10-12, Başakşehir/İstanbul
+          - link "WhatsApp desteği" [ref=f2e534] [cursor=pointer]:
+            - /url: https://wa.me/905372672689?text=Merhaba%2C%20arac%C4%B1ma%20uygun%20EVA%20paspas%20seti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.
+      - generic [ref=f2e538]:
+        - generic [ref=f2e539]: © 2026 OTO POLİK
+        - generic [ref=f2e540]: İstanbul'da üretilir · Türkiye'ye gönderilir
+    - button
+  - button "Open Next.js Dev Tools" [ref=f2e546] [cursor=pointer]
+  - alert [ref=f2e550]: Sipariş | OTO POLİK

@@ -104,17 +104,17 @@ export default async function ProductDetailPage({
   return (
     <div className="mx-auto max-w-7xl px-4 pb-28 pt-10 sm:py-14">
       <nav aria-label="Konum" className="spec-value mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs uppercase tracking-[0.14em] text-muted">
-        <Link href="/" className="hover:text-sand">Ana Sayfa</Link>
-        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
-        <Link href="/urunler" className="hover:text-sand">Ürünler</Link>
-        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
+        <Link href="/" className="hover:text-white">Ana Sayfa</Link>
+        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
+        <Link href="/urunler" className="hover:text-white">Ürünler</Link>
+        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
         <Link
           href={`/urunler?kategori=${encodeURIComponent(product.category)}`}
-          className="hover:text-sand"
+          className="hover:text-white"
         >
           {CATEGORY_LABELS[product.category]}
         </Link>
-        <ChevronRightIcon className="h-3 w-3 text-sand-dim" aria-hidden="true" />
+        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
         <span className="text-foreground">{product.brand} {product.model}</span>
       </nav>
 
@@ -134,7 +134,7 @@ export default async function ProductDetailPage({
           </h1>
 
           <div className="mt-4 flex items-baseline gap-3">
-            <span className="spec-value text-3xl font-semibold text-sand">
+            <span className="spec-value text-3xl font-semibold text-white">
               {formatPrice(product.price)}
             </span>
             {product.oldPrice && (
@@ -151,7 +151,7 @@ export default async function ProductDetailPage({
               { icon: Undo2Icon, label: "Ürüne göre iade koşulu" },
             ].map(({ icon: Icon, label }) => (
               <li key={label} className="flex flex-col items-center gap-1.5 bg-surface px-2 py-3 text-center">
-                <Icon className="h-4 w-4 text-sand" aria-hidden="true" />
+                <Icon className="h-4 w-4 text-white" aria-hidden="true" />
                 <span className="spec-value text-[10px] font-medium uppercase tracking-[0.12em] text-foreground/85">
                   {label}
                 </span>
@@ -163,8 +163,8 @@ export default async function ProductDetailPage({
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <div className="border border-border bg-surface p-4">
               <div className="flex items-center gap-2">
-                <CalendarIcon className="h-4 w-4 text-sand" aria-hidden="true" />
-                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                <CalendarIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                   Araç Uyumluluğu
                 </span>
               </div>
@@ -176,15 +176,15 @@ export default async function ProductDetailPage({
                 href={compatibilityLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block text-[11px] font-bold text-sand hover:underline"
+                className="mt-2 inline-block text-[11px] font-bold text-white hover:underline"
               >
                 WhatsApp&apos;tan teyit et →
               </a>
             </div>
             <div className="border border-border bg-surface p-4">
               <div className="flex items-center gap-2">
-                <TruckIcon className="h-4 w-4 text-sand" aria-hidden="true" />
-                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-sand">
+                <TruckIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                <span className="spec-value text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                   Kargo
                 </span>
               </div>
@@ -222,7 +222,7 @@ export default async function ProductDetailPage({
                   key={feature}
                   className="flex items-start gap-3 border border-border bg-surface/50 p-3"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-border bg-background text-sand">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-border bg-background text-white">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="text-sm leading-relaxed text-foreground/85">{feature}</span>
@@ -235,12 +235,12 @@ export default async function ProductDetailPage({
             <details className="group border-b border-dashed border-border">
               <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
                 Araç uyumluluğu
-                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+                <PlusIcon className="h-4 w-4 text-white transition-transform group-open:rotate-45" aria-hidden="true" />
               </summary>
               <div className="pb-5">
                 <p className="text-sm text-muted">{product.compatibility.yearRange}</p>
                 <p className="mt-1 text-sm text-muted">{product.compatibility.bodyOrChassis}</p>
-                <a href={compatibilityLink} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-bold text-sand hover:underline">
+                <a href={compatibilityLink} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-bold text-white hover:underline">
                   Uyumluluğu WhatsApp&apos;tan teyit et
                 </a>
               </div>
@@ -248,7 +248,7 @@ export default async function ProductDetailPage({
             <details className="group border-b border-dashed border-border">
               <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
                 Kargo ve teslimat
-                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+                <PlusIcon className="h-4 w-4 text-white transition-transform group-open:rotate-45" aria-hidden="true" />
               </summary>
               <div className="pb-5">
                 <p className="text-sm text-muted">Kargoya teslim: {product.dispatchEstimate}</p>
@@ -258,7 +258,7 @@ export default async function ProductDetailPage({
             <details className="group border-b border-dashed border-border" open>
               <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-heading text-base font-bold uppercase text-white [&::-webkit-details-marker]:hidden">
                 Bu sette neler var?
-                <PlusIcon className="h-4 w-4 text-sand transition-transform group-open:rotate-45" aria-hidden="true" />
+                <PlusIcon className="h-4 w-4 text-white transition-transform group-open:rotate-45" aria-hidden="true" />
               </summary>
               <div className="pb-5">
                 <ul className="space-y-1.5 text-sm text-muted">

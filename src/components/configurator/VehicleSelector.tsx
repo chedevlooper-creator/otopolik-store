@@ -20,7 +20,7 @@ export default function VehicleSelector({ value, onChange }: Props) {
         id="configurator-vehicle-title"
         className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white"
       >
-        <span className="spec-value text-base font-medium text-sand">01</span>
+        <span className="spec-value text-base font-medium text-white">01</span>
         Aracınızı Seçin
       </h2>
 

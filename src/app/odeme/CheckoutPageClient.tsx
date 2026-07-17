@@ -337,7 +337,7 @@ export default function CheckoutPageClient({
               aria-labelledby="checkout-vehicle-title"
               className="rounded-2xl border border-white/15 bg-surface/60 p-5"
             >
-              <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-sand">
+              <p className="spec-value text-[10px] font-bold uppercase tracking-[0.16em] text-white">
                 Üretim bilgisi gerekli
               </p>
               <h2
@@ -385,7 +385,7 @@ export default function CheckoutPageClient({
                 aria-invalid={Boolean(errors.fullName)}
                 aria-describedby={errors.fullName ? "checkout-fullName-error" : undefined}
                 className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                  errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                  errors.fullName ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
                 }`}
               />
               {errors.fullName && (
@@ -411,7 +411,7 @@ export default function CheckoutPageClient({
                 aria-describedby={errors.phone ? "checkout-phone-error" : undefined}
                 placeholder="05XX XXX XX XX"
                 className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                  errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                  errors.phone ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
                 }`}
               />
               {errors.phone && (
@@ -436,7 +436,7 @@ export default function CheckoutPageClient({
               aria-invalid={Boolean(errors.city)}
               aria-describedby={errors.city ? "checkout-city-error" : undefined}
               className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
               }`}
             />
             {errors.city && (
@@ -461,7 +461,7 @@ export default function CheckoutPageClient({
               aria-invalid={Boolean(errors.address)}
               aria-describedby={errors.address ? "checkout-address-error" : undefined}
               className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-sand"
+                errors.address ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
               }`}
             />
             {errors.address && (
@@ -480,7 +480,7 @@ export default function CheckoutPageClient({
               autoComplete="off"
               value={form.note}
               onChange={(e) => handleChange("note", e.target.value)}
-              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-sand focus:outline-none"
+              className="input-rich mt-1.5 w-full rounded-xl border border-border px-4 py-3 font-normal focus:border-white focus:outline-none"
             />
           </label>
 
@@ -489,7 +489,7 @@ export default function CheckoutPageClient({
               Sipariş ve ödeme tercihi
             </legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-white has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -502,7 +502,7 @@ export default function CheckoutPageClient({
                   WhatsApp ile teklif ve sipariş onayı
                 </span>
               </label>
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-sand has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-white has-[:checked]:bg-surface-hover">
                 <input
                   type="radio"
                   name="payment"
@@ -538,11 +538,11 @@ export default function CheckoutPageClient({
             />
             <span className="text-sm leading-6 text-foreground/85">
              {" "}
-              <Link href="/bilgiler/on-bilgilendirme" className="font-semibold text-sand hover:underline">
+              <Link href="/bilgiler/on-bilgilendirme" className="font-semibold text-white hover:underline">
                 Ön bilgilendirme
               </Link>
               {" "}ve{" "}
-              <Link href="/bilgiler/mesafeli-satis" className="font-semibold text-sand hover:underline">
+              <Link href="/bilgiler/mesafeli-satis" className="font-semibold text-white hover:underline">
                 mesafeli satış sözleşmesi
               </Link>
               {" "}metinlerini okudum, kabul ediyorum.
@@ -565,7 +565,7 @@ export default function CheckoutPageClient({
                     {item.name} ({item.color}) × {item.quantity}
                   </span>
                   {item.configuration?.vehicle ? (
-                    <span className="mt-0.5 block line-clamp-2 text-[11px] leading-4 text-sand/80">
+                    <span className="mt-0.5 block line-clamp-2 text-[11px] leading-4 text-white/80">
                       {item.configuration.vehicle}
                     </span>
                   ) : null}
@@ -582,7 +582,7 @@ export default function CheckoutPageClient({
           </div>
           <div className="mt-3 flex items-center justify-between">
             <span className="font-heading text-lg font-bold uppercase text-white">Toplam</span>
-            <span className="spec-value text-xl font-semibold text-sand">
+            <span className="spec-value text-xl font-semibold text-white">
               {formatPrice(orderTotal)}
             </span>
           </div>
@@ -613,7 +613,7 @@ export default function CheckoutPageClient({
               <span>Uyumluluk siparişten önce teyit edilir</span>
             </li>
             <li className="flex items-center gap-2">
-              <TruckIcon className="h-3.5 w-3.5 shrink-0 text-sand" aria-hidden="true" />
+              <TruckIcon className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden="true" />
               <span>{settings.estimatedDispatch} içinde kargoda</span>
             </li>
           </ul>

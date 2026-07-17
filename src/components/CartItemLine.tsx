@@ -48,7 +48,7 @@ export default function CartItemLine({
             Renk: {item.color}
           </p>
           {item.configuration?.vehicle ? (
-            <p className={`${compact ? "line-clamp-2 text-[11px]" : "text-xs"} mt-1 leading-5 text-sand/85`}>
+            <p className={`${compact ? "line-clamp-2 text-[11px]" : "text-xs"} mt-1 leading-5 text-white/85`}>
               Araç: {item.configuration.vehicle}
             </p>
           ) : null}
@@ -60,7 +60,7 @@ export default function CartItemLine({
               type="button"
               onClick={() => onUpdateQuantity(item.slug, item.color, item.quantity - 1)}
               aria-label={`${item.name} adedini azalt`}
-              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-sand`}
+              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-white`}
             >
               <MinusIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -71,7 +71,7 @@ export default function CartItemLine({
               type="button"
               onClick={() => onUpdateQuantity(item.slug, item.color, item.quantity + 1)}
               aria-label={`${item.name} adedini artır`}
-              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-sand`}
+              className={`${buttonClass} inline-flex items-center justify-center font-semibold text-muted transition-colors hover:bg-white/5 hover:text-white`}
             >
               <PlusIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </button>

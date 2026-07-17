@@ -33,7 +33,7 @@ import {
 } from "./actions";
 
 const inputClass =
-  "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-sand focus:outline-none focus:ring-2 focus:ring-brand-red/15";
+  "mt-1.5 w-full border border-border bg-background px-4 py-2.5 text-sm font-normal text-foreground focus:border-white focus:outline-none focus:ring-2 focus:ring-brand-red/15";
 
 type TabId =
   | "seo"
@@ -594,7 +594,7 @@ function PageEditor({
                 onSaveSection(section);
               }}
             >
-              <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-sand">
+              <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-white">
                 {section.sectionKey}
               </h3>
               <div className="grid gap-3 sm:grid-cols-2">
