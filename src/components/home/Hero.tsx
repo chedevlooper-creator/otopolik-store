@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroMedia from "@/components/home/HeroMedia";
+import HeroVehicleSelector from "@/components/home/HeroVehicleSelector";
 import type { ContentSection } from "@/lib/cms-defaults";
 
 type Props = {
@@ -14,7 +15,7 @@ export default function Hero({ content }: Props) {
   const secondary = content?.secondaryCta;
 
   return (
-    <section className="relative flex min-h-[75vh] items-center justify-center overflow-hidden bg-black text-center pt-16 pb-20">
+    <section className="relative flex min-h-[75vh] items-center justify-center overflow-hidden bg-black text-center pt-16 pb-32">
       {/* Background Media with HUD overlays */}
       <div className="absolute inset-0 z-0">
         <HeroMedia />
@@ -50,6 +51,8 @@ export default function Hero({ content }: Props) {
             {secondary?.ctaLabel ?? "Özellikleri Keşfet"}
           </Link>
         </div>
+
+        <HeroVehicleSelector />
       </div>
 
       {/* Premium Marquee */}

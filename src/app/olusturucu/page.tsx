@@ -20,9 +20,11 @@ export default async function ConfiguratorPage({
     model?: string;
     yil?: string;
     kasa?: string;
+    taban?: string;
+    kenar?: string;
   }>;
 }) {
-  const { marka = "", model = "", yil = "", kasa = "" } = await searchParams;
+  const { marka = "", model = "", yil = "", kasa = "", taban = "", kenar = "" } = await searchParams;
   const { page, sections } = await getContentPage("olusturucu");
   const kicker = sections.find((s) => s.sectionKey === "kicker");
   const aiEnabled = isCustomerAiUiEnabled();
@@ -64,6 +66,8 @@ export default async function ConfiguratorPage({
           year: yil,
           bodyOrChassis: kasa,
         }}
+        initialFloor={taban}
+        initialEdge={kenar}
       >
         {ConfiguratorChat ? <ConfiguratorChat /> : null}
         <MatConfigurator aiEnabled={aiEnabled} />

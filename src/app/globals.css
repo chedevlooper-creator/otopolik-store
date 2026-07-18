@@ -553,6 +553,19 @@ h3 {
   animation: check-spread 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* ── Teşekkürler sayfası: onay halkası — küçük ölçekte lazer-kesim çizim tekniği ── */
+@keyframes confirm-ring-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+.confirm-ring {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 6px rgba(237, 27, 36, 0.5));
+  animation: confirm-ring-draw 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
 /* ── Yıldız parlaması — testimonial hover ── */
 @keyframes star-glow {
   0%,
@@ -682,6 +695,16 @@ h3 {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .confirm-ring {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .wa-ring::after {
+    animation: none !important;
+    display: none !important;
   }
 }
 

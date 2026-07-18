@@ -1,5 +1,8 @@
 import Hero from "@/components/home/Hero";
+import BrandMarquee from "@/components/home/BrandMarquee";
 import ShowroomBento from "@/components/home/ShowroomBento";
+import ShowroomStats from "@/components/home/ShowroomStats";
+import ShowroomFounder from "@/components/home/ShowroomFounder";
 import ShowroomColorPicker from "@/components/home/ShowroomColorPicker";
 import ShowroomConfiguratorBanner from "@/components/home/ShowroomConfiguratorBanner";
 import ShowroomProcess from "@/components/home/ShowroomProcess";
@@ -48,6 +51,9 @@ export default async function Home() {
         }}
       />
       <ShowroomBento />
+      <BrandMarquee />
+      <ShowroomStats />
+      <ShowroomFounder />
       <ShowroomColorPicker />
       <ShowroomConfiguratorBanner />
       <ShowroomProcess />

@@ -63,20 +63,39 @@ const ConfiguratorAssistantContext =
 export function ConfiguratorAssistantProvider({
   children,
   initialConfiguration = {},
+  initialFloor,
+  initialEdge,
 }: {
   children: ReactNode;
   initialConfiguration?: InitialConfiguration;
+  initialFloor?: string;
+  initialEdge?: string;
 }) {
   const [vehicle, setVehicle] = useState<VehicleDetails>({
     ...EMPTY_VEHICLE_DETAILS,
     ...initialConfiguration,
   });
-  const [floor, setFloor] = useState<MatColor>(FLOOR_COLORS[0]);
-  const [edge, setEdge] = useState<MatColor>(EDGE_COLORS[10]);
+
+  const resolvedFloor = useMemo(() => {
+    if (!initialFloor) return FLOOR_COLORS[0];
+    return FLOOR_COLORS.find(
+      (c) => c.slug === initialFloor || c.name.toLowerCase() === initialFloor.toLowerCase()
+    ) ?? FLOOR_COLORS[0];
+  }, [initialFloor]);
+
+  const resolvedEdge = useMemo(() => {
+    if (!initialEdge) return EDGE_COLORS[10];
+    return EDGE_COLORS.find(
+      (c) => c.slug === initialEdge || c.name.toLowerCase() === initialEdge.toLowerCase()
+    ) ?? EDGE_COLORS[10];
+  }, [initialEdge]);
+
+  const [floor, setFloor] = useState<MatColor>(resolvedFloor);
+  const [edge, setEdge] = useState<MatColor>(resolvedEdge);
   const [heelPad, setHeelPad] = useState(false);
   const [trunkMat, setTrunkMat] = useState(false);
-  const [floorTouched, setFloorTouched] = useState(false);
-  const [edgeTouched, setEdgeTouched] = useState(false);
+  const [floorTouched, setFloorTouched] = useState(!!initialFloor);
+  const [edgeTouched, setEdgeTouched] = useState(!!initialEdge);
 
   const vehicleComplete = isVehicleDetailsComplete(vehicle);
   const vehicleLabel = vehicleComplete ? formatVehicleLabel(vehicle) : "";

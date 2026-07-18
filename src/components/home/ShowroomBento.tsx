@@ -64,7 +64,7 @@ export default function ShowroomBento() {
             <span className="mono">NEDEN OTOPOLİK</span>
             <h2>Showroom kalitesi,<br />zemin seviyesinde.</h2>
           </div>
-          <p>Her set sipariş üzerine üretilir — stoktan değil, aracının kalıbından.</p>
+          <p>Her set doğrudan sipariş üzerine, aracınızın birebir zemin ölçülerine göre üretilir.</p>
         </div>
         
         {/* Full-width showroom tile with HUD */}

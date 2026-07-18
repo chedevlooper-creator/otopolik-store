@@ -10,7 +10,7 @@ import { getShippingCost } from "@/lib/shipping";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
-import { ShieldCheckIcon, TruckIcon } from "lucide-react";
+import { ShieldCheckIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
 import VehicleDetailsFields from "@/components/VehicleDetailsFields";
 import {
   EMPTY_VEHICLE_DETAILS,
@@ -132,7 +132,7 @@ export default function CheckoutPageClient({
   if (!isHydrated) {
     return (
       <div
-        className="mx-auto max-w-5xl px-4 py-10 sm:py-14"
+        className="mx-auto max-w-5xl px-4 pt-32 pb-10 sm:pt-40 sm:pb-14"
         role="status"
         aria-live="polite"
         aria-label="Sipariş formu yükleniyor"
@@ -157,8 +157,11 @@ export default function CheckoutPageClient({
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <h1 className="font-heading text-3xl font-bold text-white">
+      <div className="mx-auto flex max-w-3xl flex-col items-center px-4 pt-32 pb-20 text-center sm:pt-40">
+        <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--red-hot)]/25 bg-[var(--red-hot)]/[0.06] shadow-[0_0_40px_rgba(237,27,36,0.1)]">
+          <ShoppingCartIcon className="h-7 w-7 text-[var(--red-hot)]" aria-hidden="true" />
+        </span>
+        <h1 className="mt-5 font-heading text-3xl font-bold text-white">
           {content.emptyTitle ?? "Sepetiniz boş"}
         </h1>
         <p className="mt-2 text-muted">
@@ -315,7 +318,7 @@ export default function CheckoutPageClient({
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
+    <div className="mx-auto max-w-5xl px-4 pt-32 pb-10 sm:pt-40 sm:pb-14">
       <span className="spec-label">Sipariş</span>
       <h1 className="mt-3 font-heading text-4xl font-bold text-white">
         {content.title}

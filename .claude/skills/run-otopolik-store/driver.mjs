@@ -32,7 +32,26 @@ page.setDefaultTimeout(15_000);
 
 const shot = async (name) => {
   const file = join(SHOTS, `${name}.png`);
-  await page.screenshot({ path: file, fullPage: false });
+  // Scroll down to the bottom of the page to trigger all scroll reveals/lazy loads
+  await page.evaluate(async () => {
+    await new Promise((resolve) => {
+      let totalHeight = 0;
+      const distance = 200;
+      const timer = setInterval(() => {
+        const scrollHeight = document.body.scrollHeight;
+        window.scrollBy(0, distance);
+        totalHeight += distance;
+        if (totalHeight >= scrollHeight) {
+          clearInterval(timer);
+          window.scrollTo(0, 0);
+          resolve();
+        }
+      }, 30);
+    });
+  });
+  // Wait for reveal CSS transitions to complete
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: file, fullPage: true });
   console.log(`shot: ${file}`);
 };
 
