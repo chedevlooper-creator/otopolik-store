@@ -1,0 +1,18 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Support page offers a WhatsApp contact link with a prefilled message",
+  "description": "Verifies /destek renders a support entry point with a WhatsApp link that opens wa.me with a prefilled support message (covers the non-AI fallback UI, which is the default when the customer AI chat UI flag is off).",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /destek" },
+    {
+      "type": "assertion",
+      "description": "The page shows a support heading and a link/button whose visible text contains 'WhatsApp'"
+    },
+    {
+      "type": "assertion",
+      "description": "The WhatsApp link's href starts with 'https://wa.me/' and includes a URL-encoded text query parameter"
+    }
+  ]
+}

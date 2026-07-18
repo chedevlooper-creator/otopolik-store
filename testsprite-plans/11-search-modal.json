@@ -1,0 +1,24 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Header search opens a modal and returns vehicle/product results for a query",
+  "description": "Verifies clicking the header search icon opens a search dialog, and typing a well-known brand name like 'Toyota' returns matching results.",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to the homepage (/) and click the search icon button in the header (aria-label 'Araç veya ürün ara')" },
+    {
+      "type": "assertion",
+      "description": "A search dialog opens with a focused text input"
+    },
+    { "type": "action", "description": "Type 'Toyota' into the search input" },
+    {
+      "type": "assertion",
+      "description": "The dialog shows at least one result related to Toyota (a vehicle or product list item containing the text 'Toyota')"
+    },
+    { "type": "action", "description": "Press the Escape key" },
+    {
+      "type": "assertion",
+      "description": "The search dialog closes"
+    }
+  ]
+}

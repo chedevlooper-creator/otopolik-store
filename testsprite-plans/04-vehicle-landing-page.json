@@ -1,0 +1,27 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Vehicle SEO landing page renders brand/model content and its CTA links to a pre-filled configurator",
+  "description": "Verifies /arac/toyota-corolla-sedan renders vehicle-specific hero copy, a price tier table, and that the primary CTA deep-links into the configurator with the vehicle pre-filled.",
+  "priority": "p1",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /arac/toyota-corolla-sedan" },
+    {
+      "type": "assertion",
+      "description": "The page heading shows 'Toyota' and 'Corolla Sedan'"
+    },
+    {
+      "type": "assertion",
+      "description": "The breadcrumb navigation shows 'Ana Sayfa' followed by 'Toyota Corolla Sedan'"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'Paket seçenekleri' section is visible listing at least one priced package with a price shown in ₺"
+    },
+    { "type": "action", "description": "Click the 'Hemen Tasarla' button in the hero section" },
+    {
+      "type": "assertion",
+      "description": "The browser navigates to a URL whose path is /olusturucu and whose query string contains marka=Toyota and model=Corolla+Sedan (or URL-encoded equivalents)"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Header cart button opens an empty cart drawer that can be closed",
+  "description": "Verifies clicking the header's Sepet button opens the slide-in cart drawer with the empty-cart message and CTA, and that it closes again.",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to the homepage (/) with no items in the cart" },
+    { "type": "action", "description": "Click the 'Sepet' (cart) button in the header" },
+    {
+      "type": "assertion",
+      "description": "A dialog panel slides in from the right showing the heading 'Sepetim' and the empty-state text 'Sepetiniz boş'"
+    },
+    {
+      "type": "assertion",
+      "description": "The empty cart panel shows a 'Hemen Tasarla' link/button"
+    },
+    { "type": "action", "description": "Click the close (X) button on the cart drawer" },
+    {
+      "type": "assertion",
+      "description": "The cart drawer panel is no longer visible on screen"
+    }
+  ]
+}

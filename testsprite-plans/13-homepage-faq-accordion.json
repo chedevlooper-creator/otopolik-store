@@ -1,0 +1,24 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Homepage FAQ accordion expands and collapses an answer",
+  "description": "Verifies the 'Aklına takılanlar' FAQ section on the homepage expands an answer when its question is clicked, and collapses again on a second click.",
+  "priority": "p3",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /#sss (the FAQ section of the homepage)" },
+    {
+      "type": "assertion",
+      "description": "The heading 'Aklına takılanlar' is visible with a list of collapsed FAQ questions"
+    },
+    { "type": "action", "description": "Click the first FAQ question to expand it" },
+    {
+      "type": "assertion",
+      "description": "The answer text below that question becomes visible (the FAQ item is now in its expanded/open state)"
+    },
+    { "type": "action", "description": "Click the same FAQ question again to collapse it" },
+    {
+      "type": "assertion",
+      "description": "The answer text is hidden again (the FAQ item returns to its collapsed state)"
+    }
+  ]
+}

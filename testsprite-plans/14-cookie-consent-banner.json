@@ -1,0 +1,24 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Cookie consent banner appears for a new visitor and can be dismissed",
+  "description": "Verifies a first-time visitor sees the cookie/privacy notice with 'Yalnızca gerekli' and 'Kabul et' choices, and clicking one dismisses the banner.",
+  "priority": "p3",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to the homepage (/) in a fresh browser session with no prior visits to this site" },
+    {
+      "type": "assertion",
+      "description": "A cookie/privacy dialog is visible with the heading 'Çerez ve gizlilik' and two buttons: 'Yalnızca gerekli' and 'Kabul et'"
+    },
+    { "type": "action", "description": "Click the 'Kabul et' button" },
+    {
+      "type": "assertion",
+      "description": "The cookie consent dialog is no longer visible"
+    },
+    { "type": "action", "description": "Reload the page" },
+    {
+      "type": "assertion",
+      "description": "The cookie consent dialog does not reappear (the choice was remembered)"
+    }
+  ]
+}

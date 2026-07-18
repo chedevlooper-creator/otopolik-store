@@ -1,0 +1,20 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Checkout form shows a Turkish validation error for an invalid phone number",
+  "description": "Verifies that once the cart has an item, the /odeme form renders and typing an invalid phone number then blurring the field shows the exact Turkish inline validation error.",
+  "priority": "p1",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /olusturucu, select any brand and model in the 'Aracınızı Seçin' section, type '2021' into 'Model yılı' and 'Sedan' into 'Kasa / versiyon', pick any floor and edge color, then click 'Sepete Ekle'" },
+    { "type": "action", "description": "Navigate to /odeme" },
+    {
+      "type": "assertion",
+      "description": "The checkout page shows an order form (not the empty-cart message) with fields for Ad Soyad, Telefon, Şehir, and Adres"
+    },
+    { "type": "action", "description": "Type '123' into the Telefon (phone) field, then click/tab away from the field to blur it" },
+    {
+      "type": "assertion",
+      "description": "An inline error message appears near the phone field with the text 'Geçerli bir telefon numarası girin (örn: 05XX XXX XX XX)'"
+    }
+  ]
+}

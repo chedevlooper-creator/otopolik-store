@@ -1,0 +1,24 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Gallery page filters items by photo/video type and opens the lightbox",
+  "description": "Verifies the /galeri filter buttons (Tümü / Fotoğraflar / Videolar) change which grid items are shown, and clicking a grid item opens the lightbox viewer.",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /galeri" },
+    {
+      "type": "assertion",
+      "description": "The heading 'Gerçek Araçlar. Gerçek Uyum.' is visible and the gallery grid shows multiple items"
+    },
+    { "type": "action", "description": "Click the 'Fotoğraflar' filter button" },
+    {
+      "type": "assertion",
+      "description": "Only photo items remain in the grid (no video play-icon overlays are visible), and the 'Fotoğraflar' button is now visually highlighted as active"
+    },
+    { "type": "action", "description": "Click the first item in the filtered gallery grid" },
+    {
+      "type": "assertion",
+      "description": "A fullscreen lightbox overlay opens showing the enlarged image"
+    }
+  ]
+}

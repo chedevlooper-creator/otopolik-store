@@ -1,0 +1,29 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Configurator: completing vehicle details and colors enables adding the mat set to the cart",
+  "description": "Verifies the full /olusturucu happy path: filling in vehicle details enables the Sepete Ekle button, and adding to cart updates the header cart badge.",
+  "priority": "p1",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /olusturucu" },
+    {
+      "type": "assertion",
+      "description": "The 'Sepete Ekle' button at the bottom of the page is disabled, and the text 'Sepete eklemek için önce marka ve modelinizi seçin.' is visible"
+    },
+    { "type": "action", "description": "In the 'Aracınızı Seçin' section, select any brand from the 'Marka' dropdown, then select any model from the 'Model' dropdown, type '2021' into the 'Model yılı' field, and type 'Sedan' into the 'Kasa / versiyon' field" },
+    {
+      "type": "assertion",
+      "description": "The helper text below the vehicle fields changes to 'Araç bilgileri tamamlandı. Şimdi taban ve kenar rengini belirleyin.'"
+    },
+    { "type": "action", "description": "Select any floor color swatch and any edge color swatch offered by the color pickers" },
+    { "type": "action", "description": "Click the 'Sepete Ekle' button" },
+    {
+      "type": "assertion",
+      "description": "The button briefly shows 'Eklendi' confirmation text and a floating 'Eklendi ✓' badge appears"
+    },
+    {
+      "type": "assertion",
+      "description": "The header cart button now shows a badge count of at least 1 (aria-label includes 'Sepetim, 1 ürün' or similar non-zero count)"
+    }
+  ]
+}

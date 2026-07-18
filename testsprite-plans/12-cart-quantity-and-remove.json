@@ -1,0 +1,25 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Cart drawer quantity controls and item removal update the totals",
+  "description": "Verifies that after adding a mat set to the cart, increasing quantity in the cart drawer updates the line total and header badge, and removing the item empties the cart.",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /olusturucu, select any brand and model in the 'Aracınızı Seçin' section, type '2021' into 'Model yılı' and 'Sedan' into 'Kasa / versiyon', pick any floor and edge color, then click 'Sepete Ekle'" },
+    { "type": "action", "description": "Click the 'Sepet' (cart) button in the header to open the cart drawer" },
+    {
+      "type": "assertion",
+      "description": "The cart drawer shows exactly 1 item with quantity 1"
+    },
+    { "type": "action", "description": "Click the plus (increase quantity) button on the cart item" },
+    {
+      "type": "assertion",
+      "description": "The item's quantity shown in the drawer becomes 2 and the line price doubles"
+    },
+    { "type": "action", "description": "Click the minus (decrease quantity) button on the cart item twice" },
+    {
+      "type": "assertion",
+      "description": "The item is removed from the cart and the drawer shows the empty-cart state 'Sepetiniz boş'"
+    }
+  ]
+}

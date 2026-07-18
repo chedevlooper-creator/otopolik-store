@@ -1,0 +1,14 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Vehicle landing page returns a not-found page for an unknown vehicle slug",
+  "description": "Verifies /arac/[slug] calls notFound() for a slug that doesn't resolve to a known brand/model, instead of crashing or silently rendering an empty page.",
+  "priority": "p2",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to /arac/this-brand-does-not-exist-zzz" },
+    {
+      "type": "assertion",
+      "description": "The page shows a 404 / not-found state (Next.js default 'This page could not be found' or an equivalent not-found message), not the vehicle landing page layout"
+    }
+  ]
+}

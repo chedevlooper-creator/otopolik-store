@@ -1,0 +1,23 @@
+{
+  "projectId": "f6086be5-a9c9-400a-a684-177234083c9e",
+  "type": "frontend",
+  "name": "Home page shows header navigation and hero CTA links to the configurator",
+  "description": "Verifies the homepage renders the primary header nav links and that the hero's main CTA takes the visitor into the mat configurator.",
+  "priority": "p1",
+  "planSteps": [
+    { "type": "action", "description": "Navigate to the homepage (/)" },
+    {
+      "type": "assertion",
+      "description": "The header shows all five nav links: 'Özellikler', 'Galeri', 'Tasarla', 'S.S.S.', and 'Destek'"
+    },
+    {
+      "type": "assertion",
+      "description": "The hero section shows the heading text 'Aracının zeminine' followed by 'kusursuz uyum.'"
+    },
+    { "type": "action", "description": "Click the primary hero call-to-action button (the red button below the hero heading, default label 'Aracını Seç')" },
+    {
+      "type": "assertion",
+      "description": "The browser navigates to a URL whose path is /olusturucu"
+    }
+  ]
+}
