@@ -374,6 +374,34 @@ h3 {
   box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.6);
 }
 
+/* ─── Hero lazer kesim geçişi ───
+   Nokta die-cut hattını bir kez izler, çizgi ardında kalıcı olarak çizilir.
+   prefers-reduced-motion: çizgi tam çizili gelir, nokta hiç görünmez. */
+@keyframes hero-laser-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+.hero-laser-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 5px rgba(237, 27, 36, 0.45));
+  animation: hero-laser-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+
+@keyframes hero-laser-dot-life {
+  0% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.hero-laser-dot {
+  opacity: 0;
+  filter: drop-shadow(0 0 7px rgba(237, 27, 36, 0.95))
+    drop-shadow(0 0 16px rgba(237, 27, 36, 0.5));
+  animation: hero-laser-dot-life 1.4s linear 0.35s forwards;
+}
+
 /* Kesim çizgisi */
 .cut-line {
   height: 1px;
@@ -589,13 +617,16 @@ h3 {
   .hero-line,
   .hero-brand,
   .hero-fade,
-  .hero-laser-path,
-  .hero-laser-dot {
+  .hero-laser-path {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
     stroke-dashoffset: 0 !important;
+  }
+
+  .hero-laser-dot {
+    display: none !important;
   }
 
   .btn-press:hover,
@@ -652,19 +683,26 @@ h3 {
   isolation: isolate;
   overflow: hidden;
   color: #ffffff !important;
-  background: linear-gradient(180deg, #ED1B24 0%, #c1121c 50%, #900d14 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
-    0 12px 34px rgba(237, 27, 36, 0.24);
+  background: linear-gradient(135deg, #8c1626 0%, #a91d32 50%, #8c1626 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  box-shadow: 0 2px 12px rgba(140, 22, 38, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: background-position 0.4s ease, box-shadow 0.3s ease,
+    filter 0.3s ease, transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.btn-red-rich:hover {
+.btn-red-rich:hover:not(:disabled) {
   filter: brightness(1.08);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    0 16px 44px rgba(237, 27, 36, 0.34);
+  background-position: 100% 50%;
+  box-shadow: 0 4px 24px rgba(140, 22, 38, 0.5),
+    0 0 40px rgba(169, 29, 50, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-red-rich:active:not(:disabled) {
+  box-shadow: 0 1px 6px rgba(140, 22, 38, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-red-rich:disabled {
@@ -829,30 +867,6 @@ h3 {
   transform: translateY(0) scale(0.97);
   transition-duration: 0.08s;
 }
-
-/* ─── Premium CTA — kırmızı gradient + hover glow ─── */
-.btn-red-rich {
-  background: linear-gradient(135deg, #8c1626 0%, #a91d32 50%, #8c1626 100%);
-  background-size: 200% 200%;
-  background-position: 0% 50%;
-  box-shadow: 0 2px 12px rgba(140, 22, 38, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: background-position 0.4s ease, box-shadow 0.3s ease,
-    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.btn-red-rich:hover:not(:disabled) {
-  background-position: 100% 50%;
-  box-shadow: 0 4px 24px rgba(140, 22, 38, 0.5),
-    0 0 40px rgba(169, 29, 50, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.btn-red-rich:active:not(:disabled) {
-  box-shadow: 0 1px 6px rgba(140, 22, 38, 0.4),
-    inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
 
 /* Kart yükselme efekti — daha yumuşak */
 .card-lift {

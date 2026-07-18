@@ -39,26 +39,40 @@ export default function Hero({ content }: Props) {
             Hassas Mühendislik Protokolü
           </span>
 
-          <p className="mt-3 font-heading text-[clamp(2.8rem,7vw,5.75rem)] font-extrabold leading-[0.9] tracking-[-0.04em] text-white">
-            OTOPOLİK
-          </p>
-
-          <div className="mx-auto mt-3 h-[18px] w-full max-w-md text-brand-red">
-            <svg viewBox="0 0 420 18" fill="none" aria-hidden="true">
-              <path
-                d="M2 12 C48 4, 72 16, 118 9 S190 3, 230 11 S310 16, 360 7 L418 10"
-                stroke="currentColor"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
-          <h1 className="mt-5 max-w-2xl font-heading text-[clamp(1.35rem,2.2vw,2rem)] font-semibold leading-[1.2] tracking-[-0.03em] text-white">
+          <h1 className="mt-5 max-w-4xl font-heading text-[clamp(2.5rem,5.5vw,4.75rem)] font-extrabold leading-[1.02] tracking-[-0.04em] text-white">
             {headline}
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-6 text-white/70 sm:text-base">
+          {/* Lazer kesim geçişi — nokta hattı bir kez çizer, düz makine kesiği kalır */}
+          <div className="mx-auto mt-5 h-[22px] w-full max-w-md px-4 text-brand-red sm:px-0">
+            <svg viewBox="0 0 420 24" fill="none" aria-hidden="true" className="h-full w-full overflow-visible">
+              <path
+                id="hero-laser-track"
+                className="hero-laser-path"
+                d="M2 16 H128 V8 H160 V16 H272 V22 H304 V16 H418"
+                pathLength="1"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+              />
+              <circle className="hero-laser-dot" r="3.5" fill="#ffffff">
+                <animateMotion
+                  dur="1.4s"
+                  begin="0.35s"
+                  fill="freeze"
+                  calcMode="spline"
+                  keyPoints="0;1"
+                  keyTimes="0;1"
+                  keySplines="0.22 1 0.36 1"
+                >
+                  <mpath href="#hero-laser-track" />
+                </animateMotion>
+              </circle>
+            </svg>
+          </div>
+
+          <p className="mt-5 max-w-lg text-sm leading-6 text-white/70 sm:text-base">
             {hero?.body ?? "Lazer kesim kalıp. Premium EVA. 1-3 günde kargo."}
           </p>
 
