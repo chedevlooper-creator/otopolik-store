@@ -139,7 +139,7 @@ export default async function VehicleLandingPage({
 
       {/* Hero Section */}
       <section className="premium-grid relative overflow-hidden rounded-[2rem] border border-white/8 bg-surface/55 p-8 sm:p-12 lg:p-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(227,25,55,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(237,27,36,0.08),transparent_50%)]" />
         <div className="relative">
           <span className="spec-label">Araca özel üretim</span>
           <h1 className="mt-4 font-heading text-4xl font-bold leading-[0.94] tracking-[-0.02em] text-white sm:text-5xl lg:text-6xl">
@@ -320,7 +320,7 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* CTA Banner */}
-      <section className="mt-16 overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-red via-[#c5112d] to-[#790b1c] p-8 sm:p-12">
+      <section className="mt-16 overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-red to-brand-red-dark p-8 sm:p-12">
         <div className="relative flex flex-col items-center text-center">
           <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">
             {vehicle.brand} {vehicle.model} için hemen başlayın

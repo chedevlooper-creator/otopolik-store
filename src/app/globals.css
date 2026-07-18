@@ -251,7 +251,7 @@ h3 {
 }
 
 .red-glow {
-  box-shadow: 0 20px 60px rgba(227, 25, 55, 0.22);
+  box-shadow: 0 20px 60px rgba(237, 27, 36, 0.22);
 }
 
 /* ─── Section kicker — yeni pill badge stili ─── */
@@ -478,7 +478,7 @@ h3 {
 
 .card-lift-glow:hover {
   transform: translateY(-4px);
-  box-shadow: 0 32px 80px rgba(227, 25, 55, 0.12),
+  box-shadow: 0 32px 80px rgba(237, 27, 36, 0.12),
     0 0 0 1px rgba(255, 255, 255, 0.16);
 }
 
@@ -1107,7 +1107,7 @@ h3 {
   --sand: #cfcfca;
   --sand-dim: #8f8f8a;
   --brand-red: #ED1B24;
-  --brand-red-dark: #c1121c;
+  --brand-red-dark: #A40D15;
   color: #f2f2f0;
   background: #000000;
 }
@@ -1338,7 +1338,7 @@ h3 {
   --line: rgba(255, 255, 255, 0.09);
   --text: #FAFAFA;
   --muted: #A0A0A5;
-  --red: #E30613;
+  --red: #ED1B24;
   --red-hot: #FF2E36;
   --wa: #25D366;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -1371,7 +1371,7 @@ h3 {
 }
 .showroom-page .btn-red {
   color: #fff;
-  background: linear-gradient(160deg, var(--red-hot) 0%, var(--red) 45%, #9E0B12 100%);
+  background: linear-gradient(160deg, var(--red-hot) 0%, var(--red) 45%, #A40D15 100%);
   box-shadow: 0 12px 40px rgba(237, 27, 36, 0.35), inset 0 1px 0 rgba(255,255,255,0.35);
 }
 .showroom-page .btn-red:hover { transform: translateY(-2px); box-shadow: 0 18px 60px rgba(237, 27, 36, 0.5), inset 0 1px 0 rgba(255,255,255,0.45); }
@@ -1720,24 +1720,24 @@ h3 {
 
 /* ─── SHOWROOM FLOATING NAVBAR OVERRIDES (HOME ONLY) ─── */
 @media (min-width: 1024px) {
-  .showroom-home header {
+  .premium-site header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
   }
-  .showroom-home header > div {
+  .premium-site header > div {
     border-bottom: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
   }
-  .showroom-home header > div > div:nth-child(2) {
+  .premium-site header > div > div:nth-child(2) {
     max-width: 1280px !important;
     margin: 18px auto 0 !important;
     padding: 0 32px !important;
   }
-  .showroom-home header > div > div:nth-child(2) > div {
+  .premium-site header > div > div:nth-child(2) > div {
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
     background: linear-gradient(135deg, rgba(16, 16, 17, 0.6) 0%, rgba(8, 8, 8, 0.8) 100%) !important;
@@ -1751,7 +1751,7 @@ h3 {
     padding-right: 14px !important;
   }
   /* Nav items interactive visual polish */
-  .showroom-home header nav a {
+  .premium-site header nav a {
     position: relative;
     font-family: var(--font-body);
     font-size: 13.5px !important;
@@ -1760,11 +1760,11 @@ h3 {
     color: rgba(255, 255, 255, 0.75) !important;
     transition: color 0.3s var(--ease), transform 0.3s var(--ease) !important;
   }
-  .showroom-home header nav a:hover {
+  .premium-site header nav a:hover {
     color: #ffffff !important;
     transform: translateY(-1px);
   }
-  .showroom-home header nav a::after {
+  .premium-site header nav a::after {
     content: "";
     position: absolute;
     bottom: -6px;
@@ -1777,40 +1777,40 @@ h3 {
     transition: transform 0.3s var(--ease);
     box-shadow: 0 0 8px var(--red-hot);
   }
-  .showroom-home header nav a:hover::after {
+  .premium-site header nav a:hover::after {
     transform: translateX(-50%) scaleX(1);
   }
   /* Hover effects on logo, cart, search */
-  .showroom-home header button:hover {
+  .premium-site header button:hover {
     transform: scale(1.05);
     transition: transform 0.25s var(--ease) !important;
   }
-  .showroom-home header a:has(span.group) {
+  .premium-site header a:has(span.group) {
     transition: transform 0.3s var(--ease) !important;
   }
-  .showroom-home header a:has(span.group):hover {
+  .premium-site header a:has(span.group):hover {
     transform: scale(1.02);
   }
 }
 
 @media (max-width: 1023px) {
-  .showroom-home header {
+  .premium-site header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
   }
-  .showroom-home header > div {
+  .premium-site header > div {
     border-bottom: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
   }
-  .showroom-home header > div > div:nth-child(2) {
+  .premium-site header > div > div:nth-child(2) {
     margin: 14px 14px 0 !important;
     padding: 0 !important;
   }
-  .showroom-home header > div > div:nth-child(2) > div {
+  .premium-site header > div > div:nth-child(2) > div {
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     background: linear-gradient(135deg, rgba(16, 16, 17, 0.65) 0%, rgba(8, 8, 8, 0.8) 100%) !important;

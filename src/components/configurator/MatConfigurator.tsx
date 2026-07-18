@@ -110,7 +110,7 @@ export default function MatConfigurator({
                   <span
                     className={`spec-value flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
                       isActive
-                        ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
+                        ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(237,27,36,0.5)]"
                         : isDone
                           ? "bg-white/20 text-white"
                           : "bg-white/5 text-white/30"
@@ -137,7 +137,7 @@ export default function MatConfigurator({
               onClick={() => setPreviewMode("cabin")}
               className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 previewMode === "cabin"
-                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
+                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(237,27,36,0.5)]"
                   : "text-white/60 hover:text-white"
               }`}
             >
@@ -148,7 +148,7 @@ export default function MatConfigurator({
               onClick={() => setPreviewMode("flat")}
               className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 previewMode === "flat"
-                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
+                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(237,27,36,0.5)]"
                   : "text-white/60 hover:text-white"
               }`}
             >

@@ -33,8 +33,8 @@ export default async function ConfiguratorPage({
   return (
     <div className="relative min-h-screen bg-black overflow-hidden">
       {/* 8K Premium EVA Background */}
-      <div 
-        className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity"
+      <div
+        className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity grayscale"
         style={{
           backgroundImage: "url('/media/configurator-bg.png')",
           backgroundSize: "cover",
@@ -44,11 +44,11 @@ export default async function ConfiguratorPage({
       />
       {/* Gradient Overlays for HUD feel */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 pointer-events-none" />
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,0,50,0.05),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:py-16">
         <div className="mb-10 max-w-3xl border border-white/5 bg-black/40 p-6 sm:p-9 rounded-2xl backdrop-blur-md">
-          <span className="section-kicker shadow-[0_0_15px_rgba(255,0,50,0.5)]">{kicker?.title ?? "Online paspas oluşturucu"}</span>
+          <span className="section-kicker">{kicker?.title ?? "Online paspas oluşturucu"}</span>
           <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
             {page?.title ?? "Kendi paspasını tasarla"}
           </h1>

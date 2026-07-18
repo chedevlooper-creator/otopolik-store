@@ -26,7 +26,7 @@ export default function VehicleSelector({
         id="configurator-vehicle-title"
         className="flex items-center gap-3 font-heading text-2xl font-bold text-white mb-6"
       >
-        <span className="spec-value flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-red)] text-sm font-bold text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]">01</span>
+        <span className="spec-value flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-red)] text-sm font-bold text-white shadow-[0_0_15px_rgba(237,27,36,0.5)]">01</span>
         Aracınızı Seçin
       </h2>
 
