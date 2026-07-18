@@ -17,11 +17,6 @@ export const metadata: Metadata = {
     "Kargo, ölçü, bakım ve sipariş sorularınız için OTO POLİK destek ekibine ulaşın.",
 };
 
-const fallbackLinks = [
-  { href: "/bilgiler/kargo", label: "Kargo ve teslimat" },
-  { href: "/bilgiler/iade", label: "İade ve değişim" },
-];
-
 export default async function SupportPage() {
   const aiEnabled = isCustomerAiUiEnabled();
   const [settings, SupportChat] = await Promise.all([
@@ -92,21 +87,7 @@ export default async function SupportPage() {
               doğrudan destek ekibimize ulaşabilirsiniz.
             </p>
 
-            <nav
-              aria-label="Alternatif destek seçenekleri"
-              className="mt-6 grid gap-2 sm:grid-cols-3"
-            >
-              {fallbackLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="btn-ghost-rich btn-press inline-flex min-h-12 items-center justify-between gap-2 px-4 text-xs font-semibold"
-                >
-                  {item.label}
-                  <ArrowRightIcon className="size-4" aria-hidden="true" />
-                </Link>
-              ))}
-            </nav>
+
 
             <a
               href={whatsappHref}

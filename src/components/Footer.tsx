@@ -18,23 +18,8 @@ import {
 } from "lucide-react";
 import Logo from "@/components/Logo";
 
-const KURUMSAL_LINKS = [
-  { href: "/hakkimizda", label: "Hakkımızda" },
-  { href: "/destek", label: "Destek" },
-  { href: "/bilgiler/gizlilik", label: "Gizlilik Politikası" },
-];
-
 const URUNLER_LINKS = [
   { href: "/olusturucu", label: "Paspas Tasarla" },
-  { href: "/galeri", label: "Uygulama Galerisi" },
-];
-
-const DESTEK_LINKS = [
-  { href: "/bilgiler/kargo", label: "Kargo ve Teslimat" },
-  { href: "/bilgiler/iade", label: "İade ve Değişim" },
-  { href: "/bilgiler/mesafeli-satis", label: "Mesafeli Satış" },
-  { href: "/bilgiler/on-bilgilendirme", label: "Ön Bilgilendirme" },
-  { href: "/bilgiler/ozel-uretim", label: "Özel Üretim" },
 ];
 
 export default function Footer() {
@@ -90,15 +75,6 @@ export default function Footer() {
             </nav>
           </div>
 
-          <nav aria-labelledby="footer-corporate-title">
-            <h3 id="footer-corporate-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Kurumsal</h3>
-            <ul className="mt-3 space-y-0.5 text-sm">
-              {KURUMSAL_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
-              ))}
-            </ul>
-          </nav>
-
           <nav aria-labelledby="footer-products-title">
             <h3 id="footer-products-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Ürünler</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
@@ -111,9 +87,7 @@ export default function Footer() {
           <nav aria-labelledby="footer-support-title">
             <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Destek</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
-              {DESTEK_LINKS.map((item) => (
-                <li key={item.href}><Link href={item.href} className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">{item.label}</Link></li>
-              ))}
+              <li><Link href="/destek" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">AI Destek Asistanı</Link></li>
             </ul>
           </nav>
 

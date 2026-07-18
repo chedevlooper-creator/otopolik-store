@@ -166,10 +166,10 @@ export default function CheckoutPageClient({
             "Ödeme adımına geçmeden önce sepetinize ürün ekleyin."}
         </p>
         <Link
-          href="/urunler"
+          href="/olusturucu"
           className="btn-press btn-red-rich mt-6 inline-flex rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white"
         >
-          {content.ctaLabel ?? "Ürünleri İncele"}
+          {content.ctaLabel ?? "Hemen Tasarla"}
         </Link>
       </div>
     );
@@ -537,15 +537,7 @@ export default function CheckoutPageClient({
               aria-describedby={errors.legal ? "checkout-legal-error" : undefined}
             />
             <span className="text-sm leading-6 text-foreground/85">
-             {" "}
-              <Link href="/bilgiler/on-bilgilendirme" className="font-semibold text-white hover:underline">
-                Ön bilgilendirme
-              </Link>
-              {" "}ve{" "}
-              <Link href="/bilgiler/mesafeli-satis" className="font-semibold text-white hover:underline">
-                mesafeli satış sözleşmesi
-              </Link>
-              {" "}metinlerini okudum, kabul ediyorum.
+             {" "}WhatsApp üzerinden sağlanacak ön bilgilendirme ve mesafeli satış koşullarını okudum, kabul ediyorum.
             </span>
           </label>
           {errors.legal ? (
