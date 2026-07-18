@@ -100,11 +100,11 @@ export default function CartDrawer() {
               Aracınıza özel EVA paspas setini keşfedin.
             </p>
             <Link
-              href="/urunler"
+              href="/olusturucu"
               onClick={closeDrawer}
               className="btn-press btn-red-rich mt-2 rounded-full px-6 py-3 text-sm font-bold text-white"
             >
-              Ürünleri İncele
+              Hemen Tasarla
             </Link>
           </div>
         ) : (
@@ -166,13 +166,6 @@ export default function CartDrawer() {
                 className="btn-press btn-red-rich mt-4 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white"
               >
                 Sipariş Talebine Geç
-              </Link>
-              <Link
-                href="/sepet"
-                onClick={closeDrawer}
-                className="btn-press mt-2 flex w-full items-center justify-center rounded-full border border-white/12 px-6 py-3 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04]"
-              >
-                Sepete Git
               </Link>
             </div>
           </>

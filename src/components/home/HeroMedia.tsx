@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 /**
  * Hero arka plan videosu (lüks sedan kabin / paspas).
@@ -12,6 +12,24 @@ export default function HeroMedia() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    
+    // Ensure video properties for autoplay are set
+    video.muted = true;
+    
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setPlaying(true))
+        .catch(() => {
+          // Autoplay was prevented
+          setPlaying(false);
+        });
+    }
+  }, []);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -50,7 +68,8 @@ export default function HeroMedia() {
         muted
         loop
         playsInline
-        preload="metadata"
+        autoPlay
+        preload="auto"
         tabIndex={-1}
         aria-hidden="true"
         onPlay={() => setPlaying(true)}
@@ -73,3 +92,4 @@ export default function HeroMedia() {
     </>
   );
 }
+

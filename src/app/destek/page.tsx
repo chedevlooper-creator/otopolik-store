@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 const fallbackLinks = [
   { href: "/bilgiler/kargo", label: "Kargo ve teslimat" },
   { href: "/bilgiler/iade", label: "İade ve değişim" },
-  { href: "/iletisim", label: "İletişim bilgileri" },
 ];
 
 export default async function SupportPage() {

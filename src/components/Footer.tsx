@@ -20,13 +20,11 @@ import Logo from "@/components/Logo";
 
 const KURUMSAL_LINKS = [
   { href: "/hakkimizda", label: "Hakkımızda" },
-  { href: "/iletisim", label: "İletişim" },
   { href: "/destek", label: "Destek" },
   { href: "/bilgiler/gizlilik", label: "Gizlilik Politikası" },
 ];
 
 const URUNLER_LINKS = [
-  { href: "/urunler", label: "Paspas Modelleri" },
   { href: "/olusturucu", label: "Paspas Tasarla" },
   { href: "/galeri", label: "Uygulama Galerisi" },
 ];
@@ -37,7 +35,6 @@ const DESTEK_LINKS = [
   { href: "/bilgiler/mesafeli-satis", label: "Mesafeli Satış" },
   { href: "/bilgiler/on-bilgilendirme", label: "Ön Bilgilendirme" },
   { href: "/bilgiler/ozel-uretim", label: "Özel Üretim" },
-  { href: "/sepet", label: "Sepetim" },
 ];
 
 export default function Footer() {

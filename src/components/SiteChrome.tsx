@@ -25,6 +25,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
     mainContent.scrollIntoView({ block: "start" });
   };
 
+  const isHome = pathname === "/";
+
   if (isAdminRoute) {
     return children;
   }
@@ -32,7 +34,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <CartProvider>
       <SmoothScroll />
-      <div className="premium-site flex min-h-screen flex-col">
+      <div className={`premium-site flex min-h-screen flex-col ${isHome ? "showroom-home" : ""}`}>
         <a
           href="#main-content"
           onClick={focusMainContent}

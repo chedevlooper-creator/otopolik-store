@@ -1,12 +1,20 @@
 import Hero from "@/components/home/Hero";
-import Faq from "@/components/home/Faq";
+import ShowroomBento from "@/components/home/ShowroomBento";
+import ShowroomColorPicker from "@/components/home/ShowroomColorPicker";
+import ShowroomConfiguratorBanner from "@/components/home/ShowroomConfiguratorBanner";
+import ShowroomProcess from "@/components/home/ShowroomProcess";
+import ShowroomTestimonials from "@/components/home/ShowroomTestimonials";
+import ShowroomFaq from "@/components/home/ShowroomFaq";
+import ShowroomFinalCTA from "@/components/home/ShowroomFinalCTA";
+import ShowroomTrustStrip from "@/components/home/ShowroomTrustStrip";
+import ShowroomRevealInitializer from "@/components/home/ShowroomRevealInitializer";
+
 import {
   getContentPage,
   getFaqs,
   getStoreSettingsCompat,
   interpolateCmsText,
 } from "@/lib/cms-home";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { faqPageSchema, renderJsonLd } from "@/lib/structured-data";
 
 export const dynamic = "force-dynamic";
@@ -32,23 +40,25 @@ export default async function Home() {
   }));
 
   return (
-    <>
+    <div className="showroom-page">
       <Hero
         content={{
           hero: section("hero"),
           secondaryCta: section("hero-secondary-cta"),
         }}
       />
-      <Faq
-        header={section("faq")}
-        sidebar={section("faq-sidebar")}
-        items={faqItems}
-        whatsappHref={buildWhatsAppLink(
-          settings.whatsappNumber,
-          "Merhaba, aracıma özel EVA paspas siparişi hakkında bilgi almak istiyorum."
-        )}
-      />
+      <ShowroomBento />
+      <ShowroomColorPicker />
+      <ShowroomConfiguratorBanner />
+      <ShowroomProcess />
+      <ShowroomTestimonials />
+      <ShowroomFaq items={faqItems} />
+      <ShowroomFinalCTA />
+      <ShowroomTrustStrip />
+      <ShowroomRevealInitializer />
       {renderJsonLd(faqPageSchema(faqItems))}
-    </>
+    </div>
   );
 }
+
+

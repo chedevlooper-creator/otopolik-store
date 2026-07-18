@@ -132,10 +132,6 @@ export default async function VehicleLandingPage({
           Ana Sayfa
         </Link>
         <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
-        <Link href="/urunler" className="hover:text-white">
-          Ürünler
-        </Link>
-        <ChevronRightIcon className="h-3 w-3 text-white-dim" aria-hidden="true" />
         <span className="text-foreground">
           {vehicle.brand} {vehicle.model}
         </span>
