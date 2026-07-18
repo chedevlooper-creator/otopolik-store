@@ -94,14 +94,14 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => choose("essential")}
-            className="btn-press min-h-10 rounded-lg border border-border px-3 text-[11px] font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
+            className="btn-press min-h-10 rounded-full border border-border px-3 text-[11px] font-bold uppercase tracking-wider text-foreground hover:border-white hover:text-white"
           >
             Yalnızca gerekli
           </button>
           <button
             type="button"
             onClick={() => choose("accepted")}
-            className="btn-press btn-red-rich min-h-10 rounded-lg px-3 text-[11px] font-bold uppercase tracking-wider text-white"
+            className="btn-press btn-red-rich min-h-10 rounded-full px-3 text-[11px] font-bold uppercase tracking-wider text-white"
           >
             Kabul et
           </button>

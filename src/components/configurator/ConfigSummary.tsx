@@ -116,7 +116,7 @@ export default function ConfigSummary({
               animate={{ opacity: 1, y: -40, scale: 1 }}
               exit={{ opacity: 0, y: -60 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="pointer-events-none absolute left-1/4 top-0 z-30 rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-bold text-white shadow-lg backdrop-blur"
+              className="pointer-events-none absolute left-1/4 top-0 z-30 rounded-full bg-[#25D366]/90 px-3 py-1 text-xs font-bold text-white shadow-lg backdrop-blur"
             >
               Eklendi ✓
             </motion.div>

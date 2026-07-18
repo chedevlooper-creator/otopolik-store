@@ -29,16 +29,16 @@ export default async function NotFound() {
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/"
-            className="btn-press btn-red-rich inline-flex min-h-12 items-center gap-2 rounded-lg px-7 text-xs font-bold uppercase tracking-[0.08em]"
+            className="btn-press btn-red-rich inline-flex min-h-12 items-center gap-2 rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em]"
           >
             <HomeIcon className="h-4 w-4" aria-hidden="true" />
             Ana Sayfaya Dön
           </Link>
           <Link
-            href="/urunler"
-            className="btn-press btn-ghost-rich inline-flex min-h-12 items-center gap-2 rounded-lg px-7 text-xs font-bold uppercase tracking-[0.08em] text-white/90"
+            href="/olusturucu"
+            className="btn-press btn-ghost-rich inline-flex min-h-12 items-center gap-2 rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em] text-white/90"
           >
-            Ürünleri İncele
+            Paspasını Tasarla
             <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>

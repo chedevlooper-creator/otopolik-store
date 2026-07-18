@@ -6,6 +6,7 @@
   --foreground: #f2f2f0;
   --brand-red: #ED1B24; /* Racing Red */
   --brand-red-dark: #A40D15;
+  --red-hot: #FF2E36; /* Parlak kırmızı vurgu — tüm sayfalarda ortak */
   --brand-black: #050505;
   --surface: #0B0B0B;
   --surface-hover: #141414;
@@ -1101,13 +1102,16 @@ h3 {
    ================================================================ */
 .premium-site {
   --background: #000000;
-  --surface: #0b0b0b;
+  --surface: #0A0A0B;
   --surface-hover: #141414;
   --border: #1B1B1B;
+  --line: rgba(255, 255, 255, 0.09);
   --sand: #cfcfca;
   --sand-dim: #8f8f8a;
   --brand-red: #ED1B24;
   --brand-red-dark: #A40D15;
+  --red-hot: #FF2E36;
+  --r-card: 22px;
   color: #f2f2f0;
   background: #000000;
 }
@@ -1123,6 +1127,7 @@ h3 {
 .premium-site .premium-card,
 .premium-site .surface-glass,
 .premium-showroom {
+  border-radius: var(--r-card);
   border: 1px solid #1B1B1B;
   background: #0e0e0e;
   box-shadow:
@@ -1131,11 +1136,11 @@ h3 {
 }
 
 .premium-site .premium-card:hover {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(237, 27, 36, 0.5);
   box-shadow:
-    0 36px 90px rgba(0, 0, 0, 0.5),
+    0 36px 90px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
+    0 0 40px rgba(237, 27, 36, 0.12);
 }
 
 .premium-site .premium-grid {
@@ -1158,8 +1163,13 @@ h3 {
   color: #ffffff;
   padding: 0.375rem 0.875rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(237, 27, 36, 0.28);
+  background: rgba(237, 27, 36, 0.06);
+}
+
+.premium-site .section-kicker::before {
+  background: var(--red-hot);
+  box-shadow: 0 0 12px var(--red-hot);
 }
 
 .premium-site .section-title {
@@ -1177,18 +1187,18 @@ h3 {
   color: #ffffff !important;
   border: 1px solid rgba(237, 27, 36, 0.35);
   border-radius: 999px;
-  background: linear-gradient(135deg, #ED1B24 0%, #b90e29 50%, #8b0a1a 100%);
+  background: linear-gradient(160deg, #FF2E36 0%, #ED1B24 45%, #A40D15 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
     inset 0 -1px 0 rgba(0, 0, 0, 0.35),
-    0 12px 34px rgba(237, 27, 36, 0.22);
+    0 12px 40px rgba(237, 27, 36, 0.35);
 }
 
 .premium-site .btn-red-rich:hover {
   filter: brightness(1.08) saturate(1.04);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 17px 44px rgba(237, 27, 36, 0.32);
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 18px 60px rgba(237, 27, 36, 0.5);
 }
 
 /* Header SEPET — High contrast solid white */
@@ -1339,7 +1349,6 @@ h3 {
   --text: #FAFAFA;
   --muted: #A0A0A5;
   --red: #ED1B24;
-  --red-hot: #FF2E36;
   --wa: #25D366;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font-body: "Instrument Sans", system-ui, sans-serif;

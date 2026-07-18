@@ -32,7 +32,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
     >
       <div className={`premium-grid relative overflow-hidden border-b border-transparent bg-transparent ${featured ? "min-h-[330px] flex-1" : "aspect-[16/10]"}`}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,.05),transparent_55%)] opacity-80" />
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/[0.03] blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
+        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[var(--red-hot)]/[0.07] opacity-0 blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
         {/* Cam vitrin — ürün cam bir pencerenin arkasında sergilenir */}
         <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"} ${hasLightImage ? "bg-white!" : ""}`}>
           <SafeImage
@@ -68,7 +68,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
               </span>
             )}
           </div>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/8 bg-black/40 text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-background group-hover:shadow-lg">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/8 bg-black/40 text-white backdrop-blur-md transition-all duration-300 group-hover:-rotate-45 group-hover:border-[var(--red-hot)] group-hover:bg-[var(--red-hot)] group-hover:text-white group-hover:shadow-[0_0_18px_rgba(237,27,36,0.5)]">
             <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>

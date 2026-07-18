@@ -55,11 +55,11 @@ export default function ColorPicker({
               aria-label={`${c.name} (${c.hex.toUpperCase()})`}
               onClick={() => onSelect(c)}
               title={`${c.name} · ${c.hex.toUpperCase()}`}
-              whileHover={{ scale: 1.15, boxShadow: "0 0 20px rgba(255,255,255,0.25)" }}
+              whileHover={{ scale: 1.15, boxShadow: "0 0 20px rgba(237,27,36,0.35)" }}
               whileTap={{ scale: 0.92 }}
               className={`group/color relative h-12 w-12 rounded-full border-2 transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
                 isActive
-                  ? "border-white shadow-[0_0_16px_rgba(255,255,255,0.25)]"
+                  ? "border-[var(--red-hot)] shadow-[0_0_0_4px_rgba(237,27,36,0.18),0_0_16px_rgba(237,27,36,0.4)]"
                   : "border-white/10 hover:border-white/30"
               }`}
               style={{ backgroundColor: c.hex }}
@@ -81,7 +81,7 @@ export default function ColorPicker({
               {isActive && (
                 <motion.div
                   layoutId={`${label}-active-glow`}
-                  className="absolute -inset-1.5 rounded-full border border-white/20 pointer-events-none"
+                  className="absolute -inset-1.5 rounded-full border border-[var(--red-hot)]/40 pointer-events-none"
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 />
               )}

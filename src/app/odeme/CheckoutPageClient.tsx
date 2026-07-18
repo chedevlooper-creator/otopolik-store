@@ -489,27 +489,27 @@ export default function CheckoutPageClient({
               Sipariş ve ödeme tercihi
             </legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-white has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-[var(--red-hot)] has-[:checked]:bg-surface-hover has-[:checked]:shadow-[0_0_18px_rgba(237,27,36,0.14)]">
                 <input
                   type="radio"
                   name="payment"
                   value="whatsapp"
                   checked={paymentMethod === "whatsapp"}
                   onChange={() => setPaymentMethod("whatsapp")}
-                  className="accent-sand"
+                  className="accent-[var(--brand-red)]"
                 />
                 <span className="text-sm font-medium text-foreground">
                   WhatsApp ile teklif ve sipariş onayı
                 </span>
               </label>
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-white has-[:checked]:bg-surface-hover">
+              <label className="flex items-center gap-3 rounded-xl border border-border bg-gradient-to-b from-white/[0.045] to-transparent bg-surface px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-colors has-[:checked]:border-[var(--red-hot)] has-[:checked]:bg-surface-hover has-[:checked]:shadow-[0_0_18px_rgba(237,27,36,0.14)]">
                 <input
                   type="radio"
                   name="payment"
                   value="kapida"
                   checked={paymentMethod === "kapida"}
                   onChange={() => setPaymentMethod("kapida")}
-                  className="accent-sand"
+                  className="accent-[var(--brand-red)]"
                 />
                 <span className="text-sm font-medium text-foreground">
                   WhatsApp onayından sonra kapıda ödeme
@@ -532,7 +532,7 @@ export default function CheckoutPageClient({
                   });
                 }
               }}
-              className="mt-1 accent-sand"
+              className="mt-1 accent-[var(--brand-red)]"
               aria-invalid={Boolean(errors.legal)}
               aria-describedby={errors.legal ? "checkout-legal-error" : undefined}
             />

@@ -227,14 +227,14 @@ export default async function VehicleLandingPage({
           {content.priceTiers.map((tier: PriceTier) => (
             <div
               key={tier.label}
-              className={`relative rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
+              className={`relative rounded-[var(--r-card)] border p-6 transition-all duration-300 hover:-translate-y-1 ${
                 tier.isPopular
-                  ? "border-white/40 bg-gradient-to-b from-white/[0.06] to-transparent shadow-[0_20px_60px_rgba(255,255,255,0.08)]"
-                  : "border-border bg-surface/50 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
+                  ? "border-[var(--red-hot)]/50 bg-gradient-to-b from-[var(--brand-red)]/[0.08] to-transparent shadow-[0_20px_60px_rgba(237,27,36,0.14)]"
+                  : "border-border bg-surface/50 hover:border-[var(--red-hot)]/40 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
               }`}
             >
               {tier.isPopular && (
-                <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-background">
+                <span className="absolute -top-2.5 left-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--red-hot)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_16px_rgba(237,27,36,0.45)]">
                   <StarIcon className="h-3 w-3" aria-hidden="true" />
                   En çok tercih edilen
                 </span>
@@ -254,10 +254,10 @@ export default async function VehicleLandingPage({
                 href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(content.whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`btn-press mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
+                className={`btn-press mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
                   tier.isPopular
                     ? "btn-red-rich text-white"
-                    : "border border-white/12 bg-white/[0.04] text-white hover:border-white/30 hover:bg-white/[0.08]"
+                    : "border border-white/12 bg-white/[0.04] text-white hover:border-[var(--red-hot)]/40 hover:bg-white/[0.08]"
                 }`}
               >
                 <ShoppingCartIcon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -305,11 +305,11 @@ export default async function VehicleLandingPage({
           {content.faqItems.map((faq, index) => (
             <details
               key={index}
-              className="group rounded-2xl border border-border bg-surface/50"
+              className="group rounded-[var(--r-card)] border border-border bg-surface/50 transition-colors duration-300 open:border-[rgba(237,27,36,0.4)]"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between p-6 font-heading text-lg font-bold text-white [&::-webkit-details-marker]:hidden">
                 {faq.q}
-                <PlusIcon className="h-5 w-5 shrink-0 text-white transition-transform duration-200 group-open:rotate-45" />
+                <PlusIcon className="h-5 w-5 shrink-0 text-[var(--red-hot)] transition-transform duration-200 group-open:rotate-45" />
               </summary>
               <div className="px-6 pb-6">
                 <p className="leading-relaxed text-muted">{faq.a}</p>
@@ -320,19 +320,23 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* CTA Banner */}
-      <section className="mt-16 overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-red to-brand-red-dark p-8 sm:p-12">
+      <section className="relative mt-16 overflow-hidden rounded-[2rem] border border-white/8 bg-surface p-8 sm:p-14">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_120%_at_50%_120%,rgba(237,27,36,0.24),transparent_70%)]"
+          aria-hidden="true"
+        />
         <div className="relative flex flex-col items-center text-center">
-          <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">
+          <h2 className="font-heading text-3xl font-bold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
             {vehicle.brand} {vehicle.model} için hemen başlayın
           </h2>
-          <p className="mt-4 max-w-xl text-white/80">
+          <p className="mt-4 max-w-xl text-muted">
             Aracınıza özel paspas setinizi tasarlayın, 1-3 iş günü içinde
             kargoya verelim.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href={`/olusturucu?marka=${encodeURIComponent(vehicle.brand)}&model=${encodeURIComponent(vehicle.model)}`}
-              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-white px-8 text-sm font-bold text-background shadow-xl shadow-black/20 hover:bg-white"
+              className="btn-press btn-red-rich inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-8 text-sm font-bold uppercase tracking-[0.1em] text-white"
             >
               Tasarlamaya Başla
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
@@ -341,7 +345,7 @@ export default async function VehicleLandingPage({
               href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(content.whatsappMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 text-sm font-bold text-white backdrop-blur-sm hover:border-white/40 hover:bg-white/20"
+              className="btn-press inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.05] px-8 text-sm font-bold text-white backdrop-blur-sm hover:border-white/35 hover:bg-white/10"
             >
               <MessageCircleIcon className="h-4 w-4" aria-hidden="true" />
               WhatsApp ile Ulaşın

@@ -27,16 +27,16 @@ export default async function ThankYouPage() {
     body?.body ??
     page?.description ??
     "WhatsApp sohbet penceresinde hazırlanan sipariş detaylarını göndererek talebinizi tamamlayın.";
-  const primaryCta = body?.ctaLabel ?? "Alışverişe Devam Et";
-  const primaryHref = body?.ctaHref ?? "/urunler";
+  const primaryCta = body?.ctaLabel ?? "Yeni Bir Paspas Tasarla";
+  const primaryHref = body?.ctaHref ?? "/olusturucu";
   const secondaryCta = body?.subtitle ?? "Ana Sayfa";
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:py-28">
-      <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] border-2 border-white bg-surface shadow-[0_24px_60px_rgba(255,255,255,.14)]">
-        <CheckIcon className="h-10 w-10 text-white" aria-hidden="true" />
+      <span className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] border-2 border-[var(--red-hot)]/60 bg-surface shadow-[0_24px_60px_rgba(237,27,36,.18)]">
+        <CheckIcon className="h-10 w-10 text-[var(--red-hot)]" aria-hidden="true" />
       </span>
-      <h1 className="mt-8 font-heading text-4xl font-bold uppercase text-white sm:text-5xl">
+      <h1 className="mt-8 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
         {title}
       </h1>
       <p className="mt-5 leading-relaxed text-muted">{description}</p>
@@ -54,13 +54,13 @@ export default async function ThankYouPage() {
       <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <Link
           href={primaryHref}
-          className="btn-press btn-red-rich inline-flex min-h-12 items-center rounded-lg px-7 text-xs font-bold uppercase tracking-[0.08em]"
+          className="btn-press btn-red-rich inline-flex min-h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em]"
         >
           {primaryCta}
         </Link>
         <Link
           href="/"
-          className="btn-press btn-ghost-rich inline-flex min-h-12 items-center rounded-lg px-7 text-xs font-bold uppercase tracking-[0.08em] text-white/90"
+          className="btn-press btn-ghost-rich inline-flex min-h-12 items-center rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em] text-white/90"
         >
           {secondaryCta}
         </Link>
