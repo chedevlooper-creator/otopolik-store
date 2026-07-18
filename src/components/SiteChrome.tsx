@@ -7,6 +7,7 @@ import CookieConsent from "@/components/CookieConsent";
 import ConsentAnalytics from "@/components/ConsentAnalytics";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import RevealInitializer from "@/components/RevealInitializer";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import WhatsappFloat from "@/components/WhatsappFloat";
@@ -56,6 +57,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
         <ScrollToTop />
         <CookieConsent />
         <ConsentAnalytics />
+        <RevealInitializer />
       </div>
     </CartProvider>
   );

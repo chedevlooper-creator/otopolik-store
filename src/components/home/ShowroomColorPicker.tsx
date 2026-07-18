@@ -26,7 +26,7 @@ export default function ShowroomColorPicker() {
                 src={c.image}
                 alt={`${c.name} EVA set`}
                 fill
-                className={`object-cover transition-opacity duration-[600ms] ${idx === activeIdx ? "opacity-100 scale-100" : "opacity-0 scale-[1.03]"}`}
+                className={`object-cover ${idx === activeIdx ? "on" : ""}`}
                 style={{ zIndex: idx === activeIdx ? 2 : 1 }}
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority={idx === 0}
@@ -52,7 +52,12 @@ export default function ShowroomColorPicker() {
               ))}
             </div>
             <p className="cp-note">Taban ve kenar (overlok) rengini ayrı ayrı seçersin — kombinasyonu canlı önizlemeyle gör.</p>
-            <Link className="btn btn-ghost" href="/olusturucu">Kombinasyonları Dene →</Link>
+            <Link
+              className="btn-press btn-ghost-rich inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4 text-[13px] font-bold uppercase tracking-[0.09em] text-white"
+              href="/olusturucu"
+            >
+              Kombinasyonları Dene →
+            </Link>
           </div>
         </div>
       </div>

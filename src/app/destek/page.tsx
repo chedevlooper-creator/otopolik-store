@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
-  ArrowRightIcon,
   BotIcon,
   MessageCircleIcon,
   ShieldCheckIcon,

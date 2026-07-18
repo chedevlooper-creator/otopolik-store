@@ -8,12 +8,12 @@ import { WifiOffIcon } from "lucide-react";
  * Premium connectivity tracker toast that alerts the user on connection drop.
  */
 export function NetworkToast() {
-  const [isOffline, setIsOffline] = useState(false);
+  const [isOffline, setIsOffline] = useState(() => 
+    typeof window !== "undefined" ? !window.navigator.onLine : false
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    setIsOffline(!window.navigator.onLine);
 
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);

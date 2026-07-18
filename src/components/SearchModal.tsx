@@ -87,9 +87,7 @@ export default function SearchModal({ open, onClose }: Props) {
   }, [query, products]);
 
   const hasResults = productResults.length > 0 || vehicleResults.length > 0;
-  const catalogHref = query.trim()
-    ? `/urunler?q=${encodeURIComponent(query.trim())}`
-    : "/urunler";
+  const catalogHref = "/olusturucu";
 
   if (!open) return null;
 
@@ -99,12 +97,12 @@ export default function SearchModal({ open, onClose }: Props) {
       aria-modal="true"
       aria-labelledby="site-search-title"
       aria-describedby="site-search-help"
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-background/85 px-4 pt-16 backdrop-blur-md sm:pt-24"
+      className="animate-fade-in fixed inset-0 z-[100] flex items-start justify-center bg-background/85 px-4 pt-16 backdrop-blur-md sm:pt-24"
       onClick={onClose}
     >
       <div
         ref={dialogRef}
-        className="surface-glass w-full max-w-2xl overflow-hidden rounded-[1.4rem] shadow-2xl"
+        className="animate-scale-in surface-glass w-full max-w-2xl overflow-hidden rounded-[1.4rem] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-white/8 px-4 py-4 sm:px-5">
@@ -132,7 +130,7 @@ export default function SearchModal({ open, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Aramayı kapat"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-foreground"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition-all duration-300 hover:scale-105 hover:bg-white/[0.06] hover:text-foreground"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -159,9 +157,9 @@ export default function SearchModal({ open, onClose }: Props) {
               <Link
                 href={catalogHref}
                 onClick={onClose}
-                className="mt-4 inline-flex min-h-11 items-center rounded-lg border border-white/15 px-4 text-sm font-semibold text-white hover:border-white/50"
+                className="btn-press mt-4 inline-flex min-h-11 items-center rounded-full border border-white/15 px-5 text-sm font-semibold text-white hover:border-[var(--red-hot)]/40"
               >
-                Katalogda detaylı ara
+                Paspasını tasarla
               </Link>
             </div>
           ) : (
@@ -219,7 +217,7 @@ export default function SearchModal({ open, onClose }: Props) {
                     {productResults.map((product) => (
                       <li key={product.slug}>
                         <Link
-                          href={`/urunler/${product.slug}`}
+                          href="/olusturucu"
                           onClick={onClose}
                           className="flex min-h-16 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-colors hover:border-white/8 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                         >

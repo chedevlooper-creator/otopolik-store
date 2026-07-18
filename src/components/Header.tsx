@@ -20,6 +20,7 @@ import Logo from "@/components/Logo";
 /** Condensed Mac-pro nav — primary conversion path includes full configurator. */
 const NAV_LINKS = [
   { href: "/#ozellikler", label: "Özellikler" },
+  { href: "/galeri", label: "Galeri" },
   { href: "/olusturucu", label: "Tasarla" },
   { href: "/#sss", label: "S.S.S." },
   { href: "/destek", label: "Destek" },
@@ -129,7 +130,7 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="site-header sticky top-0 z-50">
       <div
         className={`border-b transition-[background,border-color,box-shadow] duration-500 ${
           scrolled

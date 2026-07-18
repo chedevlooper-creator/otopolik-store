@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import Image from "next/image";
 import { ColorSwatch } from "./ColorPicker";
 
 interface FlatMatPreviewProps {
@@ -54,31 +55,33 @@ export default function FlatMatPreview({ floor, edge, heelPad }: FlatMatPreviewP
       {/* Three overlapping transparent layers forming the realistic 3D paspas preview */}
       <div className="relative h-full w-full select-none">
         {/* Layer 1: Taban (Floor Mat Body) */}
-        <img
+        <Image
           src={floorUrl}
           alt=""
+          fill
           onLoad={() => setFloorLoaded(true)}
-          className="absolute inset-0 h-full w-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
+          className="object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
         />
 
         {/* Layer 2: Metal Topukluk (Driver's Heelpad - sandwiched between floor and border) */}
         {heelPad && (
-          <motion.img
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            src={heelpadUrl}
-            alt=""
-            className="absolute inset-0 z-10 h-full w-full object-contain pointer-events-none"
-          />
+            className="absolute inset-0 z-10 pointer-events-none"
+          >
+            <Image src={heelpadUrl} alt="" fill className="object-contain" />
+          </motion.div>
         )}
 
         {/* Layer 3: Kenarlık (Edge stitched border - rendered on top of heelpad) */}
-        <img
+        <Image
           src={edgeUrl}
           alt=""
+          fill
           onLoad={() => setEdgeLoaded(true)}
-          className="absolute inset-0 z-15 h-full w-full object-contain pointer-events-none"
+          className="z-15 object-contain pointer-events-none"
         />
       </div>
     </div>

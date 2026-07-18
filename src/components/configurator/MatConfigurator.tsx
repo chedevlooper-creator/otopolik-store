@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import VehicleSelector from "./VehicleSelector";
 import ColorPicker from "./ColorPicker";
 import ExtrasSelector from "./ExtrasSelector";
@@ -325,7 +324,7 @@ export default function MatConfigurator({
                   (Topuk pedi, bagaj paspası)
                 </span>
               </span>
-              <span className="spec-value text-base font-medium text-white transition-transform group-open:rotate-45">
+              <span className="spec-value text-base font-medium text-[var(--red-hot)] transition-transform group-open:rotate-45">
                 +
               </span>
             </summary>

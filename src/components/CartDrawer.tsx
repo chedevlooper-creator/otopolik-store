@@ -68,7 +68,7 @@ export default function CartDrawer() {
       />
       <aside
         ref={drawerRef}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 transition-transform duration-300 sm:rounded-l-[1.5rem] ${
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-l-[1.5rem] ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
@@ -84,7 +84,7 @@ export default function CartDrawer() {
             type="button"
             onClick={closeDrawer}
             aria-label="Sepeti kapat"
-            className="flex h-11 w-11 items-center justify-center rounded-full text-muted hover:bg-white/[0.06] hover:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-muted transition-all duration-300 hover:scale-105 hover:bg-white/[0.06] hover:text-white"
           >
             <XIcon className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -92,8 +92,8 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
-            <span className="flex h-16 w-16 items-center justify-center border border-border bg-background">
-              <ShoppingCartIcon className="h-8 w-8 text-muted" aria-hidden="true" />
+            <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--red-hot)]/25 bg-[var(--red-hot)]/[0.06] shadow-[0_0_40px_rgba(237,27,36,0.1)]">
+              <ShoppingCartIcon className="h-7 w-7 text-[var(--red-hot)]" aria-hidden="true" />
             </span>
             <p className="font-heading text-xl font-bold uppercase text-white">Sepetiniz boş</p>
             <p className="text-sm text-muted">
@@ -117,9 +117,9 @@ export default function CartDrawer() {
                     <strong className="spec-value text-white">{formatPrice(remaining)}</strong>{" "}
                     kaldı
                   </p>
-                  <div className="mt-2.5 h-1.5 overflow-hidden bg-background">
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-background">
                     <div
-                      className="h-full bg-brand-red transition-all duration-700 ease-out"
+                      className="h-full rounded-full bg-[linear-gradient(90deg,var(--brand-red),var(--red-hot))] shadow-[0_0_10px_rgba(237,27,36,0.5)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -130,8 +130,8 @@ export default function CartDrawer() {
                     <TruckIcon className="h-3.5 w-3.5" aria-hidden="true" />
                     Ücretsiz kargo kazandınız!
                   </p>
-                  <div className="mt-2.5 h-1.5 overflow-hidden bg-background">
-                    <div className="h-full w-full bg-[#25D366] transition-all duration-500" />
+                  <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-background">
+                    <div className="h-full w-full rounded-full bg-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.5)] transition-all duration-500" />
                   </div>
                 </div>
               )}

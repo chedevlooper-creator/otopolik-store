@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "*.convex.cloud" },
       { protocol: "https", hostname: "*.eu-west-1.convex.cloud" },
+      { protocol: "https", hostname: "paspasburada.com.tr" },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

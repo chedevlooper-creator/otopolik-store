@@ -14,9 +14,9 @@ export default function ShowroomProcess() {
           </div>
         </div>
         
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+        <div className="rev-stagger mt-12 grid gap-6 sm:grid-cols-3">
           {/* Kart 1: Kesim / Uyumluluk */}
-          <div className="group premium-card gradient-border card-lift overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
+          <div className="group premium-card gradient-border card-lift rev overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/50">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.05),transparent_60%)] z-10" />
               <SafeImage 
@@ -36,7 +36,7 @@ export default function ShowroomProcess() {
           </div>
 
           {/* Kart 2: Su geçirmezlik */}
-          <div className="group premium-card gradient-border card-lift overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
+          <div className="group premium-card gradient-border card-lift rev overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/50">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.05),transparent_60%)] z-10" />
               <SafeImage 
@@ -56,7 +56,7 @@ export default function ShowroomProcess() {
           </div>
 
           {/* Kart 3: Kalite / Detay */}
-          <div className="group premium-card gradient-border card-lift overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
+          <div className="group premium-card gradient-border card-lift rev overflow-hidden rounded-3xl flex flex-col min-h-[460px]">
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black/50">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,.05),transparent_60%)] z-10" />
               <SafeImage 

@@ -26,7 +26,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
     <Link
       href="/olusturucu"
       data-whatsapp-obstacle
-      className={`group premium-card gradient-border card-lift flex h-full min-w-0 flex-col overflow-hidden rounded-2xl ${
+      className={`group premium-card gradient-border card-lift reveal flex h-full min-w-0 flex-col overflow-hidden rounded-2xl ${
         featured ? "min-h-[520px]" : "min-h-[360px]"
       }`}
     >

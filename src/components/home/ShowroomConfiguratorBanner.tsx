@@ -16,7 +16,12 @@ export default function ShowroomConfiguratorBanner() {
               <span className="step"><b>02</b> Renk</span>
               <span className="step"><b>03</b> Sipariş</span>
             </div>
-            <Link className="btn btn-red" href="/olusturucu">Tasarlamaya Başla →</Link>
+            <Link
+              className="btn-press btn-red-rich inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4 text-[13px] font-bold uppercase tracking-[0.09em] text-white"
+              href="/olusturucu"
+            >
+              Tasarlamaya Başla →
+            </Link>
           </div>
         </div>
       </div>

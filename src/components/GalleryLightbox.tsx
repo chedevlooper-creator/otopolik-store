@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -46,16 +47,13 @@ export default function GalleryLightbox({
   const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
-    setIsZoomed(false);
-  }, [currentIndex]);
-
-  useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
 
   const handlePrev = useCallback(() => {
     if (items.length < 2) return;
     setDirection(-1);
+    setIsZoomed(false);
     setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
     setIsPlaying(false);
   }, [items.length]);
@@ -63,11 +61,13 @@ export default function GalleryLightbox({
   const handleNext = useCallback(() => {
     if (items.length < 2) return;
     setDirection(1);
+    setIsZoomed(false);
     setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     setIsPlaying(false);
   }, [items.length]);
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
     previousFocusRef.current = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -101,52 +101,56 @@ export default function GalleryLightbox({
       );
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (!first || !last) {
-        event.preventDefault();
-        dialogRef.current.focus();
-        return;
-      }
 
-      if (event.shiftKey && document.activeElement === first) {
+      if (!first || !last) return;
+
+      if (event.shiftKey && (document.activeElement === first || !dialogRef.current.contains(document.activeElement))) {
         event.preventDefault();
         last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
+      } else if (!event.shiftKey && (document.activeElement === last || !dialogRef.current.contains(document.activeElement))) {
         event.preventDefault();
         first.focus();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       cancelAnimationFrame(focusFrame);
-      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
-      if (previousFocusRef.current?.isConnected) previousFocusRef.current.focus();
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+      }
     };
   }, [handleNext, handlePrev]);
 
-  const handleTouchStart = (event: React.TouchEvent) => {
-    const startX = event.targetTouches[0].clientX;
-    touchStartX.current = startX;
-    touchEndX.current = startX;
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  const handleTouchMove = (event: React.TouchEvent) => {
-    touchEndX.current = event.targetTouches[0].clientX;
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 50;
-    if (distance > minSwipeDistance) handleNext();
-    else if (distance < -minSwipeDistance) handlePrev();
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+
+    if (Math.abs(diff) < threshold || isZoomed) return;
+
+    if (diff > 0) {
+      handleNext();
+    } else {
+      handlePrev();
+    }
   };
 
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
+
     if (video.paused) {
-      void video.play().catch(() => setIsPlaying(false));
+      void video.play();
     } else {
       video.pause();
     }
@@ -168,9 +172,9 @@ export default function GalleryLightbox({
     void video.play().catch(() => setIsPlaying(false));
   }, [currentIndex, currentItem?.type]);
 
-  if (!currentItem) return null;
+  if (!currentItem || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div
       ref={dialogRef}
       role="dialog"
@@ -178,7 +182,7 @@ export default function GalleryLightbox({
       aria-labelledby="gallery-lightbox-title"
       aria-describedby="gallery-lightbox-help"
       tabIndex={-1}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-between bg-black/95 p-4 backdrop-blur-lg transition-opacity duration-300"
+      className="animate-fade-in fixed inset-0 z-[100] flex flex-col items-center justify-between bg-black/95 p-4 backdrop-blur-lg"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -320,6 +324,7 @@ export default function GalleryLightbox({
         <p className="text-xs sm:hidden">Görseller arasında geçiş için kaydırın veya okları kullanın</p>
         <p className="hidden text-xs sm:block">Görseller arasında geçiş için klavyedeki yön tuşlarını (← →) kullanabilirsiniz</p>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

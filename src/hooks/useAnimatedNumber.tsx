@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useSpring, useMotionValue, useTransform, motion } from "framer-motion";
+import { useSpring, useMotionValue } from "framer-motion";
 
 /**
  * Hook that smoothly interpolates between numeric values with spring physics.

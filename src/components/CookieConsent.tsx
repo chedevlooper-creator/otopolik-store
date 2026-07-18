@@ -56,7 +56,8 @@ export default function CookieConsent() {
   const consent = useStoredConsent();
   const pathname = usePathname();
   const { isDrawerOpen } = useCart();
-  const hasMobilePurchaseBar = pathname.startsWith("/urunler/");
+  const hasMobilePurchaseBar =
+    pathname.startsWith("/urunler/") || pathname.startsWith("/olusturucu");
 
   function choose(value: ConsentValue) {
     setStoredConsent(value);
@@ -69,7 +70,7 @@ export default function CookieConsent() {
     <div
       role="dialog"
       aria-label="Çerez ve gizlilik bildirimi"
-      className={`fixed inset-x-3 z-[70] rounded-2xl border border-white/10 bg-[#0b0b0b]/96 p-4 shadow-[0_24px_80px_rgba(0,0,0,.72)] backdrop-blur-xl sm:right-auto sm:left-5 sm:max-w-xs sm:p-4 ${
+      className={`chat-msg-in fixed inset-x-3 z-[70] rounded-2xl border border-white/10 bg-[#0b0b0b]/96 p-4 shadow-[0_24px_80px_rgba(0,0,0,.72)] backdrop-blur-xl sm:right-auto sm:left-5 sm:max-w-xs sm:p-4 ${
         hasMobilePurchaseBar ? "bottom-[6.25rem]" : "bottom-3"
       } sm:bottom-5`}
     >

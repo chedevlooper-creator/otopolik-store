@@ -188,18 +188,18 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* Features Grid */}
-      <section className="mt-16">
+      <section className="reveal mt-16">
         <span className="spec-label">Neden OTO POLİK?</span>
         <h2 className="mt-4 font-heading text-3xl font-bold text-white sm:text-4xl">
           {vehicle.brand} {vehicle.model} için özel avantajlar
         </h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal-stagger mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {content.features.map((feature, index) => {
             const Icon = getFeatureIcon(feature);
             return (
               <div
                 key={index}
-                className="premium-card flex items-start gap-4 rounded-2xl p-5 transition-all duration-300 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
+                className="premium-card reveal flex items-start gap-4 rounded-2xl p-5 transition-all duration-300 hover:border-white/16 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white">
                   <Icon className="h-5 w-5" aria-hidden="true" />
@@ -214,7 +214,7 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* Fiyat Tablosu */}
-      <section className="mt-16">
+      <section className="reveal mt-16">
         <span className="spec-label">Paket seçenekleri</span>
         <h2 className="mt-4 font-heading text-3xl font-bold text-white sm:text-4xl">
           {vehicle.brand} {vehicle.model} Paspas Fiyatları
@@ -223,11 +223,11 @@ export default async function VehicleLandingPage({
           {vehicle.brand} {vehicle.model} modeliniz için 4 farklı paket seçeneği sunuyoruz.
           Tüm paketler CNC kesim, araca özel üretimdir.
         </p>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="reveal-stagger mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {content.priceTiers.map((tier: PriceTier) => (
             <div
               key={tier.label}
-              className={`relative rounded-[var(--r-card)] border p-6 transition-all duration-300 hover:-translate-y-1 ${
+              className={`card-lift reveal relative rounded-[var(--r-card)] border p-6 transition-all duration-300 ${
                 tier.isPopular
                   ? "border-[var(--red-hot)]/50 bg-gradient-to-b from-[var(--brand-red)]/[0.08] to-transparent shadow-[0_20px_60px_rgba(237,27,36,0.14)]"
                   : "border-border bg-surface/50 hover:border-[var(--red-hot)]/40 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
@@ -269,7 +269,7 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* Description */}
-      <section className="mt-16">
+      <section className="reveal mt-16">
         <div className="premium-card rounded-2xl p-8 sm:p-10">
           <h2 className="font-heading text-2xl font-bold text-white sm:text-3xl">
             {vehicle.brand} {vehicle.model} Paspas Hakkında
@@ -282,12 +282,12 @@ export default async function VehicleLandingPage({
 
       {/* Related Products */}
       {relevantProducts.length > 0 && (
-        <section className="mt-16">
+        <section className="reveal mt-16">
           <span className="spec-label">İlgili ürünler</span>
           <h2 className="mt-4 font-heading text-3xl font-bold text-white">
             {vehicle.brand} {vehicle.model} için önerilen paspas setleri
           </h2>
-          <div className="mt-8 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          <div className="reveal-stagger mt-8 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {relevantProducts.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
@@ -296,7 +296,7 @@ export default async function VehicleLandingPage({
       )}
 
       {/* FAQ Section */}
-      <section className="mt-16">
+      <section className="reveal mt-16">
         <span className="spec-label">Sıkça sorulan sorular</span>
         <h2 className="mt-4 font-heading text-3xl font-bold text-white">
           {vehicle.brand} {vehicle.model} Paspas Hakkında Sorular
@@ -320,7 +320,7 @@ export default async function VehicleLandingPage({
       </section>
 
       {/* CTA Banner */}
-      <section className="relative mt-16 overflow-hidden rounded-[2rem] border border-white/8 bg-surface p-8 sm:p-14">
+      <section className="reveal relative mt-16 overflow-hidden rounded-[2rem] border border-white/8 bg-surface p-8 sm:p-14">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_120%_at_50%_120%,rgba(237,27,36,0.24),transparent_70%)]"
           aria-hidden="true"

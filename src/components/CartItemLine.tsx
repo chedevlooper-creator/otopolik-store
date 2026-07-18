@@ -24,7 +24,7 @@ export default function CartItemLine({
     : "h-11 w-11 text-lg";
 
   return (
-    <li className={compact ? "flex gap-3 py-4" : "flex gap-4 py-5"}>
+    <li className={`cart-item-enter ${compact ? "flex gap-3 py-4" : "flex gap-4 py-5"}`}>
       <div
         className={`relative ${compact ? "h-20 w-20 rounded-xl" : "h-24 w-24 rounded-2xl"} shrink-0 overflow-hidden border border-white/10 bg-surface-hover`}
       >
@@ -86,7 +86,7 @@ export default function CartItemLine({
         type="button"
         onClick={() => onRemove(item.slug, item.color)}
         aria-label="Ürünü kaldır"
-        className="flex h-11 w-11 shrink-0 items-center justify-center self-start rounded-full text-muted transition-colors hover:bg-brand-red/10 hover:text-brand-red"
+        className="flex h-11 w-11 shrink-0 items-center justify-center self-start rounded-full text-muted transition-all duration-200 hover:scale-105 hover:bg-[var(--red-hot)]/10 hover:text-[var(--red-hot)]"
       >
         <XIcon className="h-4 w-4" aria-hidden="true" />
       </button>

@@ -32,7 +32,7 @@ export default function ShowroomTestimonials() {
             <h2>Takan bir daha çıkarmıyor.</h2>
           </div>
         </div>
-        <div className="quotes">
+        <div className="quotes rev-stagger">
           {REVIEWS.map((r, idx) => (
             <div key={idx} className="q rev">
               <span className="stars" aria-label="5 yıldız">{r.stars}</span>

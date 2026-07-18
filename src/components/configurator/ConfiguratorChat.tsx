@@ -213,7 +213,7 @@ export default function ConfiguratorChat() {
         aria-live="polite"
       >
         {messages.length === 0 ? (
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/65">
+          <div className="chat-msg-in rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/65">
             “2021 BMW 3 Serisi için siyah taban, kırmızı kenar istiyorum” diye
             başlayabilirsiniz.
           </div>
@@ -228,7 +228,7 @@ export default function ConfiguratorChat() {
           return (
             <div
               key={message.id}
-              className={`max-w-[92%] rounded-2xl border px-4 py-3 text-sm leading-6 ${
+              className={`chat-msg-in max-w-[92%] rounded-2xl border px-4 py-3 text-sm leading-6 ${
                 message.role === "user"
                   ? "ml-auto border-[var(--brand-red)]/35 bg-[var(--brand-red)]/15 text-white"
                   : "border-white/10 bg-white/[0.04] text-white/80"
@@ -249,7 +249,7 @@ export default function ConfiguratorChat() {
       {visibleError ? (
         <div
           role="alert"
-          className="mt-4 flex flex-col gap-3 rounded-xl border border-[var(--brand-red)]/35 bg-[var(--brand-red)]/10 p-3 text-sm text-white/80 sm:flex-row sm:items-center sm:justify-between"
+          className="chat-msg-in mt-4 flex flex-col gap-3 rounded-xl border border-[var(--brand-red)]/35 bg-[var(--brand-red)]/10 p-3 text-sm text-white/80 sm:flex-row sm:items-center sm:justify-between"
         >
           <span>{visibleError}</span>
           <button

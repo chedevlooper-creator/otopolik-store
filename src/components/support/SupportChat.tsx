@@ -171,7 +171,7 @@ export default function SupportChat() {
         aria-live="polite"
       >
         {messages.length === 0 ? (
-          <div className="bg-eva rounded-xl border border-white/10 bg-white/[0.025] p-5">
+          <div className="chat-msg-in bg-eva rounded-xl border border-white/10 bg-white/[0.025] p-5">
             <p className="font-heading text-lg font-semibold text-white">
               Nereden başlayalım?
             </p>
@@ -191,7 +191,7 @@ export default function SupportChat() {
           return (
             <div
               key={message.id}
-              className={`max-w-[94%] rounded-2xl border px-4 py-3 text-sm leading-6 sm:max-w-[82%] ${
+              className={`chat-msg-in max-w-[94%] rounded-2xl border px-4 py-3 text-sm leading-6 sm:max-w-[82%] ${
                 message.role === "user"
                   ? "ml-auto border-[var(--brand-red)]/35 bg-[var(--brand-red)]/15 text-white"
                   : "border-white/10 bg-white/[0.04] text-white/80"
@@ -212,7 +212,7 @@ export default function SupportChat() {
       {visibleError ? (
         <div
           role="alert"
-          className="mx-4 mb-4 flex flex-col gap-3 rounded-xl border border-[var(--brand-red)]/35 bg-[var(--brand-red)]/10 p-3 text-sm text-white/80 sm:mx-7 sm:flex-row sm:items-center sm:justify-between"
+          className="chat-msg-in mx-4 mb-4 flex flex-col gap-3 rounded-xl border border-[var(--brand-red)]/35 bg-[var(--brand-red)]/10 p-3 text-sm text-white/80 sm:mx-7 sm:flex-row sm:items-center sm:justify-between"
         >
           <span>{visibleError}</span>
           <button

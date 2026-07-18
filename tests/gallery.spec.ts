@@ -19,6 +19,8 @@ test.describe("Gallery and Lightbox E2E Flow", () => {
 
     const photoFilter = filterGroup.locator('button:has-text("Fotoğraflar")');
     await expect(photoFilter).toBeVisible();
+    await photoFilter.click();
+    await page.waitForTimeout(500); // Wait for filter animation
 
     // 3. Click first photo button to open lightbox
     const galleryGrid = page.locator("#gallery-grid");

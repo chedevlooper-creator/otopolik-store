@@ -34,7 +34,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/[0.02] bg-[#000000] text-white">
       <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 pt-6">
-        <div className="relative overflow-hidden rounded-xl border border-white/[0.02] bg-[#000000] px-6 py-8 sm:px-9 sm:py-10">
+        <div className="reveal relative overflow-hidden rounded-xl border border-white/[0.02] bg-[#000000] px-6 py-8 sm:px-9 sm:py-10">
           <div className="premium-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
           <div className="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full bg-white/[0.03] blur-[90px]" aria-hidden="true" />
           <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -87,15 +87,19 @@ export default function Footer() {
           <nav aria-labelledby="footer-explore-title">
             <h3 id="footer-explore-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Keşfet</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
+              <li><Link href="/galeri" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">Galeri</Link></li>
               <li><Link href="/#ozellikler" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">Özellikler</Link></li>
               <li><Link href="/#sss" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">S.S.S.</Link></li>
             </ul>
           </nav>
 
           <nav aria-labelledby="footer-support-title">
-            <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Destek</h3>
+            <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Destek & Yasal</h3>
             <ul className="mt-3 space-y-0.5 text-sm">
               <li><Link href="/destek" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">AI Destek Asistanı</Link></li>
+              <li><Link href="/bilgiler/mesafeli-satis" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">Mesafeli Satış Sözleşmesi</Link></li>
+              <li><Link href="/bilgiler/gizlilik" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">Gizlilik Politikası</Link></li>
+              <li><Link href="/bilgiler/iade" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">İade ve Değişim</Link></li>
             </ul>
           </nav>
 
