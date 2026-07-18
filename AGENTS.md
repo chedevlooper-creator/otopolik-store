@@ -113,3 +113,7 @@ On multi-instance Vercel it's a soft limit only — note this if touching AI.
   the app, the Playwright driver, and known test gotchas (authoritative on the
   `npm test` failure and the stale `configurator.spec.ts`).
 - `.env.example` — authoritative env var list + Vercel deploy notes.
+
+## Image Generation Rules
+
+- **EVA Car Mat Texture**: When generating images of EVA car mats, NEVER use a flat diamond stitching pattern. The material MUST have DEEP 3D honeycomb/diamond shaped pockets (pool-shaped cells like a waffle) designed to trap water and dirt. The user sent a strict reference image for this. This is a strict rule.

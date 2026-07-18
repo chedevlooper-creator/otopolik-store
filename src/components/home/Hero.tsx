@@ -14,48 +14,58 @@ export default function Hero({ content }: Props) {
   const secondary = content?.secondaryCta;
 
   return (
-    <section className="hero">
-      {/* Background Media */}
+    <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-black text-center pt-24 pb-32">
+      {/* Background Media with HUD overlays */}
       <div className="absolute inset-0 z-0">
         <HeroMedia />
-        <div className="shade" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/95 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,0,50,0.1),transparent_70%)] pointer-events-none" />
       </div>
 
-      <div className="content wrap">
-        <span className="mono kicker">HASSAS MÜHENDİSLİK PROTOKOLÜ</span>
-        <h1>
-          Aracının zeminine <span className="fade">kusursuz</span> uyum.
+      <div className="relative z-10 mx-auto max-w-5xl px-4">
+        <span className="mb-6 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--brand-red)] drop-shadow-[0_0_10px_rgba(255,0,50,0.8)]">
+          HASSAS MÜHENDİSLİK PROTOKOLÜ
+        </span>
+        <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-white sm:text-7xl">
+          Aracının zeminine <br className="hidden sm:block" /><span className="text-white/40">kusursuz</span> uyum.
         </h1>
-        <div className="laser">
-          <svg viewBox="0 0 420 24" fill="none" aria-hidden="true">
-            <path pathLength="1" d="M2 16 H128 V8 H160 V16 H272 V22 H304 V16 H418" />
-          </svg>
-        </div>
-        <p className="sub">
+        
+        {/* Modern HUD Laser Line */}
+        <div className="mx-auto my-8 h-px max-w-sm w-full bg-gradient-to-r from-transparent via-[var(--brand-red)] to-transparent opacity-70 shadow-[0_0_15px_rgba(255,0,50,1)]" />
+
+        <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
           {hero?.body ?? "Premium EVA teknolojisi ile üretilen, 6.000'den fazla araç modeline özel lazer kesim havuzlu paspaslar. 1-3 iş gününde kapında."}
         </p>
-        <div className="cta-row">
-          <Link className="btn btn-red" href="/olusturucu">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link 
+            href="/olusturucu"
+            className="btn-press btn-red-rich flex h-14 items-center justify-center rounded-full px-8 text-sm font-bold uppercase tracking-wider text-white"
+          >
             {hero?.ctaLabel ?? "Aracını Seç"} →
           </Link>
-          <Link className="btn btn-ghost" href="#urunler">
-            {secondary?.ctaLabel ?? "Koleksiyonu Keşfet"}
+          <Link 
+            href="#ozellikler"
+            className="btn-press flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 text-sm font-bold uppercase tracking-wider text-white transition-all hover:border-white/30 hover:bg-white/10"
+          >
+            {secondary?.ctaLabel ?? "Özellikleri Keşfet"}
           </Link>
         </div>
       </div>
 
-      <div className="marquee mono">
-        <div className="track">
-          <span>
-            <b>6.000+</b> ARAÇ MODELİ <i>✦</i> LAZER KESİM <b>±0,5 MM</b> <i>✦</i>{" "}
-            <b>10 MM</b> HAVUZLU EVA <i>✦</i> <b>1-3 GÜN</b> KARGO <i>✦</i> 1.500₺ ÜZERİ
-            ÜCRETSİZ <i>✦</i>
-          </span>
-          <span>
-            <b>6.000+</b> ARAÇ MODELİ <i>✦</i> LAZER KESİM <b>±0,5 MM</b> <i>✦</i>{" "}
-            <b>10 MM</b> HAVUZLU EVA <i>✦</i> <b>1-3 GÜN</b> KARGO <i>✦</i> 1.500₺ ÜZERİ
-            ÜCRETSİZ <i>✦</i>
-          </span>
+      {/* Premium Marquee */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/5 bg-black/60 backdrop-blur-md">
+        <div className="marquee mono py-4">
+          <div className="track flex items-center gap-8 text-[10px] font-medium tracking-[0.2em] text-white/40">
+            {[1, 2].map((i) => (
+              <span key={i} className="flex whitespace-nowrap items-center gap-8">
+                <span><b className="text-[var(--brand-red)]">6.000+</b> ARAÇ MODELİ</span> <i className="text-white/20">✦</i>
+                <span>LAZER KESİM <b className="text-white/80">±0,5 MM</b></span> <i className="text-white/20">✦</i>
+                <span><b className="text-white/80">10 MM</b> HAVUZLU EVA</span> <i className="text-white/20">✦</i>
+                <span><b className="text-[var(--brand-red)]">1-3 GÜN</b> KARGO</span> <i className="text-white/20">✦</i>
+                <span>1.500₺ ÜZERİ ÜCRETSİZ</span> <i className="text-white/20">✦</i>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

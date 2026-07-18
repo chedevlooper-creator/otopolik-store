@@ -28,8 +28,8 @@ export default function ColorPicker({
   return (
     <section>
       {showHeading && (
-        <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
-          <span className="spec-value text-base font-medium text-white">0{step}</span>
+        <h2 className="flex items-center gap-3 font-heading text-2xl font-bold text-white mb-4">
+          <span className="spec-value flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-red)] text-sm font-bold text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]">0{step}</span>
           {label}
           <span className="spec-value ml-1 inline-flex items-center gap-2 text-sm font-normal normal-case tracking-normal text-white">
             <span

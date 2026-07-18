@@ -84,6 +84,14 @@ export default function Footer() {
             </ul>
           </nav>
 
+          <nav aria-labelledby="footer-explore-title">
+            <h3 id="footer-explore-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Keşfet</h3>
+            <ul className="mt-3 space-y-0.5 text-sm">
+              <li><Link href="/#ozellikler" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">Özellikler</Link></li>
+              <li><Link href="/#sss" className="link-slide inline-flex min-h-11 min-w-11 items-center text-white/62 transition-colors hover:text-white">S.S.S.</Link></li>
+            </ul>
+          </nav>
+
           <nav aria-labelledby="footer-support-title">
             <h3 id="footer-support-title" className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/80">Destek</h3>
             <ul className="mt-3 space-y-0.5 text-sm">

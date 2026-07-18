@@ -24,8 +24,8 @@ export default function ExtrasSelector({
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 bg-gradient-to-b from-white/[0.04] to-transparent px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all ${
             heelPad
-              ? "border-white bg-surface-hover"
-              : "border-border bg-surface hover:border-muted"
+              ? "border-[var(--brand-red)] bg-black/40 shadow-[0_0_20px_rgba(255,0,50,0.15)]"
+              : "border-white/10 bg-black/40 hover:border-white/30"
           }`}
         >
           <span>
@@ -38,15 +38,15 @@ export default function ExtrasSelector({
               type="checkbox"
               checked={heelPad}
               onChange={(e) => onHeelPadChange(e.target.checked)}
-              className="h-5 w-5 accent-sand"
+              className="h-5 w-5 accent-[var(--brand-red)]"
             />
           </span>
         </label>
         <label
           className={`flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 bg-gradient-to-b from-white/[0.04] to-transparent px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] transition-all ${
             trunkMat
-              ? "border-white bg-surface-hover"
-              : "border-border bg-surface hover:border-muted"
+              ? "border-[var(--brand-red)] bg-black/40 shadow-[0_0_20px_rgba(255,0,50,0.15)]"
+              : "border-white/10 bg-black/40 hover:border-white/30"
           }`}
         >
           <span>
@@ -59,7 +59,7 @@ export default function ExtrasSelector({
               type="checkbox"
               checked={trunkMat}
               onChange={(e) => onTrunkMatChange(e.target.checked)}
-              className="h-5 w-5 accent-sand"
+              className="h-5 w-5 accent-[var(--brand-red)]"
             />
           </span>
         </label>

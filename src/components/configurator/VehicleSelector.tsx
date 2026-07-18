@@ -24,9 +24,9 @@ export default function VehicleSelector({
     <section aria-labelledby="configurator-vehicle-title">
       <h2
         id="configurator-vehicle-title"
-        className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white"
+        className="flex items-center gap-3 font-heading text-2xl font-bold text-white mb-6"
       >
-        <span className="spec-value text-base font-medium text-white">01</span>
+        <span className="spec-value flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand-red)] text-sm font-bold text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]">01</span>
         Aracınızı Seçin
       </h2>
 

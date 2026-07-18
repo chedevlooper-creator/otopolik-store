@@ -57,7 +57,7 @@ export default function ShowroomBento() {
   const currentSide = active !== null ? SPEC_ITEMS[active].side : "right";
 
   return (
-    <section className="blk">
+    <section id="ozellikler" className="blk">
       <div className="wrap">
         <div className="head rev">
           <div>

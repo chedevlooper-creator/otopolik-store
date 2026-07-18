@@ -87,7 +87,7 @@ export default function MatConfigurator({
     <div className="pb-28 lg:pb-0">
       {/* ─── Glassmorphism Step Progress ─── */}
       <div className="mb-8">
-        <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-xl">
+        <div className="relative rounded-2xl border border-white/5 bg-black/40 p-1.5 backdrop-blur-md">
           <ol
             aria-label="Tasarım adımları"
             className="relative grid grid-cols-3 gap-1"
@@ -110,7 +110,7 @@ export default function MatConfigurator({
                   <span
                     className={`spec-value flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
                       isActive
-                        ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                        ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
                         : isDone
                           ? "bg-white/20 text-white"
                           : "bg-white/5 text-white/30"
@@ -129,15 +129,15 @@ export default function MatConfigurator({
       <div className="grid min-w-0 max-w-full gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* Gerçek ürün görünümü */}
       <div className="min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-surface">
+        <div className="relative overflow-hidden rounded-3xl border border-white/5 bg-black/40 premium-card backdrop-blur-md">
           {/* View Mode Toggle Switcher */}
-          <div className="absolute right-4 top-4 z-30 flex rounded-full border border-white/10 bg-black/60 p-0.5 backdrop-blur-md">
+          <div className="absolute right-4 top-4 z-30 flex rounded-full border border-white/5 bg-black/60 p-1 backdrop-blur-md">
             <button
               type="button"
               onClick={() => setPreviewMode("cabin")}
-              className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${
+              className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 previewMode === "cabin"
-                  ? "bg-white text-black shadow-md"
+                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
                   : "text-white/60 hover:text-white"
               }`}
             >
@@ -146,9 +146,9 @@ export default function MatConfigurator({
             <button
               type="button"
               onClick={() => setPreviewMode("flat")}
-              className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${
+              className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 previewMode === "flat"
-                  ? "bg-white text-black shadow-md"
+                  ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(255,0,50,0.5)]"
                   : "text-white/60 hover:text-white"
               }`}
             >
@@ -218,12 +218,6 @@ export default function MatConfigurator({
             <h3 className="text-xs font-bold uppercase tracking-wider text-white">
               Müşterilerimizin Paspas Tasarımları
             </h3>
-            <Link
-              href="/galeri"
-              className="text-xs text-white hover:underline hover:text-white transition-colors"
-            >
-              Tümünü Gör →
-            </Link>
           </div>
           <div className="flex max-w-full gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-white/10">
             {CONFIGURATOR_GALLERY_ITEMS.map((item, idx) => (
