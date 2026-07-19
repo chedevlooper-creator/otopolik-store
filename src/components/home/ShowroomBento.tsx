@@ -62,7 +62,7 @@ export default function ShowroomBento() {
         <div className="head rev">
           <div>
             <span className="mono">NEDEN OTOPOLİK</span>
-            <h2>Showroom kalitesi,<br />zemin seviyesinde.</h2>
+            <h2 className="text-gradient-white">Showroom kalitesi,<br />zemin seviyesinde.</h2>
           </div>
           <p>Her set doğrudan sipariş üzerine, aracınızın birebir zemin ölçülerine göre üretilir.</p>
         </div>

@@ -27,7 +27,7 @@ export default function ShowroomFounder() {
           {/* Right Column: Founder Quote & Copy */}
           <div className="rev flex flex-col justify-center">
             <span className="mono" style={{ color: "var(--red-hot)" }}>MARKA HİKAYEMİZ</span>
-            <blockquote className="mt-4 font-heading text-3xl font-bold leading-tight text-white tracking-tight">
+            <blockquote className="mt-4 font-heading text-3xl font-bold leading-tight text-gradient-white tracking-tight">
               &ldquo;Hazır paspasların hiçbiri zemin hatlarına tam oturmuyordu.&rdquo;
             </blockquote>
             

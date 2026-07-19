@@ -204,9 +204,9 @@ const SEED_PRODUCTS: SeedProduct[] = [
     oldPrice: 1650,
     badge: "Yeni",
     inStock: false,
-    image: "/media/gorsel-yakinda.svg",
+    image: "/media/carpet-mat-set.png",
     colors: CARPET_MAT_COLORS,
-    gallery: ["/media/gorsel-yakinda.svg"],
+    gallery: ["/media/carpet-mat-set.png"],
     description:
       "Aracınıza özel kesim, kenarları overloklu premium halı paspas seti. Yumuşak dokusuyla konfor sağlarken kaymaz tabanı sayesinde yerinden oynamaz. Ön ve arka sıra için tam takımdır.",
     features: [

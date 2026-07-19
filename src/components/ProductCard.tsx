@@ -19,7 +19,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
   const shouldContainImage =
     isPlaceholderImage || ["eva-3d", "bagaj-havuzu", "bagaj-cantasi"].includes(product.category);
   // Beyaz fonlu stüdyo çekimleri (JPG) koyu kartta sırıtmasın diye çerçeveli panel içinde gösterilir
-  const hasLightImage = product.category === "bagaj-cantasi";
+  const hasLightImage = !isPlaceholderImage;
   const showSwatches = ["eva-3d", "eva-havuzlu", "bagaj-havuzu"].includes(product.category);
 
   return (
@@ -34,7 +34,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,.05),transparent_55%)] opacity-80" />
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[var(--red-hot)]/[0.07] opacity-0 blur-[60px] transition-opacity duration-600 group-hover:opacity-100" aria-hidden="true" />
         {/* Cam vitrin — ürün cam bir pencerenin arkasında sergilenir */}
-        <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"} ${hasLightImage ? "bg-white!" : ""}`}>
+        <div className={`glass-vitrine absolute overflow-hidden rounded-2xl ${featured ? "inset-6 sm:inset-9" : "inset-4"} ${hasLightImage ? "bg-[#f5f5f7]!" : ""}`}>
           <SafeImage
             src={product.image}
             alt={product.name}
@@ -44,7 +44,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
             blurDataURL={shimmer(300, 300)}
             className={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
               hasLightImage
-                ? "object-contain p-3 sm:p-4"
+                ? "object-contain p-3 sm:p-4 mix-blend-multiply"
                 : shouldContainImage
                   ? `object-contain ${featured ? "p-6 sm:p-10" : "p-4"}`
                   : "object-cover"
@@ -109,7 +109,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
                   <span
                     key={color.name}
                     title={color.name}
-                    className="h-5 w-5 rounded-full border-2 border-surface shadow-sm"
+                    className="h-5 w-5 rounded-full border border-white/20 shadow-[0_2px_5px_rgba(0,0,0,0.6)]"
                     style={{ backgroundColor: color.hex }}
                   />
                 ))}

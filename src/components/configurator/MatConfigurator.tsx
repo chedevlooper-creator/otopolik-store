@@ -117,7 +117,7 @@ export default function MatConfigurator({
                   >
                     {isDone ? "✓" : `0${step.index + 1}`}
                   </span>
-                  <span className="hidden min-[380px]:inline">{step.label}</span>
+                  <span className={`hidden sm:inline ${isActive ? "inline" : "min-[400px]:inline"}`}>{step.label}</span>
                 </li>
               );
             })}

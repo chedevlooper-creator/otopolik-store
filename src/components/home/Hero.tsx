@@ -27,8 +27,8 @@ export default function Hero({ content }: Props) {
         <span className="mb-6 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
           HASSAS MÜHENDİSLİK PROTOKOLÜ
         </span>
-        <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-white sm:text-7xl">
-          Aracının zeminine <br className="hidden sm:block" /><span className="text-white/40">kusursuz</span> uyum.
+        <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-gradient-white sm:text-7xl">
+          Aracının zeminine <br className="hidden sm:block" /><span className="opacity-45">kusursuz</span> uyum.
         </h1>
         
         {/* Modern HUD Laser Line */}

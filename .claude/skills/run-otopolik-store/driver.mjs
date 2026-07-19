@@ -86,41 +86,37 @@ try {
     await dismissConsent();
     await shot("01-home");
 
-    // 2. Product listing
-    await goto("/urunler");
-    const card = page.locator('a[href^="/urunler/"]').first();
-    const href = await card.getAttribute("href");
-    await shot("02-urunler");
+    // 2. Configurator renders
+    await goto("/olusturucu");
+    await shot("02-configurator");
 
-    // 3. Product detail
-    await goto(href);
-    await shot("03-product");
+    // 3. Fill vehicle fields in configurator
+    const brandSelect = page.locator("#configurator-vehicle-brand");
+    const modelSelect = page.locator("#configurator-vehicle-model");
+    
+    // Select brand and wait for model select to enable
+    await brandSelect.selectOption("BMW");
+    await page.waitForTimeout(500);
+    await modelSelect.selectOption("3 Serisi Sedan");
+    
+    await page.fill("#configurator-vehicle-year", "2022");
+    await page.fill("#configurator-vehicle-body", "G20");
+    console.log("vehicle: filled");
+    await shot("03-vehicle-filled");
 
-    // 4. Fill vehicle fields if this product requires them
-    const brand = page.locator("#product-vehicle-brand");
-    if (await brand.count()) {
-      await brand.selectOption({ index: 1 });
-      const model = page.locator("#product-vehicle-model");
-      await model.selectOption({ index: 1 });
-      await page.fill("#product-vehicle-year", "2022");
-      const body = page.locator("#product-vehicle-body");
-      if (await body.count()) await body.fill("G20");
-      console.log("vehicle: filled");
-    }
-
-    // 5. Add to cart, confirm the button flips to "Eklendi"
-    const add = page.locator('button:has-text("Sepete Ekle")').first();
+    // 4. Add to cart, confirm the button flips to "Eklendi"
+    const add = page.locator('button:has-text("Sepete Ekle")').filter({ visible: true }).first();
     await add.click();
     await page.locator('button:has-text("Eklendi")').first().waitFor();
     console.log("cart: item added (button shows Eklendi)");
     await shot("04-added");
 
-    // 6. Cart page shows the line item
-    await goto("/sepet");
-    const cartText = await page.locator("main").innerText();
-    if (!/₺/.test(cartText)) throw new Error("cart page shows no priced line item");
-    console.log("cart: /sepet lists a priced item ✓");
-    await shot("05-sepet");
+    // 5. Checkout page shows the item / price details
+    await goto("/odeme");
+    const checkoutText = await page.locator("main").innerText();
+    if (!/₺/.test(checkoutText)) throw new Error("checkout page shows no price details");
+    console.log("checkout: /odeme loaded with item ✓");
+    await shot("05-checkout");
 
     console.log("SMOKE PASS");
   } else {
