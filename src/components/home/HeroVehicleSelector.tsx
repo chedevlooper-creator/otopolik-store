@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
+import { ChevronDown } from "lucide-react";
 
 export default function HeroVehicleSelector() {
   const router = useRouter();
@@ -45,23 +46,23 @@ export default function HeroVehicleSelector() {
   const isButtonEnabled = !!selectedBrand;
 
   const selectClass =
-    "min-h-12 w-full rounded-xl border border-white/10 bg-black/60 text-white backdrop-blur-md px-4 py-3 text-sm font-medium transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.3)] focus:outline-none appearance-none cursor-pointer";
+    "min-h-12 w-full rounded-xl border border-white/8 bg-white/[0.03] text-white hover:bg-white/[0.06] hover:border-white/15 focus:bg-black/90 focus:border-[var(--brand-red)] focus:shadow-[0_0_20px_rgba(237,27,36,0.25)] focus:outline-none appearance-none cursor-pointer transition-all duration-300";
 
   return (
-    <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-white/5 bg-black/40 p-6 backdrop-blur-md shadow-2xl">
-      <div className="mb-4 text-center">
-        <h2 className="text-sm font-semibold tracking-[0.15em] text-white/80 uppercase">
+    <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-white/12 bg-[#09090b]/80 p-7 backdrop-blur-xl shadow-2xl premium-card transition-all duration-300 hover:border-white/20">
+      <div className="mb-6 text-center">
+        <h2 className="text-gradient-white text-base font-extrabold tracking-[0.2em] uppercase">
           Hızlı Seçim Sihirbazı
         </h2>
-        <p className="mt-1 text-xs text-white/50">
+        <p className="mt-2 text-xs text-white/50 tracking-wide">
           Aracınızı seçerek uyumlu paspas modellerini ve renk kombinasyonlarını anında keşfedin
         </p>
       </div>
 
       <form onSubmit={handleSearch} className="grid gap-4 sm:grid-cols-4 items-end">
         {/* Brand Select */}
-        <div className="relative">
-          <label className="block text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1.5">
+        <div className="relative group">
+          <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
             Marka
           </label>
           <div className="relative">
@@ -70,22 +71,22 @@ export default function HeroVehicleSelector() {
               onChange={(e) => handleBrandChange(e.target.value)}
               className={selectClass}
             >
-              <option value="" className="bg-black">Marka Seçin</option>
+              <option value="" className="bg-black text-white/60">Marka Seçin</option>
               {brands.map((brand) => (
                 <option key={brand} value={brand} className="bg-black text-white">
                   {brand}
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/40">
-              ▼
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
             </div>
           </div>
         </div>
 
         {/* Model Select */}
-        <div className="relative">
-          <label className="block text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1.5">
+        <div className="relative group">
+          <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
             Model
           </label>
           <div className="relative">
@@ -93,9 +94,9 @@ export default function HeroVehicleSelector() {
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
               disabled={!selectedBrand}
-              className={`${selectClass} disabled:opacity-40 disabled:cursor-not-allowed`}
+              className={`${selectClass} disabled:opacity-20 disabled:cursor-not-allowed`}
             >
-              <option value="" className="bg-black">
+              <option value="" className="bg-black text-white/60">
                 {selectedBrand ? "Model Seçin" : "Önce Marka Seçin"}
               </option>
               {models.map((model) => (
@@ -104,15 +105,15 @@ export default function HeroVehicleSelector() {
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/40">
-              ▼
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
             </div>
           </div>
         </div>
 
         {/* Year Select */}
-        <div className="relative">
-          <label className="block text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1.5">
+        <div className="relative group">
+          <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
             Yıl
           </label>
           <div className="relative">
@@ -120,17 +121,17 @@ export default function HeroVehicleSelector() {
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
               disabled={!selectedBrand}
-              className={`${selectClass} disabled:opacity-40 disabled:cursor-not-allowed`}
+              className={`${selectClass} disabled:opacity-20 disabled:cursor-not-allowed`}
             >
-              <option value="" className="bg-black">Yıl Seçin</option>
+              <option value="" className="bg-black text-white/60">Yıl Seçin</option>
               {years.map((year) => (
                 <option key={year} value={year} className="bg-black text-white">
                   {year}
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/40">
-              ▼
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
             </div>
           </div>
         </div>
@@ -140,7 +141,11 @@ export default function HeroVehicleSelector() {
           <button
             type="submit"
             disabled={!isButtonEnabled}
-            className="btn-press btn-red-rich flex h-12 w-full items-center justify-center rounded-xl text-xs font-bold uppercase tracking-wider text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className={`btn-press flex h-12 w-full items-center justify-center rounded-xl text-xs font-bold uppercase tracking-[0.18em] transition-all duration-300 ${
+              isButtonEnabled
+                ? "bg-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.45)] hover:bg-[var(--brand-red)]/90 hover:shadow-[0_0_28px_rgba(237,27,36,0.6)] cursor-pointer"
+                : "bg-white/5 border border-white/5 text-white/30 cursor-not-allowed"
+            }`}
           >
             Paspasını Tasarla →
           </button>
@@ -149,3 +154,4 @@ export default function HeroVehicleSelector() {
     </div>
   );
 }
+
