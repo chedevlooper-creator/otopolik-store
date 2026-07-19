@@ -1,11 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
-import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
+import { useMemo, useState } from "react";
+import { getModelsByBrand } from "@/lib/vehicle-data";
 import {
   OTHER_VEHICLE_BRAND,
   type VehicleDetails,
 } from "@/lib/vehicle-compatibility";
+import { ChevronDown } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
+import BrandSelectorModal from "@/components/configurator/BrandSelectorModal";
 
 type Props = {
   value: VehicleDetails;
@@ -25,7 +28,7 @@ export default function VehicleDetailsFields({
   showError = false,
   className = "",
 }: Props) {
-  const brands = useMemo(() => getAllBrands(), []);
+  const [isBrandOpen, setIsBrandOpen] = useState(false);
   const models = useMemo(
     () =>
       value.brand && value.brand !== OTHER_VEHICLE_BRAND
@@ -41,29 +44,32 @@ export default function VehicleDetailsFields({
   return (
     <div className={className}>
       <div className="grid gap-3 sm:grid-cols-2">
-        <label
-          htmlFor={`${idPrefix}-brand`}
-          className="block text-xs font-semibold text-foreground"
-        >
-          Marka
-          <select
+        <div className="block text-xs font-semibold text-foreground">
+          <label htmlFor={`${idPrefix}-brand`}>Marka</label>
+          <button
+            type="button"
             id={`${idPrefix}-brand`}
-            value={value.brand}
-            onChange={(event) =>
-              update({ brand: event.target.value, model: "" })
-            }
-            aria-invalid={showError && !value.brand}
-            className={fieldClass}
+            onClick={() => setIsBrandOpen(true)}
+            className={`${fieldClass} flex items-center justify-between text-left cursor-pointer w-full text-white/90`}
           >
-            <option value="">Marka seçin</option>
-            {brands.map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-            <option value={OTHER_VEHICLE_BRAND}>Diğer / Listede yok</option>
-          </select>
-        </label>
+            {value.brand ? (
+              <span className="flex items-center gap-2.5">
+                <BrandLogo brand={value.brand} className="h-5 w-5 text-white/70" />
+                <span>{value.brand}</span>
+              </span>
+            ) : (
+              <span className="text-white/40">Marka seçin</span>
+            )}
+            <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+          </button>
+
+          <BrandSelectorModal
+            isOpen={isBrandOpen}
+            onClose={() => setIsBrandOpen(false)}
+            onSelect={(brand) => update({ brand, model: "" })}
+            selectedBrand={value.brand}
+          />
+        </div>
 
         {value.brand === OTHER_VEHICLE_BRAND ? (
           <label

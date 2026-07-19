@@ -2,17 +2,18 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { getAllBrands, getModelsByBrand } from "@/lib/vehicle-data";
+import { getModelsByBrand } from "@/lib/vehicle-data";
 import { ChevronDown } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
+import BrandSelectorModal from "@/components/configurator/BrandSelectorModal";
 
 export default function HeroVehicleSelector() {
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
+  const [isBrandOpen, setIsBrandOpen] = useState(false);
 
-  const brands = useMemo(() => getAllBrands(), []);
-  
   const models = useMemo(() => {
     if (!selectedBrand) return [];
     return getModelsByBrand(selectedBrand);
@@ -66,21 +67,27 @@ export default function HeroVehicleSelector() {
             Marka
           </label>
           <div className="relative">
-            <select
-              value={selectedBrand}
-              onChange={(e) => handleBrandChange(e.target.value)}
-              className={selectClass}
+            <button
+              type="button"
+              onClick={() => setIsBrandOpen(true)}
+              className={`${selectClass} flex items-center justify-between text-left`}
             >
-              <option value="" className="bg-black text-white/60">Marka Seçin</option>
-              {brands.map((brand) => (
-                <option key={brand} value={brand} className="bg-black text-white">
-                  {brand}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
-              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
-            </div>
+              {selectedBrand ? (
+                <span className="flex items-center gap-2.5">
+                  <BrandLogo brand={selectedBrand} className="h-5 w-5 text-white/70" />
+                  <span>{selectedBrand}</span>
+                </span>
+              ) : (
+                <span className="text-white/40">Marka Seçin</span>
+              )}
+              <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+            </button>
+            <BrandSelectorModal
+              isOpen={isBrandOpen}
+              onClose={() => setIsBrandOpen(false)}
+              onSelect={handleBrandChange}
+              selectedBrand={selectedBrand}
+            />
           </div>
         </div>
 
