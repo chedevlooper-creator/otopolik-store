@@ -2,10 +2,10 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { getModelsByBrand } from "@/lib/vehicle-data";
 import { ChevronDown } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 import BrandSelectorModal from "@/components/configurator/BrandSelectorModal";
+import ModelSelectorModal from "@/components/configurator/ModelSelectorModal";
 
 export default function HeroVehicleSelector() {
   const router = useRouter();
@@ -13,11 +13,7 @@ export default function HeroVehicleSelector() {
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [isBrandOpen, setIsBrandOpen] = useState(false);
-
-  const models = useMemo(() => {
-    if (!selectedBrand) return [];
-    return getModelsByBrand(selectedBrand);
-  }, [selectedBrand]);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   const years = useMemo(() => {
     const currentYear = 2026;
@@ -97,24 +93,31 @@ export default function HeroVehicleSelector() {
             Model
           </label>
           <div className="relative">
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
+            <button
+              type="button"
               disabled={!selectedBrand}
-              className={`${selectClass} disabled:opacity-20 disabled:cursor-not-allowed`}
+              onClick={() => setIsModelOpen(true)}
+              className={`${selectClass} flex items-center justify-between text-left disabled:opacity-20 disabled:cursor-not-allowed`}
             >
-              <option value="" className="bg-black text-white/60">
-                {selectedBrand ? "Model Seçin" : "Önce Marka Seçin"}
-              </option>
-              {models.map((model) => (
-                <option key={model.name} value={model.name} className="bg-black text-white">
-                  {model.name}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
-              <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
-            </div>
+              {selectedModel ? (
+                <span className="flex items-center gap-2.5">
+                  <BrandLogo brand={selectedBrand} className="h-5 w-5 text-white/70" />
+                  <span>{selectedModel}</span>
+                </span>
+              ) : (
+                <span className="text-white/40">
+                  {selectedBrand ? "Model Seçin" : "Önce Marka Seçin"}
+                </span>
+              )}
+              <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+            </button>
+            <ModelSelectorModal
+              isOpen={isModelOpen}
+              onClose={() => setIsModelOpen(false)}
+              onSelect={(model) => setSelectedModel(model)}
+              selectedModel={selectedModel}
+              brand={selectedBrand}
+            />
           </div>
         </div>
 

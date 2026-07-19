@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { getModelsByBrand } from "@/lib/vehicle-data";
+import { useState } from "react";
 import {
   OTHER_VEHICLE_BRAND,
   type VehicleDetails,
@@ -9,6 +8,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 import BrandSelectorModal from "@/components/configurator/BrandSelectorModal";
+import ModelSelectorModal from "@/components/configurator/ModelSelectorModal";
 
 type Props = {
   value: VehicleDetails;
@@ -29,13 +29,7 @@ export default function VehicleDetailsFields({
   className = "",
 }: Props) {
   const [isBrandOpen, setIsBrandOpen] = useState(false);
-  const models = useMemo(
-    () =>
-      value.brand && value.brand !== OTHER_VEHICLE_BRAND
-        ? getModelsByBrand(value.brand)
-        : [],
-    [value.brand]
-  );
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   const update = (patch: Partial<VehicleDetails>) => {
     onChange({ ...value, ...patch });
@@ -88,30 +82,38 @@ export default function VehicleDetailsFields({
             />
           </label>
         ) : (
-          <label
-            htmlFor={`${idPrefix}-model`}
-            className="block text-xs font-semibold text-foreground"
-          >
-            Model
-            <select
+          <div className="block text-xs font-semibold text-foreground">
+            <label htmlFor={`${idPrefix}-model`}>Model</label>
+            <button
+              type="button"
               id={`${idPrefix}-model`}
-              value={value.model}
-              onChange={(event) => update({ model: event.target.value })}
               disabled={!value.brand}
-              aria-invalid={showError && !value.model}
-              className={`${fieldClass} disabled:cursor-not-allowed disabled:text-muted`}
+              onClick={() => setIsModelOpen(true)}
+              className={`${fieldClass} flex items-center justify-between text-left cursor-pointer w-full text-white/90 disabled:opacity-20 disabled:cursor-not-allowed`}
             >
-              <option value="">
-                {value.brand ? "Model seçin" : "Önce marka seçin"}
-              </option>
-              {models.map((model) => (
-                <option key={model.name} value={model.name}>
-                  {model.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
+              {value.model ? (
+                <span className="flex items-center gap-2.5">
+                  <BrandLogo brand={value.brand} className="h-5 w-5 text-white/70" />
+                  <span>{value.model}</span>
+                </span>
+              ) : (
+                <span className="text-white/40">
+                  {value.brand ? "Model seçin" : "Önce marka seçin"}
+                </span>
+              )}
+              <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+            </button>
+
+            <ModelSelectorModal
+              isOpen={isModelOpen}
+              onClose={() => setIsModelOpen(false)}
+              onSelect={(model, bodyType) =>
+                update({ model, bodyOrChassis: `${bodyType} /` })
+              }
+              selectedModel={value.model}
+              brand={value.brand}
+            />
+          </div>    )}
 
         <label
           htmlFor={`${idPrefix}-year`}
