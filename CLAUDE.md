@@ -6,6 +6,62 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 OTO POLİK — a Turkish-language e-commerce storefront for custom car floor mats (paspas). Next.js 16 App Router + React 19, Tailwind v4, Convex cloud backend, and Anthropic AI features via the Vercel AI SDK. The UI copy and code comments are in Turkish; keep new user-facing strings and comments Turkish to match.
 
+## Agent çalışma kuralları (Agent working rules)
+
+Bu depoda çalışan her AI ajanı için bağlayıcıdır. Depo sahibi yeni başlayan bir
+yazılımcı — bu kurallar onun her seferinde tek tek talimat vermek zorunda
+kalmaması için var.
+
+### İletişim
+- **Kullanıcıyla her zaman Türkçe konuş** — istek hangi dilde gelirse gelsin.
+  (UI metni/yorum kuralından ayrı; bu, sohbetin kendisiyle ilgili.)
+- **Her değişikliği basit dille özetle**: hangi dosyalar değişti, ne yapıldı,
+  neden. Jargon kullanman gerekiyorsa bir cümleyle açıkla. Kullanıcının koddan
+  öğrenmesine yardım et — sadece "yaptım" deme.
+- **Proaktif öneri sun**: dokunduğun alanla ilgili somut, spesifik geliştirme
+  önerileri ver (UX, dönüşüm, performans, SEO, kod kalitesi, yeni özellik).
+  Genel geçer tavsiye değil; "şu dosyada şunu yapabiliriz" netliğinde.
+
+### Güvenlik ağı (asla atlanmaz)
+- **Sormadan commit/push yapma.** `push --force`, `reset --hard`,
+  `checkout --`, `clean` gibi geri alınamaz komutlardan önce mutlaka
+  `git status` kontrol et ve kullanıcıya sor.
+- **Gizli bilgiler koda girmez**: API anahtarı, şifre, secret asla kaynak koda
+  yazılmaz, loglanmaz, ekrana basılmaz. `.env.local` git'e girmez.
+  `admin123` gibi placeholder şifreler asla gerçek ortama gitmez.
+- **Yeni npm paketi eklemeden önce gerekçeyi söyle ve onay al** — çoğu ihtiyaç
+  mevcut stack'le (Next 16, React 19, Tailwind v4, Convex, AI SDK) çözülür.
+
+### Doğrulama (her kod değişikliğinden sonra)
+- Bitirdim demeden önce: `npm run typecheck` + `npm run lint` +
+  `npx vitest run --exclude "tests/**" --exclude "src/lib/ai/evals/**"`.
+- UI değiştiyse çalışan uygulamada gör: `.claude/skills/run-otopolik-store/`
+  driver'ı ile smoke/ekran görüntüsü al. Mobil görünümü de kontrol et —
+  trafiğin çoğu mobil.
+- Test kırmızıysa veya bir adım atlandıysa bunu açıkça söyle; "çalışıyor
+  olmalı" diye geçiştirme.
+- `npm run ai:eval:*` gerçek Anthropic API çağrısı yapar (ücretli) — sadece
+  kullanıcı isterse çalıştır.
+
+### Projenin bozulmaması gereken değişmezleri
+- Ürün kataloğu **statiktir**: `src/lib/products.ts`. Convex'te ürün düzenleme
+  arama — Convex yalnızca sipariş/ayar/CMS için.
+- Fiyat **yalnızca** `src/lib/mat-pricing.ts`'te değişir; başka yerde fiyat
+  sabiti tanımlama.
+- **Fallback deseni korunur**: site, Convex URL'si ve AI anahtarı olmadan da
+  hatasız açılmalı. Yeni sunucu verisi eklerken aynı "Convex dene → statik
+  varsayılana düş" şeklini uygula.
+- `server-only` modüllerin içeriği client koduna sızdırılmaz;
+  `convex/_generated/` elle düzenlenmez.
+- Fiyat/sepet/ödeme mantığına dokunurken önce/sonra değerlerini göster —
+  kuruş hatası kabul edilemez.
+
+### Kapsam disiplini
+- Küçük, odaklı değişiklikler; istenmeyen refactor yok. Bir seferde bir iş —
+  kullanıcı diff'i takip edebilmeli.
+- Hata çıktığında belirtiyi değil **kök nedeni** düzelt ve hatayı basit dille
+  açıkla (ne oldu, neden oldu, nasıl çözüldü).
+
 ## Commands
 
 ```bash
@@ -26,7 +82,7 @@ npm run ai:eval:vehicle-match   # (also :configurator-chat, :support-chat, :cont
 ```
 
 - **`npm test` (= `vitest run`) fails**: vitest picks up the Playwright specs under `tests/` and errors "Playwright Test did not expect test.describe()". Always run vitest with the two `--exclude` flags above.
-- `tests/configurator.spec.ts` has a known stale failure (expects old copy "Aracınız", UI now says "Araç"). Not an app breakage.
+- Both Playwright specs pass. If the configurator step-label copy changes, update the spec to match the UI, not the component.
 - To drive the running app (smoke flow, screenshots), use the committed skill at `.claude/skills/run-otopolik-store/` (`node .claude/skills/run-otopolik-store/driver.mjs smoke`). It documents the dev-server, cookie-banner, and vehicle-field gotchas.
 
 ## Environment

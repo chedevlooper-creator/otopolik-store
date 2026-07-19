@@ -4,6 +4,28 @@ Compact agent-facing notes for this repo. Every line is something an agent
 would likely get wrong without it. Most strings are Turkish; the admin area
 and API error codes are too.
 
+## Agent working rules (full Turkish version in CLAUDE.md — binding)
+
+- **Reply to the user in Turkish, always** — regardless of request language.
+  The owner is a beginner developer: summarize every change in plain language
+  (which files, what, why), explain jargon in one sentence, help them learn.
+- **Proactively suggest improvements** tied to the area being touched (UX,
+  conversion, performance, SEO, code quality) — concrete and file-specific,
+  never generic advice.
+- **Safety net**: never commit/push unasked; check `git status` and ask before
+  any destructive git command. No secrets in source/logs/output; `.env.local`
+  never committed; placeholder passwords never deployed. Justify and get
+  approval before adding any npm dependency.
+- **Verify before claiming done**: typecheck + lint + vitest (with excludes);
+  UI changes get a driver smoke/screenshot incl. mobile viewport. Report red
+  tests honestly. `ai:eval:*` costs real API money — only on request.
+- **Invariants**: catalog is static (`src/lib/products.ts`), prices only in
+  `src/lib/mat-pricing.ts`, Convex/AI fallback pattern must survive (site
+  renders with no backend), `server-only` stays server-only, never hand-edit
+  `convex/_generated/`. Show before/after values when touching price/cart math.
+- **Scope**: small focused diffs, no unrequested refactors, fix root causes
+  and explain them simply.
+
 ## Stack & boundaries
 
 - **Next.js 16 App Router**, Turbopack dev. Convex cloud backend (no local
@@ -48,7 +70,7 @@ npm run typecheck    # tsc --noEmit
 |---|---|---|
 | `npx vitest run --exclude "tests/**" --exclude "src/lib/ai/evals/**"` | unit suite (57 tests, ~1s) | **plain `npm test` (= `vitest run`) fails** — vitest also picks up the Playwright specs in `tests/` and throws "did not expect test.describe()". The `npm run ai:eval:*` scripts have the same bug (they're `vitest run <file>` without excludes); invoke the file directly as below instead. |
 | `npx vitest run src/lib/ai/evals/vehicle-match-eval.test.ts` (and the three sibling `*-eval.test.ts` files) | AI golden evals | **Offline, no `ANTHROPIC_API_KEY` needed** — these test pricing/tools/golden-case shape, not live model calls. The `ai:eval:*` npm scripts wrap them but inherit the `tests/**` collision risk if `tests/` isn't excluded. |
-| `npx playwright test` | E2E (config reuses a running dev server on :3000, or starts one) | `tests/configurator.spec.ts` has a **known stale failure**: asserts step label `"Aracınız"` but the UI now renders `"Araç"` (copy changed). Not an app bug — don't "fix" the component for this. `tests/gallery.spec.ts` passes. |
+| `npx playwright test` | E2E (config reuses a running dev server on :3000, or starts one) | Both specs pass. If the configurator step-label copy changes again, update the spec to match the UI — not the component. |
 
 Recommended pre-commit gate: `npm run lint && npm run typecheck && npx vitest run --exclude "tests/**" --exclude "src/lib/ai/evals/**"`.
 
@@ -111,7 +133,7 @@ On multi-instance Vercel it's a soft limit only — note this if touching AI.
 
 - `.claude/skills/run-otopolik-store/SKILL.md` — authoritative for running
   the app, the Playwright driver, and known test gotchas (authoritative on the
-  `npm test` failure and the stale `configurator.spec.ts`).
+  `npm test` failure and the E2E/dev-server gotchas).
 - `.env.example` — authoritative env var list + Vercel deploy notes.
 
 ## Image Generation Rules
