@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { XIcon, SearchIcon } from "lucide-react";
 import { getAllBrands } from "@/lib/vehicle-data";
@@ -40,7 +41,13 @@ export default function BrandSelectorModal({
   selectedBrand,
 }: Props) {
   const [search, setSearch] = useState("");
+  const [mounted, setMounted] = useState(false);
   const allBrands = useMemo(() => getAllBrands(), []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   const filteredBrands = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -54,7 +61,7 @@ export default function BrandSelectorModal({
     setSearch("");
   };
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -64,7 +71,7 @@ export default function BrandSelectorModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm"
           />
 
           {/* Modal Container */}
@@ -73,7 +80,7 @@ export default function BrandSelectorModal({
             animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
             exit={{ opacity: 0, scale: 0.95, y: "-47%", x: "-50%" }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[51] flex h-[85vh] w-[92vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
+            className="fixed left-1/2 top-1/2 z-[10000] flex h-[85vh] w-[92vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -198,4 +205,6 @@ export default function BrandSelectorModal({
       )}
     </AnimatePresence>
   );
+
+  return mounted ? createPortal(modalContent, document.body) : null;
 }
