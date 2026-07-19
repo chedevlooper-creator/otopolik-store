@@ -80,7 +80,7 @@ export default function BrandSelectorModal({
             animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
             exit={{ opacity: 0, scale: 0.95, y: "-47%", x: "-50%" }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[10000] flex h-[85vh] w-[92vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
+            className="fixed left-1/2 top-1/2 z-[10000] flex h-[85vh] w-[92vw] max-w-2xl flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
