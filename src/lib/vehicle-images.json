@@ -1,0 +1,902 @@
+{
+  "brands": [
+    {
+      "name": "Alfa Romeo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-alfa-romeo-logo.svg"
+    },
+    {
+      "name": "Audi",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-audi-logo.svg"
+    },
+    {
+      "name": "BMW",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-bmw-logo.svg"
+    },
+    {
+      "name": "BYD",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-byd-logo.svg"
+    },
+    {
+      "name": "Chery",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-chery-logo.svg"
+    },
+    {
+      "name": "Chevrolet",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-chevrolet-logo.svg"
+    },
+    {
+      "name": "Citroen",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-citroen-logo.svg"
+    },
+    {
+      "name": "Cupra",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-cupra-logo.svg"
+    },
+    {
+      "name": "Dacia",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-dacia-logo.svg"
+    },
+    {
+      "name": "DS Automobiles",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ds-automobiles-logo.svg"
+    },
+    {
+      "name": "Fiat",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-fiat-logo.svg"
+    },
+    {
+      "name": "Ford",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ford-logo.svg"
+    },
+    {
+      "name": "Honda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-honda-logo.svg"
+    },
+    {
+      "name": "Hyundai",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-hyundai-logo.svg"
+    },
+    {
+      "name": "Isuzu",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-isuzu-logo.svg"
+    },
+    {
+      "name": "Jaecoo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jaecoo-logo.svg"
+    },
+    {
+      "name": "Jaguar",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jaguar-logo.svg"
+    },
+    {
+      "name": "Jeep",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jeep-logo.svg"
+    },
+    {
+      "name": "Kia",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-kia-logo.svg"
+    },
+    {
+      "name": "Land Rover",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-land-rover-logo.svg"
+    },
+    {
+      "name": "Lexus",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-lexus-logo.svg"
+    },
+    {
+      "name": "Mazda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mazda-logo.svg"
+    },
+    {
+      "name": "Mercedes-Benz",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mercedes-logo.svg"
+    },
+    {
+      "name": "MG",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mg-logo.svg"
+    },
+    {
+      "name": "MINI",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mini-cooper-logo.svg"
+    },
+    {
+      "name": "Mitsubishi",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mitsubishi-logo.svg"
+    },
+    {
+      "name": "Nissan",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-nissan-logo.svg"
+    },
+    {
+      "name": "Opel",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-opel-logo.svg"
+    },
+    {
+      "name": "Peugeot",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-peugeot-logo.svg"
+    },
+    {
+      "name": "Porsche",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-porsche-logo.svg"
+    },
+    {
+      "name": "Renault",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-renault-logo.svg"
+    },
+    {
+      "name": "Seat",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-seat-logo.svg"
+    },
+    {
+      "name": "Skoda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-skoda-logo.svg"
+    },
+    {
+      "name": "SsangYong",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ssang-yong-logo.svg"
+    },
+    {
+      "name": "Subaru",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-subaru-logo.svg"
+    },
+    {
+      "name": "Suzuki",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-suzuki-logo.svg"
+    },
+    {
+      "name": "Tesla",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-tesla-logo.svg"
+    },
+    {
+      "name": "Tofaş",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-tofas-logo.svg"
+    },
+    {
+      "name": "Togg",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-togg-logo.svg"
+    },
+    {
+      "name": "Toyota",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-toyota-logo.svg"
+    },
+    {
+      "name": "Volkswagen",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-volkswagen-logo.svg"
+    },
+    {
+      "name": "Volvo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-volvo-logo.svg"
+    },
+    {
+      "name": "Alfa Romeo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-alfa-romeo-logo.svg"
+    },
+    {
+      "name": "Audi",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-audi-logo.svg"
+    },
+    {
+      "name": "BMW",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-bmw-logo.svg"
+    },
+    {
+      "name": "BYD",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-byd-logo.svg"
+    },
+    {
+      "name": "Chery",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-chery-logo.svg"
+    },
+    {
+      "name": "Chevrolet",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-chevrolet-logo.svg"
+    },
+    {
+      "name": "Citroen",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-citroen-logo.svg"
+    },
+    {
+      "name": "Cupra",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-cupra-logo.svg"
+    },
+    {
+      "name": "Dacia",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-dacia-logo.svg"
+    },
+    {
+      "name": "DS Automobiles",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ds-automobiles-logo.svg"
+    },
+    {
+      "name": "Fiat",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-fiat-logo.svg"
+    },
+    {
+      "name": "Ford",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ford-logo.svg"
+    },
+    {
+      "name": "Honda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-honda-logo.svg"
+    },
+    {
+      "name": "Hyundai",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-hyundai-logo.svg"
+    },
+    {
+      "name": "Isuzu",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-isuzu-logo.svg"
+    },
+    {
+      "name": "Jaecoo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jaecoo-logo.svg"
+    },
+    {
+      "name": "Jaguar",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jaguar-logo.svg"
+    },
+    {
+      "name": "Jeep",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-jeep-logo.svg"
+    },
+    {
+      "name": "Kia",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-kia-logo.svg"
+    },
+    {
+      "name": "Land Rover",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-land-rover-logo.svg"
+    },
+    {
+      "name": "Lexus",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-lexus-logo.svg"
+    },
+    {
+      "name": "Mazda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mazda-logo.svg"
+    },
+    {
+      "name": "Mercedes-Benz",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mercedes-logo.svg"
+    },
+    {
+      "name": "MG",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mg-logo.svg"
+    },
+    {
+      "name": "MINI",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mini-cooper-logo.svg"
+    },
+    {
+      "name": "Mitsubishi",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-mitsubishi-logo.svg"
+    },
+    {
+      "name": "Nissan",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-nissan-logo.svg"
+    },
+    {
+      "name": "Opel",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-opel-logo.svg"
+    },
+    {
+      "name": "Peugeot",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-peugeot-logo.svg"
+    },
+    {
+      "name": "Porsche",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-porsche-logo.svg"
+    },
+    {
+      "name": "Renault",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-renault-logo.svg"
+    },
+    {
+      "name": "Seat",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-seat-logo.svg"
+    },
+    {
+      "name": "Skoda",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-skoda-logo.svg"
+    },
+    {
+      "name": "SsangYong",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-ssang-yong-logo.svg"
+    },
+    {
+      "name": "Subaru",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-subaru-logo.svg"
+    },
+    {
+      "name": "Suzuki",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-suzuki-logo.svg"
+    },
+    {
+      "name": "Tesla",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-tesla-logo.svg"
+    },
+    {
+      "name": "Tofaş",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-tofas-logo.svg"
+    },
+    {
+      "name": "Togg",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-togg-logo.svg"
+    },
+    {
+      "name": "Toyota",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-toyota-logo.svg"
+    },
+    {
+      "name": "Volkswagen",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-volkswagen-logo.svg"
+    },
+    {
+      "name": "Volvo",
+      "logoUrl": "https://paspasburada.com.tr/logolar/paspasburada-eva-paspas-volvo-logo.svg"
+    }
+  ],
+  "models": {
+    "Alfa Romeo": {
+      "147": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-056.png",
+      "156": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-055.png",
+      "159": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-054.png",
+      "166": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-053.png",
+      "Brera": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-052.png",
+      "Giulia": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-051.png",
+      "Giulietta": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-050.png",
+      "MiTo": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-049.png",
+      "Stelvio": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-048.png",
+      "Tonale": "https://paspasburada.com.tr/vehicle-model-icons/raw/alfa-romeo/asset-047.png"
+    },
+    "Audi": {
+      "A1": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-087.png",
+      "A2": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-086.png",
+      "A6 e-tron": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-073.png",
+      "A7": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-072.png",
+      "A8": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-071.png",
+      "e-tron GT": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-070.png",
+      "Q2": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-069.png",
+      "Q3": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-068.png",
+      "Q5": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-065.png",
+      "Q7": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-062.png",
+      "Q8": "https://paspasburada.com.tr/vehicle-model-icons/raw/audi/asset-061.png"
+    },
+    "BMW": {
+      "1 Serisi": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-120.png",
+      "7 Serisi": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-105.png",
+      "i4": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-102.png",
+      "i5": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-101.png",
+      "i7": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-100.png",
+      "i8": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-099.png",
+      "iX": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-098.png",
+      "iX1": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-097.png",
+      "iX2": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-096.png",
+      "iX3": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-095.png",
+      "X1": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-094.png",
+      "X2": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-093.png",
+      "X3": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-092.png",
+      "X4": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-091.png",
+      "X5": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-090.png",
+      "X6": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-089.png",
+      "X7": "https://paspasburada.com.tr/vehicle-model-icons/raw/bmw/asset-088.png"
+    },
+    "BYD": {
+      "Atto 2": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-123.png",
+      "Atto 3": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-136.png",
+      "Dolphin": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-126.png",
+      "Han": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-133.png",
+      "Seagull": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-128.png",
+      "Seal": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-127.png",
+      "Seal U": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-131.png",
+      "Sealion 7": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-121.png",
+      "Tang": "https://paspasburada.com.tr/vehicle-model-icons/raw/byd/asset-122.png"
+    },
+    "Chery": {
+      "Arrizo 8": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-046.png",
+      "Omoda 5": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-045.png",
+      "Tiggo 4 Pro": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-044.png",
+      "Tiggo 7 Pro Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-042.png",
+      "Tiggo 7 Pro": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-043.png",
+      "Tiggo 8 Pro Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-040.png",
+      "Tiggo 8 Pro": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-041.png",
+      "Tiggo 9": "https://paspasburada.com.tr/vehicle-model-icons/raw/chery/asset-039.png"
+    },
+    "Chevrolet": {
+      "Aveo": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-148.png",
+      "Camaro": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-147.png",
+      "Captiva": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-146.png",
+      "Cruze": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-145.png",
+      "Epica": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-144.png",
+      "Kalos": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-143.png",
+      "Lacetti": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-142.png",
+      "Matiz": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-141.png",
+      "Orlando": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-140.png",
+      "Rezzo": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-139.png",
+      "Spark": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-138.png",
+      "Trax": "https://paspasburada.com.tr/vehicle-model-icons/raw/chevrolet/asset-137.png"
+    },
+    "Citroen": {
+      "Ami": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-172.png",
+      "Berlingo": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-171.png",
+      "C-Elysee": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-170.png",
+      "C1": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-169.png",
+      "C2": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-168.png",
+      "C3 Aircross": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-166.png",
+      "C3": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-167.png",
+      "C3 Picasso": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-165.png",
+      "C4 Cactus": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-162.png",
+      "C4 Picasso": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-161.png",
+      "C4 X": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-160.png",
+      "C5 Aircross": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-158.png",
+      "C5": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-159.png",
+      "C5 X": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-157.png",
+      "Grand C4 Picasso": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-156.png",
+      "Nemo": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-154.png",
+      "Saxo": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-153.png",
+      "Xantia": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-151.png",
+      "Xsara": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-150.png",
+      "Xsara Picasso": "https://paspasburada.com.tr/vehicle-model-icons/raw/citroen/asset-149.png"
+    },
+    "Cupra": {
+      "Ateca": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-178.png",
+      "Born": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-177.png",
+      "Formentor": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-176.png",
+      "Leon": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-175.png",
+      "Tavascan": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-174.png",
+      "Terramar": "https://paspasburada.com.tr/vehicle-model-icons/raw/cupra/asset-173.png"
+    },
+    "Dacia": {
+      "Dokker": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-188.png",
+      "Duster": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-187.png",
+      "Jogger": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-186.png",
+      "Lodgy": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-185.png",
+      "Logan MCV": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-183.png",
+      "Logan": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-184.png",
+      "Sandero": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-182.png",
+      "Sandero Stepway": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-181.png",
+      "Solenza": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-180.png",
+      "Spring": "https://paspasburada.com.tr/vehicle-model-icons/raw/dacia/asset-179.png"
+    },
+    "DS Automobiles": {
+      "DS 5": "https://paspasburada.com.tr/vehicle-model-icons/raw/ds-automobiles/asset-198.png",
+      "DS 7": "https://paspasburada.com.tr/vehicle-model-icons/raw/ds-automobiles/asset-197.png",
+      "DS 9": "https://paspasburada.com.tr/vehicle-model-icons/raw/ds-automobiles/asset-196.png"
+    },
+    "Fiat": {
+      "500": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-234.png",
+      "600": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-230.png",
+      "500C": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-233.png",
+      "500L": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-232.png",
+      "500X": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-231.png",
+      "Albea": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-229.png",
+      "Bravo": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-228.png",
+      "Doblo": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-227.png",
+      "Egea Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-225.png",
+      "Fiorino": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-221.png",
+      "Freemont": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-220.png",
+      "Fullback": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-219.png",
+      "Grande Panda": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-218.png",
+      "Linea": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-217.png",
+      "Marea": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-216.png",
+      "Palio": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-215.png",
+      "Panda Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-214.png",
+      "Panda": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-213.png",
+      "Punto Evo": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-211.png",
+      "Punto": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-212.png",
+      "Qubo": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-210.png",
+      "Siena": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-208.png",
+      "Tempra": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-207.png",
+      "Ulysse": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-204.png",
+      "Uno": "https://paspasburada.com.tr/vehicle-model-icons/raw/fiat/asset-203.png"
+    },
+    "Ford": {
+      "B-Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-267.png",
+      "Bronco Sport": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-266.png",
+      "C-Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-265.png",
+      "Capri": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-264.png",
+      "Connect": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-263.png",
+      "EcoSport": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-262.png",
+      "Edge": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-261.png",
+      "Escort": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-260.png",
+      "Explorer": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-259.png",
+      "Fiesta": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-258.png",
+      "Fusion": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-254.png",
+      "Galaxy": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-253.png",
+      "Ka": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-252.png",
+      "Kuga": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-251.png",
+      "Mustang": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-246.png",
+      "Mustang Mach-E": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-245.png",
+      "Puma": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-244.png",
+      "Ranger": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-243.png",
+      "S-Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-242.png",
+      "Tourneo Connect": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-241.png",
+      "Tourneo Courier": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-240.png",
+      "Transit Connect": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-237.png",
+      "Transit Courier": "https://paspasburada.com.tr/vehicle-model-icons/raw/ford/asset-236.png"
+    },
+    "Honda": {
+      "Accord": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-277.png",
+      "City": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-276.png",
+      "CR-V": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-273.png",
+      "CR-Z": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-272.png",
+      "HR-V": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-271.png",
+      "Integra": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-270.png",
+      "S2000": "https://paspasburada.com.tr/vehicle-model-icons/raw/honda/asset-268.png"
+    },
+    "Hyundai": {
+      "Accent Admire": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-304.png",
+      "Accent Blue": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-303.png",
+      "Accent Era": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-302.png",
+      "Accent": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-305.png",
+      "Atos": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-301.png",
+      "Bayon": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-300.png",
+      "Coupe": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-299.png",
+      "Elantra": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-298.png",
+      "Getz": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-297.png",
+      "Inster": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-291.png",
+      "Ioniq 5": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-289.png",
+      "Ioniq 6": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-288.png",
+      "Ioniq": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-290.png",
+      "i10": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-296.png",
+      "i20": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-295.png",
+      "i30": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-294.png",
+      "ix20": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-287.png",
+      "ix35": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-286.png",
+      "Kona": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-285.png",
+      "Matrix": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-284.png",
+      "Palisade": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-283.png",
+      "Santa Fe": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-282.png",
+      "Sonata": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-281.png",
+      "Trajet": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-279.png",
+      "Tucson": "https://paspasburada.com.tr/vehicle-model-icons/raw/hyundai/asset-278.png"
+    },
+    "Isuzu": {
+      "D-Max": "https://paspasburada.com.tr/vehicle-model-icons/raw/isuzu/asset-306.png"
+    },
+    "Jaecoo": {
+      "7": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaecoo/asset-307.png"
+    },
+    "Jaguar": {
+      "E-Pace": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-314.png",
+      "F-Pace": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-313.png",
+      "F-Type": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-312.png",
+      "I-Pace": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-311.png",
+      "XE": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-310.png",
+      "XF": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-309.png",
+      "XJ": "https://paspasburada.com.tr/vehicle-model-icons/raw/jaguar/asset-308.png"
+    },
+    "Jeep": {
+      "Avenger": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-322.png",
+      "Cherokee": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-321.png",
+      "Compass": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-320.png",
+      "Gladiator": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-318.png",
+      "Grand Cherokee": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-317.png",
+      "Renegade": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-316.png",
+      "Wrangler": "https://paspasburada.com.tr/vehicle-model-icons/raw/jeep/asset-315.png"
+    },
+    "Kia": {
+      "Bongo": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-344.png",
+      "Carens": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-343.png",
+      "Carnival": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-342.png",
+      "Cerato": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-331.png",
+      "EV3": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-337.png",
+      "EV6": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-336.png",
+      "EV9": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-335.png",
+      "K5": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-338.png",
+      "Magentis": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-334.png",
+      "Niro": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-332.png",
+      "Optima": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-339.png",
+      "Picanto": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-341.png",
+      "Sorento": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-328.png",
+      "Soul": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-325.png",
+      "Sportage": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-327.png",
+      "Stonic": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-326.png",
+      "Venga": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-324.png",
+      "XCeed": "https://paspasburada.com.tr/vehicle-model-icons/raw/kia/asset-323.png"
+    },
+    "Land Rover": {
+      "Defender": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-351.png",
+      "Discovery Sport": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-353.png",
+      "Discovery": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-352.png",
+      "Freelander": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-350.png",
+      "Range Rover Evoque": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-348.png",
+      "Range Rover Sport": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-347.png",
+      "Range Rover": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-349.png",
+      "Range Rover Velar": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-346.png",
+      "Range Rover Vogue": "https://paspasburada.com.tr/vehicle-model-icons/raw/land-rover/asset-345.png"
+    },
+    "Lexus": {
+      "CT": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-362.png",
+      "ES": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-361.png",
+      "GX": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-360.png",
+      "IS": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-359.png",
+      "LBX": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-358.png",
+      "LS": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-357.png",
+      "NX": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-356.png",
+      "RX": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-355.png",
+      "UX": "https://paspasburada.com.tr/vehicle-model-icons/raw/lexus/asset-354.png"
+    },
+    "Mazda": {
+      "2": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-372.png",
+      "5": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-369.png",
+      "6": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-368.png",
+      "CX-3": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-367.png",
+      "CX-30": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-366.png",
+      "CX-5": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-365.png",
+      "CX-60": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-364.png",
+      "MX-5": "https://paspasburada.com.tr/vehicle-model-icons/raw/mazda/asset-363.png"
+    },
+    "Mercedes-Benz": {},
+    "MG": {
+      "4": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-374.png",
+      "5": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-378.png",
+      "EHS": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-377.png",
+      "HS": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-376.png",
+      "Marvel R": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-375.png",
+      "ZS": "https://paspasburada.com.tr/vehicle-model-icons/raw/mg/asset-373.png"
+    },
+    "MINI": {
+      "Cabrio": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-385.png",
+      "Clubman": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-384.png",
+      "Cooper": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-383.png",
+      "Countryman": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-382.png",
+      "Hatch": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-381.png",
+      "One": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-380.png",
+      "Paceman": "https://paspasburada.com.tr/vehicle-model-icons/raw/mini/asset-379.png"
+    },
+    "Nissan": {
+      "Almera": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-411.png",
+      "Altima": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-410.png",
+      "Ariya": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-409.png",
+      "Juke": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-408.png",
+      "Leaf": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-407.png",
+      "Micra": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-406.png",
+      "Navara": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-405.png",
+      "Note": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-404.png",
+      "Pathfinder": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-403.png",
+      "Primera": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-402.png",
+      "Pulsar": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-401.png",
+      "Qashqai": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-400.png",
+      "Terrano": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-399.png",
+      "Tiida": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-398.png",
+      "Townstar": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-397.png",
+      "X-Trail": "https://paspasburada.com.tr/vehicle-model-icons/raw/nissan/asset-396.png"
+    },
+    "Opel": {
+      "Adam": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-435.png",
+      "Agila": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-434.png",
+      "Antara": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-433.png",
+      "Calibra": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-429.png",
+      "Combo": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-428.png",
+      "Corsa": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-427.png",
+      "Crossland": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-426.png",
+      "Crossland X": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-425.png",
+      "Frontera": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-424.png",
+      "Grandland": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-423.png",
+      "Grandland X": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-422.png",
+      "Karl": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-419.png",
+      "Meriva": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-418.png",
+      "Mokka": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-417.png",
+      "Omega": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-416.png",
+      "Tigra": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-415.png",
+      "Vectra": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-414.png",
+      "Zafira": "https://paspasburada.com.tr/vehicle-model-icons/raw/opel/asset-412.png"
+    },
+    "Peugeot": {
+      "106": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-463.png",
+      "205": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-461.png",
+      "206": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-460.png",
+      "207": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-459.png",
+      "208": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-458.png",
+      "301": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-456.png",
+      "306": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-455.png",
+      "307": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-454.png",
+      "406": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-450.png",
+      "408": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-447.png",
+      "607": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-443.png",
+      "807": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-442.png",
+      "1007": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-464.png",
+      "2008": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-462.png",
+      "3008": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-457.png",
+      "4008": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-451.png",
+      "5008": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-446.png",
+      "Bipper": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-441.png",
+      "Rifter": "https://paspasburada.com.tr/vehicle-model-icons/raw/peugeot/asset-437.png"
+    },
+    "Porsche": {
+      "911": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-474.png",
+      "Boxster": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-473.png",
+      "Cayenne Coupe": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-471.png",
+      "Cayenne": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-472.png",
+      "Cayman": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-470.png",
+      "Macan": "https://paspasburada.com.tr/vehicle-model-icons/raw/porsche/asset-469.png"
+    },
+    "Renault": {
+      "9": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-507.png",
+      "11": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-513.png",
+      "12": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-512.png",
+      "21": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-509.png",
+      "5 E-Tech": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-508.png",
+      "Alaskan": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-506.png",
+      "Arkana": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-505.png",
+      "Austral": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-504.png",
+      "Captur": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-503.png",
+      "Clio": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-502.png",
+      "Clio Symbol": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-501.png",
+      "Duster": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-500.png",
+      "Espace": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-499.png",
+      "Europa": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-498.png",
+      "Express": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-497.png",
+      "Fluence": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-496.png",
+      "Grand Scenic": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-495.png",
+      "Kadjar": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-494.png",
+      "Kangoo": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-493.png",
+      "Koleos": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-492.png",
+      "Laguna": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-491.png",
+      "Latitude": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-490.png",
+      "Megane E-Tech": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-483.png",
+      "Modus": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-482.png",
+      "Rafale": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-481.png",
+      "Scenic": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-480.png",
+      "Symbol": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-479.png",
+      "Taliant": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-478.png",
+      "Talisman": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-477.png",
+      "Zoe": "https://paspasburada.com.tr/vehicle-model-icons/raw/renault/asset-475.png"
+    },
+    "Seat": {
+      "Alhambra": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-526.png",
+      "Altea": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-525.png",
+      "Arona": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-524.png",
+      "Ateca": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-523.png",
+      "Cordoba": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-522.png",
+      "Exeo": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-521.png",
+      "Mii": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-516.png",
+      "Tarraco": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-515.png",
+      "Toledo": "https://paspasburada.com.tr/vehicle-model-icons/raw/seat/asset-514.png"
+    },
+    "Skoda": {
+      "Citigo": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-543.png",
+      "Elroq": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-542.png",
+      "Fabia": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-539.png",
+      "Felicia": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-538.png",
+      "Kamiq": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-537.png",
+      "Karoq": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-536.png",
+      "Kodiaq": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-535.png",
+      "Rapid": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-532.png",
+      "Roomster": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-531.png",
+      "Scala": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-530.png",
+      "Yeti": "https://paspasburada.com.tr/vehicle-model-icons/raw/skoda/asset-527.png"
+    },
+    "SsangYong": {
+      "Actyon Sports": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-550.png",
+      "Actyon": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-551.png",
+      "Korando": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-549.png",
+      "Kyron": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-548.png",
+      "Musso": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-547.png",
+      "Rexton": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-546.png",
+      "Tivoli": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-545.png",
+      "Torres": "https://paspasburada.com.tr/vehicle-model-icons/raw/ssangyong/asset-544.png"
+    },
+    "Subaru": {
+      "BRZ": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-559.png",
+      "Forester": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-558.png",
+      "Impreza": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-557.png",
+      "Legacy": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-556.png",
+      "Levorg": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-555.png",
+      "Outback": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-554.png",
+      "Tribeca": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-553.png",
+      "XV": "https://paspasburada.com.tr/vehicle-model-icons/raw/subaru/asset-552.png"
+    },
+    "Suzuki": {
+      "Alto": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-571.png",
+      "Baleno": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-570.png",
+      "Grand Vitara": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-569.png",
+      "Ignis": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-568.png",
+      "Jimny": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-567.png",
+      "S-Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-566.png",
+      "Samurai": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-565.png",
+      "Splash": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-564.png",
+      "Swift": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-563.png",
+      "SX4": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-562.png",
+      "SX4 S-Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-561.png",
+      "Vitara": "https://paspasburada.com.tr/vehicle-model-icons/raw/suzuki/asset-560.png"
+    },
+    "Tesla": {
+      "Model 3": "https://paspasburada.com.tr/vehicle-model-icons/raw/tesla/asset-575.png",
+      "Model S": "https://paspasburada.com.tr/vehicle-model-icons/raw/tesla/asset-574.png",
+      "Model X": "https://paspasburada.com.tr/vehicle-model-icons/raw/tesla/asset-573.png",
+      "Model Y": "https://paspasburada.com.tr/vehicle-model-icons/raw/tesla/asset-572.png"
+    },
+    "Tofaş": {
+      "Doğan": "https://paspasburada.com.tr/vehicle-model-icons/raw/tofas/asset-579.png",
+      "Kartal": "https://paspasburada.com.tr/vehicle-model-icons/raw/tofas/asset-578.png",
+      "Murat 131": "https://paspasburada.com.tr/vehicle-model-icons/raw/tofas/asset-577.png",
+      "Şahin": "https://paspasburada.com.tr/vehicle-model-icons/raw/tofas/asset-576.png"
+    },
+    "Togg": {
+      "T10F": "https://paspasburada.com.tr/vehicle-model-icons/raw/togg/asset-581.png",
+      "T10X": "https://paspasburada.com.tr/vehicle-model-icons/raw/togg/asset-580.png"
+    },
+    "Toyota": {
+      "Auris": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-603.png",
+      "Avensis": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-602.png",
+      "Aygo": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-601.png",
+      "C-HR": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-600.png",
+      "Camry": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-599.png",
+      "Corolla Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-595.png",
+      "Corolla Verso": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-594.png",
+      "Hilux": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-593.png",
+      "Land Cruiser": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-592.png",
+      "Prius": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-591.png",
+      "Proace City": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-590.png",
+      "Proace City Verso": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-589.png",
+      "RAV4": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-588.png",
+      "Supra": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-587.png",
+      "Urban Cruiser": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-586.png",
+      "Verso": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-585.png",
+      "Verso-S": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-584.png",
+      "Yaris Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-582.png",
+      "Yaris": "https://paspasburada.com.tr/vehicle-model-icons/raw/toyota/asset-583.png"
+    },
+    "Volkswagen": {
+      "Amarok": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-604.png",
+      "Arteon": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-622.png",
+      "Bora": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-631.png",
+      "Caddy": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-609.png",
+      "CC": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-629.png",
+      "ID.4": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-617.png",
+      "ID.5": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-616.png",
+      "ID.6": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-618.png",
+      "ID.7": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-624.png",
+      "ID.Buzz": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-610.png",
+      "Jetta": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-630.png",
+      "Passat Alltrack": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-626.png",
+      "Passat CC": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-628.png",
+      "Sharan": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-611.png",
+      "T-Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-620.png",
+      "T-Roc": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-619.png",
+      "Taigo": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-621.png",
+      "Tayron": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-615.png",
+      "Tiguan": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-614.png",
+      "Touareg": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-613.png",
+      "Touran": "https://paspasburada.com.tr/vehicle-model-icons/raw/volkswagen/asset-612.png"
+    },
+    "Volvo": {
+      "C30": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-660.png",
+      "C40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-659.png",
+      "EC40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-658.png",
+      "EX30": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-657.png",
+      "EX40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-656.png",
+      "S40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-655.png",
+      "S60": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-654.png",
+      "S80": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-653.png",
+      "S90": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-652.png",
+      "V40 Cross Country": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-650.png",
+      "V40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-651.png",
+      "V50": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-649.png",
+      "V60 Cross Country": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-647.png",
+      "V60": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-648.png",
+      "V70": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-646.png",
+      "V90 Cross Country": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-644.png",
+      "V90": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-645.png",
+      "XC40": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-643.png",
+      "XC60": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-642.png",
+      "XC70": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-641.png",
+      "XC90": "https://paspasburada.com.tr/vehicle-model-icons/raw/volvo/asset-640.png"
+    },
+    "Mitsubishi": {
+      "ASX": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-395.png",
+      "Carisma": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-394.png",
+      "Colt": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-393.png",
+      "Eclipse Cross": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-392.png",
+      "Grandis": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-391.png",
+      "L200": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-390.png",
+      "Lancer": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-389.png",
+      "Outlander": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-388.png",
+      "Pajero": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-387.png",
+      "Space Star": "https://paspasburada.com.tr/vehicle-model-icons/raw/mitsubishi/asset-386.png"
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { XIcon, SearchIcon } from "lucide-react";
 import { getModelsByBrand } from "@/lib/vehicle-data";
 import BrandLogo from "@/components/BrandLogo";
 import CarBodySilhouette from "@/components/CarBodySilhouette";
+import vehicleImages from "@/lib/vehicle-images.json";
 
 type Props = {
   isOpen: boolean;
@@ -41,6 +42,27 @@ export default function ModelSelectorModal({
     setSearch("");
   };
 
+  const getModelImageUrl = (brandName: string, modelName: string): string | null => {
+    const brandData = (vehicleImages.models as Record<string, Record<string, string>>)[brandName];
+    if (!brandData) return null;
+
+    // Direct match
+    if (brandData[modelName]) return brandData[modelName];
+
+    // Substring / Prefix match
+    const keys = Object.keys(brandData).sort((a, b) => b.length - a.length);
+    for (const key of keys) {
+      if (
+        modelName.toLowerCase().startsWith(key.toLowerCase()) ||
+        modelName.toLowerCase().includes(key.toLowerCase())
+      ) {
+        return brandData[key];
+      }
+    }
+
+    return null;
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -71,7 +93,7 @@ export default function ModelSelectorModal({
                     {brand} Modelini Seçin
                   </h3>
                   <p className="mt-1 text-xs text-white/50">
-                    BMW serisi veya model ailesini belirtin.
+                    {brand} serisi veya model ailesini belirtin.
                   </p>
                 </div>
               </div>
@@ -103,6 +125,8 @@ export default function ModelSelectorModal({
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pb-6">
                   {filteredModels.map((model) => {
                     const isActive = selectedModel === model.name;
+                    const modelImgUrl = getModelImageUrl(brand, model.name);
+
                     return (
                       <button
                         key={model.name}
@@ -114,14 +138,28 @@ export default function ModelSelectorModal({
                             : "bg-white/[0.02] border-white/5 text-white/80 hover:bg-white/[0.05] hover:border-white/15 hover:scale-[1.03]"
                         }`}
                       >
-                        <CarBodySilhouette
-                          bodyType={model.bodyType}
-                          className={`h-9 w-20 transition-colors duration-300 ${
-                            isActive
-                              ? "text-[var(--brand-red)]"
-                              : "text-white/40 group-hover:text-white/80"
-                          }`}
-                        />
+                        {modelImgUrl ? (
+                          <div className="h-10 w-24 flex items-center justify-center">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={modelImgUrl}
+                              alt={`${model.name} silüeti`}
+                              className={`h-full w-full object-contain filter transition-all duration-300 ${
+                                isActive ? "brightness-125" : "brightness-90 opacity-60 group-hover:opacity-100 group-hover:brightness-100"
+                              }`}
+                              loading="lazy"
+                            />
+                          </div>
+                        ) : (
+                          <CarBodySilhouette
+                            bodyType={model.bodyType}
+                            className={`h-9 w-20 transition-colors duration-300 ${
+                              isActive
+                                ? "text-[var(--brand-red)]"
+                                : "text-white/40 group-hover:text-white/80"
+                            }`}
+                          />
+                        )}
                         <div className="flex flex-col">
                           <span className="text-[13px] font-bold tracking-wider">{model.name}</span>
                           <span className="text-[10px] text-white/40 mt-0.5 uppercase tracking-wider">{model.bodyType}</span>

@@ -1,4 +1,6 @@
+"use client";
 
+import vehicleImages from "@/lib/vehicle-images.json";
 
 type Props = {
   brand: string;
@@ -6,6 +8,22 @@ type Props = {
 };
 
 export default function BrandLogo({ brand, className = "h-6 w-6" }: Props) {
+  const brandObj = vehicleImages.brands.find(
+    (b) => b.name.toLowerCase() === brand.toLowerCase()
+  );
+
+  if (brandObj?.logoUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={brandObj.logoUrl}
+        alt={`${brand} logosu`}
+        className={`${className} object-contain`}
+        loading="lazy"
+      />
+    );
+  }
+
   const norm = brand.trim().toLowerCase();
 
   // Audi (Four rings)
@@ -135,7 +153,7 @@ export default function BrandLogo({ brand, className = "h-6 w-6" }: Props) {
     );
   }
 
-  // Default fallback (sleek circle with brand initial or generic car icon)
+  // Default fallback (sleek circle with brand initial)
   return (
     <div className={`flex items-center justify-center rounded-full bg-white/5 border border-white/10 ${className}`}>
       <span className="text-[10px] font-bold text-white">{brand[0]?.toUpperCase() || "A"}</span>
