@@ -145,13 +145,14 @@ export default function VehicleDetailsFields({
             inputMode="numeric"
             maxLength={4}
             value={value.year}
+            disabled={!value.model}
             onChange={(event) =>
               update({ year: event.target.value.replace(/\D/g, "").slice(0, 4) })
             }
-            placeholder="Örn. 2021"
+            placeholder={value.model ? "Örn. 2021" : "Önce model seçin"}
             aria-invalid={showError && isYearInvalid}
             style={showError && isYearInvalid ? errorStyle : undefined}
-            className={getFieldClass(isYearInvalid, showError)}
+            className={`${getFieldClass(isYearInvalid, showError)} disabled:opacity-20 disabled:cursor-not-allowed`}
           />
         </label>
 
@@ -164,11 +165,12 @@ export default function VehicleDetailsFields({
             id={`${idPrefix}-body`}
             type="text"
             value={value.bodyOrChassis}
+            disabled={!value.model}
             onChange={(event) => update({ bodyOrChassis: event.target.value })}
-            placeholder="Örn. W205 Sedan / Sport"
+            placeholder={value.model ? "Örn. W205 Sedan / Sport" : "Önce model seçin"}
             aria-invalid={showError && isBodyInvalid}
             style={showError && isBodyInvalid ? errorStyle : undefined}
-            className={getFieldClass(isBodyInvalid, showError)}
+            className={`${getFieldClass(isBodyInvalid, showError)} disabled:opacity-20 disabled:cursor-not-allowed`}
           />
         </label>
       </div>

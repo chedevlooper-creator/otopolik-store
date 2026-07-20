@@ -28,7 +28,6 @@ export default function ShowroomTestimonials() {
       <div className="wrap">
         <div className="head rev">
           <div>
-            <span className="mono">MÜŞTERİ YORUMLARI</span>
             <h2>Takan bir daha çıkarmıyor.</h2>
           </div>
         </div>

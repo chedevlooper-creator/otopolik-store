@@ -27,7 +27,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
       href="/olusturucu"
       data-whatsapp-obstacle
       className={`group premium-card gradient-border card-lift reveal flex h-full min-w-0 flex-col overflow-hidden rounded-2xl ${
-        featured ? "min-h-[520px]" : "min-h-[360px]"
+        featured ? "premium-card-featured min-h-[520px]" : "min-h-[360px]"
       }`}
     >
       <div className={`premium-grid relative overflow-hidden border-b border-transparent bg-transparent ${featured ? "min-h-[330px] flex-1" : "aspect-[16/10]"}`}>
@@ -63,7 +63,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
               </span>
             )}
             {discount > 0 && (
-              <span className="spec-value rounded-full bg-brand-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-white shadow-[0_0_12px_rgba(237,27,36,0.5)]">
+              <span className="spec-value rounded-full bg-brand-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-white">
                 %{discount} avantaj
               </span>
             )}
@@ -121,6 +121,13 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
           ) : (
             <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-white/65 transition-colors group-hover:text-white">Detayları gör</span>
           )}
+        </div>
+
+        {/* Full-width CTA Button */}
+        <div className="mt-5 pt-1">
+          <span className="btn-press flex h-11 items-center justify-center rounded-xl bg-[var(--brand-red)] text-center text-xs font-bold uppercase tracking-[0.15em] text-white shadow-[0_4px_12px_rgba(237,27,36,0.3)] transition-all duration-300 group-hover:bg-[var(--brand-red)]/90 group-hover:shadow-[0_4px_20px_rgba(237,27,36,0.5)]">
+            Hemen Tasarla →
+          </span>
         </div>
       </div>
     </Link>

@@ -2,35 +2,26 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { GALLERY_ITEMS } from "@/lib/gallery-media";
+import { ORDERED_GALLERY_ITEMS } from "@/lib/gallery-featured";
 import GalleryLightbox from "@/components/GalleryLightbox";
 import { PlayIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const BRANDS = ["Tümü", "BMW", "Mercedes-Benz", "Audi", "Tesla", "Volkswagen", "Renault", "Fiat"];
-
-const getBrandForItem = (src: string): string => {
-  let hash = 0;
-  for (let i = 0; i < src.length; i++) {
-    hash = (hash << 5) - hash + src.charCodeAt(i);
-    hash |= 0;
-  }
-  const brandList = ["BMW", "Mercedes-Benz", "Audi", "Tesla", "Volkswagen", "Renault", "Fiat", "Diğer"];
-  const index = Math.abs(hash) % brandList.length;
-  // Map "Diğer" to something or just return "Diğer"
-  return brandList[index];
-};
+const INITIAL_VISIBLE_COUNT = 40;
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState<"all" | "photo" | "video">("all");
-  const [selectedBrand, setSelectedBrand] = useState<string>("Tümü");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filteredItems = GALLERY_ITEMS.filter((item) => {
-    const matchesType = filter === "all" || item.type === filter;
-    const matchesBrand = selectedBrand === "Tümü" || getBrandForItem(item.src) === selectedBrand;
-    return matchesType && matchesBrand;
-  });
+  const filteredItems = ORDERED_GALLERY_ITEMS.filter(
+    (item) => filter === "all" || item.type === filter,
+  );
+
+  const setGalleryFilter = (nextFilter: "all" | "photo" | "video") => {
+    setFilter(nextFilter);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black pt-32 pb-24 text-white">
@@ -57,7 +48,7 @@ export default function GalleryPage() {
             className="flex items-center gap-1 rounded-full border border-white/5 bg-white/[0.02] p-1.5 backdrop-blur-md"
           >
             <button
-              onClick={() => setFilter("all")}
+              onClick={() => setGalleryFilter("all")}
               className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "all"
                   ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
@@ -67,7 +58,7 @@ export default function GalleryPage() {
               Tümü
             </button>
             <button
-              onClick={() => setFilter("photo")}
+              onClick={() => setGalleryFilter("photo")}
               className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "photo"
                   ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
@@ -77,7 +68,7 @@ export default function GalleryPage() {
               Fotoğraflar
             </button>
             <button
-              onClick={() => setFilter("video")}
+              onClick={() => setGalleryFilter("video")}
               className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "video"
                   ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
@@ -89,26 +80,6 @@ export default function GalleryPage() {
           </div>
         </div>
 
-        {/* Brand Filter Chips */}
-        <div className="reveal mb-12 flex flex-wrap justify-center gap-x-6 gap-y-4 max-w-4xl mx-auto px-4 border-b border-white/5 pb-6">
-          {BRANDS.map((brandName) => {
-            const isActive = selectedBrand === brandName;
-            return (
-              <button
-                key={brandName}
-                onClick={() => setSelectedBrand(brandName)}
-                className={`relative py-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                  isActive
-                    ? "text-white after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[var(--red-hot)]"
-                    : "text-white/40 hover:text-white/80"
-                }`}
-              >
-                {brandName}
-              </button>
-            );
-          })}
-        </div>
-
         {/* Grid */}
         <motion.div
           layout
@@ -116,7 +87,7 @@ export default function GalleryPage() {
           className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >
           <AnimatePresence>
-            {filteredItems.slice(0, 40).map((item, index) => (
+            {filteredItems.slice(0, visibleCount).map((item, index) => (
               <motion.button
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -162,6 +133,18 @@ export default function GalleryPage() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {visibleCount < filteredItems.length && (
+          <div className="mt-12 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE_COUNT)}
+              className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:border-white/30 hover:bg-white/[0.08]"
+            >
+              Daha fazla göster
+            </button>
+          </div>
+        )}
       </div>
 
       {lightboxIndex !== null && (

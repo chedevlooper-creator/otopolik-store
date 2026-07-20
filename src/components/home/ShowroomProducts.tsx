@@ -10,8 +10,7 @@ export default function ShowroomProducts() {
       <div className="wrap">
         <div className="head rev justify-between items-end gap-6 flex-wrap md:flex-nowrap">
           <div>
-            <span className="mono text-[var(--red-hot)]">ÜRÜN KATALOĞU</span>
-            <h2 className="mt-3 text-gradient-white">Gerçek EVA Paspas ve Aksesuarları</h2>
+            <h2 className="text-gradient-white">Gerçek EVA Paspas ve Aksesuarları</h2>
             <p className="mt-4 max-w-xl text-white/50">
               Lazer ölçümlü EVA paspas setlerimiz, sıvı hapseden bagaj havuzlarımız ve araç içi kullanım ömrünü uzatan özel topuk pedlerimizi inceleyin.
             </p>
@@ -19,12 +18,18 @@ export default function ShowroomProducts() {
         </div>
 
         {/* Product Cards Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-12 rev-stagger">
-          {featuredProducts.map((product) => (
-            <div key={product.slug} className="rev">
-              <ProductCard product={product} />
-            </div>
-          ))}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mt-12 rev-stagger items-stretch">
+          {featuredProducts.map((product) => {
+            const isPaspas = product.slug === "eva-oto-paspas-seti";
+            return (
+              <div
+                key={product.slug}
+                className={`rev flex ${isPaspas ? "lg:col-span-2" : ""}`}
+              >
+                <ProductCard product={product} featured={isPaspas} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

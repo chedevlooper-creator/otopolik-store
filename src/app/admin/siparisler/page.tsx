@@ -248,7 +248,7 @@ export default function AdminSiparisler() {
           </h1>
           <p className="mt-1 text-sm text-muted" aria-live="polite">
             {loading
-              ? "Siparişler yükleniyor..."
+              ? "Siparişler yükleniyor…"
               : loadError
                 ? "Sipariş verisine ulaşılamadı"
                 : `${filtered.length} sipariş · Toplam: ${formatPrice(totalCiro)}`}
@@ -297,7 +297,7 @@ export default function AdminSiparisler() {
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Müşteri veya sipariş ara..."
+            placeholder="Müşteri veya sipariş ara…"
             className="w-full border border-border py-2 pl-10 pr-4 text-sm focus:border-white focus:outline-none sm:w-64"
           />
         </div>

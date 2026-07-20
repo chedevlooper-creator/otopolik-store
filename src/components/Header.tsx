@@ -5,9 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/cart-context";
 import { useStoreSettings } from "@/context/settings-context";
-import { useCmsChrome } from "@/context/cms-context";
 import {
-  BadgeCheckIcon,
   MenuIcon,
   XIcon,
   ShoppingBagIcon,
@@ -40,7 +38,6 @@ export default function Header() {
   const menuDialogRef = useRef<HTMLDivElement>(null);
   const { totalItems, openDrawer } = useCart();
   const settings = useStoreSettings();
-  const cms = useCmsChrome();
   const pathname = usePathname();
 
   useEffect(() => {

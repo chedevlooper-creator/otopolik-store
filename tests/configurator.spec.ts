@@ -54,7 +54,7 @@ test.describe("MatConfigurator E2E Flow", () => {
     await turuncuSwatch.click();
 
     // 8. Open the Ekstralar accordion, then toggle the first extra checkbox
-    const extrasSummary = page.locator('summary').filter({ hasText: "Ekstralar" });
+    const extrasSummary = page.getByRole("button", { name: /Ekstralar/ });
     await expect(extrasSummary).toBeVisible();
     await extrasSummary.click();
 
@@ -63,7 +63,7 @@ test.describe("MatConfigurator E2E Flow", () => {
     await expect(topukPediCheckbox).not.toBeChecked();
     
     // Click label or checkbox to toggle
-    await topukPediCheckbox.click();
+    await page.locator("label").filter({ hasText: "Topuk Pedi" }).click();
     await expect(topukPediCheckbox).toBeChecked();
 
     // 9. Click "Sepete Ekle" and verify button feedback
@@ -100,7 +100,7 @@ test.describe("MatConfigurator E2E Flow", () => {
     await yerliBtn.click();
 
     // 3. Open Ekstralar ve Çantalar
-    const extrasSummary = page.locator('summary').filter({ hasText: "Ekstralar ve Çantalar" });
+    const extrasSummary = page.getByRole("button", { name: /Ekstralar ve Çantalar/ });
     await expect(extrasSummary).toBeVisible();
     await extrasSummary.click();
 

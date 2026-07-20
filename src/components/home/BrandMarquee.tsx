@@ -1,33 +1,41 @@
+"use client";
+
+import BrandLogo from "@/components/BrandLogo";
+
 export default function BrandMarquee() {
-  // A select subset of popular brands to keep it clean and fast
+  // Top popular brands to render in the trust grid
   const popularBrands = [
-    "Alfa Romeo", "Audi", "BMW", "BYD", "Chery", "Citroen", "Cupra", 
-    "Dacia", "Fiat", "Ford", "Honda", "Hyundai", "Jeep", "Kia", 
-    "Land Rover", "Lexus", "MG", "MINI", "Mercedes-Benz", "Nissan", 
-    "Opel", "Peugeot", "Porsche", "Renault", "Seat", "Skoda", 
-    "Tesla", "Togg", "Toyota", "Volkswagen", "Volvo"
+    "Audi", "BMW", "Chery", "Citroen", "Cupra", 
+    "Dacia", "Fiat", "Ford", "Hyundai", "Mercedes-Benz", 
+    "Renault", "Tesla", "Togg", "Toyota", "Volkswagen", "Volvo"
   ];
 
   return (
-    <div className="border-t border-b border-white/5 bg-black/40 py-5 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 text-center mb-3">
-        <span className="font-mono text-[9px] font-bold tracking-[0.25em] text-white/50 uppercase">
-          70+ Marka İçin Birebir Uyum Garantili Lazer Ölçümlü Kalıplar
+    <div className="border-t border-b border-white/5 bg-black/40 py-10 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 text-center mb-8">
+        <span className="font-mono text-[9px] font-bold tracking-[0.25em] text-[var(--brand-red)] uppercase block mb-2">
+          HASSAS UYUMLULUK KAPSAMI
         </span>
+        <h2 className="text-2xl font-bold text-white tracking-tight sm:text-3xl">
+          70+ Marka İçin Birebir Uyum Garantili Paspas Kalıpları
+        </h2>
+        <p className="text-xs sm:text-sm text-white/50 mt-2 max-w-md mx-auto">
+          Aracınızın zemin ölçülerine milimetrik uyum sağlayan özel lazer kesim kalıplarımız mevcuttur.
+        </p>
       </div>
-      <div className="marquee py-2">
-        <div className="track flex items-center gap-14 text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">
-          {[1, 2].map((i) => (
-            <span key={i} className="flex whitespace-nowrap items-center gap-14">
-              {popularBrands.map((brand) => (
-                <span key={brand} className="flex items-center gap-14">
-                  <span className="text-white/60 hover:text-white transition-colors duration-200 cursor-default">
-                    {brand}
-                  </span>
-                  <i className="text-[var(--brand-red)] not-italic">✦</i>
-                </span>
-              ))}
-            </span>
+
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3 sm:gap-4">
+          {popularBrands.map((brand) => (
+            <div
+              key={brand}
+              className="flex flex-col items-center justify-center p-4 rounded-2xl border border-white/[0.03] bg-white/[0.01] transition-all duration-300 hover:border-white/10 hover:bg-white/[0.05] group"
+            >
+              <BrandLogo brand={brand} className="h-7 w-7 text-white/50 group-hover:text-white transition-colors duration-300" />
+              <span className="text-[10px] font-bold text-white/40 group-hover:text-white/80 mt-2 transition-colors duration-300 tracking-wider">
+                {brand.toUpperCase()}
+              </span>
+            </div>
           ))}
         </div>
       </div>

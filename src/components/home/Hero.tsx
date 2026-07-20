@@ -26,10 +26,10 @@ export default function Hero({ content }: Props) {
       <div className="relative z-10 mx-auto max-w-5xl px-4 flex flex-col justify-center h-full w-full">
         <div className="flex-1 flex flex-col justify-center items-center mt-12 mb-8">
           <span className="mb-6 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
-            HASSAS MÜHENDİSLİK PROTOKOLÜ
+            PREMİUM 3D EVA PASPAS SİSTEMLERİ
           </span>
           <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-gradient-white sm:text-7xl">
-            Aracının zeminine <br className="hidden sm:block" /><span className="opacity-45">kusursuz</span> uyum.
+            Aracının zeminine <br className="hidden sm:block" /><span className="[-webkit-text-fill-color:#8a8a8a]">kusursuz</span> uyum.
           </h1>
           
           {/* Modern HUD Laser Line */}
@@ -59,20 +59,14 @@ export default function Hero({ content }: Props) {
         </div>
       </div>
 
-      {/* Premium Marquee */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/5 bg-black/60 backdrop-blur-md">
-        <div className="marquee mono py-4">
-          <div className="track flex items-center gap-8 text-[10px] font-medium tracking-[0.2em] text-white/40">
-            {[1, 2].map((i) => (
-              <span key={i} className="flex whitespace-nowrap items-center gap-8">
-                <span><b className="text-[var(--brand-red)]">6.000+</b> ARAÇ MODELİ</span> <i className="text-white/20">✦</i>
-                <span>LAZER KESİM <b className="text-white/80">±0,5 MM</b></span> <i className="text-white/20">✦</i>
-                <span><b className="text-white/80">10 MM</b> HAVUZLU EVA</span> <i className="text-white/20">✦</i>
-                <span><b className="text-[var(--brand-red)]">1-3 GÜN</b> KARGO</span> <i className="text-white/20">✦</i>
-                <span>1.500₺ ÜZERİ ÜCRETSİZ</span> <i className="text-white/20">✦</i>
-              </span>
-            ))}
-          </div>
+      {/* Premium Trust Badge Row */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/5 bg-black/60 backdrop-blur-md py-4">
+        <div className="mx-auto max-w-6xl px-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[10px] font-medium tracking-[0.2em] text-white/40">
+          <span className="flex items-center gap-2"><b className="text-[var(--brand-red)]">6.000+</b> ARAÇ MODELİ</span> <i className="text-white/10 hidden md:inline">✦</i>
+          <span className="flex items-center gap-2">LAZER KESİM <b className="text-white/80">±0,5 MM</b></span> <i className="text-white/10 hidden md:inline">✦</i>
+          <span className="flex items-center gap-2"><b className="text-white/80">10 MM</b> HAVUZLU EVA</span> <i className="text-white/10 hidden md:inline">✦</i>
+          <span className="flex items-center gap-2"><b className="text-[var(--brand-red)]">1-3 GÜN</b> KARGO</span> <i className="text-white/10 hidden md:inline">✦</i>
+          <span className="flex items-center gap-2">1.500₺ ÜZERİ ÜCRETSİZ</span>
         </div>
       </div>
     </section>

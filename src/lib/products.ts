@@ -1,5 +1,4 @@
 import { Product } from "./types";
-import { MAT_PRICING } from "./mat-pricing";
 
 const EVA_MAT_COLORS: Product["colors"] = [
   { name: "Siyah", hex: "#1a1a1a", image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png" },

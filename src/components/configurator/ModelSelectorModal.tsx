@@ -145,7 +145,7 @@ export default function ModelSelectorModal({
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Model ara... (Örn: 3 Serisi, A3, Golf)"
+                placeholder="Model ara… (Örn: 3 Serisi, A3, Golf)"
                 className="min-h-12 w-full rounded-xl border border-border bg-black/40 pl-11 pr-4 py-3 text-sm font-medium text-white placeholder-white/30 transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.2)] focus:outline-none"
               />
             </div>

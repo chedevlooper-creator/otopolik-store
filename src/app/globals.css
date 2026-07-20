@@ -271,6 +271,23 @@ h3 {
     0 0 30px var(--glow-red-rich);
 }
 
+.premium-card-featured {
+  border-color: rgba(237, 27, 36, 0.45) !important;
+  background: linear-gradient(180deg, rgba(237, 27, 36, 0.04) 0%, rgba(0, 0, 0, 0.6) 100%) !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 25px rgba(237, 27, 36, 0.18) !important;
+}
+
+.premium-card-featured:hover {
+  border-color: rgba(237, 27, 36, 0.75) !important;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 35px rgba(237, 27, 36, 0.32) !important;
+}
+
 .premium-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -376,7 +393,6 @@ h3 {
   height: 2px;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--brand-red), #ff6b81);
-  box-shadow: 0 0 16px rgba(237, 27, 36, 0.5);
   flex-shrink: 0;
 }
 
@@ -1247,7 +1263,6 @@ h3 {
 
 .premium-site .section-kicker::before {
   background: var(--red-hot);
-  box-shadow: 0 0 12px var(--red-hot);
 }
 
 .premium-site .section-title {

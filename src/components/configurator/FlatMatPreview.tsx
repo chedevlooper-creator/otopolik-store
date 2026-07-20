@@ -45,7 +45,7 @@ export default function FlatMatPreview({ floor, edge, heelPad }: FlatMatPreviewP
             <div className="flex flex-col items-center gap-3">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-brand-red" />
               <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">
-                Görsel Yükleniyor...
+                Tasarım Kombinasyonu Uygulanıyor…
               </span>
             </div>
           </motion.div>
@@ -60,6 +60,7 @@ export default function FlatMatPreview({ floor, edge, heelPad }: FlatMatPreviewP
           alt=""
           fill
           onLoad={() => setFloorLoaded(true)}
+          onError={() => setFloorLoaded(true)}
           className="object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
         />
 
@@ -81,6 +82,7 @@ export default function FlatMatPreview({ floor, edge, heelPad }: FlatMatPreviewP
           alt=""
           fill
           onLoad={() => setEdgeLoaded(true)}
+          onError={() => setEdgeLoaded(true)}
           className="z-15 object-contain pointer-events-none"
         />
       </div>

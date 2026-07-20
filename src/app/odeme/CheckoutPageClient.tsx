@@ -204,6 +204,9 @@ export default function CheckoutPageClient({
         !isVehicleDetailsComplete(fallbackVehicle)
           ? "Araç marka, model, yıl ve kasa/versiyon bilgisini tamamlayın."
           : undefined,
+      legal: !legalAccepted
+        ? "Devam etmek için mesafeli satış ve ön bilgilendirme sözleşmelerini onaylayın."
+        : undefined,
     };
 
     const filteredErrors: FormErrors = {};
@@ -221,14 +224,6 @@ export default function CheckoutPageClient({
             : `checkout-${firstInvalidField}`;
         document.getElementById(targetId)?.focus();
       });
-      return;
-    }
-
-    if (!legalAccepted) {
-      setErrors((prev) => ({
-        ...prev,
-        legal: "Devam etmek için mesafeli satış ve ön bilgilendirme sözleşmelerini onaylayın.",
-      }));
       return;
     }
 
@@ -571,6 +566,7 @@ export default function CheckoutPageClient({
 
           <label className="flex items-start gap-3 rounded-xl border border-border bg-surface px-4 py-3.5">
             <input
+              id="checkout-legal"
               type="checkbox"
               checked={legalAccepted}
               onChange={(e) => {
@@ -647,7 +643,7 @@ export default function CheckoutPageClient({
             disabled={isSubmitting}
             className="btn-press btn-red-rich mt-6 flex w-full items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {isSubmitting ? "Hazırlanıyor..." : "WhatsApp'ta Sipariş Özetini Aç"}
+            {isSubmitting ? "Hazırlanıyor…" : "WhatsApp'ta Sipariş Özetini Aç"}
           </button>
 
           <ul className="mt-5 space-y-2 border-t border-border pt-5 text-[11px] text-muted">

@@ -15,15 +15,13 @@ import {
   MAT_PREVIEW_IMAGES,
 } from "@/lib/configurator-cart-item";
 import { PaletteIcon, RulerIcon, TruckIcon, PlayIcon } from "lucide-react";
-import { GALLERY_ITEMS } from "@/lib/gallery-media";
+import { CONFIGURATOR_GALLERY_ITEMS } from "@/lib/gallery-featured";
 import GalleryLightbox from "@/components/GalleryLightbox";
 import { formatPrice } from "@/lib/format";
 import FlatMatPreview from "./FlatMatPreview";
 import { useConfiguratorAssistant } from "./ConfiguratorAssistantProvider";
 
 // Select a stable mix of 12 items for the configurator sidebar to show real applications
-const CONFIGURATOR_GALLERY_ITEMS = GALLERY_ITEMS.slice(10, 22);
-
 type Props = {
   aiEnabled?: boolean;
 };
@@ -31,7 +29,7 @@ type Props = {
 export default function MatConfigurator({
   aiEnabled = false,
 }: Props) {
-  const { addItem, closeDrawer } = useCart();
+  const { addItem } = useCart();
   const {
     vehicle,
     setVehicle,
@@ -50,7 +48,6 @@ export default function MatConfigurator({
     vehicleComplete,
     vehicleLabel,
     totalPrice,
-    currentStep,
     selectFloor,
     selectEdge,
     buildCartItem,
@@ -58,6 +55,7 @@ export default function MatConfigurator({
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
   const [previewMode, setPreviewMode] = useState<"flat" | "cabin">("flat");
   const [showValidationErrors, setShowValidationErrors] = useState(false);
+  const [extrasExpanded, setExtrasExpanded] = useState(false);
 
   const previewKey = `${floor.name}|${edge.name}`;
   const preview = getMatPreview(floor, edge);
@@ -76,11 +74,6 @@ export default function MatConfigurator({
     .join(" · ");
 
   const canAdd = vehicleComplete;
-  const steps = [
-    { label: "Araç", index: 0 },
-    { label: "Renkler", index: 1 },
-    { label: "Ekstralar", index: 2 },
-  ];
 
   function handleAddToCart() {
     if (!vehicleComplete) {
@@ -95,19 +88,20 @@ export default function MatConfigurator({
     if (item) addItem(item);
   }
 
-  function handleCheckout() {
-    handleAddToCart();
-    closeDrawer();
-  }
-
   return (
     <div className="pb-28 lg:pb-0">
-      {/* Spacer where progress bar used to be */}
-      <div className="mb-8 hidden lg:block" />
-
       <div className="grid min-w-0 max-w-full gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
+      <div className="min-w-0 max-w-full lg:col-start-2 lg:row-start-1">
+        <VehicleSelector
+          value={vehicle}
+          onChange={setVehicle}
+          aiEnabled={aiEnabled}
+          showError={showValidationErrors}
+        />
+      </div>
+
       {/* Gerçek ürün görünümü */}
-      <div className="min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
+      <div className="min-w-0 max-w-full lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:sticky lg:top-32 lg:self-start">
         <div className="relative overflow-hidden rounded-3xl border border-white/5 bg-black/40 premium-card backdrop-blur-md">
           {/* View Mode Toggle Switcher */}
           <div className="absolute right-4 top-4 z-30 flex rounded-full border border-white/5 bg-black/60 p-1 backdrop-blur-md">
@@ -236,14 +230,7 @@ export default function MatConfigurator({
       </div>
 
       {/* Seçenekler */}
-      <div className="min-w-0 max-w-full space-y-7">
-        <VehicleSelector
-          value={vehicle}
-          onChange={setVehicle}
-          aiEnabled={aiEnabled}
-          showError={showValidationErrors}
-        />
-
+      <div className="min-w-0 max-w-full space-y-7 lg:col-start-2 lg:row-start-2">
         {/* Kalite Seçimi */}
         <section className="space-y-4">
           <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
@@ -251,10 +238,12 @@ export default function MatConfigurator({
             Kalite Seçimi
           </h2>
           <div className="grid gap-3 sm:grid-cols-2">
-            <button
+            <motion.button
               type="button"
               onClick={() => setQuality("ithal")}
-              className={`flex flex-col p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group ${
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className={`flex flex-col p-5 rounded-2xl border text-left relative overflow-hidden group cursor-pointer transition-colors duration-300 ${
                 quality === "ithal"
                   ? "bg-[var(--brand-red)]/10 border-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.15)]"
                   : "bg-white/[0.02] border-white/5 text-white/70 hover:bg-white/[0.05] hover:border-white/12"
@@ -266,11 +255,13 @@ export default function MatConfigurator({
               <span className="text-[11px] text-white/50 mt-2.5 leading-relaxed">
                 İthal kalın EVA malzeme, derin 3D petek kilit havuzu ve maksimum aşınma direnci.
               </span>
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               type="button"
               onClick={() => setQuality("yerli")}
-              className={`flex flex-col p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group ${
+              whileHover={{ y: -2, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className={`flex flex-col p-5 rounded-2xl border text-left relative overflow-hidden group cursor-pointer transition-colors duration-300 ${
                 quality === "yerli"
                   ? "bg-[var(--brand-red)]/10 border-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.15)]"
                   : "bg-white/[0.02] border-white/5 text-white/70 hover:bg-white/[0.05] hover:border-white/12"
@@ -282,7 +273,7 @@ export default function MatConfigurator({
               <span className="text-[11px] text-white/50 mt-2.5 leading-relaxed">
                 Yüksek kaliteli yerli üretim, şık kenar biyeleri ve dayanıklı yapısı.
               </span>
-            </button>
+            </motion.button>
           </div>
         </section>
 
@@ -338,36 +329,55 @@ export default function MatConfigurator({
 
         {/* Collapsed Extras Accordion */}
         <section className="py-2">
-          <details className="group">
-            <summary className="flex cursor-pointer list-none items-center justify-between p-5 font-heading text-2xl font-bold text-white [&::-webkit-details-marker]:hidden">
+          <button
+            type="button"
+            onClick={() => setExtrasExpanded(!extrasExpanded)}
+            className="flex w-full items-center justify-between gap-4 p-5 font-heading text-2xl font-bold text-white transition-colors hover:text-white/95 cursor-pointer outline-none"
+            aria-expanded={extrasExpanded}
+          >
+            <span className="flex flex-col gap-1.5 text-left">
               <span className="flex items-baseline gap-3">
                 <span className="spec-value text-base font-medium text-white">04</span>
                 <span>Ekstralar ve Çantalar</span>
-                <span className="spec-value ml-2 text-xs font-normal normal-case tracking-normal text-muted group-open:hidden">
-                  (Topukluk, logo, bagaj paspası, bagaj çantası)
+              </span>
+              {!extrasExpanded && (
+                <span className="spec-value text-xs font-normal normal-case tracking-normal text-muted">
+                  Topukluk, logo, bagaj paspası, bagaj çantası
                 </span>
-              </span>
-              <span className="spec-value text-base font-medium text-[var(--red-hot)] transition-transform group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <div className="px-5 pb-5 border-t border-white/5 pt-5">
-              <ExtrasSelector
-                heelPad={heelPad}
-                trunkMat={trunkMat}
-                heelPadPrice={MAT_PRICING.heelPadPrice}
-                trunkMatPrice={quality === "yerli" ? MAT_PRICING.yerliTrunkMatPrice : MAT_PRICING.trunkMatPrice}
-                onHeelPadChange={setHeelPad}
-                onTrunkMatChange={setTrunkMat}
-                logoCount={logoCount}
-                logoPrice={MAT_PRICING.logoPrice}
-                onLogoCountChange={setLogoCount}
-                bagSize={bagSize}
-                onBagSizeChange={setBagSize}
-                quality={quality}
-              />
-            </div>
-          </details>
+              )}
+            </span>
+            <span className={`spec-value text-base font-medium text-[var(--red-hot)] transition-transform duration-300 ${extrasExpanded ? "rotate-45" : ""}`}>
+              +
+            </span>
+          </button>
+          <AnimatePresence initial={false}>
+            {extrasExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="px-5 pb-5 border-t border-white/5 pt-5">
+                  <ExtrasSelector
+                    heelPad={heelPad}
+                    trunkMat={trunkMat}
+                    heelPadPrice={MAT_PRICING.heelPadPrice}
+                    trunkMatPrice={quality === "yerli" ? MAT_PRICING.yerliTrunkMatPrice : MAT_PRICING.trunkMatPrice}
+                    onHeelPadChange={setHeelPad}
+                    onTrunkMatChange={setTrunkMat}
+                    logoCount={logoCount}
+                    logoPrice={MAT_PRICING.logoPrice}
+                    onLogoCountChange={setLogoCount}
+                    bagSize={bagSize}
+                    onBagSizeChange={setBagSize}
+                    quality={quality}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
 
         {/* Material Tech Highlight */}
@@ -400,7 +410,6 @@ export default function MatConfigurator({
           configSummary={configSummary}
           totalPrice={totalPrice}
           onAddToCart={handleAddToCart}
-          onCheckout={handleCheckout}
           canAdd={canAdd}
         />
       </div>
@@ -416,7 +425,7 @@ export default function MatConfigurator({
 
       {/* Mobile Sticky Bottom Price/CTA Bar */}
       <div className="fixed bottom-0 inset-x-0 z-40 border-t border-white/10 bg-black/80 backdrop-blur-lg p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:hidden">
-        <div className="flex items-center justify-between gap-4 max-w-xl mx-auto">
+        <div className="mx-auto flex max-w-xl items-center justify-between gap-4 pr-14 sm:pr-0">
           <div>
             <span className="spec-label text-[10px] text-muted block mb-0.5">Toplam</span>
             <span className="spec-value text-xl font-bold text-white">
@@ -431,7 +440,7 @@ export default function MatConfigurator({
             onClick={handleAddToCart}
             className="btn-press btn-red-rich flex-1 min-h-12 rounded-full text-xs font-bold uppercase tracking-wider text-white"
           >
-            Sepete Ekle
+            {canAdd ? "Sepete Ekle" : "Önce aracını seç"}
           </button>
         </div>
       </div>

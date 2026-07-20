@@ -47,6 +47,7 @@ export default async function Home() {
           secondaryCta: section("hero-secondary-cta"),
         }}
       />
+      <ShowroomTrustStrip />
       <ShowroomBento />
       <BrandMarquee />
       <ShowroomProducts />
@@ -54,7 +55,6 @@ export default async function Home() {
       <ShowroomTestimonials />
       <ShowroomFaq items={faqItems} />
       <ShowroomFinalCTA />
-      <ShowroomTrustStrip />
       <ShowroomRevealInitializer />
       {renderJsonLd(faqPageSchema(faqItems))}
     </div>

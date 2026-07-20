@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 
 /**
  * Hero arka plan videosu (lüks sedan kabin / paspas).
@@ -48,13 +49,11 @@ export default function HeroMedia() {
 
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/media/hero-poster.jpg?v=2"
+      <Image
+        src="/media/hero-poster.jpg"
         alt=""
         aria-hidden="true"
-        fetchPriority="high"
-        decoding="sync"
+        priority
         width={1920}
         height={1080}
         className={`absolute inset-0 h-full w-full object-cover object-[62%_50%] transition-opacity duration-700 md:object-center ${

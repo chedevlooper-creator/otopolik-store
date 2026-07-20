@@ -94,7 +94,7 @@ export default async function SupportPage() {
               className="btn-red-rich btn-press mt-6 inline-flex h-14 w-fit items-center justify-center gap-3 rounded-full px-8 text-sm font-bold uppercase tracking-wider"
             >
               <MessageCircleIcon className="size-5" aria-hidden="true" />
-              WhatsApp'tan Destek Al
+              WhatsApp&apos;tan Destek Al
             </a>
 
             <p className="mt-6 flex items-center justify-center gap-2 text-[11px] leading-5 text-white/40">

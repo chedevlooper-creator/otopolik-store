@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatPrice } from "@/lib/format";
@@ -13,30 +12,20 @@ type Props = {
   configSummary: string;
   totalPrice: number;
   onAddToCart: () => void;
-  onCheckout: () => void;
   canAdd: boolean;
 };
-
-const priceFormatter = (n: number) =>
-  new Intl.NumberFormat("tr-TR", {
-    style: "currency",
-    currency: "TRY",
-    maximumFractionDigits: 0,
-  }).format(n);
 
 export default function ConfigSummary({
   vehicleLabel,
   configSummary,
   totalPrice,
   onAddToCart,
-  onCheckout,
   canAdd,
 }: Props) {
-  const router = useRouter();
   const settings = useStoreSettings();
   const [showAdded, setShowAdded] = useState(false);
 
-  const animatedPrice = useAnimatedNumber(totalPrice, priceFormatter, {
+  const animatedPrice = useAnimatedNumber(totalPrice, formatPrice, {
     stiffness: 100,
     damping: 20,
     mass: 0.5,
@@ -103,7 +92,7 @@ export default function ConfigSummary({
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                Sepete Ekle
+                {canAdd ? "Sepete Ekle" : "Önce aracını seç"}
               </motion.span>
             )}
           </AnimatePresence>
@@ -123,19 +112,6 @@ export default function ConfigSummary({
             </motion.div>
           )}
         </AnimatePresence>
-
-        <motion.button
-          type="button"
-          disabled={!canAdd}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            onCheckout();
-            router.push("/odeme");
-          }}
-          className="btn-press hidden min-h-11 flex-1 rounded-full border border-white/12 px-6 py-3.5 text-sm font-semibold text-foreground hover:border-white/24 hover:bg-white/[0.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:text-muted sm:block"
-        >
-          Hemen Sipariş Ver
-        </motion.button>
       </div>
       <a
         href={whatsappHref}

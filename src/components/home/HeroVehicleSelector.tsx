@@ -4,9 +4,11 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import BrandLogo from "@/components/BrandLogo";
 import BrandSelectorModal from "@/components/configurator/BrandSelectorModal";
 import ModelSelectorModal from "@/components/configurator/ModelSelectorModal";
+import YearSelectorModal from "@/components/configurator/YearSelectorModal";
 import CarBodySilhouette from "@/components/CarBodySilhouette";
 import { getModelsByBrand } from "@/lib/vehicle-data";
 import vehicleImages from "@/lib/vehicle-images.json";
@@ -18,6 +20,7 @@ export default function HeroVehicleSelector() {
   const [selectedYear, setSelectedYear] = useState("");
   const [isBrandOpen, setIsBrandOpen] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isYearOpen, setIsYearOpen] = useState(false);
 
   const years = useMemo(() => {
     const currentYear = 2026;
@@ -161,22 +164,28 @@ export default function HeroVehicleSelector() {
                 Yıl
               </label>
               <div className="relative">
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  disabled={!selectedBrand}
-                  className={`${selectClass} disabled:opacity-20 disabled:cursor-not-allowed`}
+                <button
+                  type="button"
+                  disabled={!selectedModel}
+                  onClick={() => setIsYearOpen(true)}
+                  className={`${selectClass} flex items-center justify-between text-left disabled:opacity-20 disabled:cursor-not-allowed`}
                 >
-                  <option value="" className="bg-black text-white/60">Yıl Seçin</option>
-                  {years.map((year) => (
-                    <option key={year} value={year} className="bg-black text-white">
-                      {year}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
-                  <ChevronDown className="h-4 w-4 text-white/40 transition-transform duration-300 group-focus-within:rotate-180" />
-                </div>
+                  {selectedYear ? (
+                    <span>{selectedYear}</span>
+                  ) : (
+                    <span className="text-white/40">
+                      {selectedModel ? "Yıl Seçin" : "Önce Model Seçin"}
+                    </span>
+                  )}
+                  <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+                </button>
+                <YearSelectorModal
+                  isOpen={isYearOpen}
+                  onClose={() => setIsYearOpen(false)}
+                  onSelect={(year) => setSelectedYear(year)}
+                  selectedYear={selectedYear}
+                  years={years}
+                />
               </div>
             </div>
           </form>
@@ -217,9 +226,9 @@ export default function HeroVehicleSelector() {
         <div className="relative z-10 flex items-center justify-between text-[9px] font-mono text-white/40 tracking-wider">
           <div className="flex items-center gap-1.5">
             <span className={`h-1.5 w-1.5 rounded-full ${selectedModel ? "bg-[var(--brand-red)] animate-pulse" : "bg-white/30"}`} />
-            <span>{selectedModel ? "TARAMA TAMAMLANDI" : "BEKLEMEDE"}</span>
+            <span>{selectedModel ? "UYUMLULUK ONAYLANDI" : "AKILLI ALGORİTMA"}</span>
           </div>
-          <span>SYS.VER.1.2</span>
+          <span>3D LAZER ÖLÇÜ</span>
         </div>
 
         {/* Center: Vehicle Silhouette / Scanner Graphic */}
@@ -245,10 +254,11 @@ export default function HeroVehicleSelector() {
               >
                 {modelImgUrl ? (
                   <div className="h-16 w-36 flex items-center justify-center relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={modelImgUrl}
                       alt={`${selectedModel} silüeti`}
+                      width={144}
+                      height={64}
                       className="h-full w-full object-contain filter invert brightness-125 drop-shadow-[0_0_12px_rgba(237,27,36,0.35)]"
                     />
                   </div>
@@ -276,7 +286,7 @@ export default function HeroVehicleSelector() {
                   className="h-14 w-32 text-white/20"
                 />
                 <span className="text-[10px] font-mono text-white/30 mt-4 tracking-widest uppercase animate-pulse">
-                  ARAÇ BEKLENİYOR
+                  ARAÇ SEÇİMİ BEKLENİYOR
                 </span>
               </motion.div>
             )}
@@ -289,43 +299,43 @@ export default function HeroVehicleSelector() {
             {selectedModelObj ? (
               <>
                 <div className="flex justify-between">
-                  <span>MARKA:</span>
+                  <span>Araç Markası:</span>
                   <span className="text-white font-bold">{selectedBrand}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>MODEL:</span>
+                  <span>Araç Modeli:</span>
                   <span className="text-white font-bold">{selectedModelObj.name.replace(/\s+(Sedan|Hatchback|SUV|Coupe|Cabrio|MPV|Station Wagon|Pickup|Van|Roadster|Liftback|Sportback|Fastback|Crossover|Microcar)$/i, "")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>GÖVDE:</span>
+                  <span>Gövde Tipi:</span>
                   <span className="text-[var(--brand-red)] font-bold">{selectedModelObj.bodyType.toUpperCase()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>YIL:</span>
+                  <span>Model Yılı:</span>
                   <span className="text-white font-bold">{selectedYear || "BELİRTİLMEDİ"}</span>
                 </div>
                 <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/30">
-                  <span>UYUMLULUK:</span>
-                  <span className="text-emerald-400 font-bold">%100 HASSAS UYUM</span>
+                  <span>Uyum Oranı:</span>
+                  <span className="text-emerald-400 font-bold">%100 BİREBİR UYUM</span>
                 </div>
               </>
             ) : (
               <>
                 <div className="flex justify-between">
-                  <span>SİSTEM:</span>
-                  <span className="text-white">ÇEVRİMİÇİ</span>
+                  <span>Lazer Ölçüm:</span>
+                  <span className="text-white">Aktif</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>VERİTABANI:</span>
-                  <span className="text-white">6000+ MODEL</span>
+                  <span>Kalıp Kapsamı:</span>
+                  <span className="text-white">6000+ Araç</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>ÖLÇÜM:</span>
-                  <span className="text-white">3D LAZER TARAMA</span>
+                  <span>Ölçüm Teknolojisi:</span>
+                  <span className="text-white">3D Milimetrik</span>
                 </div>
                 <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/30">
                   <span>DURUM:</span>
-                  <span className="text-white/40 animate-pulse">ARAÇ VERİSİ BEKLENİYOR...</span>
+                  <span className="text-white/40 animate-pulse">Araç seçimi bekleniyor...</span>
                 </div>
               </>
             )}

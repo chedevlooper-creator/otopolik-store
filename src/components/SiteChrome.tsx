@@ -2,16 +2,18 @@
 
 import type { MouseEvent } from "react";
 import { usePathname } from "next/navigation";
-import CartDrawer from "@/components/CartDrawer";
-import CookieConsent from "@/components/CookieConsent";
-import ConsentAnalytics from "@/components/ConsentAnalytics";
+import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import RevealInitializer from "@/components/RevealInitializer";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
-import WhatsappFloat from "@/components/WhatsappFloat";
 import { CartProvider } from "@/context/cart-context";
+
+const CartDrawer = dynamic(() => import("@/components/CartDrawer"), { ssr: false });
+const CookieConsent = dynamic(() => import("@/components/CookieConsent"), { ssr: false });
+const ConsentAnalytics = dynamic(() => import("@/components/ConsentAnalytics"), { ssr: false });
+const WhatsappFloat = dynamic(() => import("@/components/WhatsappFloat"), { ssr: false });
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
