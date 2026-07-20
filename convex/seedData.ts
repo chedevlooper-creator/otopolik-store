@@ -31,13 +31,9 @@ export const DEFAULT_COMPATIBILITY = {
 export type SeedCategory =
   | "eva-3d"
   | "eva-havuzlu"
-  | "hali-paspas"
   | "bagaj"
   | "bagaj-havuzu"
-  | "bagaj-cantasi"
-  | "direksiyon-kilifi"
-  | "minder-seti"
-  | "ekran-koruyucu";
+  | "bagaj-cantasi";
 
 export type SeedProduct = {
   slug: string;
@@ -192,110 +188,5 @@ export const SEED_PRODUCTS: SeedProduct[] = [
     setContents: ["1 adet EVA Bagaj Çantası"],
     optionalExtras: [],
     dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "hali-oto-paspas-seti",
-    name: "Halı Oto Paspas Seti",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "hali-paspas",
-    price: 1250,
-    oldPrice: 1650,
-    badge: "Yeni",
-    image: "/media/galeri/hali-paspas/01-siyah-on.jpg",
-    gallery: [
-      "/media/galeri/hali-paspas/01-siyah-on.jpg",
-      "/media/galeri/hali-paspas/02-siyah-arka.jpg",
-    ],
-    description:
-      "Aracınıza özel kesim, kenarları overloklu premium hali paspas seti. Yumuşak dokusuyla konfor sağlarken kaymaz tabanı sayesinde yerinden oynamaz. Ön ve arka sıra için tam takımdır.",
-    features: [
-      "Araca özel kesim, tam uyum",
-      "Kenar overlok dikişli, şık görünüm",
-      "Kaymaz taban — sabit durur",
-      "Yumuşak, yoğun hali dokusu",
-      "Yıkanabilir, kolay bakım",
-    ],
-    setContents: ["Ön sürücü paspası", "Ön yolcu paspası", "Arka sıra paspasları"],
-    optionalExtras: ["Bagaj paspası"],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "premium-direksiyon-kilifi",
-    name: "Premium Direksiyon Kılıfı",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "direksiyon-kilifi",
-    price: 450,
-    oldPrice: 650,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
-    gallery: [
-      "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
-    ],
-    description:
-      "Yüksek kaliteli suni deriden üretilen, zarif dikiş işçilikli premium direksiyon kılıfı. Kaymaz yüzeyiyle daha iyi kavrama ve sürüş konforu sağlar, direksiyonunuzu aşınma ve güneşe karşı korur.",
-    features: [
-      "Premium suni deri, uzun ömürlü",
-      "Kaymaz yüzey — konforlu tutuş",
-      "Standart direksiyonlara tam uyum",
-      "Aşınma ve güneşe karşı koruma",
-      "Silerek kolayca temizlenir",
-    ],
-    setContents: ["1 adet direksiyon kılıfı"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "arac-ekran-koruyucu",
-    name: "Araç Ekran Koruyucu",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "ekran-koruyucu",
-    price: 350,
-    oldPrice: 500,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
-    gallery: [
-      "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
-    ],
-    description:
-      "Aracınızın multimedya ve gösterge ekranını çizilmeye, toza ve parmak izine karşı koruyan şeffaf ekran koruyucu. Araca özel kesim sayesinde ekranınıza tam oturur, dokunmatik hassasiyetini etkilemez.",
-    features: [
-      "Araca özel kesim, tam uyum",
-      "Çizilmeye karşı koruma",
-      "Parmak izi ve toz tutmaz",
-      "Dokunmatik hassasiyetini korur",
-      "Kabarcıksız kolay montaj",
-    ],
-    setContents: ["1 adet ekran koruyucu"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "ortopedik-minder-seti",
-    name: "Ortopedik Oto Minder Seti",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "minder-seti",
-    price: 950,
-    oldPrice: 1350,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
-    gallery: [
-      "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
-    ],
-    description:
-      "Terletmeyen kumaşı ve ortopedik dolgusuyla uzun yolculuklarda konfor sağlayan oto minder seti. Cepli tasarımı ile pratik saklama alanı sunar, koltuklarınızı aşınma ve lekelere karşı korur.",
-    features: [
-      "Ortopedik dolgu — uzun yolda konfor",
-      "Terletmeyen nefes alan kumaş",
-      "Cepli tasarım, pratik saklama",
-      "Koltukları aşınma ve lekeye karşı korur",
-      "Çoğu araç koltuğuna uyumlu",
-    ],
-    setContents: ["Ön koltuk minderleri", "Boyun yastıkları"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
+  }
 ];

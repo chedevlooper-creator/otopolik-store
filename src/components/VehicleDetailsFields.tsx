@@ -18,8 +18,13 @@ type Props = {
   className?: string;
 };
 
-const fieldClass =
-  "input-rich mt-1.5 min-h-12 w-full rounded-xl border border-white/10 bg-black/40 backdrop-blur-md px-4 py-3 text-sm font-medium transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.3)] focus:outline-none";
+const getFieldClass = (isInvalid: boolean, showError: boolean) => {
+  return `input-rich mt-1.5 min-h-12 w-full rounded-xl border px-4 py-3 text-sm font-medium transition-all focus:outline-none ${
+    isInvalid && showError
+      ? "border-red-500/85 bg-red-950/10 shadow-[0_0_15px_rgba(239,68,68,0.35)] animate-pulse"
+      : "border-border bg-black/40 backdrop-blur-md focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.3)]"
+  }`;
+};
 
 export default function VehicleDetailsFields({
   value,
@@ -35,6 +40,16 @@ export default function VehicleDetailsFields({
     onChange({ ...value, ...patch });
   };
 
+  const isBrandInvalid = !value.brand.trim();
+  const isModelInvalid = !value.model.trim();
+  const isYearInvalid = !/^\d{4}$/.test(value.year.trim());
+  const isBodyInvalid = value.bodyOrChassis.trim().length < 2;
+
+  const errorStyle = {
+    borderColor: "rgba(239, 68, 68, 0.85)",
+    boxShadow: "0 0 15px rgba(239, 68, 68, 0.35)",
+  };
+
   return (
     <div className={className}>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -44,7 +59,8 @@ export default function VehicleDetailsFields({
             type="button"
             id={`${idPrefix}-brand`}
             onClick={() => setIsBrandOpen(true)}
-            className={`${fieldClass} flex items-center justify-between text-left cursor-pointer w-full text-white/90`}
+            style={showError && isBrandInvalid ? errorStyle : undefined}
+            className={`${getFieldClass(isBrandInvalid, showError)} flex items-center justify-between text-left cursor-pointer w-full text-white/90`}
           >
             {value.brand ? (
               <span className="flex items-center gap-2.5">
@@ -77,8 +93,9 @@ export default function VehicleDetailsFields({
               value={value.model}
               onChange={(event) => update({ model: event.target.value })}
               placeholder="Örn. Saab 9-3 Sedan"
-              aria-invalid={showError && !value.model.trim()}
-              className={fieldClass}
+              aria-invalid={showError && isModelInvalid}
+              style={showError && isModelInvalid ? errorStyle : undefined}
+              className={getFieldClass(isModelInvalid, showError)}
             />
           </label>
         ) : (
@@ -89,7 +106,8 @@ export default function VehicleDetailsFields({
               id={`${idPrefix}-model`}
               disabled={!value.brand}
               onClick={() => setIsModelOpen(true)}
-              className={`${fieldClass} flex items-center justify-between text-left cursor-pointer w-full text-white/90 disabled:opacity-20 disabled:cursor-not-allowed`}
+              style={showError && isModelInvalid ? errorStyle : undefined}
+              className={`${getFieldClass(isModelInvalid, showError)} flex items-center justify-between text-left cursor-pointer w-full text-white/90 disabled:opacity-20 disabled:cursor-not-allowed`}
             >
               {value.model ? (
                 <span className="flex items-center gap-2.5">
@@ -113,7 +131,8 @@ export default function VehicleDetailsFields({
               selectedModel={value.model}
               brand={value.brand}
             />
-          </div>    )}
+          </div>
+        )}
 
         <label
           htmlFor={`${idPrefix}-year`}
@@ -130,8 +149,9 @@ export default function VehicleDetailsFields({
               update({ year: event.target.value.replace(/\D/g, "").slice(0, 4) })
             }
             placeholder="Örn. 2021"
-            aria-invalid={showError && !/^\d{4}$/.test(value.year)}
-            className={fieldClass}
+            aria-invalid={showError && isYearInvalid}
+            style={showError && isYearInvalid ? errorStyle : undefined}
+            className={getFieldClass(isYearInvalid, showError)}
           />
         </label>
 
@@ -146,14 +166,15 @@ export default function VehicleDetailsFields({
             value={value.bodyOrChassis}
             onChange={(event) => update({ bodyOrChassis: event.target.value })}
             placeholder="Örn. W205 Sedan / Sport"
-            aria-invalid={showError && value.bodyOrChassis.trim().length < 2}
-            className={fieldClass}
+            aria-invalid={showError && isBodyInvalid}
+            style={showError && isBodyInvalid ? errorStyle : undefined}
+            className={getFieldClass(isBodyInvalid, showError)}
           />
         </label>
       </div>
 
       {showError ? (
-        <p role="alert" className="mt-3 text-xs font-semibold text-red-300">
+        <p role="alert" className="mt-3 text-xs font-semibold text-red-400">
           Doğru kalıbı hazırlayabilmemiz için marka, model, 4 haneli yıl ve kasa/versiyon bilgisini tamamlayın.
         </p>
       ) : (

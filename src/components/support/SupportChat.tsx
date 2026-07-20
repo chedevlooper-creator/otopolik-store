@@ -135,9 +135,9 @@ export default function SupportChat() {
   return (
     <section
       aria-labelledby="support-chat-title"
-      className="surface-glass mac-glass overflow-hidden rounded-2xl border border-white/10 bg-black"
+      className="surface-glass mac-glass overflow-hidden rounded-2xl border border-border bg-surface"
     >
-      <header className="flex flex-col gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-start sm:justify-between sm:p-7">
+      <header className="flex flex-col gap-4 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between sm:p-7">
         <div className="flex items-start gap-3">
           <span className="icon-badge-rich flex size-11 shrink-0 items-center justify-center">
             <BotIcon className="size-5" aria-hidden="true" />
@@ -258,7 +258,7 @@ export default function SupportChat() {
             maxLength={2000}
             disabled={isStreaming}
             placeholder="Kargo, ölçü, bakım veya sipariş sorunuzu yazın…"
-            className="input-rich min-w-0 flex-1 rounded-xl border border-white/10 bg-black/70 px-4 py-3 text-sm text-white placeholder:text-white/35"
+            className="input-rich min-w-0 flex-1 rounded-xl border border-border bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/35"
           />
           {isStreaming ? (
             <button

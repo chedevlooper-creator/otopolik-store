@@ -80,7 +80,7 @@ export default function BrandSelectorModal({
             animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
             exit={{ opacity: 0, scale: 0.95, y: "-47%", x: "-50%" }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[10000] flex h-[85vh] w-[92vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
+            className="fixed left-1/2 top-1/2 z-[10000] flex h-[85vh] w-[92vw] max-w-2xl flex-col rounded-3xl border border-border bg-surface p-6 shadow-2xl backdrop-blur-xl sm:p-8"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -110,7 +110,7 @@ export default function BrandSelectorModal({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Marka ara... (Örn: BMW, Togg, Audi)"
-                className="min-h-12 w-full rounded-xl border border-white/8 bg-white/[0.03] pl-11 pr-4 py-3 text-sm font-medium text-white placeholder-white/30 transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.2)] focus:outline-none"
+                className="min-h-12 w-full rounded-xl border border-border bg-black/40 pl-11 pr-4 py-3 text-sm font-medium text-white placeholder-white/30 transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.2)] focus:outline-none"
               />
             </div>
 

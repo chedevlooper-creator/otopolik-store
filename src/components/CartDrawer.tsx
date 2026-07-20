@@ -68,7 +68,7 @@ export default function CartDrawer() {
       />
       <aside
         ref={drawerRef}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-white/10 bg-surface shadow-2xl shadow-black/60 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-l-[1.5rem] ${
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-hidden border-l border-border bg-surface shadow-2xl shadow-black/60 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rounded-l-[1.5rem] ${
           isDrawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"

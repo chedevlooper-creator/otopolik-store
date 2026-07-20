@@ -15,7 +15,7 @@ export default function Hero({ content }: Props) {
   const secondary = content?.secondaryCta;
 
   return (
-    <section className="relative flex min-h-[75vh] items-center justify-center overflow-hidden bg-black text-center pt-16 pb-32">
+    <section className="relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden bg-black text-center pt-24 pb-32">
       {/* Background Media with HUD overlays */}
       <div className="absolute inset-0 z-0">
         <HeroMedia />
@@ -23,36 +23,40 @@ export default function Hero({ content }: Props) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4">
-        <span className="mb-6 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
-          HASSAS MÜHENDİSLİK PROTOKOLÜ
-        </span>
-        <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-gradient-white sm:text-7xl">
-          Aracının zeminine <br className="hidden sm:block" /><span className="opacity-45">kusursuz</span> uyum.
-        </h1>
-        
-        {/* Modern HUD Laser Line */}
-        <div className="mx-auto my-8 h-px max-w-sm w-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-60" />
+      <div className="relative z-10 mx-auto max-w-5xl px-4 flex flex-col justify-center h-full w-full">
+        <div className="flex-1 flex flex-col justify-center items-center mt-12 mb-8">
+          <span className="mb-6 inline-block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">
+            HASSAS MÜHENDİSLİK PROTOKOLÜ
+          </span>
+          <h1 className="mb-6 font-heading text-5xl font-extrabold tracking-[-0.04em] text-gradient-white sm:text-7xl">
+            Aracının zeminine <br className="hidden sm:block" /><span className="opacity-45">kusursuz</span> uyum.
+          </h1>
+          
+          {/* Modern HUD Laser Line */}
+          <div className="mx-auto my-8 h-px max-w-sm w-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-60" />
 
-        <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-          {hero?.body ?? "Premium EVA teknolojisi ile üretilen, 6.000'den fazla araç modeline özel lazer kesim havuzlu paspaslar. 1-3 iş gününde kapında."}
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link 
-            href="/olusturucu"
-            className="btn-press btn-red-rich flex h-14 items-center justify-center rounded-full px-8 text-sm font-bold uppercase tracking-wider text-white"
-          >
-            {hero?.ctaLabel ?? "Aracını Seç"} →
-          </Link>
-          <Link 
-            href="#ozellikler"
-            className="btn-press flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 text-sm font-bold uppercase tracking-wider text-white transition-all hover:border-white/30 hover:bg-white/10"
-          >
-            {secondary?.ctaLabel ?? "Özellikleri Keşfet"}
-          </Link>
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
+            {hero?.body ?? "Premium EVA teknolojisi ile üretilen, 6.000'den fazla araç modeline özel lazer kesim havuzlu paspaslar. 1-3 iş gününde kapında."}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link 
+              href="/olusturucu"
+              className="btn-press btn-red-rich flex h-14 items-center justify-center rounded-full px-8 text-sm font-bold uppercase tracking-wider text-white"
+            >
+              {hero?.ctaLabel ?? "Aracını Seç"} →
+            </Link>
+            <Link 
+              href="#ozellikler"
+              className="btn-press flex h-14 items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 text-sm font-bold uppercase tracking-wider text-white transition-all hover:border-white/30 hover:bg-white/10"
+            >
+              {secondary?.ctaLabel ?? "Özellikleri Keşfet"}
+            </Link>
+          </div>
         </div>
 
-        <HeroVehicleSelector />
+        <div className="relative z-20 w-full mb-12">
+          <HeroVehicleSelector />
+        </div>
       </div>
 
       {/* Premium Marquee */}

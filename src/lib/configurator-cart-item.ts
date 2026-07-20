@@ -1,4 +1,4 @@
-import { calculateMatPrice } from "@/lib/mat-pricing";
+import { calculateMatPrice, type BagSize } from "@/lib/mat-pricing";
 import type { MatColor } from "@/lib/mat-colors";
 import type { CartItem } from "@/lib/types";
 import {
@@ -56,6 +56,9 @@ type ConfiguredMatCartInput = {
   edge: MatColor;
   heelPad: boolean;
   trunkMat: boolean;
+  quality?: "ithal" | "yerli";
+  logoCount?: number;
+  bagSize?: BagSize;
 };
 
 export function getMatPreview(floor: MatColor, edge: MatColor) {
@@ -72,26 +75,32 @@ export function buildConfiguredMatCartItem({
   edge,
   heelPad,
   trunkMat,
+  quality = "ithal",
+  logoCount = 0,
+  bagSize = "none",
 }: ConfiguredMatCartInput): CartItem | null {
   if (!isVehicleDetailsComplete(vehicle)) return null;
 
   const vehicleLabel = formatVehicleLabel(vehicle);
   const summary = [
+    quality === "yerli" ? "Yerli Premium Kalite" : "İthal Kalite",
     `${floor.name} taban`,
     `${edge.name} kenar`,
     heelPad ? "Topuk pedi" : null,
     trunkMat ? "Bagaj paspası" : null,
+    logoCount > 0 ? `${logoCount} Adet Logo` : null,
+    bagSize !== "none" ? `${bagSize} Çanta` : null,
   ]
     .filter(Boolean)
     .join(" · ");
 
   return {
-    slug: `ozel-tasarim-${vehicleDetailsKey(vehicle)}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}`.toLocaleLowerCase(
+    slug: `ozel-tasarim-${vehicleDetailsKey(vehicle)}-${floor.name}-${edge.name}${heelPad ? "-topuk" : ""}${trunkMat ? "-bagaj" : ""}-${quality}-${logoCount}-${bagSize}`.toLocaleLowerCase(
       "tr-TR"
     ),
     name: `Özel Tasarım EVA Paspas — ${vehicleLabel}`,
     image: getMatPreview(floor, edge).src,
-    price: calculateMatPrice({ heelPad, trunkMat }),
+    price: calculateMatPrice({ heelPad, trunkMat, quality, logoCount, bagSize }),
     color: summary,
     quantity: 1,
     configuration: {
@@ -100,6 +109,9 @@ export function buildConfiguredMatCartItem({
       edgeColor: edge.name,
       heelPad,
       trunkMat,
+      quality,
+      logoCount,
+      bagSize,
     },
   };
 }

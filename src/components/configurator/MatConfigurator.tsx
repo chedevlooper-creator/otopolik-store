@@ -41,6 +41,12 @@ export default function MatConfigurator({
     setHeelPad,
     trunkMat,
     setTrunkMat,
+    quality,
+    setQuality,
+    logoCount,
+    setLogoCount,
+    bagSize,
+    setBagSize,
     vehicleComplete,
     vehicleLabel,
     totalPrice,
@@ -50,17 +56,21 @@ export default function MatConfigurator({
     buildCartItem,
   } = useConfiguratorAssistant();
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number | null>(null);
-  const [previewMode, setPreviewMode] = useState<"cabin" | "flat">("cabin");
+  const [previewMode, setPreviewMode] = useState<"flat" | "cabin">("flat");
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
 
   const previewKey = `${floor.name}|${edge.name}`;
   const preview = getMatPreview(floor, edge);
   const hasExactPreview = previewKey in MAT_PREVIEW_IMAGES;
 
   const configSummary = [
+    quality === "yerli" ? "Yerli Premium" : "İthal Kalite",
     `${floor.name} taban`,
     `${edge.name} kenar`,
     heelPad ? "Topuk pedi" : null,
     trunkMat ? "Bagaj paspası" : null,
+    logoCount > 0 ? `${logoCount} Adet Logo` : null,
+    bagSize !== "none" ? `${bagSize} Çanta` : null,
   ]
     .filter(Boolean)
     .join(" · ");
@@ -73,6 +83,14 @@ export default function MatConfigurator({
   ];
 
   function handleAddToCart() {
+    if (!vehicleComplete) {
+      setShowValidationErrors(true);
+      const brandBtn = document.getElementById("configurator-vehicle-brand");
+      if (brandBtn) {
+        brandBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
     const item = buildCartItem();
     if (item) addItem(item);
   }
@@ -84,46 +102,8 @@ export default function MatConfigurator({
 
   return (
     <div className="pb-28 lg:pb-0">
-      {/* ─── Glassmorphism Step Progress ─── */}
-      <div className="mb-8">
-        <div className="relative rounded-2xl border border-white/5 bg-black/40 p-1.5 backdrop-blur-md">
-          <ol
-            aria-label="Tasarım adımları"
-            className="relative grid grid-cols-3 gap-1"
-          >
-            {steps.map((step) => {
-              const isDone = step.index < currentStep;
-              const isActive = step.index === currentStep;
-              return (
-                <li
-                  key={step.label}
-                  aria-current={isActive ? "step" : undefined}
-                  className={`relative flex items-center justify-center sm:justify-start gap-2.5 rounded-xl px-3 py-2.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
-                    isActive
-                      ? "text-white"
-                      : isDone
-                        ? "text-white/80"
-                        : "text-white/30"
-                  }`}
-                >
-                  <span
-                    className={`spec-value flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold transition-colors duration-300 ${
-                      isActive
-                        ? "bg-[var(--brand-red)] text-white shadow-[0_0_15px_rgba(237,27,36,0.5)]"
-                        : isDone
-                          ? "bg-white/20 text-white"
-                          : "bg-white/5 text-white/30"
-                    }`}
-                  >
-                    {isDone ? "✓" : `0${step.index + 1}`}
-                  </span>
-                  <span className={`hidden sm:inline ${isActive ? "inline" : "min-[400px]:inline"}`}>{step.label}</span>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </div>
+      {/* Spacer where progress bar used to be */}
+      <div className="mb-8 hidden lg:block" />
 
       <div className="grid min-w-0 max-w-full gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10">
       {/* Gerçek ürün görünümü */}
@@ -261,15 +241,58 @@ export default function MatConfigurator({
           value={vehicle}
           onChange={setVehicle}
           aiEnabled={aiEnabled}
+          showError={showValidationErrors}
         />
+
+        {/* Kalite Seçimi */}
+        <section className="space-y-4">
+          <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
+            <span className="spec-value text-base font-medium text-white">02</span>
+            Kalite Seçimi
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => setQuality("ithal")}
+              className={`flex flex-col p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group ${
+                quality === "ithal"
+                  ? "bg-[var(--brand-red)]/10 border-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.15)]"
+                  : "bg-white/[0.02] border-white/5 text-white/70 hover:bg-white/[0.05] hover:border-white/12"
+              }`}
+            >
+              <div className="absolute top-0 right-0 p-2.5 text-[8px] font-mono font-bold tracking-widest text-[var(--brand-red)] bg-white/5 rounded-bl-xl uppercase">İthal Sınıfı</div>
+              <span className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest">İTHAL KALİTE</span>
+              <span className="text-2xl font-extrabold mt-2.5 tracking-tight">3.500 ₺</span>
+              <span className="text-[11px] text-white/50 mt-2.5 leading-relaxed">
+                İthal kalın EVA malzeme, derin 3D petek kilit havuzu ve maksimum aşınma direnci.
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuality("yerli")}
+              className={`flex flex-col p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden group ${
+                quality === "yerli"
+                  ? "bg-[var(--brand-red)]/10 border-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.15)]"
+                  : "bg-white/[0.02] border-white/5 text-white/70 hover:bg-white/[0.05] hover:border-white/12"
+              }`}
+            >
+              <div className="absolute top-0 right-0 p-2.5 text-[8px] font-mono font-bold tracking-widest text-white/30 bg-white/5 rounded-bl-xl uppercase">Premium Yerli</div>
+              <span className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest">YERLİ KALİTE</span>
+              <span className="text-2xl font-extrabold mt-2.5 tracking-tight">2.350 ₺</span>
+              <span className="text-[11px] text-white/50 mt-2.5 leading-relaxed">
+                Yüksek kaliteli yerli üretim, şık kenar biyeleri ve dayanıklı yapısı.
+              </span>
+            </button>
+          </div>
+        </section>
 
         {/* Merged Color Section (Taban + Kenar) */}
         <section className="space-y-4">
           <h2 className="flex items-baseline gap-3 font-heading text-2xl font-bold text-white">
-            <span className="spec-value text-base font-medium text-white">02</span>
+            <span className="spec-value text-base font-medium text-white">03</span>
             Renkler
           </h2>
-          <div className="space-y-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
+          <div className="space-y-6 py-4">
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="spec-label">Taban Rengi</span>
@@ -314,14 +337,14 @@ export default function MatConfigurator({
         </section>
 
         {/* Collapsed Extras Accordion */}
-        <section className="border border-white/10 bg-white/[0.03] rounded-2xl backdrop-blur-xl">
+        <section className="py-2">
           <details className="group">
             <summary className="flex cursor-pointer list-none items-center justify-between p-5 font-heading text-2xl font-bold text-white [&::-webkit-details-marker]:hidden">
               <span className="flex items-baseline gap-3">
-                <span className="spec-value text-base font-medium text-white">03</span>
-                <span>Ekstralar</span>
+                <span className="spec-value text-base font-medium text-white">04</span>
+                <span>Ekstralar ve Çantalar</span>
                 <span className="spec-value ml-2 text-xs font-normal normal-case tracking-normal text-muted group-open:hidden">
-                  (Topuk pedi, bagaj paspası)
+                  (Topukluk, logo, bagaj paspası, bagaj çantası)
                 </span>
               </span>
               <span className="spec-value text-base font-medium text-[var(--red-hot)] transition-transform group-open:rotate-45">
@@ -333,12 +356,43 @@ export default function MatConfigurator({
                 heelPad={heelPad}
                 trunkMat={trunkMat}
                 heelPadPrice={MAT_PRICING.heelPadPrice}
-                trunkMatPrice={MAT_PRICING.trunkMatPrice}
+                trunkMatPrice={quality === "yerli" ? MAT_PRICING.yerliTrunkMatPrice : MAT_PRICING.trunkMatPrice}
                 onHeelPadChange={setHeelPad}
                 onTrunkMatChange={setTrunkMat}
+                logoCount={logoCount}
+                logoPrice={MAT_PRICING.logoPrice}
+                onLogoCountChange={setLogoCount}
+                bagSize={bagSize}
+                onBagSizeChange={setBagSize}
+                quality={quality}
               />
             </div>
           </details>
+        </section>
+
+        {/* Material Tech Highlight */}
+        <section className="relative overflow-hidden pt-4">
+          <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--brand-red)] opacity-10 blur-3xl pointer-events-none" />
+          <div className="flex items-start gap-4">
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-white/10">
+              <Image
+                src="/media/real-eva-cargo-detail.jpg"
+                alt="3D Hücre Yapısı"
+                fill
+                className="object-cover"
+                sizes="64px"
+              />
+            </div>
+            <div>
+              <h3 className="flex items-center gap-2 font-heading text-sm font-bold tracking-wider text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-red)]" />
+                3D Sıvı Kilit Haznesi
+              </h3>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-white/70">
+                10mm derinliğindeki özel baklava hücreler; dökülen çamur, su ve tozları yüzey gerilimiyle hapsederek aracınızın zeminine akmasını tamamen önler.
+              </p>
+            </div>
+          </div>
         </section>
 
         <ConfigSummary
@@ -374,9 +428,8 @@ export default function MatConfigurator({
           </div>
           <button
             type="button"
-            disabled={!canAdd}
             onClick={handleAddToCart}
-            className="btn-press btn-red-rich flex-1 min-h-12 rounded-full text-xs font-bold uppercase tracking-wider text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-press btn-red-rich flex-1 min-h-12 rounded-full text-xs font-bold uppercase tracking-wider text-white"
           >
             Sepete Ekle
           </button>

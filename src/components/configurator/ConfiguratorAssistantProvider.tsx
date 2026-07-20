@@ -10,7 +10,7 @@ import {
 } from "react";
 
 import { buildConfiguredMatCartItem } from "@/lib/configurator-cart-item";
-import { calculateMatPrice } from "@/lib/mat-pricing";
+import { calculateMatPrice, type BagSize } from "@/lib/mat-pricing";
 import {
   EDGE_COLORS,
   FLOOR_COLORS,
@@ -37,6 +37,12 @@ type ConfiguratorAssistantContextValue = {
   setHeelPad: (selected: boolean) => void;
   trunkMat: boolean;
   setTrunkMat: (selected: boolean) => void;
+  quality: "ithal" | "yerli";
+  setQuality: (quality: "ithal" | "yerli") => void;
+  logoCount: number;
+  setLogoCount: (count: number) => void;
+  bagSize: BagSize;
+  setBagSize: (size: BagSize) => void;
   floorTouched: boolean;
   edgeTouched: boolean;
   vehicleComplete: boolean;
@@ -94,12 +100,15 @@ export function ConfiguratorAssistantProvider({
   const [edge, setEdge] = useState<MatColor>(resolvedEdge);
   const [heelPad, setHeelPad] = useState(false);
   const [trunkMat, setTrunkMat] = useState(false);
+  const [quality, setQuality] = useState<"ithal" | "yerli">("ithal");
+  const [logoCount, setLogoCount] = useState(0);
+  const [bagSize, setBagSize] = useState<BagSize>("none");
   const [floorTouched, setFloorTouched] = useState(!!initialFloor);
   const [edgeTouched, setEdgeTouched] = useState(!!initialEdge);
 
   const vehicleComplete = isVehicleDetailsComplete(vehicle);
   const vehicleLabel = vehicleComplete ? formatVehicleLabel(vehicle) : "";
-  const totalPrice = calculateMatPrice({ heelPad, trunkMat });
+  const totalPrice = calculateMatPrice({ heelPad, trunkMat, quality, logoCount, bagSize });
   const currentStep = !vehicleComplete
     ? 0
     : (!floorTouched || !edgeTouched)
@@ -165,8 +174,11 @@ export function ConfiguratorAssistantProvider({
         edge,
         heelPad,
         trunkMat,
+        quality,
+        logoCount,
+        bagSize,
       }),
-    [edge, floor, heelPad, trunkMat, vehicle]
+    [edge, floor, heelPad, trunkMat, vehicle, quality, logoCount, bagSize]
   );
 
   const value = useMemo<ConfiguratorAssistantContextValue>(
@@ -181,6 +193,12 @@ export function ConfiguratorAssistantProvider({
       setHeelPad,
       trunkMat,
       setTrunkMat,
+      quality,
+      setQuality,
+      logoCount,
+      setLogoCount,
+      bagSize,
+      setBagSize,
       floorTouched,
       edgeTouched,
       vehicleComplete,
@@ -214,6 +232,9 @@ export function ConfiguratorAssistantProvider({
       vehicle,
       vehicleComplete,
       vehicleLabel,
+      quality,
+      logoCount,
+      bagSize,
     ]
   );
 

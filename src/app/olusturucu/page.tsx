@@ -48,13 +48,13 @@ export default async function ConfiguratorPage({
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 pointer-events-none" />
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.03),transparent_70%)] pointer-events-none" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:py-16">
-        <div className="mb-10 max-w-3xl border border-white/5 bg-black/40 p-6 sm:p-9 rounded-2xl backdrop-blur-md">
-          <span className="section-kicker">{kicker?.title ?? "Online paspas oluşturucu"}</span>
-          <h1 className="mt-5 font-heading text-4xl font-bold tracking-[-0.03em] text-white sm:text-5xl">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:py-20">
+        <div className="mb-16 flex flex-col items-center text-center">
+          <span className="section-kicker mb-4">{kicker?.title ?? "Online paspas oluşturucu"}</span>
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight text-gradient-white sm:text-5xl lg:text-6xl mb-4">
             {page?.title ?? "Kendi paspasını tasarla"}
           </h1>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-white/55">
+          <p className="max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
             {page?.description ??
               "Aracınızı seçin, taban ve kenar rengini belirleyin, topuk pedi ve bagaj paspası ekleyin."}
           </p>
