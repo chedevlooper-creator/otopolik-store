@@ -138,25 +138,14 @@ export default function Header() {
             : "bg-gradient-to-b from-black/60 to-transparent border-transparent"
         }`}
       >
-        <div className="border-b border-white/[0.06] bg-white/[0.02]">
-          <div className="mx-auto flex h-7 max-w-screen-2xl 2xl:px-8 items-center justify-center gap-2 px-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/55 sm:justify-between">
-            <span className="inline-flex items-center gap-1.5 text-white/90 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-              <BadgeCheckIcon className="h-3 w-3 text-brand-red" aria-hidden="true" />
-              {cms.header?.title ?? "6.000+ araç modeli için özel kalıp"}
-            </span>
-            <span className="hidden sm:inline text-white/60">
-              {cms.header?.body ??
-                `${settings.freeShippingThreshold.toLocaleString("tr-TR")}₺ üzeri ücretsiz kargo · ${settings.estimatedDispatch} içinde kargo`}
-            </span>
-          </div>
-        </div>
+        {/* Top banner removed as per user request */}
 
         <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4">
           <div className="flex h-16 items-center justify-between gap-3 sm:h-20 lg:h-20">
             <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />
 
             <nav
-              className="hidden items-center gap-4 lg:flex xl:gap-8"
+              className="hidden items-center gap-6 lg:flex xl:gap-10"
               aria-label="Ana menü"
             >
               {NAV_LINKS.map((link) => {
@@ -166,10 +155,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative inline-flex min-h-9 items-center text-[13.5px] font-medium tracking-[0.02em] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-center after:transition-transform after:duration-300 ${
+                    className={`relative inline-flex min-h-9 items-center text-sm font-semibold tracking-wide transition-colors ${
                       active
-                        ? "text-white after:scale-x-100 after:bg-brand-red"
-                        : "text-white/60 after:scale-x-0 after:bg-white/55 hover:text-white hover:after:scale-x-100"
+                        ? "text-white"
+                        : "text-white/60 hover:text-white"
                     }`}
                   >
                     {link.label}

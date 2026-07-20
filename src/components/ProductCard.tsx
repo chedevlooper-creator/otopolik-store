@@ -19,7 +19,7 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
   const shouldContainImage =
     isPlaceholderImage || ["eva-3d", "bagaj-havuzu", "bagaj-cantasi"].includes(product.category);
   // Beyaz fonlu stüdyo çekimleri (JPG) koyu kartta sırıtmasın diye çerçeveli panel içinde gösterilir
-  const hasLightImage = !isPlaceholderImage;
+  const hasLightImage = !isPlaceholderImage && product.image.endsWith(".jpg");
   const showSwatches = ["eva-3d", "eva-havuzlu", "bagaj-havuzu"].includes(product.category);
 
   return (

@@ -74,24 +74,24 @@ export default async function InfoPage({
           {interpolateCmsText(page.description, tokens)}
         </p>
 
-        <div className="reveal-stagger mt-16 space-y-12">
+        <div className="reveal-stagger mt-16 space-y-16">
           {bodySections.map((section) => (
-            <section key={section.sectionKey} className="reveal group rounded-[var(--r-card)] border border-white/5 bg-white/[0.02] p-8 transition-colors duration-300 hover:border-[var(--red-hot)]/25 hover:bg-white/[0.04]">
+            <section key={section.sectionKey} className="reveal group border-t border-white/5 pt-10">
               <h2 className="font-heading text-xl font-bold tracking-tight text-white sm:text-2xl">
                 {section.title}
               </h2>
-              <div className="mt-4 h-px w-12 bg-[var(--red-hot)]/50 transition-all duration-300 group-hover:w-24 group-hover:bg-[var(--red-hot)]" />
-              <p className="mt-6 text-base leading-7 text-white/60">
+              <div className="mt-3 h-px w-12 bg-[var(--red-hot)]/50 transition-all duration-300 group-hover:w-24 group-hover:bg-[var(--red-hot)]" />
+              <p className="mt-6 text-base leading-7 text-white/50">
                 {interpolateCmsText(section.body, tokens)}
               </p>
             </section>
           ))}
         </div>
 
-        <div className="reveal mt-16 rounded-[var(--r-card)] border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm">
-          <p className="text-sm text-white/60">
+        <div className="reveal mt-20 border-t border-white/5 pt-12 text-center">
+          <p className="text-sm text-white/50">
             Daha fazla sorunuz mu var?{" "}
-            <Link href="/destek" className="font-semibold text-white transition-colors hover:text-[var(--red-hot)]">
+            <Link href="/destek" className="font-semibold text-white transition-colors hover:text-[var(--red-hot)] underline underline-offset-4">
               Destek ekibimizle iletişime geçin.
             </Link>
           </p>

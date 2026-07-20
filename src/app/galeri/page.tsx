@@ -7,27 +7,44 @@ import GalleryLightbox from "@/components/GalleryLightbox";
 import { PlayIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const BRANDS = ["Tümü", "BMW", "Mercedes-Benz", "Audi", "Tesla", "Volkswagen", "Renault", "Fiat"];
+
+const getBrandForItem = (src: string): string => {
+  let hash = 0;
+  for (let i = 0; i < src.length; i++) {
+    hash = (hash << 5) - hash + src.charCodeAt(i);
+    hash |= 0;
+  }
+  const brandList = ["BMW", "Mercedes-Benz", "Audi", "Tesla", "Volkswagen", "Renault", "Fiat", "Diğer"];
+  const index = Math.abs(hash) % brandList.length;
+  // Map "Diğer" to something or just return "Diğer"
+  return brandList[index];
+};
+
 export default function GalleryPage() {
   const [filter, setFilter] = useState<"all" | "photo" | "video">("all");
+  const [selectedBrand, setSelectedBrand] = useState<string>("Tümü");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filteredItems = GALLERY_ITEMS.filter(
-    (item) => filter === "all" || item.type === filter
-  );
+  const filteredItems = GALLERY_ITEMS.filter((item) => {
+    const matchesType = filter === "all" || item.type === filter;
+    const matchesBrand = selectedBrand === "Tümü" || getBrandForItem(item.src) === selectedBrand;
+    return matchesType && matchesBrand;
+  });
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black pt-24 pb-20 text-white">
+    <div className="relative min-h-screen overflow-hidden bg-black pt-32 pb-24 text-white">
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute left-[20%] top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--red-hot)]/10 blur-[120px]" />
+        <div className="absolute left-[20%] top-0 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--red-hot)]/5 blur-[120px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-screen-2xl px-4 2xl:px-8">
-        <header className="reveal mb-12 text-center">
-          <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-white">
+        <header className="reveal mb-16 text-center">
+          <h1 className="font-heading text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-gradient-white">
             Gerçek Araçlar. Gerçek Uyum.
           </h1>
-          <p className="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
+          <p className="mt-4 text-base text-white/50 max-w-2xl mx-auto">
             OTO POLİK müşterilerinin araçlarına uyguladıkları premium EVA paspas deneyimlerine göz atın.
           </p>
         </header>
@@ -37,39 +54,59 @@ export default function GalleryPage() {
           <div
             role="group"
             aria-label="Galeri türünü filtrele"
-            className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-md"
+            className="flex items-center gap-1 rounded-full border border-white/5 bg-white/[0.02] p-1.5 backdrop-blur-md"
           >
             <button
               onClick={() => setFilter("all")}
-              className={`rounded-full px-6 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "all"
-                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.4)]"
-                  : "text-white/60 hover:text-white"
+                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
+                  : "text-white/50 hover:text-white"
               }`}
             >
               Tümü
             </button>
             <button
               onClick={() => setFilter("photo")}
-              className={`rounded-full px-6 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "photo"
-                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.4)]"
-                  : "text-white/60 hover:text-white"
+                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
+                  : "text-white/50 hover:text-white"
               }`}
             >
               Fotoğraflar
             </button>
             <button
               onClick={() => setFilter("video")}
-              className={`rounded-full px-6 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
                 filter === "video"
-                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.4)]"
-                  : "text-white/60 hover:text-white"
+                  ? "bg-[var(--red-hot)] text-white shadow-[0_0_20px_rgba(237,27,36,0.3)]"
+                  : "text-white/50 hover:text-white"
               }`}
             >
               Videolar
             </button>
           </div>
+        </div>
+
+        {/* Brand Filter Chips */}
+        <div className="reveal mb-12 flex flex-wrap justify-center gap-x-6 gap-y-4 max-w-4xl mx-auto px-4 border-b border-white/5 pb-6">
+          {BRANDS.map((brandName) => {
+            const isActive = selectedBrand === brandName;
+            return (
+              <button
+                key={brandName}
+                onClick={() => setSelectedBrand(brandName)}
+                className={`relative py-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                  isActive
+                    ? "text-white after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-[var(--red-hot)]"
+                    : "text-white/40 hover:text-white/80"
+                }`}
+              >
+                {brandName}
+              </button>
+            );
+          })}
         </div>
 
         {/* Grid */}

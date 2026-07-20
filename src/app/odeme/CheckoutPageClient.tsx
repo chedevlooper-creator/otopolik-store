@@ -10,7 +10,7 @@ import { getShippingCost } from "@/lib/shipping";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { isConvexConfiguredClient } from "@/lib/convex-client";
-import { ShieldCheckIcon, ShoppingCartIcon, TruckIcon } from "lucide-react";
+import { ShieldCheckIcon, ShoppingCartIcon, TruckIcon, LockIcon } from "lucide-react";
 import VehicleDetailsFields from "@/components/VehicleDetailsFields";
 import {
   EMPTY_VEHICLE_DETAILS,
@@ -19,6 +19,7 @@ import {
   isVehicleDetailsComplete,
   type VehicleDetails,
 } from "@/lib/vehicle-compatibility";
+import { TURKEY_PROVINCES } from "@/lib/turkey-provinces";
 
 type CheckoutContent = {
   title: string;
@@ -32,6 +33,7 @@ interface FormErrors {
   fullName?: string;
   phone?: string;
   city?: string;
+  district?: string;
   address?: string;
   legal?: string;
   vehicle?: string;
@@ -53,7 +55,13 @@ function validateName(name: string): string | undefined {
 }
 
 function validateCity(city: string): string | undefined {
-  if (!city.trim()) return "Şehir zorunludur";
+  if (!city.trim()) return "Şehir seçimi zorunludur";
+  return undefined;
+}
+
+function validateDistrict(district: string): string | undefined {
+  if (!district.trim()) return "İlçe zorunludur";
+  if (district.trim().length < 2) return "En az 2 karakter girin";
   return undefined;
 }
 
@@ -77,6 +85,7 @@ export default function CheckoutPageClient({
     fullName: "",
     phone: "",
     city: "",
+    district: "",
     address: "",
     note: "",
   });
@@ -107,6 +116,9 @@ export default function CheckoutPageClient({
       case "city":
         error = validateCity(value);
         break;
+      case "district":
+        error = validateDistrict(value);
+        break;
       case "address":
         error = validateAddress(value);
         break;
@@ -125,7 +137,7 @@ export default function CheckoutPageClient({
   const handleChange = (field: keyof typeof form, value: string) => {
     setForm((f) => ({ ...f, [field]: value }));
     if (field !== "note" && errors[field]) {
-      validateField(field, value);
+      validateField(field as keyof FormErrors, value);
     }
   };
 
@@ -185,6 +197,7 @@ export default function CheckoutPageClient({
       fullName: validateName(form.fullName),
       phone: validatePhone(form.phone),
       city: validateCity(form.city),
+      district: validateDistrict(form.district),
       address: validateAddress(form.address),
       vehicle:
         missingVehicleItems.length > 0 &&
@@ -239,7 +252,7 @@ export default function CheckoutPageClient({
       "",
       `Ad Soyad: ${form.fullName}`,
       `Telefon: ${form.phone}`,
-      `Şehir: ${form.city}`,
+      `Şehir: ${form.city} / ${form.district}`,
       `Adres: ${form.address}`,
       form.note ? `Not: ${form.note}` : null,
       `Sipariş Tercihi: ${paymentMethod === "kapida" ? "Kapıda Ödeme (ek ücret yok)" : "WhatsApp üzerinden onay"}`,
@@ -425,29 +438,64 @@ export default function CheckoutPageClient({
             </label>
           </div>
 
-          <label htmlFor="checkout-city" className="block text-sm font-semibold text-foreground">
-            Şehir
-            <input
-              id="checkout-city"
-              name="address-level2"
-              required
-              type="text"
-              autoComplete="address-level2"
-              value={form.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              onBlur={(e) => validateField("city", e.target.value)}
-              aria-invalid={Boolean(errors.city)}
-              aria-describedby={errors.city ? "checkout-city-error" : undefined}
-              className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
-                errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
-              }`}
-            />
-            {errors.city && (
-              <p id="checkout-city-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
-                {errors.city}
-              </p>
-            )}
-          </label>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label htmlFor="checkout-city" className="block text-sm font-semibold text-foreground">
+              Şehir (İl)
+              <div className="relative">
+                <select
+                  id="checkout-city"
+                  name="address-level1"
+                  required
+                  value={form.city}
+                  onChange={(e) => handleChange("city", e.target.value)}
+                  onBlur={(e) => validateField("city", e.target.value)}
+                  aria-invalid={Boolean(errors.city)}
+                  aria-describedby={errors.city ? "checkout-city-error" : undefined}
+                  className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none appearance-none ${
+                    errors.city ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
+                  } ${!form.city ? "text-white/50" : "text-white"}`}
+                >
+                  <option value="" disabled hidden>İl seçin</option>
+                  {TURKEY_PROVINCES.map(p => <option key={p} value={p} className="text-black">{p}</option>)}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center pt-1.5 text-white/40">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+              {errors.city && (
+                <p id="checkout-city-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                  {errors.city}
+                </p>
+              )}
+            </label>
+
+            <label htmlFor="checkout-district" className="block text-sm font-semibold text-foreground">
+              İlçe
+              <input
+                id="checkout-district"
+                name="address-level2"
+                required
+                type="text"
+                autoComplete="address-level2"
+                value={form.district}
+                onChange={(e) => handleChange("district", e.target.value)}
+                onBlur={(e) => validateField("district", e.target.value)}
+                aria-invalid={Boolean(errors.district)}
+                aria-describedby={errors.district ? "checkout-district-error" : undefined}
+                placeholder="Örn: Kadıköy"
+                className={`input-rich mt-1.5 w-full rounded-xl border px-4 py-3 font-normal focus:outline-none ${
+                  errors.district ? "border-brand-red focus:border-brand-red" : "border-border focus:border-white"
+                }`}
+              />
+              {errors.district && (
+                <p id="checkout-district-error" role="alert" className="mt-1 text-xs font-medium text-red-300">
+                  {errors.district}
+                </p>
+              )}
+            </label>
+          </div>
 
           <label htmlFor="checkout-address" className="block text-sm font-semibold text-foreground">
             Adres
@@ -612,6 +660,17 @@ export default function CheckoutPageClient({
               <span>{settings.estimatedDispatch} içinde kargoda</span>
             </li>
           </ul>
+
+          <div className="mt-5 flex items-center justify-center gap-8 rounded-xl bg-white/5 py-4">
+            <div className="flex flex-col items-center gap-1.5 opacity-80">
+              <ShieldCheckIcon className="h-6 w-6 text-emerald-400" strokeWidth={1.5} />
+              <span className="text-[9px] font-bold tracking-widest text-emerald-400/80">256-BIT SSL</span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5 opacity-80">
+              <LockIcon className="h-6 w-6 text-emerald-400" strokeWidth={1.5} />
+              <span className="text-[9px] font-bold tracking-widest text-emerald-400/80">3D SECURE</span>
+            </div>
+          </div>
         </aside>
       </form>
     </div>

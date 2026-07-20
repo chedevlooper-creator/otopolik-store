@@ -18,21 +18,7 @@ const TRUNK_BAG_COLORS: Product["colors"] = [
   { name: "Mavi", hex: "#344b6a", image: "/media/galeri/bagaj-cantasi/02-koleksiyon-mavi.jpg" },
 ];
 
-const CARPET_MAT_COLORS: Product["colors"] = [
-  { name: "Siyah", hex: "#181818", image: "/media/galeri/hali-paspas/01-siyah-on.jpg" },
-];
 
-const STEERING_WHEEL_COLORS: Product["colors"] = [
-  { name: "Siyah", hex: "#171717", image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg" },
-];
-
-const SCREEN_PROTECTOR_VARIANTS: Product["colors"] = [
-  { name: "Şeffaf", hex: "#dce7ec", image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg" },
-];
-
-const SEAT_CUSHION_COLORS: Product["colors"] = [
-  { name: "Siyah", hex: "#202020", image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg" },
-];
 
 type SeedProduct = {
   slug: string;
@@ -61,8 +47,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "eva-3d",
-    price: MAT_PRICING.basePrice,
-    oldPrice: 4500,
+    price: 2350,
+    oldPrice: 3500,
     badge: "Çok Satan",
     image: "/media/scraped/evaotopaspas/paspas-seti/01-siyah-urun.png",
     colors: EVA_MAT_COLORS,
@@ -139,8 +125,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "bagaj-havuzu",
-    price: 1750,
-    oldPrice: 2500,
+    price: 1350,
+    oldPrice: 1750,
     badge: "Yeni",
     image: "/media/scraped/evaotopaspas/bagaj-havuzu/01-siyah-bagaj.png",
     colors: TRUNK_LINER_COLORS,
@@ -170,8 +156,8 @@ const SEED_PRODUCTS: SeedProduct[] = [
     brand: "OTO POLİK",
     model: "Tüm Modeller",
     category: "bagaj-cantasi",
-    price: 899,
-    oldPrice: 1399,
+    price: 1850,
+    oldPrice: 2500,
     badge: "Fırsat",
     image: "/media/scraped/evaotopaspas/bagaj-cantasi/01-bagaj-cantasi.jpg",
     colors: TRUNK_BAG_COLORS,
@@ -193,126 +179,15 @@ const SEED_PRODUCTS: SeedProduct[] = [
     setContents: ["1 adet EVA Bagaj Çantası"],
     optionalExtras: [],
     dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "hali-oto-paspas-seti",
-    name: "Halı Oto Paspas Seti",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "hali-paspas",
-    price: 1250,
-    oldPrice: 1650,
-    badge: "Yeni",
-    inStock: false,
-    image: "/media/carpet-mat-set.png",
-    colors: CARPET_MAT_COLORS,
-    gallery: ["/media/carpet-mat-set.png"],
-    description:
-      "Aracınıza özel kesim, kenarları overloklu premium halı paspas seti. Yumuşak dokusuyla konfor sağlarken kaymaz tabanı sayesinde yerinden oynamaz. Ön ve arka sıra için tam takımdır.",
-    features: [
-      "Araca özel kesim, tam uyum",
-      "Kenar overlok dikişli, şık görünüm",
-      "Kaymaz taban — sabit durur",
-      "Yumuşak, yoğun halı dokusu",
-      "Yıkanabilir, kolay bakım",
-    ],
-    setContents: ["Ön sürücü paspası", "Ön yolcu paspası", "Arka sıra paspasları"],
-    optionalExtras: ["Bagaj paspası"],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "premium-direksiyon-kilifi",
-    name: "Premium Direksiyon Kılıfı",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "direksiyon-kilifi",
-    price: 450,
-    oldPrice: 650,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
-    colors: STEERING_WHEEL_COLORS,
-    gallery: [
-      "/media/scraped/evaotopaspas/direksiyon-kilifi/01-direksiyon-kilifi.jpeg",
-    ],
-    description:
-      "Yüksek kaliteli suni deriden üretilen, zarif dikiş işçilikli premium direksiyon kılıfı. Kaymaz yüzeyiyle daha iyi kavrama ve sürüş konforu sağlar, direksiyonunuzu aşınma ve güneşe karşı korur.",
-    features: [
-      "Premium suni deri, uzun ömürlü",
-      "Kaymaz yüzey — konforlu tutuş",
-      "Standart direksiyonlara tam uyum",
-      "Aşınma ve güneşe karşı koruma",
-      "Silerek kolayca temizlenir",
-    ],
-    setContents: ["1 adet direksiyon kılıfı"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "arac-ekran-koruyucu",
-    name: "Araç Ekran Koruyucu",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "ekran-koruyucu",
-    price: 350,
-    oldPrice: 500,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
-    colors: SCREEN_PROTECTOR_VARIANTS,
-    gallery: [
-      "/media/scraped/evaotopaspas/ekran-koruyucu/01-ekran-koruyucu.jpg",
-    ],
-    description:
-      "Aracınızın multimedya ve gösterge ekranını çizilmeye, toza ve parmak izine karşı koruyan şeffaf ekran koruyucu. Araca özel kesim sayesinde ekranınıza tam oturur, dokunmatik hassasiyetini etkilemez.",
-    features: [
-      "Araca özel kesim, tam uyum",
-      "Çizilmeye karşı koruma",
-      "Parmak izi ve toz tutmaz",
-      "Dokunmatik hassasiyetini korur",
-      "Kabarcıksız kolay montaj",
-    ],
-    setContents: ["1 adet ekran koruyucu"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
-  {
-    slug: "ortopedik-minder-seti",
-    name: "Ortopedik Oto Minder Seti",
-    brand: "OTO POLİK",
-    model: "Tüm Modeller",
-    category: "minder-seti",
-    price: 950,
-    oldPrice: 1350,
-    badge: "Yeni",
-    image: "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
-    colors: SEAT_CUSHION_COLORS,
-    gallery: [
-      "/media/scraped/evaotopaspas/minder-seti/01-minder-seti.jpg",
-    ],
-    description:
-      "Terletmeyen kumaşı ve ortopedik dolgusuyla uzun yolculuklarda konfor sağlayan oto minder seti. Cepli tasarımı ile pratik saklama alanı sunar, koltuklarınızı aşınma ve lekelere karşı korur.",
-    features: [
-      "Ortopedik dolgu — uzun yolda konfor",
-      "Terletmeyen nefes alan kumaş",
-      "Cepli tasarım, pratik saklama",
-      "Koltukları aşınma ve lekeye karşı korur",
-      "Çoğu araç koltuğuna uyumlu",
-    ],
-    setContents: ["Ön koltuk minderleri", "Boyun yastıkları"],
-    optionalExtras: [],
-    dispatchEstimate: "1-3 iş günü",
-  },
+  }
 ];
 
 export const CATEGORY_LABELS: Record<Product["category"], string> = {
   "eva-3d": "3D EVA Paspas",
   "eva-havuzlu": "Havuzlu EVA Paspas",
-  "hali-paspas": "Halı Paspas",
   bagaj: "Bagaj Paspası",
   "bagaj-havuzu": "Bagaj Havuzu",
   "bagaj-cantasi": "Bagaj Çantası",
-  "direksiyon-kilifi": "Direksiyon Kılıfı",
-  "minder-seti": "Minder Seti",
-  "ekran-koruyucu": "Ekran Koruyucu",
 };
 
 export const products: Product[] = SEED_PRODUCTS.map((seed) => ({

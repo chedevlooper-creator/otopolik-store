@@ -19,17 +19,13 @@ export const EMPTY_VEHICLE_DETAILS: VehicleDetails = {
 const VEHICLE_REQUIRED_CATEGORIES = new Set<Product["category"]>([
   "eva-3d",
   "eva-havuzlu",
-  "hali-paspas",
   "bagaj",
   "bagaj-havuzu",
-  "ekran-koruyucu",
 ]);
 
 const VEHICLE_REQUIRED_SLUGS = new Set([
   "eva-oto-paspas-seti",
   "eva-oto-bagaj-havuzu",
-  "hali-oto-paspas-seti",
-  "arac-ekran-koruyucu",
 ]);
 
 export function productRequiresVehicle(product: Pick<Product, "category">): boolean {

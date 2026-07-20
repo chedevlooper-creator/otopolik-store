@@ -36,7 +36,7 @@
   --color-sand: #ffffff;
   --color-sand-dim: rgba(255, 255, 255, 0.6);
   --font-sans: var(--font-body);
-  --font-heading: var(--font-body);
+  --font-heading: var(--font-heading);
   --font-mono: var(--font-spec);
 }
 
@@ -88,8 +88,8 @@ h2,
 h3,
 h4,
 .font-heading {
-  font-family: var(--font-body), "Instrument Sans", system-ui, sans-serif;
-  letter-spacing: -0.035em;
+  font-family: var(--font-heading), "Syne", system-ui, sans-serif;
+  letter-spacing: -0.025em;
   font-weight: 800;
 }
 

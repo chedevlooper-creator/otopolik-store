@@ -17,6 +17,25 @@ type Props = {
   brand: string;
 };
 
+const POPULAR_MODELS_BY_BRAND: Record<string, string[]> = {
+  BMW: ["3 Serisi Sedan", "5 Serisi Sedan", "1 Serisi Hatchback", "X5 SUV"],
+  Audi: ["A3 Sedan", "A3 Sportback", "A4 Sedan", "A6 Sedan", "Q3 SUV"],
+  "Mercedes-Benz": ["C Serisi Sedan", "E Serisi Sedan", "A Serisi Hatchback", "CLA Coupe"],
+  Volkswagen: ["Golf Hatchback", "Passat Sedan", "Polo Hatchback", "Tiguan SUV"],
+  Renault: ["Clio Hatchback", "Megane Sedan", "Fluence Sedan", "Symbol Sedan"],
+  Fiat: ["Egea Sedan", "Egea Cross", "Linea Sedan", "Punto Hatchback"],
+  Ford: ["Focus Sedan", "Focus Hatchback", "Fiesta Hatchback", "Puma SUV"],
+  Toyota: ["Corolla Sedan", "Yaris Hatchback", "C-HR SUV", "Auris Hatchback"],
+  Opel: ["Astra Hatchback", "Corsa Hatchback", "Insignia Sedan", "Mokka SUV"],
+  Peugeot: ["3008 SUV", "2008 SUV", "308 Hatchback", "208 Hatchback"],
+  Hyundai: ["i20 Hatchback", "i30 Hatchback", "Tucson SUV", "Elantra Sedan"],
+  Honda: ["Civic Sedan", "Accord Sedan", "CR-V SUV", "HR-V SUV"],
+  Citroen: ["C3 Hatchback", "C4 Hatchback", "C-Elysee Sedan", "C5 Aircross SUV"],
+  Dacia: ["Duster SUV", "Sandero Stepway", "Logan Sedan", "Spring Hatchback"],
+  Togg: ["T10X SUV", "T10F Liftback"],
+  Tesla: ["Model Y SUV", "Model 3 Sedan"],
+};
+
 export default function ModelSelectorModal({
   isOpen,
   onClose,
@@ -35,6 +54,11 @@ export default function ModelSelectorModal({
   const models = useMemo(() => {
     if (!brand) return [];
     return getModelsByBrand(brand);
+  }, [brand]);
+
+  const popularModels = useMemo(() => {
+    if (!brand) return [];
+    return POPULAR_MODELS_BY_BRAND[brand] || [];
   }, [brand]);
 
   const filteredModels = useMemo(() => {
@@ -89,7 +113,7 @@ export default function ModelSelectorModal({
             animate={{ opacity: 1, scale: 1, y: "-50%", x: "-50%" }}
             exit={{ opacity: 0, scale: 0.95, y: "-47%", x: "-50%" }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[10000] flex h-[80vh] w-[92vw] max-w-2xl flex-col rounded-3xl border border-white/12 bg-[#09090b] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
+            className="fixed left-1/2 top-1/2 z-[10000] flex h-[80vh] w-[92vw] max-w-2xl flex-col rounded-3xl border border-border bg-surface p-6 shadow-2xl backdrop-blur-xl sm:p-8"
           >
             {/* Selected Brand Display at top */}
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
@@ -122,12 +146,53 @@ export default function ModelSelectorModal({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Model ara... (Örn: 3 Serisi, A3, Golf)"
-                className="min-h-12 w-full rounded-xl border border-white/8 bg-white/[0.03] pl-11 pr-4 py-3 text-sm font-medium text-white placeholder-white/30 transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.2)] focus:outline-none"
+                className="min-h-12 w-full rounded-xl border border-border bg-black/40 pl-11 pr-4 py-3 text-sm font-medium text-white placeholder-white/30 transition-all focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.2)] focus:outline-none"
               />
             </div>
 
             {/* Content Body */}
             <div className="flex-1 overflow-y-auto mt-6 pr-1 scrollbar-thin scrollbar-thumb-white/10">
+              {!search && popularModels.length > 0 && (
+                <div className="mb-6 border-b border-white/5 pb-5">
+                  <h4 className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-[0.2em] mb-3">
+                    Öne Çıkan Modeller
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {popularModels.map((popModelName) => {
+                      const actualModel = models.find(m => m.name.toLowerCase() === popModelName.toLowerCase()) ||
+                                          models.find(m => m.name.toLowerCase().startsWith(popModelName.toLowerCase())) ||
+                                          models.find(m => m.name.toLowerCase().includes(popModelName.toLowerCase()));
+
+                      const displayName = popModelName.replace(/\s+(Sedan|Hatchback|SUV|Coupe|Cabrio|MPV|Station Wagon|Pickup|Van|Roadster|Liftback|Sportback|Fastback|Crossover|Microcar)$/i, "");
+
+                      if (!actualModel) return null;
+                      const isActive = selectedModel === actualModel.name;
+
+                      return (
+                        <button
+                          key={popModelName}
+                          type="button"
+                          onClick={() => handleSelect(actualModel.name, actualModel.bodyType)}
+                          className={`btn-press px-4 py-2 rounded-full border text-xs font-bold transition-all duration-300 ${
+                            isActive
+                              ? "bg-[var(--brand-red)]/15 border-[var(--brand-red)] text-white shadow-[0_0_12px_rgba(237,27,36,0.25)]"
+                              : "bg-white/[0.02] border-white/5 text-white/75 hover:bg-white/[0.05] hover:border-white/12 hover:scale-[1.03] hover:text-white"
+                          }`}
+                        >
+                          {displayName}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* All Models Title */}
+              {!search && (
+                <h4 className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-[0.2em] mb-3">
+                  Tüm Modeller
+                </h4>
+              )}
               {filteredModels.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pb-6">
                   {filteredModels.map((model) => {

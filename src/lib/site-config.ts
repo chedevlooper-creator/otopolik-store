@@ -45,8 +45,8 @@ export const siteConfig = {
   youtube: readEnv(process.env.NEXT_PUBLIC_SITE_YOUTUBE, "https://youtube.com/@otopolik"),
 
   // Kargo
-  freeShippingThreshold: readEnvNumber(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD, 3500),
-  shippingFee: readEnvNumber(process.env.NEXT_PUBLIC_SHIPPING_FEE, 99),
+  freeShippingThreshold: readEnvNumber(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD, 0),
+  shippingFee: readEnvNumber(process.env.NEXT_PUBLIC_SHIPPING_FEE, 0),
   estimatedDispatch: readEnv(process.env.NEXT_PUBLIC_ESTIMATED_DISPATCH, "1-3 iş günü"),
   businessHours: readEnv(process.env.NEXT_PUBLIC_BUSINESS_HOURS, "Pazartesi - Cumartesi, 09:00 - 18:00"),
 

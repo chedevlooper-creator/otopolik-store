@@ -11,9 +11,9 @@ export default function ShowroomProducts() {
         <div className="head rev justify-between items-end gap-6 flex-wrap md:flex-nowrap">
           <div>
             <span className="mono text-[var(--red-hot)]">ÜRÜN KATALOĞU</span>
-            <h2 className="mt-3 text-gradient-white">Aracınız İçin Premium Aksesuarlar</h2>
+            <h2 className="mt-3 text-gradient-white">Gerçek EVA Paspas ve Aksesuarları</h2>
             <p className="mt-4 max-w-xl text-white/50">
-              Lazer ölçümlü EVA paspas setlerimizin yanı sıra, konfor minderleri, koruyucu ekran filmleri ve bagaj aksesuarlarımızı inceleyin.
+              Lazer ölçümlü EVA paspas setlerimiz, sıvı hapseden bagaj havuzlarımız ve araç içi kullanım ömrünü uzatan özel topuk pedlerimizi inceleyin.
             </p>
           </div>
         </div>

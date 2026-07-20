@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   buildWhatsAppLink,
   useStoreSettings,
@@ -25,6 +26,8 @@ const URUNLER_LINKS = [
 export default function Footer() {
   const settings = useStoreSettings();
   const cms = useCmsChrome();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const whatsappHref = buildWhatsAppLink(
     settings.whatsappNumber,
     "Merhaba, aracıma uygun EVA paspas seti hakkında bilgi almak istiyorum."
@@ -32,32 +35,28 @@ export default function Footer() {
   const footer = cms.footer;
 
   return (
-    <footer className="border-t border-white/[0.02] bg-[#000000] text-white">
-      <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 pt-6">
-        <div className="reveal relative overflow-hidden rounded-xl border border-white/[0.02] bg-[#000000] px-6 py-8 sm:px-9 sm:py-10">
-          <div className="premium-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
-          <div className="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full bg-white/[0.03] blur-[90px]" aria-hidden="true" />
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/80">
-                {footer?.eyebrow ?? "Aracınıza özel üretim"}
-              </p>
-              <h2 className="mt-3 max-w-3xl font-heading text-3xl font-bold text-white sm:text-4xl">
-                {footer?.title ?? "Doğru kalıbı seçin, tarzınızı yola taşıyın."}
-              </h2>
-            </div>
+    <footer className={`border-t border-white/[0.04] bg-black text-white ${isHome ? "pt-10" : "pt-20"}`}>
+      {!isHome && (
+        <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4">
+          <div className="reveal flex flex-col items-center justify-center text-center pb-20 border-b border-white/[0.04]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-4">
+              {footer?.eyebrow ?? "Aracınıza özel üretim"}
+            </p>
+            <h2 className="max-w-2xl font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl mb-8">
+              {footer?.title ?? "Doğru kalıbı seçin, tarzınızı yola taşıyın."}
+            </h2>
             <Link
               href={footer?.ctaHref ?? "/olusturucu"}
-              className="btn-press btn-red-rich inline-flex min-h-13 w-fit shrink-0 items-center justify-center gap-2 rounded-full px-7 text-xs font-bold uppercase tracking-[0.08em]"
+              className="btn-press btn-red-rich inline-flex h-14 w-fit items-center justify-center gap-3 rounded-full px-8 text-sm font-bold uppercase tracking-wider"
             >
-              {footer?.ctaLabel ?? "Tasarımını başlat"}
+              {footer?.ctaLabel ?? "Tasarımını Başlat"}
               <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 py-12 sm:py-16">
+      <div className="mx-auto max-w-screen-2xl 2xl:px-8 px-4 py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_.6fr_.65fr_.65fr_1fr] lg:gap-10">
           <div>
             <Logo variant="header" ariaLabel="OTO POLİK ana sayfa" />

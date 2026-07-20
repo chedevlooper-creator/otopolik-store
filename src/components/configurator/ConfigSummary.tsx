@@ -49,9 +49,11 @@ export default function ConfigSummary({
 
   const handleAddToCart = useCallback(() => {
     onAddToCart();
-    setShowAdded(true);
-    setTimeout(() => setShowAdded(false), 1500);
-  }, [onAddToCart]);
+    if (canAdd) {
+      setShowAdded(true);
+      setTimeout(() => setShowAdded(false), 1500);
+    }
+  }, [onAddToCart, canAdd]);
 
   return (
     <section
@@ -76,10 +78,9 @@ export default function ConfigSummary({
       <div className="relative mt-3 flex gap-3 sm:mt-5">
         <motion.button
           type="button"
-          disabled={!canAdd}
           onClick={handleAddToCart}
           whileTap={{ scale: 0.95 }}
-          className="btn-press btn-red-rich relative min-h-11 flex-1 overflow-hidden rounded-full px-6 py-3 text-sm font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:text-muted sm:py-3.5"
+          className="btn-press btn-red-rich relative min-h-11 flex-1 overflow-hidden rounded-full px-6 py-3 text-sm font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:py-3.5"
         >
           <AnimatePresence mode="wait">
             {showAdded ? (

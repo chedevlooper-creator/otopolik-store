@@ -11,12 +11,14 @@ type Props = {
   value: VehicleDetails;
   onChange: (next: VehicleDetails) => void;
   aiEnabled: boolean;
+  showError?: boolean;
 };
 
 export default function VehicleSelector({
   value,
   onChange,
   aiEnabled,
+  showError = false,
 }: Props) {
   const complete = isVehicleDetailsComplete(value);
 
@@ -48,6 +50,7 @@ export default function VehicleSelector({
         value={value}
         onChange={onChange}
         idPrefix="configurator-vehicle"
+        showError={showError}
         className="mt-4"
       />
 

@@ -69,9 +69,9 @@ export default async function SupportPage() {
         ) : (
           <section
             aria-labelledby="support-fallback-title"
-            className="surface-glass mac-glass mx-auto max-w-3xl rounded-2xl border border-white/10 bg-black p-6 sm:p-9"
+            className="mx-auto max-w-3xl py-10 flex flex-col items-center text-center"
           >
-            <span className="icon-badge-rich flex size-12 items-center justify-center">
+            <span className="icon-badge-rich flex size-16 items-center justify-center rounded-full mb-6">
               <MessageCircleIcon className="size-5" aria-hidden="true" />
             </span>
             <h2
@@ -91,20 +91,64 @@ export default async function SupportPage() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-red-rich btn-press mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 px-5 text-sm font-bold"
+              className="btn-red-rich btn-press mt-6 inline-flex h-14 w-fit items-center justify-center gap-3 rounded-full px-8 text-sm font-bold uppercase tracking-wider"
             >
-              <MessageCircleIcon className="size-4" aria-hidden="true" />
-              WhatsApp&apos;tan destek al
+              <MessageCircleIcon className="size-5" aria-hidden="true" />
+              WhatsApp'tan Destek Al
             </a>
 
-            <p className="mt-5 flex items-start gap-2 text-[11px] leading-5 text-white/40">
+            <p className="mt-6 flex items-center justify-center gap-2 text-[11px] leading-5 text-white/40">
               <ShieldCheckIcon
-                className="mt-0.5 size-4 shrink-0"
+                className="size-4 shrink-0"
                 aria-hidden="true"
               />
-              Sepet, tasarım ve WhatsApp sipariş akışınız kesintisiz devam
-              eder.
+              Sepet, tasarım ve WhatsApp sipariş akışınız kesintisiz devam eder.
             </p>
+
+            {/* SSS Accordions */}
+            <div className="mt-20 w-full text-left border-t border-white/5 pt-12">
+              <h3 className="font-heading text-xl font-bold text-white mb-8 text-center uppercase tracking-wider">
+                Sıkça Sorulan Sorular
+              </h3>
+              <div className="space-y-5 max-w-2xl mx-auto">
+                <details className="group border-b border-white/5 pb-4">
+                  <summary className="flex cursor-pointer items-center justify-between font-semibold text-white/90 group-open:text-white transition-colors list-none [&::-webkit-details-marker]:hidden">
+                    <span>Paspaslar aracıma tam uyum sağlar mı?</span>
+                    <span className="text-[var(--brand-red)] font-mono transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-6 text-white/60">
+                    Evet, tüm paspaslarımız 3D lazer tarama cihazları ile alınmış milimetrik araç şablonlarına göre CNC lazer makinelerinde kesilir. OTO POLİK olarak %100 uyum garantisi sunuyoruz.
+                  </p>
+                </details>
+                <details className="group border-b border-white/5 pb-4">
+                  <summary className="flex cursor-pointer items-center justify-between font-semibold text-white/90 group-open:text-white transition-colors list-none [&::-webkit-details-marker]:hidden">
+                    <span>Sipariş verdikten sonra ne zaman kargolanır?</span>
+                    <span className="text-[var(--brand-red)] font-mono transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-6 text-white/60">
+                    Her paspas sipariş üzerine özel olarak üretilir. Üretim ve kalite kontrol süreçlerimiz genellikle 1 ila 3 iş günü sürer ve ardından hızlı kargo ile adresinize gönderilir.
+                  </p>
+                </details>
+                <details className="group border-b border-white/5 pb-4">
+                  <summary className="flex cursor-pointer items-center justify-between font-semibold text-white/90 group-open:text-white transition-colors list-none [&::-webkit-details-marker]:hidden">
+                    <span>EVA paspasların bakımı ve temizliği nasıldır?</span>
+                    <span className="text-[var(--brand-red)] font-mono transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-6 text-white/60">
+                    Hücre yapısı sayesinde kiri ve suyu hapseder. Temizlemek için paspası ters çevirip hafifçe vurmanız veya suyla durulamanız yeterlidir. Hızlı kuruyan yapısıyla saniyeler içinde tekrar kullanıma hazır hale gelir.
+                  </p>
+                </details>
+                <details className="group border-b border-white/5 pb-4">
+                  <summary className="flex cursor-pointer items-center justify-between font-semibold text-white/90 group-open:text-white transition-colors list-none [&::-webkit-details-marker]:hidden">
+                    <span>İade veya değişim koşulları nelerdir?</span>
+                    <span className="text-[var(--brand-red)] font-mono transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-6 text-white/60">
+                    Ürünlerimiz sipariş üzerine tamamen sizin seçtiğiniz renk kombinasyonlarında ve aracınıza özel ölçülerde üretildiği için cayma hakkı kapsamında iade alınamamaktadır. Ancak üretim kaynaklı hatalarda veya ölçü uyumsuzluğunda ücretsiz revizyon ve değişim desteği sağlıyoruz.
+                  </p>
+                </details>
+              </div>
+            </div>
           </section>
         )}
       </div>
