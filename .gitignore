@@ -86,3 +86,10 @@ tmp/
 
 # run-skill screenshots
 .claude/skills/run-otopolik-store/shots/
+
+# agent tool artifacts
+.codex/
+.codex-adobe-review/
+.ag-kit-backups/
+testsprite_tests/
+highlight-floor-mats.md
