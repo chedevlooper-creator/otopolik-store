@@ -33,7 +33,7 @@ export default async function ConfiguratorPage({
     : null;
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden">
+    <div className="relative min-h-screen bg-black">
       {/* 8K Premium EVA Background */}
       <div
         className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity grayscale"
