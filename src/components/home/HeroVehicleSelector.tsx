@@ -77,7 +77,7 @@ export default function HeroVehicleSelector() {
   const isButtonEnabled = !!selectedBrand;
 
   const selectClass =
-    "min-h-12 w-full rounded-xl border border-border bg-black/40 text-white hover:bg-black/60 hover:border-white/10 focus:bg-black/90 focus:border-[var(--brand-red)] focus:shadow-[0_0_20px_rgba(237,27,36,0.25)] focus:outline-none appearance-none cursor-pointer transition-all duration-300";
+    "min-h-12 w-full rounded-xl border border-white/15 bg-black/40 text-white hover:bg-black/60 hover:border-white/25 focus:bg-black/90 focus:border-[var(--brand-red)] focus:shadow-[0_0_20px_rgba(237,27,36,0.25)] focus:outline-none appearance-none cursor-pointer transition-all duration-300";
 
   return (
     <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-border bg-surface/85 p-6 sm:p-8 backdrop-blur-xl shadow-2xl transition-all duration-500 hover:border-white/10 grid gap-8 lg:grid-cols-12 text-left">
@@ -88,7 +88,7 @@ export default function HeroVehicleSelector() {
             <h2 className="text-gradient-white text-base font-extrabold tracking-[0.2em] uppercase">
               Hızlı Seçim Sihirbazı
             </h2>
-            <p className="mt-2 text-xs text-white/50 tracking-wide">
+            <p className="mt-2 text-xs text-white/70 tracking-wide">
               Aracınızı seçerek uyumlu paspas modellerini ve renk kombinasyonlarını anında keşfedin
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function HeroVehicleSelector() {
           <form onSubmit={handleSearch} className="grid gap-4 sm:grid-cols-3 items-end">
             {/* Brand Select */}
             <div className="relative group">
-              <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
+              <label className="block text-[10px] font-mono font-bold text-white/70 uppercase tracking-[0.2em] mb-2">
                 Marka
               </label>
               <div className="relative">
@@ -111,9 +111,9 @@ export default function HeroVehicleSelector() {
                       <span>{selectedBrand}</span>
                     </span>
                   ) : (
-                    <span className="text-white/40">Marka Seçin</span>
+                    <span className="text-white/65">Marka Seçin</span>
                   )}
-                  <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+                  <ChevronDown className="h-4 w-4 text-white/65 shrink-0" />
                 </button>
                 <BrandSelectorModal
                   isOpen={isBrandOpen}
@@ -126,7 +126,7 @@ export default function HeroVehicleSelector() {
 
             {/* Model Select */}
             <div className="relative group">
-              <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
+              <label className="block text-[10px] font-mono font-bold text-white/70 uppercase tracking-[0.2em] mb-2">
                 Model
               </label>
               <div className="relative">
@@ -142,11 +142,11 @@ export default function HeroVehicleSelector() {
                       <span>{selectedModel.replace(/\s+(Sedan|Hatchback|SUV|Coupe|Cabrio|MPV|Station Wagon|Pickup|Van|Roadster|Liftback|Sportback|Fastback|Crossover|Microcar)$/i, "")}</span>
                     </span>
                   ) : (
-                    <span className="text-white/40">
+                    <span className="text-white/65">
                       {selectedBrand ? "Model Seçin" : "Önce Marka Seçin"}
                     </span>
                   )}
-                  <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+                  <ChevronDown className="h-4 w-4 text-white/65 shrink-0" />
                 </button>
                 <ModelSelectorModal
                   isOpen={isModelOpen}
@@ -160,7 +160,7 @@ export default function HeroVehicleSelector() {
 
             {/* Year Select */}
             <div className="relative group">
-              <label className="block text-[10px] font-mono font-bold text-white/50 uppercase tracking-[0.2em] mb-2">
+              <label className="block text-[10px] font-mono font-bold text-white/70 uppercase tracking-[0.2em] mb-2">
                 Yıl
               </label>
               <div className="relative">
@@ -173,11 +173,11 @@ export default function HeroVehicleSelector() {
                   {selectedYear ? (
                     <span>{selectedYear}</span>
                   ) : (
-                    <span className="text-white/40">
+                    <span className="text-white/65">
                       {selectedModel ? "Yıl Seçin" : "Önce Model Seçin"}
                     </span>
                   )}
-                  <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+                  <ChevronDown className="h-4 w-4 text-white/65 shrink-0" />
                 </button>
                 <YearSelectorModal
                   isOpen={isYearOpen}
@@ -200,7 +200,7 @@ export default function HeroVehicleSelector() {
             className={`btn-press flex h-12 w-full items-center justify-center rounded-xl text-xs font-bold uppercase tracking-[0.18em] transition-all duration-300 ${
               isButtonEnabled
                 ? "bg-[var(--brand-red)] text-white shadow-[0_0_20px_rgba(237,27,36,0.45)] hover:bg-[var(--brand-red)]/90 hover:shadow-[0_0_28px_rgba(237,27,36,0.6)] cursor-pointer"
-                : "bg-white/5 border border-white/5 text-white/30 cursor-not-allowed"
+                : "bg-white/5 border border-white/5 text-white/55 cursor-not-allowed"
             }`}
           >
             Paspasını Tasarla →
@@ -223,7 +223,7 @@ export default function HeroVehicleSelector() {
         />
 
         {/* HUD UI Header */}
-        <div className="relative z-10 flex items-center justify-between text-[9px] font-mono text-white/40 tracking-wider">
+        <div className="relative z-10 flex items-center justify-between text-[9px] font-mono text-white/65 tracking-wider">
           <div className="flex items-center gap-1.5">
             <span className={`h-1.5 w-1.5 rounded-full ${selectedModel ? "bg-[var(--brand-red)] animate-pulse" : "bg-white/30"}`} />
             <span>{selectedModel ? "UYUMLULUK ONAYLANDI" : "AKILLI ALGORİTMA"}</span>
@@ -285,7 +285,7 @@ export default function HeroVehicleSelector() {
                   bodyType="Sedan"
                   className="h-14 w-32 text-white/20"
                 />
-                <span className="text-[10px] font-mono text-white/30 mt-4 tracking-widest uppercase animate-pulse">
+                <span className="text-[10px] font-mono text-white/55 mt-4 tracking-widest uppercase animate-pulse">
                   ARAÇ SEÇİMİ BEKLENİYOR
                 </span>
               </motion.div>
@@ -295,7 +295,7 @@ export default function HeroVehicleSelector() {
 
         {/* HUD Data Overlay Panel */}
         <div className="relative z-10 border-t border-white/5 pt-3 text-left">
-          <div className="font-mono text-[9px] text-white/50 leading-relaxed space-y-0.5">
+          <div className="font-mono text-[9px] text-white/70 leading-relaxed space-y-0.5">
             {selectedModelObj ? (
               <>
                 <div className="flex justify-between">
@@ -314,7 +314,7 @@ export default function HeroVehicleSelector() {
                   <span>Model Yılı:</span>
                   <span className="text-white font-bold">{selectedYear || "BELİRTİLMEDİ"}</span>
                 </div>
-                <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/30">
+                <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/55">
                   <span>Uyum Oranı:</span>
                   <span className="text-emerald-400 font-bold">%100 BİREBİR UYUM</span>
                 </div>
@@ -333,9 +333,9 @@ export default function HeroVehicleSelector() {
                   <span>Ölçüm Teknolojisi:</span>
                   <span className="text-white">3D Milimetrik</span>
                 </div>
-                <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/30">
+                <div className="flex justify-between border-t border-white/5 pt-1 mt-1 text-[8px] text-white/55">
                   <span>DURUM:</span>
-                  <span className="text-white/40 animate-pulse">Araç seçimi bekleniyor...</span>
+                  <span className="text-white/65 animate-pulse">Araç seçimi bekleniyor...</span>
                 </div>
               </>
             )}

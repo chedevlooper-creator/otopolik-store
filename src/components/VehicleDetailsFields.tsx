@@ -19,10 +19,10 @@ type Props = {
 };
 
 const getFieldClass = (isInvalid: boolean, showError: boolean) => {
-  return `input-rich mt-1.5 min-h-12 w-full rounded-xl border px-4 py-3 text-sm font-medium transition-all focus:outline-none ${
+  return `input-rich mt-1.5 min-h-12 w-full rounded-xl border px-4 py-3 text-sm font-medium transition-all focus:outline-none placeholder:text-white/55 ${
     isInvalid && showError
       ? "border-red-500/85 bg-red-950/10 shadow-[0_0_15px_rgba(239,68,68,0.35)] animate-pulse"
-      : "border-border bg-black/40 backdrop-blur-md focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.3)]"
+      : "border-white/15 bg-black/40 backdrop-blur-md focus:border-[var(--brand-red)] focus:shadow-[0_0_15px_rgba(237,27,36,0.3)]"
   }`;
 };
 
@@ -68,9 +68,9 @@ export default function VehicleDetailsFields({
                 <span>{value.brand}</span>
               </span>
             ) : (
-              <span className="text-white/40">Marka seçin</span>
+              <span className="text-white/65">Marka seçin</span>
             )}
-            <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+            <ChevronDown className="h-4 w-4 text-white/65 shrink-0" />
           </button>
 
           <BrandSelectorModal
@@ -115,11 +115,11 @@ export default function VehicleDetailsFields({
                   <span>{value.model}</span>
                 </span>
               ) : (
-                <span className="text-white/40">
+                <span className="text-white/65">
                   {value.brand ? "Model seçin" : "Önce marka seçin"}
                 </span>
               )}
-              <ChevronDown className="h-4 w-4 text-white/40 shrink-0" />
+              <ChevronDown className="h-4 w-4 text-white/65 shrink-0" />
             </button>
 
             <ModelSelectorModal
