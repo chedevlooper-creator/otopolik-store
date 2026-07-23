@@ -53,6 +53,13 @@ export default function ProductCard({ product, featured = false }: ProductCardPr
           {hasLightImage && (
             <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_50%_38%,transparent_52%,rgba(12,14,22,.08))]" />
           )}
+          {/* Açık gri stüdyo fonlu PNG ürün fotoğrafları koyu kartta "kutu" gibi durmasın diye kenar vinyeti ile temaya harmanlanır */}
+          {!hasLightImage && shouldContainImage && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_center,transparent_48%,rgba(0,0,0,0.55))]"
+            />
+          )}
         </div>
 
         <div className="absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
